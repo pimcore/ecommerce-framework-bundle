@@ -1,6 +1,10 @@
 <?php
 
-class OnlineShop_Framework_FilterService_SelectCategory extends OnlineShop_Framework_FilterService_AbstractFilterType {
+class OnlineShop_Framework_FilterService_ElasticSearch_SelectCategory extends OnlineShop_Framework_FilterService_SelectCategory {
+
+    public function prepareGroupByValues(OnlineShop_Framework_AbstractFilterDefinitionType $filterDefinition, OnlineShop_Framework_IProductList $productList) {
+        $productList->prepareGroupByValues($filterDefinition->getField(), true);
+    }
 
     public function getFilterFrontend(OnlineShop_Framework_AbstractFilterDefinitionType $filterDefinition, OnlineShop_Framework_IProductList $productList, $currentFilter) {
         if ($filterDefinition->getScriptPath()) {
@@ -19,19 +23,8 @@ class OnlineShop_Framework_FilterService_SelectCategory extends OnlineShop_Frame
             }
         }
 
-
         foreach($rawValues as $v) {
-            $explode = explode(",", $v['value']);
-            foreach($explode as $e) {
-                if(!empty($e) && (empty($availableRelations) || $availableRelations[$e] === true)) {
-                    if($values[$e]) {
-                        $count = $values[$e]['count'] + $v['count'];
-                    } else {
-                        $count = $v['count'];
-                    }
-                    $values[$e] = array('value' => $e, "count" => $count);
-                }
-            }
+            $values[$v['value']] = array('value' => $v['value'], "count" => $v['count']);
         }
 
         return $this->view->partial($script, array(
@@ -58,15 +51,8 @@ class OnlineShop_Framework_FilterService_SelectCategory extends OnlineShop_Frame
         $currentFilter[$filterDefinition->getField()] = $value;
 
         if(!empty($value)) {
-
-            $value = "%," . trim($value) . ",%";
-
-            if($isPrecondition) {
-                $productList->addCondition($filterDefinition->getField() . " LIKE " . $productList->quote($value), "PRECONDITION_" . $filterDefinition->getField());
-            } else {
-                $productList->addCondition($filterDefinition->getField() . " LIKE " . $productList->quote($value), $filterDefinition->getField());
-            }
-
+            $value = trim($value);
+            $productList->addCondition($value, $filterDefinition->getField());
         }
         return $currentFilter;
     }

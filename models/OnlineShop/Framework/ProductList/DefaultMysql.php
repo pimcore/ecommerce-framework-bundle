@@ -3,34 +3,23 @@
 /**
  * Implementation of product list which works based on the product index of the online shop framework
  */
-class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interface, Zend_Paginator_AdapterAggregate, Iterator {
-
-    const ORDERKEY_PRICE = "orderkey_price";
-
-    /**
-     * does not consider variants in search results
-     */
-    const VARIANT_MODE_HIDE = "hide";
+class OnlineShop_Framework_ProductList_DefaultMysql implements OnlineShop_Framework_IProductList
+{
 
     /**
-     * considers variants in search results and returns objects and variants
-     */
-    const VARIANT_MODE_INCLUDE = "include";
-
-    /**
-     * considers variants in search results but only returns corresponding objects in search results
-     */
-    const VARIANT_MODE_INCLUDE_PARENT_OBJECT = "include_parent_object";
-
-    /**
-     * @var null|OnlineShop_Framework_AbstractProduct[]
+     * @var null|OnlineShop_Framework_ProductInterfaces_IIndexable[]
      */
     protected $products = null;
 
     /**
-     * @var null|OnlineShop_Framework_IndexService
+     * @var string
      */
-    protected $indexService = null;
+    protected $tenantName;
+
+    /**
+     * @var OnlineShop_Framework_IndexService_Tenant_IMysqlConfig
+     */
+    protected $tenantConfig;
 
     /**
      * @var null|int
@@ -40,7 +29,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
     /**
      * @var string
      */
-    protected $variantMode = self::VARIANT_MODE_INCLUDE;
+    protected $variantMode = OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE;
 
     /**
      * @var integer
@@ -58,7 +47,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
     protected $category;
 
     /**
-     * @var OnlineShop_Framework_ProductList_Resource
+     * @var OnlineShop_Framework_ProductList_DefaultMysql_Resource
      */
     protected $resource;
 
@@ -68,11 +57,11 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
     protected $inProductList = true;
 
 
-    public function __construct() {
-        $this->indexService = OnlineShop_Framework_Factory::getInstance()->getIndexService();
-        $this->resource = new OnlineShop_Framework_ProductList_Resource($this);
+    public function __construct(OnlineShop_Framework_IndexService_Tenant_IMysqlConfig $tenantConfig) {
+        $this->tenantName = $tenantConfig->getTenantName();
+        $this->tenantConfig = $tenantConfig;
+        $this->resource = new OnlineShop_Framework_ProductList_DefaultMysql_Resource($this);
     }
-
 
     /**
      * @return OnlineShop_Framework_AbstractProduct[]
@@ -135,6 +124,33 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
         $this->conditionPriceTo = null;
     }
 
+
+    /**
+     * Adds query condition to product list for fulltext search
+     * Fieldname is optional but highly recommended - needed for resetting condition based on fieldname
+     * and exclude functionality in group by results
+     *
+     * @param $condition
+     * @param string $fieldname
+     */
+    public function addQueryCondition($condition, $fieldname = "")
+    {
+        // TODO: Implement addQueryCondition() method.
+        throw new Exception("Not implemented yet.");
+    }
+
+    /**
+     * Reset query condition for fieldname
+     *
+     * @param $fieldname
+     * @return mixed
+     */
+    public function resetQueryCondition($fieldname)
+    {
+        // TODO: Implement resetQueryCondition() method.
+        throw new Exception("Not implemented yet.");
+    }
+
     /**
      * @param null|float $from
      * @param null|float $to
@@ -159,13 +175,13 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
         return $this->inProductList;
     }
 
-    private $order;
+    protected $order;
     /**
      * @var string | array
      */
-    private $orderKey;
+    protected $orderKey;
 
-    private $orderByPrice = false;
+    protected $orderByPrice = false;
 
     public function setOrder($order) {
         $this->order = $order;
@@ -179,7 +195,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
      * @param $orderKey string | array  - either single field name, or array of field names or array of arrays (field name, direction)
      */
     public function setOrderKey($orderKey) {
-        if($orderKey == self::ORDERKEY_PRICE) {
+        if($orderKey == OnlineShop_Framework_IProductList::ORDERKEY_PRICE) {
             $this->orderByPrice = true;
         } else {
             $this->orderByPrice = false;
@@ -215,7 +231,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
     }
 
 
-    public function setCategory($category) {
+    public function setCategory(OnlineShop_Framework_AbstractCategory $category) {
         $this->category = $category;
     }
 
@@ -284,13 +300,46 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
 
         $this->products = array();
         foreach($objectRaws as $raw) {
-            $product = $this->getCurrentTenantConfig()->getObjectById($raw['o_id']);
+            $product = $this->loadElementById($raw['o_id']);
             if($product) {
                 $this->products[] = $product;
             }
         }
 
         return $this->products;
+    }
+
+    /**
+     * loads element by id
+     *
+     * @param $elementId
+     * @return array|Object_Abstract
+     */
+    protected function loadElementById($elementId) {
+        return $this->getCurrentTenantConfig()->getObjectMockupById($elementId);
+    }
+
+    /**
+     * prepares all group by values for given field names and cache them in local variable
+     * considers both - normal values and relation values
+     *
+     * @param string $fieldname
+     * @return void
+     */
+    public function prepareGroupByValues($fieldname, $countValues = false, $fieldnameShouldBeExcluded = true)
+    {
+        // not supported with mysql tables
+    }
+
+
+    /**
+     * resets all set prepared group by values
+     *
+     * @return void
+     */
+    public function resetPreparedGroupByValues()
+    {
+        // not supported with mysql tables
     }
 
     /**
@@ -306,7 +355,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
             $excludedFieldName=null;
         }
         if($this->conditionPriceFrom === null && $this->conditionPriceTo === null) {
-            return $this->resource->loadGroupByValues($fieldname, $this->buildQueryFromConditions(false, $excludedFieldName, OnlineShop_Framework_ProductList::VARIANT_MODE_INCLUDE), $countValues);
+            return $this->resource->loadGroupByValues($fieldname, $this->buildQueryFromConditions(false, $excludedFieldName, OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE), $countValues);
 
         } else {
             throw new Exception("Not supported yet");
@@ -327,7 +376,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
             $excludedFieldName=null;
         }
         if($this->conditionPriceFrom === null && $this->conditionPriceTo === null) {
-            return $this->resource->loadGroupByRelationValues($fieldname, $this->buildQueryFromConditions(false, $excludedFieldName, OnlineShop_Framework_ProductList::VARIANT_MODE_INCLUDE), $countValues);
+            return $this->resource->loadGroupByRelationValues($fieldname, $this->buildQueryFromConditions(false, $excludedFieldName, OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE), $countValues);
 
         } else {
             throw new Exception("Not supported yet");
@@ -335,7 +384,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
     }
 
 
-    private function buildQueryFromConditions($excludeConditions = false, $excludedFieldname = null, $variantMode = null) {
+    protected function buildQueryFromConditions($excludeConditions = false, $excludedFieldname = null, $variantMode = null) {
         if($variantMode == null) {
             $variantMode = $this->getVariantMode();
         }
@@ -357,7 +406,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
 
         //variant handling and userspecific conditions
 
-        if($variantMode == self::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
+        if($variantMode == OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
             if(!$excludeConditions) {
                 $userspecific = $this->buildUserspecificConditions($excludedFieldname);
                 if($userspecific) {
@@ -366,7 +415,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
             }
 
         } else {
-            if($variantMode == self::VARIANT_MODE_HIDE) {
+            if($variantMode == OnlineShop_Framework_IProductList::VARIANT_MODE_HIDE) {
                 $condition .= " AND o_type != 'variant'";
             }
 
@@ -383,7 +432,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
     }
 
 
-    private function buildUserspecificConditions($excludedFieldname = null) {
+    protected function buildUserspecificConditions($excludedFieldname = null) {
         $condition = "";
         foreach($this->relationConditions as $fieldname => $condArray) {
             if($fieldname !== $excludedFieldname) {
@@ -412,8 +461,8 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
         return $condition;
     }
 
-    private function buildOrderBy() {
-        if(!empty($this->orderKey) && $this->orderKey !== self::ORDERKEY_PRICE) {
+    protected function buildOrderBy() {
+        if(!empty($this->orderKey) && $this->orderKey !== OnlineShop_Framework_IProductList::ORDERKEY_PRICE) {
 
             $orderKeys = $this->orderKey;
             if(!is_array($orderKeys)) {
@@ -435,7 +484,7 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
                 $key = $keyDirection[0];
                 $direction = $keyDirection[1];
 
-                if($this->getVariantMode() == self::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
+                if($this->getVariantMode() == OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
                     if(strtoupper($this->order) == "DESC") {
                         $orderByStringArray[] = "max(" . $key . ") " . $direction;
                     } else {
@@ -457,10 +506,10 @@ class OnlineShop_Framework_ProductList implements Zend_Paginator_Adapter_Interfa
     }
 
     /**
-     * @return OnlineShop_Framework_IndexService_Tenant_DefaultConfig
+     * @return OnlineShop_Framework_IndexService_Tenant_IMysqlConfig
      */
     public function getCurrentTenantConfig() {
-        return $this->indexService->getCurrentTenantConfig();
+        return $this->tenantConfig;
     }
 
     /**

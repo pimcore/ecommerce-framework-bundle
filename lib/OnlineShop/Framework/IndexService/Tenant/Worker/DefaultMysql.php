@@ -1,39 +1,19 @@
 <?php
 
-class OnlineShop_Framework_IndexService_Tenant_Worker {
-    const MULTISELECT_DELIMITER = "#;#";
-
+class OnlineShop_Framework_IndexService_Tenant_Worker_DefaultMysql extends OnlineShop_Framework_IndexService_Tenant_Worker_Abstract implements OnlineShop_Framework_IndexService_Tenant_IWorker {
     protected $_sqlChangeLog = array();
-    protected $columnConfig;
-    protected $searchColumnConfig;
-
-    protected $indexColumns;
-    protected $filterGroups;
 
     /**
-     * @var OnlineShop_Framework_IndexService_Tenant_AbstractConfig
+     * @var OnlineShop_Framework_IndexService_Tenant_IMysqlConfig
      */
-    private $tenantConfig;
+    protected $tenantConfig;
 
-    public function __construct(OnlineShop_Framework_IndexService_Tenant_AbstractConfig $tenantConfig) {
-        $this->tenantConfig = $tenantConfig;
-        $this->columnConfig = $tenantConfig->getColumnConfig();
-        $this->searchColumnConfig = $tenantConfig->getSearchColumnConfig();
-        $this->db = Pimcore_Resource::get();
+    public function __construct(OnlineShop_Framework_IndexService_Tenant_IMysqlConfig $tenantConfig) {
+        parent::__construct($tenantConfig);
     }
 
-    /**
-     * @return OnlineShop_Framework_IndexService_Tenant_DefaultConfig
-     */
-    public function getTenantConfig() {
-        return $this->tenantConfig;
-    }
 
-    public function getGeneralSearchColumns() {
-        return $this->searchColumnConfig;
-    }
-
-    public function createOrUpdateTable() {
+    public function createOrUpdateIndexStructures() {
         $primaryIdColumnType = $this->tenantConfig->getIdColumnType(true);
         $idColumnType = $this->tenantConfig->getIdColumnType(false);
 
@@ -96,7 +76,7 @@ class OnlineShop_Framework_IndexService_Tenant_Worker {
             $this->dbexec('ALTER TABLE `' . $this->tenantConfig->getTablename() . '` ADD `' . $c . '` ' . $type . ';');
         }
 
-        $searchIndexColums = $this->getGeneralSearchColumns();
+        $searchIndexColums = $this->getGeneralSearchAttributes();
         if(!empty($searchIndexColums)) {
 
             try {
@@ -135,7 +115,7 @@ class OnlineShop_Framework_IndexService_Tenant_Worker {
 
     public function deleteFromIndex(OnlineShop_Framework_ProductInterfaces_IIndexable $object){
         if(!$this->tenantConfig->isActive($object)) {
-            Logger::info("Tenant is not active.");
+            Logger::info("Tenant {$this->name} is not active.");
             return;
         }
 
@@ -153,7 +133,7 @@ class OnlineShop_Framework_IndexService_Tenant_Worker {
 
     public function updateIndex(OnlineShop_Framework_ProductInterfaces_IIndexable $object) {
         if(!$this->tenantConfig->isActive($object)) {
-            Logger::info("Tenant is not active.");
+            Logger::info("Tenant {$this->name} is not active.");
             return;
         }
 
@@ -267,7 +247,7 @@ class OnlineShop_Framework_IndexService_Tenant_Worker {
                         }
 
                         if(is_array($data[$column->name])) {
-                            $data[$column->name] = self::MULTISELECT_DELIMITER . implode($data[$column->name], self::MULTISELECT_DELIMITER) . self::MULTISELECT_DELIMITER;
+                            $data[$column->name] = OnlineShop_Framework_IndexService_Tenant_IWorker::MULTISELECT_DELIMITER . implode($data[$column->name], OnlineShop_Framework_IndexService_Tenant_IWorker::MULTISELECT_DELIMITER) . OnlineShop_Framework_IndexService_Tenant_IWorker::MULTISELECT_DELIMITER;
                         }
 
                     } catch(Exception $e) {
@@ -321,7 +301,7 @@ class OnlineShop_Framework_IndexService_Tenant_Worker {
                 try {
                     $this->db->delete($this->tenantConfig->getTablename(), "o_id = " . $this->db->quote($subObjectId));
                 } catch (Exception $e) {
-                    Logger::warn("Error during updating index relation table: " . $e->getMessage(), $e);
+                    Logger::warn("Error during updating index table: " . $e->getMessage(), $e);
                 }
 
                 try {
@@ -335,9 +315,6 @@ class OnlineShop_Framework_IndexService_Tenant_Worker {
                         $this->db->delete($this->tenantConfig->getTenantRelationTablename(), "o_id = " . $this->db->quote($subObjectId));
                     }
                 } catch (Exception $e) {
-
-                    echo $e;
-                    var_dump($this->tenantConfig->getTenantRelationTablename());
                     Logger::warn("Error during updating index tenant relation table: " . $e->getMessage(), $e);
                 }
 
@@ -346,67 +323,16 @@ class OnlineShop_Framework_IndexService_Tenant_Worker {
         }
     }
 
-    public function getIndexAttributes($id) {
-        return $this->db->fetchRow("SELECT * FROM " . $this->tenantConfig->getTablename() . " WHERE o_id = " . $this->db->quote($id));
-    }
-
-    private function getSystemColumns() {
+    protected function getSystemColumns() {
         return array("o_id", "o_classId", "o_parentId", "o_virtualProductId", "o_virtualProductActive", "o_type", "categoryIds", "parentCategoryIds", "priceSystemName", "active", "inProductList");
     }
 
-    public function getIndexColumns($considerHideInFieldList = false) {
-        if(empty($this->indexColumns)) {
-            $this->indexColumns = array();
-
-            $this->indexColumns["categoryIds"] = "categoryIds";
-
-            foreach($this->columnConfig->column as $column) {
-                if(!$considerHideInFieldList || ($considerHideInFieldList && $column->hideInFieldlistDatatype != "true")) {
-                    $this->indexColumns[$column->name] = $column->name;
-                }
-            }
-            $this->indexColumns = array_values($this->indexColumns);
-        }
-
-        return $this->indexColumns;
-    }
-
-    public function getIndexColumnsByFilterGroup($filterGroup) {
-        $this->getAllFilterGroups();
-        return $this->filterGroups[$filterGroup] ? $this->filterGroups[$filterGroup] : [];
-    }
-
-    public function getAllFilterGroups() {
-        if(empty($this->filterGroups)) {
-            $this->filterGroups = array();
-            $this->filterGroups['system'] = array_diff($this->getSystemColumns(), array("categoryIds"));
-            $this->filterGroups['category'] = array("categoryIds");
-
-
-            if($this->columnConfig) {
-                foreach($this->columnConfig->column as $column) {
-                    if($column->filtergroup) {
-                        $this->filterGroups[(string)$column->filtergroup][] = (string)$column->name;
-                    }
-                }
-            }
-        }
-
-        return array_keys($this->filterGroups);
-    }
-
-
-    private function getAllColumns() {
-        return array_merge($this->getSystemColumns(), $this->getIndexColumns());
-    }
-
-
-    private function dbexec($sql) {
+    protected function dbexec($sql) {
         $this->db->query($sql);
         $this->logSql($sql);
     }
 
-    private function logSql ($sql) {
+    protected function logSql ($sql) {
         Logger::info($sql);
 
         $this->_sqlChangeLog[] = $sql;
@@ -426,6 +352,15 @@ class OnlineShop_Framework_IndexService_Tenant_Worker {
 
             file_put_contents($file, $log);
         }
+    }
+
+    /**
+     * returns product list implementation valid and configured for this worker/tenant
+     *
+     * @return mixed
+     */
+    function getProductList() {
+        return new OnlineShop_Framework_ProductList_DefaultMysql($this->getTenantConfig());
     }
 }
 

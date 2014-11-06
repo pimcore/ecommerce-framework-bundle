@@ -1,6 +1,6 @@
 <?php
 
-class OnlineShop_Framework_ProductList_Resource {
+class OnlineShop_Framework_ProductList_DefaultMysql_Resource {
 
     /**
      * @var Zend_Db_Adapter_Abstract
@@ -8,7 +8,7 @@ class OnlineShop_Framework_ProductList_Resource {
     private $db;
 
     /**
-     * @var OnlineShop_Framework_ProductList
+     * @var OnlineShop_Framework_IProductList
      */
     private $model;
 
@@ -18,7 +18,7 @@ class OnlineShop_Framework_ProductList_Resource {
     private $lastRecordCount;
 
 
-    public function __construct(OnlineShop_Framework_ProductList $model) {
+    public function __construct(OnlineShop_Framework_IProductList $model) {
         $this->model = $model;
         $this->db = Pimcore_Resource::get();
     }
@@ -42,7 +42,7 @@ class OnlineShop_Framework_ProductList_Resource {
             }
         }
 
-        if($this->model->getVariantMode() == OnlineShop_Framework_ProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
+        if($this->model->getVariantMode() == OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
             if($orderBy) {
                 $query = "SELECT SQL_CALC_FOUND_ROWS DISTINCT o_virtualProductId as o_id, priceSystemName FROM "
                     . $this->model->getCurrentTenantConfig()->getTablename() . " a "
@@ -74,7 +74,7 @@ class OnlineShop_Framework_ProductList_Resource {
         }
 
         if($countValues) {
-            if($this->model->getVariantMode() == OnlineShop_Framework_ProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
+            if($this->model->getVariantMode() == OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
                 $query = "SELECT TRIM(`$fieldname`) as `value`, count(DISTINCT o_virtualProductId) as `count` FROM "
                     . $this->model->getCurrentTenantConfig()->getTablename() . " a "
                     . $this->model->getCurrentTenantConfig()->getJoins()
@@ -91,10 +91,10 @@ class OnlineShop_Framework_ProductList_Resource {
             OnlineShop_Plugin::getSQLLogger()->log("Query done.", Zend_Log::INFO);
             return $result;
         } else {
-            $query = "SELECT `$fieldname` FROM "
+            $query = "SELECT " . $this->db->quoteIdentifier($fieldname) . " FROM "
                 . $this->model->getCurrentTenantConfig()->getTablename() . " a "
                 . $this->model->getCurrentTenantConfig()->getJoins()
-                . $condition . " GROUP BY `" . $fieldname . "`";
+                . $condition . " GROUP BY " . $this->db->quoteIdentifier($fieldname);
             OnlineShop_Plugin::getSQLLogger()->log("Query: " . $query, Zend_Log::INFO);
             $result = $this->db->fetchCol($query);
             OnlineShop_Plugin::getSQLLogger()->log("Query done.", Zend_Log::INFO);
@@ -109,7 +109,7 @@ class OnlineShop_Framework_ProductList_Resource {
         }
 
         if($countValues) {
-            if($this->model->getVariantMode() == OnlineShop_Framework_ProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
+            if($this->model->getVariantMode() == OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
                 $query = "SELECT dest as `value`, count(DISTINCT src_virtualProductId) as `count` FROM "
                     . $this->model->getCurrentTenantConfig()->getRelationTablename() . " a "
                     . "WHERE fieldname = " . $this->quote($fieldname);
@@ -165,7 +165,7 @@ class OnlineShop_Framework_ProductList_Resource {
             }
         }
 
-        if($this->model->getVariantMode() == OnlineShop_Framework_ProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
+        if($this->model->getVariantMode() == OnlineShop_Framework_IProductList::VARIANT_MODE_INCLUDE_PARENT_OBJECT) {
             $query = "SELECT count(DISTINCT o_virtualProductId) FROM "
                 . $this->model->getCurrentTenantConfig()->getTablename() . " a "
                 . $this->model->getCurrentTenantConfig()->getJoins()
@@ -217,30 +217,6 @@ class OnlineShop_Framework_ProductList_Resource {
             OnlineShop_Plugin::getSQLLogger()->log("Query done.", Zend_Log::INFO);
 
             if(!empty($objectValues)) {
-//                $subStatement = array();
-//                foreach($fields as $f) {
-//                    $subStatement[] = $f->getWeight() . " * " . $this->db->quoteIdentifier($f->getField()) . " * " . $objectValues[$f->getField()];
-//                }
-//
-//                $firstPart = implode(" + ", $subStatement);
-//
-//
-//                $subStatement = array();
-//                foreach($fields as $f) {
-//                    $subStatement[] = $f->getWeight() . " * POW(" . $this->db->quoteIdentifier($f->getField()) . ",2)";
-//                }
-//                $secondPart = "POW(" . implode(" + ", $subStatement) . ", 0.5)";
-//
-//                $subStatement = array();
-//                foreach($fields as $f) {
-//                    $subStatement[] = $f->getWeight() . " * POW(" . $objectValues[$f->getField()] . ",2)";
-//                }
-//
-//                $secondPart .= " * POW(" . implode(" + ", $subStatement) . ", 0.5)";
-//
-//
-//                $statement = "(" . $firstPart . ") / (" . $secondPart . ")";
-
                 $subStatement = array();
                 foreach($fields as $f) {
                     $subStatement[] =

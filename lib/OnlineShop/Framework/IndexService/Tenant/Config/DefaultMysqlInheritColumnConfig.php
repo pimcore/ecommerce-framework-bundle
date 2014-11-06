@@ -1,14 +1,14 @@
 <?php
 
-class OnlineShop_Framework_IndexService_Tenant_DefaultConfigInheritColumnConfig extends OnlineShop_Framework_IndexService_Tenant_DefaultConfig {
+class OnlineShop_Framework_IndexService_Tenant_Config_DefaultMysqlInheritColumnConfig extends OnlineShop_Framework_IndexService_Tenant_Config_DefaultMysql {
 
     public function __construct($tenantConfigXml, $totalConfigXml = null) {
-        $this->columnConfig = $totalConfigXml->columns;
+        $this->attributeConfig = $totalConfigXml->columns;
 
-        $this->searchColumnConfig = array();
+        $this->searchAttributeConfig = array();
         if($totalConfigXml->generalSearchColumns->column) {
             foreach($totalConfigXml->generalSearchColumns->column as $c) {
-                $this->searchColumnConfig[] = $c->name;
+                $this->searchAttributeConfig[] = $c->name;
             }
         }
     }
