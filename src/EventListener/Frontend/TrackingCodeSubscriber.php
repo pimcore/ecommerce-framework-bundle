@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\EventListener\Frontend;
 
-use Pimcore\Bundle\CoreBundle\EventListener\Traits\EnabledTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\PimcoreContextAwareTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\PreviewRequestTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\ResponseInjectionTrait;
@@ -31,7 +30,6 @@ use Twig\Environment;
 
 class TrackingCodeSubscriber implements EventSubscriberInterface
 {
-    use EnabledTrait;
     use ResponseInjectionTrait;
     use PimcoreContextAwareTrait;
     use PreviewRequestTrait;
@@ -40,6 +38,8 @@ class TrackingCodeSubscriber implements EventSubscriberInterface
 
     /** @var Environment * */
     protected Environment $twig;
+
+    private bool $enabled = true;
 
     public function __construct(TrackingManager $trackingManager, Environment $twig)
     {
@@ -59,7 +59,7 @@ class TrackingCodeSubscriber implements EventSubscriberInterface
 
     public function onCodeHead(CodeEvent $event): void
     {
-        if (! $this->isEnabled()) {
+        if (!$this->isEnabled()) {
             return;
         }
 
@@ -83,5 +83,20 @@ class TrackingCodeSubscriber implements EventSubscriberInterface
                 $block->prepend($code);
             }
         }
+    }
+
+    public function disable(): void
+    {
+        $this->enabled = false;
+    }
+
+    public function enable(): void
+    {
+        $this->enabled = true;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
     }
 }
