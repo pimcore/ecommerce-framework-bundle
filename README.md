@@ -55,4 +55,4 @@ Following aspects are short-cuts into the documentation for start working with t
 - [Integrating Payment Functionality](./doc/15_Payment/README.md)
 - [Working with Orders](./doc/17_Order_Manager/README.md)
 - [Tracking Manager](./doc/19_Tracking_Manager.md)
-- [Events](./doc/20_Event_API_and_Event_Manager)
+- [Events](./doc/20_Event_API_and_Event_Manager.md)
