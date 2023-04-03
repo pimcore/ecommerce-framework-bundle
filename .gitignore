@@ -47,8 +47,6 @@ Thumbs.db
 # NetBeans
 nbproject
 
-node_modules/
-
 # codeception (only stage *.dist.yml config files)
 /codeception.yml
 /pimcore/codeception.yml
@@ -60,3 +58,7 @@ node_modules/
 /plugins/
 /tools/
 /website/
+
+#npm
+**/node_modules
+**/package-lock.json
