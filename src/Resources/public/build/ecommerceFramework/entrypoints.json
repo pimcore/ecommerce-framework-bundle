@@ -23,6 +23,7 @@
     "voucher": {
       "js": [
         "/bundles/pimcoreecommerceframework/build/ecommerceFramework/runtime.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/261.js",
         "/bundles/pimcoreecommerceframework/build/ecommerceFramework/voucher.js"
       ]
     },
