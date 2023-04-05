@@ -175,7 +175,7 @@ class AdminOrderController extends AdminController implements KernelControllerEv
         // Paginate the results of the query
         $paginator = $paginator->paginate(
             $list,
-            (int) $request->get('page', 1),
+            $request->query->getInt('page', 1),
             10
         );
 
