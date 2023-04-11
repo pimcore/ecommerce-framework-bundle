@@ -1,0 +1,41 @@
+{
+  "entrypoints": {
+    "flatpickr": {
+      "js": [
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/runtime.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/527.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/flatpickr.js"
+      ],
+      "css": [
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/flatpickr.css"
+      ]
+    },
+    "bootstrap": {
+      "js": [
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/runtime.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/897.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/bootstrap.js"
+      ],
+      "css": [
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/897.css"
+      ]
+    },
+    "voucher": {
+      "js": [
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/runtime.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/261.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/voucher.js"
+      ]
+    },
+    "leaflet": {
+      "js": [
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/runtime.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/243.js",
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/leaflet.js"
+      ],
+      "css": [
+        "/bundles/pimcoreecommerceframework/build/ecommerceFramework/leaflet.css"
+      ]
+    }
+  }
+}
