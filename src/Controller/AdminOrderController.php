@@ -175,7 +175,7 @@ class AdminOrderController extends AdminController implements KernelControllerEv
         // Paginate the results of the query
         $paginator = $paginator->paginate(
             $list,
-            $request->get('page', 1),
+            $request->query->getInt('page', 1),
             10
         );
 
@@ -432,7 +432,7 @@ class AdminOrderController extends AdminController implements KernelControllerEv
 
             // change item
             $agent = $this->orderManager->createOrderAgent($order);
-            $note = $agent->itemChangeAmount($orderItem, $request->get('quantity'));
+            $note = $agent->itemChangeAmount($orderItem, (float) $request->get('quantity'));
 
             // extend log
             $note->addData('message', 'text', $request->get('message')); // 'text','date','document','asset','object','bool'
@@ -467,7 +467,7 @@ class AdminOrderController extends AdminController implements KernelControllerEv
 
             // change item
             $agent = $this->orderManager->createOrderAgent($order);
-            $note = $agent->itemComplaint($orderItem, $request->get('quantity'));
+            $note = $agent->itemComplaint($orderItem, (float) $request->get('quantity'));
 
             // extend log
             $note->addData('message', 'text', $request->get('message'));
