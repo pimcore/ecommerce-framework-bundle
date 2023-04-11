@@ -467,7 +467,7 @@ class AdminOrderController extends AdminController implements KernelControllerEv
 
             // change item
             $agent = $this->orderManager->createOrderAgent($order);
-            $note = $agent->itemComplaint($orderItem, $request->get('quantity'));
+            $note = $agent->itemComplaint($orderItem, (float) $request->get('quantity'));
 
             // extend log
             $note->addData('message', 'text', $request->get('message'));
