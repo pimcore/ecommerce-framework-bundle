@@ -95,10 +95,13 @@
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         const actionModal = document.getElementById('actionModal');
-                        const modal = new Modal(actionModal,
-                            {
-                                content: '<div id="modal-content" class="modal-content">' + this.response + '</div>', // sets modal content
-                            });
+                        const modal = new bootstrap.Modal(actionModal);
+
+                        modal._element.innerHTML = `
+                            <div class="modal-dialog">
+                                <div id="modal-content" class="modal-content">${this.response}</div>
+                            </div>
+                        `;
 
                         modal.show();
                     }
@@ -109,7 +112,6 @@
             };
 
         }
-        // http://host.docker.internal/bundles/pimcoreecommerceframework/build/ecommerceFramework/leaflet.js
         L.Icon.Default.imagePath = '/bundles/pimcoreecommerceframework/build/ecommerceFramework/images/';
     </script>
 

@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var selector = this.getAttribute('data-modal');
 
             var modal = document.getElementById(selector);
-            var modalInstance = new Modal(modal,
+            var modalInstance = new bootstrap.Modal(modal,
                 {
                     "backdrop": "static",
                     "keyboard": true,

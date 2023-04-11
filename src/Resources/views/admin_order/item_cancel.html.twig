@@ -4,7 +4,7 @@
     <input type="hidden" name="csrfToken" value="{{ pimcore_csrf.getCsrfToken(app.request.session) }}">
     <div class="modal-header">
         <h5 class="modal-title">{{ orderItem.getProductName() }} <small>{{ ('bundle_ecommerce.back-office.order.item-cancel')|trans([],'admin') }}</small></h5>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
