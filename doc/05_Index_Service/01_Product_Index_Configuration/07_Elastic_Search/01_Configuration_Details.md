@@ -62,10 +62,10 @@ pimcore_ecommerce_framework:
                             analyzer:
                                 my_ngram_analyzer:
                                     tokenizer: my_ngram_tokenizer
-                                whitelist_analyzer:
+                                allow_list_analyzer:
                                     tokenizer: standard
                                     filter:
-                                      - white_list_filter
+                                      - allow_list_filter
                             tokenizer:
                                 my_ngram_tokenizer:
                                     type: nGram
@@ -73,7 +73,7 @@ pimcore_ecommerce_framework:
                                     max_gram: 15
                                     token_chars: [letter, digit]
                             filter:
-                                white_list_filter:
+                                allow_list_filter:
                                     type: keep
                                     keep_words:
                                       - was
