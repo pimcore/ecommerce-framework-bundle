@@ -43,21 +43,37 @@ class MySql
     /**
      * @return string[]
      */
-    public function getValidTableColumns(string $table): array
+    public function getPrimaryKey(string $table, bool $cache = true): array
+    {
+        return $this->getValidTableColumns($table, $cache, true);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getValidTableColumns(string $table, bool $cache = true, bool $primaryKeyColumnsOnly = false): array
     {
         $cacheKey = 'plugin_ecommerce_productindex_columns_' . $table;
 
-        if (!Cache\RuntimeCache::isRegistered($cacheKey)) {
+        if (!Cache\RuntimeCache::isRegistered($cacheKey) || !$cache) {
             $columns = [];
+            $primaryKeyColumns = [];
             $data = $this->db->fetchAllAssociative('SHOW COLUMNS FROM ' . $table);
             foreach ($data as $d) {
-                $columns[] = $d['Field'];
+                $fieldName = $d['Field'];
+                $columns[] = $fieldName;
+                if ($d['Key'] === 'PRI') {
+                    $primaryKeyColumns[] = $fieldName;
+                }
             }
-
-            Cache\RuntimeCache::save($columns, $cacheKey);
+            $allColumns = ['columns' => $columns,  'primaryKeyColumns' => $primaryKeyColumns];
+            Cache\RuntimeCache::save($allColumns, $cacheKey);
+        }
+        else {
+            $allColumns = Cache\RuntimeCache::load($cacheKey);
         }
 
-        return Cache\RuntimeCache::load($cacheKey);
+        return $primaryKeyColumnsOnly ? $allColumns['primaryKeyColumns'] : $allColumns['columns'];
     }
 
     public function doInsertData(array $data): void
@@ -69,7 +85,7 @@ class MySql
             }
         }
 
-        Helper::insertOrUpdate($this->db, $this->tenantConfig->getTablename(), $data);
+        Helper::upsert($this->db, $this->tenantConfig->getTablename(), $data, $this->getPrimaryKey($this->tenantConfig->getTablename()));
     }
 
     /**
