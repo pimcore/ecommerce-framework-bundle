@@ -55,7 +55,7 @@ class MySql
     {
         $cacheKey = 'plugin_ecommerce_productindex_columns_' . $table;
 
-        if (!Cache\RuntimeCache::isRegistered($cacheKey)) {
+        if (!Cache\RuntimeCache::isRegistered($cacheKey) || !$cache) {
             $columns = [];
             $primaryKeyColumns = [];
             $data = $this->db->fetchAllAssociative('SHOW COLUMNS FROM ' . $table);
@@ -67,7 +67,7 @@ class MySql
                 }
             }
             $allColumns = ['columns' => $columns,  'primaryKeyColumns' => $primaryKeyColumns];
-            Cache\RuntimeCache::save($columns, $cacheKey);
+            Cache\RuntimeCache::save($allColumns, $cacheKey);
         }
         else {
             $allColumns = Cache\RuntimeCache::load($cacheKey);
