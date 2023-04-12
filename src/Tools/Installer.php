@@ -171,7 +171,6 @@ class Installer extends AbstractInstaller
         $this->installFieldCollections();
         $this->installClasses();
         $this->installTables();
-        $this->installTranslations();
         $this->installPermissions();
         $this->installDependentBundles();
     }
@@ -374,10 +373,6 @@ class Installer extends AbstractInstaller
         }
     }
 
-    private function installTranslations(): void
-    {
-        Translation::importTranslationsFromFile($this->installSourcesPath . '/admin-translations/init.csv', Translation::DOMAIN_ADMIN);
-    }
 
     /**
      * Finds objectbrick/fieldcollection sources by path returns a result list
