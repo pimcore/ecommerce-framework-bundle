@@ -98,7 +98,6 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
         $loader->load('tracking_manager.yaml');
         $loader->load('maintenance.yaml');
         $loader->load('commands.yaml');
-        $loader->load('order_agent.yaml');
 
         $this->registerFactoryConfiguration($container, $config['factory']);
         $this->registerEnvironmentConfiguration($container, $config['environment']);

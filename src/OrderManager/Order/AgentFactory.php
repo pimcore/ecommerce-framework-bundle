@@ -74,7 +74,8 @@ class AgentFactory implements OrderAgentFactoryInterface
     public function createAgent(AbstractOrder $order): OrderAgentInterface
     {
         $class = $this->agentClass;
-
-        return new $class($order, $this->environment, $this->paymentManager, $this->eventDispatcher);
+        $newClass = new $class($order, $this->environment, $this->paymentManager, $this->eventDispatcher);
+        $newClass->setLogger($this->logger);
+        return $newClass;
     }
 }
