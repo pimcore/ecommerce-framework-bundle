@@ -4,7 +4,7 @@ services:
         autoconfigure: true
 
     Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7\OrderAgent:
-        lazy: rue
+        lazy: true
         calls:
             - [ setLogger, [ '@logger' ] ]
         tags:
