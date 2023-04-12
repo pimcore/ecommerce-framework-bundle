@@ -526,7 +526,7 @@ class OrderAgent implements OrderAgentInterface
     public function updatePayment(StatusInterface $status): static
     {
         //log this for documentation
-        $this->logger->info('update-payment', 'Update payment called with status: ' . print_r($status, true));
+        $this->logger->info('Update payment called with status: ' . print_r($status, true));
 
         $event = new OrderAgentEvent($this, ['status' => $status]);
         $this->eventDispatcher->dispatch($event, OrderAgentEvents::PRE_UPDATE_PAYMENT);
