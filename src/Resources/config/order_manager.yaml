@@ -10,6 +10,10 @@ services:
             - '@pimcore_ecommerce.payment_manager'
             - '@event_dispatcher'
             - []
+        calls:
+            - [ setLogger, [ '@logger' ] ]
+        tags:
+            - { name: monolog.logger, channel: update_payment }
 
     Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7\OrderManager:
         arguments:

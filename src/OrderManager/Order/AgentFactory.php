@@ -23,11 +23,14 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderAgentFactoryInterf
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderAgentInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7\OrderAgent;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\PaymentManagerInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AgentFactory implements OrderAgentFactoryInterface
 {
+    use LoggerAwareTrait;
+
     protected EnvironmentInterface $environment;
 
     protected PaymentManagerInterface $paymentManager;
@@ -74,7 +77,8 @@ class AgentFactory implements OrderAgentFactoryInterface
     public function createAgent(AbstractOrder $order): OrderAgentInterface
     {
         $class = $this->agentClass;
-
-        return new $class($order, $this->environment, $this->paymentManager, $this->eventDispatcher);
+        $newClass = new $class($order, $this->environment, $this->paymentManager, $this->eventDispatcher);
+        $newClass->setLogger($this->logger);
+        return $newClass;
     }
 }
