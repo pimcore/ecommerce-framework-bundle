@@ -33,7 +33,6 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\StatusInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\V7\Payment\PaymentInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\V7\Payment\RecurringPaymentInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Type\Decimal;
-use Pimcore\Log\Simple;
 use Pimcore\Logger;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\Fieldcollection;
@@ -41,10 +40,13 @@ use Pimcore\Model\DataObject\Fieldcollection\Data\PaymentInfo;
 use Pimcore\Model\DataObject\Objectbrick\Data\AbstractData;
 use Pimcore\Model\Element\Note;
 use Pimcore\Model\Element\Note\Listing as NoteListing;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class OrderAgent implements OrderAgentInterface
 {
+    use LoggerAwareTrait;
+
     public const PAYMENT_PROVIDER_BRICK_PREFIX = 'PaymentProvider';
 
     protected AbstractOrder $order;
@@ -524,7 +526,7 @@ class OrderAgent implements OrderAgentInterface
     public function updatePayment(StatusInterface $status): static
     {
         //log this for documentation
-        Simple::log('update-payment', 'Update payment called with status: ' . print_r($status, true));
+        $this->logger->info('update-payment', 'Update payment called with status: ' . print_r($status, true));
 
         $event = new OrderAgentEvent($this, ['status' => $status]);
         $this->eventDispatcher->dispatch($event, OrderAgentEvents::PRE_UPDATE_PAYMENT);
