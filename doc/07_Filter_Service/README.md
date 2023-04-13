@@ -1,3 +1,5 @@
+# Filter Service
+
 ## Basic Idea of the *Filter Service*
 The *Filter Service* supports the developers in setting up E-Commerce product listings with filters and layered navigation 
 known from classic shop systems. Therefore it provides functionality to ...
