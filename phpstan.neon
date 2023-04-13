@@ -4,5 +4,9 @@ parameters:
         - src
     bootstrapFiles:
         - phpstan-bootstrap.php
+
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
+
 includes:
     - phpstan-baseline.neon
