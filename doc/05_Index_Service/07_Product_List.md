@@ -1,3 +1,5 @@
+# Product List
+
 ## Working with Product Lists
 The API for getting (and filtering, ...) products out of the *Product Index* are so called Product Lists. They all 
 implement the interface `\Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface` and need to be 

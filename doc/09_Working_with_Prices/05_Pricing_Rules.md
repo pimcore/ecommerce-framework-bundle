@@ -1,4 +1,4 @@
-## Pricing Rules
+# Pricing Rules
 Pricing Rules are supported by the E-Commerce Framework out of the box. The pricing rules themselves can be configured 
 in the Pimcore Backend UI by putting conditions and actions together. 
 
