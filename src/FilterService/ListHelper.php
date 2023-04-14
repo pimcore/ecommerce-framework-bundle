@@ -19,6 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractCategory;
 use Pimcore\Model\DataObject\Fieldcollection\Data\OrderByFields;
+use Pimcore\Model\DataObject\FilterDefinition;
 
 /**
  * Helper service class for setting up a product list utilizing the filter service
@@ -27,7 +28,7 @@ use Pimcore\Model\DataObject\Fieldcollection\Data\OrderByFields;
 class ListHelper
 {
     public function setupProductList(
-        \Pimcore\Model\DataObject\FilterDefinition $filterDefinition,
+        FilterDefinition $filterDefinition,
         ProductListInterface $productList,
         array &$params,
         FilterService $filterService,
@@ -67,18 +68,22 @@ class ListHelper
             $params['currentPage'] = (int)$params['page'];
             $offset = $pageLimit * ($params['page'] - 1);
         }
+
+        $productList->setLimit((int)$pageLimit);
+
         if ($filterDefinition->getAjaxReload()) {
             if ($loadFullPage && !$excludeLimitOfFirstpage) {
                 $productList->setLimit($pageLimit);
-            } elseif ($loadFullPage && $excludeLimitOfFirstpage) {
+            }
+            if ($loadFullPage && $excludeLimitOfFirstpage) {
                 $offset += $limitOnFirstLoad;
                 $productList->setLimit(intval($pageLimit - $limitOnFirstLoad));
-            } else {
+            }
+            if(!$loadFullPage) {
                 $productList->setLimit((int)$limitOnFirstLoad);
             }
-        } else {
-            $productList->setLimit((int)$pageLimit);
         }
+        
         $productList->setOffset((int)$offset);
 
         $params['pageLimit'] = $pageLimit;
@@ -122,9 +127,7 @@ class ListHelper
             }
         }
 
-        if ($filterService) {
-            $params['currentFilter'] = $filterService->initFilterService($filterDefinition, $productList, $params);
-        }
+        $params['currentFilter'] = $filterService->initFilterService($filterDefinition, $productList, $params);
 
         $params['orderByOptions'] = $orderByOptions;
     }

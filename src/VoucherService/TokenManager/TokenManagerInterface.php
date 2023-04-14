@@ -123,10 +123,10 @@ interface TokenManagerInterface
      * Removes reservations
      *
      * @param int $duration
-     *
+     * @param int|null $seriesId
      * @return bool
      */
-    public function cleanUpReservations(int $duration = 0): bool;
+    public function cleanUpReservations(int $duration = 0, ?int $seriesId = null): bool;
 
     /**
      * Prepares the view and returns the according template for rendering.

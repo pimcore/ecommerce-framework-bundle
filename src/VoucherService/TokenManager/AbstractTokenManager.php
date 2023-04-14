@@ -260,7 +260,7 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
     /**
      * {@inheritdoc}
      */
-    abstract public function cleanUpReservations(int $duration = 0): bool;
+    abstract public function cleanUpReservations(int $duration = 0, ?int $seriesId = null): bool;
 
     /**
      * @param array $viewParamsBag

@@ -75,15 +75,14 @@ class Listing extends AbstractOrderList implements OrderListInterface
                 $queryBuilder->groupBy('OrderId');
             }
 
-            // filter order state
-            if (!is_null($this->getOrderState())) {
-                $orderStates = [];
-                foreach ((array)$this->getOrderState() as $orderState) {
-                    $orderStates[] = $queryBuilder->expr()->literal($orderState);
-                }
-
-                $queryBuilder->andWhere('order.orderState IN('. implode(',', $orderStates) .')');
+            // filter order state default order state is committed
+            $orderStates = [];
+            foreach ((array)$this->getOrderState() as $orderState) {
+                $orderStates[] = $queryBuilder->expr()->literal($orderState);
             }
+
+            $queryBuilder->andWhere('order.orderState IN('. implode(',', $orderStates) .')');
+
 
             $this->queryBuilder = $queryBuilder;
         }

@@ -681,7 +681,7 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
         return $serviceLocator;
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $builds = [
             'pimcoreEcommerceFramework' => realpath(__DIR__ . '/../Resources/public/build/ecommerceFramework'),

@@ -95,8 +95,9 @@ class Decimal
      */
     private static function toIntValue(mixed $value, int $roundingMode = null): int
     {
+        $roundingMode = $roundingMode ?? PHP_ROUND_HALF_UP;
         if (!is_int($value)) {
-            $value = round($value, 0, $roundingMode ?? PHP_ROUND_HALF_UP);
+            $value = round($value, 0, $roundingMode);
             $value = (int)$value;
         }
 
