@@ -1,25 +1,25 @@
 parameters:
 	ignoreErrors:
 			-
-			    message: "#^Parameter #1 $product of method Pimcore\Bundle\EcommerceFrameworkBundle\OfferTool\AbstractOfferItem::setProduct() expects Pimcore\Model\Element\AbstractElement|null, Pimcore\Bundle\EcommerceFrameworkBundle\Model\CheckoutableInterface given.$#"
+			    message: "#^Parameter \\#1 \\$product of method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\OfferTool\\\\AbstractOfferItem\\:\\:setProduct\\(\\)\\ expects Pimcore\\\\Model\\\\Element\\\\AbstractElement\\|null, Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\CheckoutableInterface\\ given\\.$#"
 			    reportUnmatched: false
 			    count: 2
 			    path: src/OfferTool/DefaultService.php
 
 			-
-			    message: "#^Parameter #1 $product of method Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrderItem::setProduct() expects Pimcore\Model\Element\AbstractElement|null, Pimcore\Bundle\EcommerceFrameworkBundle\Model\CheckoutableInterface given.$#"
+			    message: "#^Parameter \\#1 \\$product of method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\AbstractOrderItem\\:\\:setProduct\\(\\)\\ expects Pimcore\\\\Model\\\\Element\\\\AbstractElement\\|null, Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\CheckoutableInterface\\ given\\.$#"
 			    reportUnmatched: false
 			    count: 1
 			    path: src/OrderManager/V7/OrderManager.php
 
 			-
-			    message: "#^Parameter #1 $products of method Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Condition\CatalogProduct::setProducts() expects array<Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractProduct>, array<int<0, max>, Pimcore\Model\DataObject\Concrete> given.$#"
+			    message: "#^Parameter \\#1 \\$products of method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\PricingManager\\\\Condition\\\\CatalogProduct\\:\\:setProducts\\(\\)\\ expects array\\<Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\AbstractProduct\\>, array\\<int<0, max>, Pimcore\\\\Model\\\\DataObject\\\\Concrete> given\\.$#"
 			    reportUnmatched: false
 			    count: 1
 			    path: src/PricingManager/Condition/CatalogProduct.php
 
 			-
-			    message: "#^Parameter #1 $product of method Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\EnvironmentInterface::setProduct() expects Pimcore\Bundle\EcommerceFrameworkBundle\Model\CheckoutableInterface, null given.$#"
+			    message: "#^Parameter \\#1 \\$product of method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\PricingManager\\\\EnvironmentInterface\\:\\:setProduct\\(\\)\\ expects Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\CheckoutableInterface\\, null given\\.$#"
 			    reportUnmatched: false
 			    count: 1
-			    path: PricingManager/PricingManager.php
+			    path: src/PricingManager/PricingManager.php
