@@ -41,7 +41,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Pimcore\\Bundle\\EcommerceFrameworkBundle\\Tests\\": "tests"
+      "Pimcore\\Bundle\\EcommerceFrameworkBundle\\Tests\\": "tests",
+      "Pimcore\\Model\\DataObject\\": "var/classes/DataObject"
     },
     "files": [
       "kernel/Kernel.php"
