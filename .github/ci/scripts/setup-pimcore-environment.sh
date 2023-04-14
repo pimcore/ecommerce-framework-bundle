@@ -12,4 +12,4 @@ cp -r .github/ci/files/var var
 
 cp .github/ci/files/.env ./
 
-ls -la
+ls -la var/classes/DataObject
