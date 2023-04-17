@@ -43,7 +43,7 @@ class NumberRangeSelection extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filt
         $ranges = $filterDefinition->getRanges();
         $field = $filterDefinition->getField();
 
-        if($field instanceof IndexFieldSelection) {
+        if($field instanceof IndexFieldSelection || $field === null) {
             return [];
         }
 
