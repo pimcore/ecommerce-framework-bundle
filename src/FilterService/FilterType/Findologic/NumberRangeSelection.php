@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\Findologic;
 
+use Pimcore\Bundle\EcommerceFrameworkBundle\CoreExtensions\ObjectData\IndexFieldSelection;
 use Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\AbstractFilterType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractFilterDefinitionType;
@@ -41,11 +42,12 @@ class NumberRangeSelection extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filt
     {
         $ranges = $filterDefinition->getRanges();
         $field = $filterDefinition->getField();
-        $groupByValues = [];
 
-        if(is_string($field)) {
-            $groupByValues = $productList->getGroupByValues($filterDefinition->getField(), true);
+        if($field instanceof IndexFieldSelection) {
+            return [];
         }
+
+        $groupByValues = $productList->getGroupByValues($field, true);
 
         $counts = [];
         foreach ($ranges->getData() as $row) {

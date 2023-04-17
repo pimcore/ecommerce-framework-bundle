@@ -13,7 +13,7 @@ parameters:
 			    path: src/OrderManager/V7/OrderManager.php
 
 			-
-			    message: "#^Parameter \\#1 \\$products of method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\PricingManager\\\\Condition\\\\CatalogProduct\\:\\:setProducts\\(\\)\\ expects array\\<Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\AbstractProduct\\>, array\\<int<0, max>, Pimcore\\\\Model\\\\DataObject\\\\Concrete> given\\.$#"
+			    message: "#^Parameter \\#1 \\$products of method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\PricingManager\\\\Condition\\\\CatalogProduct\\:\\:setProducts\\(\\)\\ expects array\\<Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\AbstractProduct\\>, array\\<int<0, max>, Pimcore\\\\Model\\\\DataObject\\\\Concrete\\> given\\.$#"
 			    reportUnmatched: false
 			    count: 1
 			    path: src/PricingManager/Condition/CatalogProduct.php
@@ -23,3 +23,22 @@ parameters:
 			    reportUnmatched: false
 			    count: 1
 			    path: src/PricingManager/PricingManager.php
+
+			-
+			    message: "#^Parameter \\#1 \\$categories of method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\PricingManager\\\\Condition\\\\CatalogCategory\\:\\:setCategories\\(\\)\\ expects array\\<Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\AbstractCategory\\>, array\\<int, Pimcore\\\\Model\\\\DataObject\\\\Concrete\\> given\\.$#"
+			    reportUnmatched: false
+			    count: 1
+			    path: src/PricingManager/Condition/CatalogCategory.php
+
+			-
+			    message: "#^Parameter \\#1 \\$products of method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\PricingManager\\\\Condition\\\\CatalogProduct\\:\\:setProducts\\(\\)\\ expects array\\<Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\Model\\\\AbstractProduct\\, array\\<int, Pimcore\\\\Model\\\\DataObject\\\\Concrete\\> given\\.$#"
+			    reportUnmatched: false
+			    count: 1
+			    path: src/PricingManager/Condition/CatalogProduct.php
+
+			-
+			    message: "#^Parameter \\#3 \\$mode of function round expects 1|2|3|4, int given\\.$#"
+			    reportUnmatched: false
+			    count: 1
+			    path: src/Type/Decimal.php
+
