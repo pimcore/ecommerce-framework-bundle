@@ -5,15 +5,12 @@ pimcore:
         domain: pimcore-test.dev
         redirect_to_maindomain: false
         language: en
-        valid_languages:
-            - en
-            - de
+        valid_languages: 'en,de'
         fallback_languages:
             en: ''
             de: ''
         default_language: ''
         disable_usage_statistics: false
-        instance_identifier: ''
     documents:
         versions:
             days: null
@@ -34,12 +31,6 @@ pimcore:
         icc_cmyk_profile: ''
         hide_edit_image: false
         disable_tree_preview: false
-    services:
-        google:
-            client_id: ''
-            email: ''
-            simple_api_key: ''
-            browser_api_key: ''
     full_page_cache:
         enabled: false
         lifetime: null
@@ -60,15 +51,6 @@ pimcore:
             email: pimcore@example.com
         debug:
             email_addresses: ''
-    newsletter:
-        sender:
-            name: ''
-            email: ''
-        return:
-            name: ''
-            email: ''
-        debug: null
-        use_specific: true
     applicationlog:
         mail_notification:
             send_log_summary: false
@@ -81,4 +63,3 @@ pimcore_admin:
         color_login_screen: ''
         color_admin_interface: ''
         login_screen_custom_image: ''
-
