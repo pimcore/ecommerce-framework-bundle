@@ -112,12 +112,17 @@ class DefaultMockup implements ProductInterface, LinkGeneratorAwareInterface, In
     public function __call(string $method, array $args): mixed
     {
         $attributeName = $method;
+
         if (substr($method, 0, 3) == 'get') {
-            $attributeName = lcfirst(substr($method, 3));
+            $attributeName = substr($method, 3);
         }
 
-        if (is_array($this->params) && array_key_exists($attributeName, $this->params)) {
-            return $this->params[$attributeName];
+        foreach([$attributeName, lcfirst($attributeName)] as $attrName) {
+
+            if (is_array($this->params) && array_key_exists($attrName, $this->params)) {
+                return $this->params[$attrName];
+            }
+
         }
 
         if (is_array($this->relations) && array_key_exists($attributeName, $this->relations)) {
