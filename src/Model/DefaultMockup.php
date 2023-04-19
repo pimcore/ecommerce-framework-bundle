@@ -64,6 +64,11 @@ class DefaultMockup implements ProductInterface, LinkGeneratorAwareInterface, In
         return $this->params[$key];
     }
 
+    public function hasParam(string $key): bool
+    {
+        return isset($this->params[$key]);
+    }
+
     public function setParams(array $params): static
     {
         $this->params = $params;
