@@ -74,19 +74,19 @@ class NumberRangeSelection extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filt
         }
 
         $currentValue = '';
-        if ($currentFilter[$filterDefinition->getField()]['from'] || $currentFilter[$filterDefinition->getField()]['to']) {
-            $currentValue = implode('-', $currentFilter[$filterDefinition->getField()]);
+        if ($currentFilter[$field]['from'] || $currentFilter[$field]['to']) {
+            $currentValue = implode('-', $currentFilter[$field]);
         }
 
         return [
             'hideFilter' => $filterDefinition->getRequiredFilterField() && empty($currentFilter[$filterDefinition->getRequiredFilterField()]),
             'label' => $filterDefinition->getLabel(),
             'currentValue' => $currentValue,
-            'currentNiceValue' => $this->createLabel($currentFilter[$filterDefinition->getField()]),
+            'currentNiceValue' => $this->createLabel($currentFilter[$field]),
             'unit' => $filterDefinition->getUnit(),
             'values' => $values,
             'definition' => $filterDefinition,
-            'fieldname' => $filterDefinition->getField(),
+            'fieldname' => $field,
             'resultCount' => $productList->count(),
         ];
     }
