@@ -54,7 +54,7 @@ class ListHelper
 
         $pageLimit = (int)($params['perPage'] ?? $filterDefinition->getPageLimit() ?? 50);
 
-        $limitOnFirstLoad = (int)$filterDefinition->getLimitOnFirstLoad() ?? 6;
+        $limitOnFirstLoad = (int)$filterDefinition->getLimitOnFirstLoad() ?: 6;
 
         if (isset($params['page'])) {
             $page = (int)$params['page'];
