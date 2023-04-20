@@ -52,39 +52,30 @@ class ListHelper
 
         $offset = 0;
 
-        $pageLimit = isset($params['perPage']) ? (int)$params['perPage'] : null;
-        if (!$pageLimit) {
-            $pageLimit = $filterDefinition->getPageLimit();
-        }
-        if (!$pageLimit) {
-            $pageLimit = 50;
-        }
-        $limitOnFirstLoad = $filterDefinition->getLimitOnFirstLoad();
-        if (!$limitOnFirstLoad) {
-            $limitOnFirstLoad = 6;
-        }
+        $pageLimit = (int)($params['perPage'] ?? $filterDefinition->getPageLimit() ?? 50);
+
+        $limitOnFirstLoad = (int)$filterDefinition->getLimitOnFirstLoad() ?? 6;
 
         if (isset($params['page'])) {
-            $params['currentPage'] = (int)$params['page'];
-            $offset = $pageLimit * ($params['page'] - 1);
+            $page = (int)$params['page'];
+            $params['currentPage'] = $page;
+            $offset = $pageLimit * ($page - 1);
         }
 
-        $productList->setLimit((int)$pageLimit);
+        $productList->setLimit($pageLimit);
 
         if ($filterDefinition->getAjaxReload()) {
-            if ($loadFullPage && !$excludeLimitOfFirstpage) {
+            $productList->setLimit($limitOnFirstLoad);
+            if ($loadFullPage) {
                 $productList->setLimit($pageLimit);
-            }
-            if ($loadFullPage && $excludeLimitOfFirstpage) {
-                $offset += $limitOnFirstLoad;
-                $productList->setLimit(intval($pageLimit - $limitOnFirstLoad));
-            }
-            if(!$loadFullPage) {
-                $productList->setLimit((int)$limitOnFirstLoad);
+                if ($excludeLimitOfFirstpage) {
+                    $offset += $limitOnFirstLoad;
+                    $productList->setLimit($pageLimit - $limitOnFirstLoad);
+                }
             }
         }
-        
-        $productList->setOffset((int)$offset);
+
+        $productList->setOffset($offset);
 
         $params['pageLimit'] = $pageLimit;
 
