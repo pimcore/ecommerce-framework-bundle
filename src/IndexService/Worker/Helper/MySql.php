@@ -68,8 +68,7 @@ class MySql
             }
             $allColumns = ['columns' => $columns,  'primaryKeyColumns' => $primaryKeyColumns];
             Cache\RuntimeCache::save($allColumns, $cacheKey);
-        }
-        else {
+        } else {
             $allColumns = Cache\RuntimeCache::load($cacheKey);
         }
 
