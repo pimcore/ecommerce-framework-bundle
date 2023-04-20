@@ -186,7 +186,7 @@ class IndexUpdateService
             return;
         }
 
-        if(is_countable($tenantNameList)  && count($tenantNameList) === 0) {
+        if(is_array($tenantNameList)  && count($tenantNameList) === 0) {
             return;
         }
 
