@@ -71,6 +71,7 @@ class Statistic extends \Pimcore\Model\AbstractModel
             return $result;
         } catch (\Exception $e) {
             Logger::error('VoucherService', [$e]);
+
             return false;
         }
     }
@@ -85,6 +86,7 @@ class Statistic extends \Pimcore\Model\AbstractModel
             return true;
         } catch (\Exception $e) {
             Logger::error('VoucherService', [$e]);
+
             return false;
         }
     }
