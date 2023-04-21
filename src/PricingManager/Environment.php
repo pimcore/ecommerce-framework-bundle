@@ -75,7 +75,7 @@ class Environment implements EnvironmentInterface
         return $this;
     }
 
-    public function setProduct(CheckoutableInterface $product = null): static
+    public function setProduct(?CheckoutableInterface $product = null): static
     {
         $this->product = $product;
 

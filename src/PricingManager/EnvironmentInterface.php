@@ -45,7 +45,7 @@ interface EnvironmentInterface
     /**
      * @return $this
      */
-    public function setProduct(CheckoutableInterface $product): static;
+    public function setProduct(?CheckoutableInterface $product): static;
 
     public function getProduct(): ?CheckoutableInterface;
 
