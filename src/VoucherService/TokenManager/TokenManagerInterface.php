@@ -124,6 +124,7 @@ interface TokenManagerInterface
      *
      * @param int $duration
      * @param int|null $seriesId
+     *
      * @return bool
      */
     public function cleanUpReservations(int $duration = 0, ?int $seriesId = null): bool;
