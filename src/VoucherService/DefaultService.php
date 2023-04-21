@@ -253,13 +253,9 @@ class DefaultService implements VoucherServiceInterface
         return $tokenInformationList;
     }
 
-    public function cleanUpReservations(int $seriesId = null): bool
+    public function cleanUpReservations(?int $seriesId = null): bool
     {
-        if (isset($seriesId)) {
-            return Reservation::cleanUpReservations($this->reservationMinutesThreshold, $seriesId);
-        } else {
-            return Reservation::cleanUpReservations($this->reservationMinutesThreshold);
-        }
+        return Reservation::cleanUpReservations($this->reservationMinutesThreshold, $seriesId);
     }
 
     public function cleanUpVoucherSeries(\Pimcore\Model\DataObject\OnlineShopVoucherSeries $series): bool

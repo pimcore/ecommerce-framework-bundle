@@ -182,14 +182,16 @@ class IndexUpdateService
      */
     protected function resetIds(array $idList, string $triggerInfo, bool $onlyResetUpdateIndex = false, array $tenantNameList = null): void
     {
-        if (count($idList) <= 0) {
+        if (count($idList) === 0) {
             return;
         }
 
-        if ($tenantNameList == null) {
-            $tenantNameList = $this->indexService->getTenants();
-        } elseif (count($tenantNameList) <= 0) {
+        if(is_array($tenantNameList)  && count($tenantNameList) === 0) {
             return;
+        }
+
+        if ($tenantNameList === null) {
+            $tenantNameList = $this->indexService->getTenants();
         }
 
         $storeTableNames = $this->getStoreTableList($tenantNameList);

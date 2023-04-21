@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\Findologic;
 
+use Pimcore\Bundle\EcommerceFrameworkBundle\CoreExtensions\ObjectData\IndexFieldSelection;
 use Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\AbstractFilterType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractFilterDefinitionType;
@@ -39,8 +40,10 @@ class NumberRangeSelection extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filt
      */
     public function getFilterValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter): array
     {
+        $field = $this->getField($filterDefinition);
         $ranges = $filterDefinition->getRanges();
-        $groupByValues = $productList->getGroupByValues($filterDefinition->getField(), true);
+
+        $groupByValues = $productList->getGroupByValues($field, true);
 
         $counts = [];
         foreach ($ranges->getData() as $row) {
@@ -71,19 +74,19 @@ class NumberRangeSelection extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filt
         }
 
         $currentValue = '';
-        if ($currentFilter[$filterDefinition->getField()]['from'] || $currentFilter[$filterDefinition->getField()]['to']) {
-            $currentValue = implode('-', $currentFilter[$filterDefinition->getField()]);
+        if ($currentFilter[$field]['from'] || $currentFilter[$field]['to']) {
+            $currentValue = implode('-', $currentFilter[$field]);
         }
 
         return [
             'hideFilter' => $filterDefinition->getRequiredFilterField() && empty($currentFilter[$filterDefinition->getRequiredFilterField()]),
             'label' => $filterDefinition->getLabel(),
             'currentValue' => $currentValue,
-            'currentNiceValue' => $this->createLabel($currentFilter[$filterDefinition->getField()]),
+            'currentNiceValue' => $this->createLabel($currentFilter[$field]),
             'unit' => $filterDefinition->getUnit(),
             'values' => $values,
             'definition' => $filterDefinition,
-            'fieldname' => $filterDefinition->getField(),
+            'fieldname' => $field,
             'resultCount' => $productList->count(),
         ];
     }

@@ -89,7 +89,7 @@ class Reservation extends AbstractModel
     /**
      * @param int $duration in Minutes
      */
-    public static function cleanUpReservations(int $duration, int $seriesId = null): bool
+    public static function cleanUpReservations(int $duration, ?int $seriesId = null): bool
     {
         $query = 'DELETE FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Reservation\Dao::TABLE_NAME . ' WHERE TIMESTAMPDIFF(MINUTE, timestamp , NOW())  >= ?';
         $params[] = $duration;
