@@ -372,7 +372,6 @@ class Installer extends AbstractInstaller
         }
     }
 
-
     /**
      * Finds objectbrick/fieldcollection sources by path returns a result list
      * indexed by element name.
