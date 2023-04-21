@@ -24,7 +24,6 @@ use Pimcore\Extension\Bundle\Installer\Exception\InstallationException;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\ClassDefinition\Service;
 use Pimcore\Model\DataObject\Fieldcollection;
-use Pimcore\Model\Translation;
 use Pimcore\Model\User\Permission;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -171,7 +170,6 @@ class Installer extends AbstractInstaller
         $this->installFieldCollections();
         $this->installClasses();
         $this->installTables();
-        $this->installTranslations();
         $this->installPermissions();
         $this->installDependentBundles();
     }
@@ -374,10 +372,6 @@ class Installer extends AbstractInstaller
         }
     }
 
-    private function installTranslations(): void
-    {
-        Translation::importTranslationsFromFile($this->installSourcesPath . '/admin-translations/init.csv', Translation::DOMAIN_ADMIN);
-    }
 
     /**
      * Finds objectbrick/fieldcollection sources by path returns a result list
