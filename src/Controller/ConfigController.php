@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
-use Pimcore\Bundle\AdminBundle\Controller\AdminController;
+use Pimcore\Controller\UserAwareController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
@@ -28,16 +28,14 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @internal
  */
-class ConfigController extends AdminController
+class ConfigController extends UserAwareController
 {
-    private RouterInterface $router;
-
     /**
      * ConfigController constructor.
      *
      * @param RouterInterface $router
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(private RouterInterface $router)
     {
         $this->router = $router;
     }

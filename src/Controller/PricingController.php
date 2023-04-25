@@ -17,11 +17,13 @@ declare(strict_types=1);
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
 use Exception;
-use Pimcore\Bundle\AdminBundle\Controller\AdminController;
-use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
+
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Rule;
 use Pimcore\Controller\KernelControllerEventInterface;
+use Pimcore\Controller\Traits\JsonHelperTrait;
+use Pimcore\Controller\UserAwareController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -34,8 +36,10 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @internal
  */
-class PricingController extends AdminController implements KernelControllerEventInterface
+class PricingController extends UserAwareController implements KernelControllerEventInterface
 {
+    use JsonHelperTrait;
+
     public function onKernelControllerEvent(ControllerEvent $event): void
     {
         // permission check
@@ -76,7 +80,7 @@ class PricingController extends AdminController implements KernelControllerEvent
             ];
         }
 
-        return $this->adminJson($json);
+        return $this->jsonResponse($json);
     }
 
     /**
@@ -120,7 +124,7 @@ class PricingController extends AdminController implements KernelControllerEvent
                 $json['actions'][] = json_decode($action->toJSON());
             }
 
-            return $this->adminJson($json);
+            return $this->jsonResponse($json);
         }
 
         throw $this->createNotFoundException('Rule not found');
@@ -156,7 +160,7 @@ class PricingController extends AdminController implements KernelControllerEvent
         }
 
         // send respone
-        return $this->adminJson($return);
+        return $this->jsonResponse($return);
     }
 
     /**
@@ -186,7 +190,7 @@ class PricingController extends AdminController implements KernelControllerEvent
         }
 
         // send respone
-        return $this->adminJson($return);
+        return $this->jsonResponse($return);
     }
 
     /**
@@ -239,7 +243,7 @@ class PricingController extends AdminController implements KernelControllerEvent
         }
 
         // send respone
-        return $this->adminJson($return);
+        return $this->jsonResponse($return);
     }
 
     /**
@@ -286,7 +290,7 @@ class PricingController extends AdminController implements KernelControllerEvent
         }
 
         // send respone
-        return $this->adminJson($return);
+        return $this->jsonResponse($return);
     }
 
     /**
@@ -380,7 +384,7 @@ class PricingController extends AdminController implements KernelControllerEvent
         }
 
         // send respone
-        return $this->adminJson($return);
+        return $this->jsonResponse($return);
     }
 
     /**
@@ -409,7 +413,7 @@ class PricingController extends AdminController implements KernelControllerEvent
         $return['success'] = true;
 
         // send respone
-        return $this->adminJson($return);
+        return $this->jsonResponse($return);
     }
 
     /**
@@ -421,7 +425,7 @@ class PricingController extends AdminController implements KernelControllerEvent
     {
         $pricingManager = Factory::getInstance()->getPricingManager();
 
-        return $this->adminJson([
+        return $this->jsonResponse([
             'condition' => array_keys($pricingManager->getConditionMapping()),
             'action' => array_keys($pricingManager->getActionMapping()),
         ]);

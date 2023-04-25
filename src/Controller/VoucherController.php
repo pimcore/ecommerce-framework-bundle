@@ -16,13 +16,14 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
-use Pimcore\Bundle\AdminBundle\Security\User\TokenStorageUserResolver;
+
 use Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\TokenManager\ExportableTokenManagerInterface;
 use Pimcore\Controller\FrontendController;
 use Pimcore\Controller\KernelControllerEventInterface;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Localizedfield;
 use Pimcore\Model\DataObject\OnlineShopVoucherSeries;
+use Pimcore\Security\User\TokenStorageUserResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -44,8 +45,6 @@ class VoucherController extends FrontendController implements KernelControllerEv
     protected TranslatorInterface $translator;
 
     /**
-     * AdminController constructor.
-     *
      * @param TokenStorageUserResolver $tokenStorageUserResolver
      * @param TranslatorInterface $translator
      */
