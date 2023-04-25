@@ -183,7 +183,7 @@ class IndexController extends UserAwareController
 
         if ($tenants) {
             foreach ($tenants as $tenant) {
-                $data[] = ['key' => $tenant, 'name' => $translator->trans($tenant)];
+                $data[] = ['key' => $tenant, 'name' => $translator->trans($tenant, [], 'admin')];
             }
         }
 

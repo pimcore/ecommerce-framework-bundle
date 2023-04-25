@@ -97,14 +97,4 @@ class PimcoreEcommerceFrameworkBundle extends AbstractPimcoreBundle implements D
         $collection->addBundle(PimcoreGoogleMarketingBundle::class);
         $collection->addBundle(new WebpackEncoreBundle());
     }
-
-    public function getEditmodeJsPaths(): array
-    {
-        return [];
-    }
-
-    public function getEditmodeCssPaths(): array
-    {
-        return [];
-    }
 }
