@@ -70,7 +70,7 @@ class IndexController extends UserAwareController
     /**
      * @Route("/get-values-for-filter-field", name="pimcore_ecommerceframework_index_getvaluesforfilterfield", methods={"GET"})
      */
-    public function getValuesForFilterFieldAction(Request $request, EventDispatcherInterface $eventDispatcher): \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+    public function getValuesForFilterFieldAction(Request $request, EventDispatcherInterface $eventDispatcher): JsonResponse
     {
         try {
             $data = [];
