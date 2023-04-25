@@ -151,13 +151,13 @@ class IndexController extends UserAwareController
         }
 
         foreach ($indexColumns as $c) {
-            $fields[$c] = ['key' => $c, 'name' => $translator->trans($c)];
+            $fields[$c] = ['key' => $c, 'name' => $translator->trans($c, [], 'admin')];
         }
 
         if ($request->get('specific_price_field') == 'true') {
             $fields[ProductListInterface::ORDERKEY_PRICE] = [
                 'key' => ProductListInterface::ORDERKEY_PRICE,
-                'name' => $translator->trans(ProductListInterface::ORDERKEY_PRICE),
+                'name' => $translator->trans(ProductListInterface::ORDERKEY_PRICE, [], 'admin'),
             ];
         }
 
