@@ -16,14 +16,17 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
-use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Event\AdminEvents;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
+use Pimcore\Controller\Traits\JsonHelperTrait;
+use Pimcore\Controller\UserAwareController;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class IndexController
@@ -32,14 +35,16 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  *
  * @internal
  */
-class IndexController extends AdminController
+class IndexController extends UserAwareController
 {
+    use JsonHelperTrait;
+
     /**
      * @Route("/get-filter-groups", name="pimcore_ecommerceframework_index_getfiltergroups", methods={"GET"})
      *
-     * @return \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function getFilterGroupsAction(): \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+    public function getFilterGroupsAction(): JsonResponse
     {
         $indexService = Factory::getInstance()->getIndexService();
         $tenants = Factory::getInstance()->getAllTenants();
@@ -59,13 +64,13 @@ class IndexController extends AdminController
             }
         }
 
-        return $this->adminJson(['data' => array_values($data)]);
+        return $this->jsonResponse(['data' => array_values($data)]);
     }
 
     /**
      * @Route("/get-values-for-filter-field", name="pimcore_ecommerceframework_index_getvaluesforfilterfield", methods={"GET"})
      */
-    public function getValuesForFilterFieldAction(Request $request, EventDispatcherInterface $eventDispatcher): \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+    public function getValuesForFilterFieldAction(Request $request, EventDispatcherInterface $eventDispatcher): JsonResponse
     {
         try {
             $data = [];
@@ -102,9 +107,9 @@ class IndexController extends AdminController
             $eventDispatcher->dispatch($event, AdminEvents::GET_VALUES_FOR_FILTER_FIELD_PRE_SEND_DATA);
             $data = $event->getArgument('data');
 
-            return $this->adminJson(['data' => array_values($data)]);
+            return $this->jsonResponse(['data' => array_values($data)]);
         } catch (\Exception $e) {
-            return $this->adminJson(['message' => $e->getMessage()]);
+            return $this->jsonResponse(['message' => $e->getMessage()]);
         }
     }
 
@@ -113,10 +118,10 @@ class IndexController extends AdminController
      *
      * @param Request $request
      * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @return \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+     * @param TranslatorInterface $translator
+     * @return JsonResponse
      */
-    public function getFieldsAction(Request $request, EventDispatcherInterface $eventDispatcher): \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+    public function getFieldsAction(Request $request, EventDispatcherInterface $eventDispatcher, TranslatorInterface $translator): JsonResponse
     {
         $indexService = Factory::getInstance()->getIndexService();
 
@@ -142,17 +147,17 @@ class IndexController extends AdminController
         $fields = [];
 
         if ($request->get('add_empty') == 'true') {
-            $fields[' '] = ['key' => '', 'name' => '(' . $this->trans('empty', [], 'messages') . ')'];
+            $fields[' '] = ['key' => '', 'name' => '(' . $translator->trans('empty', [], 'messages') . ')'];
         }
 
         foreach ($indexColumns as $c) {
-            $fields[$c] = ['key' => $c, 'name' => $this->trans($c)];
+            $fields[$c] = ['key' => $c, 'name' => $translator->trans($c, [], 'admin')];
         }
 
         if ($request->get('specific_price_field') == 'true') {
             $fields[ProductListInterface::ORDERKEY_PRICE] = [
                 'key' => ProductListInterface::ORDERKEY_PRICE,
-                'name' => $this->trans(ProductListInterface::ORDERKEY_PRICE),
+                'name' => $translator->trans(ProductListInterface::ORDERKEY_PRICE, [], 'admin'),
             ];
         }
 
@@ -162,25 +167,26 @@ class IndexController extends AdminController
         $eventDispatcher->dispatch($event, AdminEvents::GET_INDEX_FIELD_NAMES_PRE_SEND_DATA);
         $data = $event->getArgument('data');
 
-        return $this->adminJson(['data' => array_values($data)]);
+        return $this->jsonResponse(['data' => array_values($data)]);
     }
 
     /**
      * @Route("/get-all-tenants", name="pimcore_ecommerceframework_index_getalltenants", methods={"GET"})
      *
-     * @return \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+     * @param TranslatorInterface $translator
+     * @return JsonResponse
      */
-    public function getAllTenantsAction(): \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+    public function getAllTenantsAction(TranslatorInterface $translator): JsonResponse
     {
         $tenants = Factory::getInstance()->getAllTenants();
         $data = [];
 
         if ($tenants) {
             foreach ($tenants as $tenant) {
-                $data[] = ['key' => $tenant, 'name' => $this->trans($tenant)];
+                $data[] = ['key' => $tenant, 'name' => $translator->trans($tenant, [], 'admin')];
             }
         }
 
-        return $this->adminJson(['data' => $data]);
+        return $this->jsonResponse(['data' => $data]);
     }
 }
