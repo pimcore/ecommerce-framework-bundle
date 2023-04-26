@@ -119,6 +119,7 @@ class IndexController extends UserAwareController
      * @param Request $request
      * @param EventDispatcherInterface $eventDispatcher
      * @param TranslatorInterface $translator
+     *
      * @return JsonResponse
      */
     public function getFieldsAction(Request $request, EventDispatcherInterface $eventDispatcher, TranslatorInterface $translator): JsonResponse
@@ -174,6 +175,7 @@ class IndexController extends UserAwareController
      * @Route("/get-all-tenants", name="pimcore_ecommerceframework_index_getalltenants", methods={"GET"})
      *
      * @param TranslatorInterface $translator
+     *
      * @return JsonResponse
      */
     public function getAllTenantsAction(TranslatorInterface $translator): JsonResponse

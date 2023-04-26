@@ -34,6 +34,7 @@ use Symfony\WebpackEncoreBundle\WebpackEncoreBundle;
 class PimcoreEcommerceFrameworkBundle extends AbstractPimcoreBundle implements DependentBundleInterface, PimcoreBundleAdminClassicInterface
 {
     use BundleAdminClassicTrait;
+
     /**
      * {@inheritdoc}
      */

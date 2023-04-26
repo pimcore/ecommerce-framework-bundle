@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
-
 use Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\TokenManager\ExportableTokenManagerInterface;
 use Pimcore\Controller\FrontendController;
 use Pimcore\Controller\KernelControllerEventInterface;
