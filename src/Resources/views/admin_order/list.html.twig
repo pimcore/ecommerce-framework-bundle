@@ -78,39 +78,27 @@
         </tr>
         </thead>
         <tbody>
-        {% set totalSum = 0 %}
-
         {% for item in paginator.items %}
-            {% set totalSum = totalSum + item['TotalPrice'] %}
+            <tr>
+                <td>
+                    {% set urlDetail = path('pimcore_ecommerce_backend_admin-order_detail', {'id' : item['OrderId']}|merge(urlParams)) %}
+                    <a href="{{ urlDetail }}">{{ item['OrderNumber'] }}</a>
+                </td>
+                <td>
+                    {% set date = item['OrderDate'] %}
 
-        <tr>
-            <td>
-                {% set urlDetail = path('pimcore_ecommerce_backend_admin-order_detail', {'id' : item['OrderId']}|merge(urlParams)) %}
-                <a href="{{ urlDetail }}">{{ item['OrderNumber'] }}</a>
-            </td>
-            <td>
-                {% set date = item['OrderDate'] %}
+                    {% if date.timestamp is defined %}
+                        {% set date = date() %}
+                        {% do date.setTimestamp(item['OrderDate']) %}
+                    {% endif %}
 
-                {% if date.timestamp is defined %}
-                    {% set date = date() %}
-                    {% do date.setTimestamp(item['OrderDate']) %}
-                {% endif %}
-
-                {{ formatter.formatDateTime(date, constant('\\Pimcore\\Localization\\IntlFormatter::DATETIME_MEDIUM')) }}
-            </td>
-            <td>{{ item['Items'] }}</td>
-            <td class="text-end">{{ formatter.formatCurrency(item['TotalPrice'], defaultCurrency.getShortName()) }}</td>
-        </tr>
+                    {{ formatter.formatDateTime(date, constant('\\Pimcore\\Localization\\IntlFormatter::DATETIME_MEDIUM')) }}
+                </td>
+                <td>{{ item['Items'] }}</td>
+                <td class="text-end">{{ formatter.formatCurrency(item['TotalPrice'], item['Currency']) }}</td>
+            </tr>
         {% endfor %}
         </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="3"></td>
-            <td class="text-end">
-                <strong>{{ defaultCurrency.toCurrency(totalSum) }}</strong>
-            </td>
-        </tr>
-        </tfoot>
     </table>
 
     {% if paginator.getPaginationData().pageCount > 1 %}
