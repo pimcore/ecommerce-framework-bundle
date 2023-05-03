@@ -3,28 +3,32 @@
         <div class="modal-content">
             <div class="modal-body-content">
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h3>{{ ('bundle_ecommerce_voucherservice_modal_cleanup-reservations-headline')|trans([],'admin') }}</h3>
                 <form class="form-horizontal js-cleanup-reservations-modal-form"
                       action="{{ path('pimcore_ecommerce_backend_voucher_cleanup-reservations', urlParams) }}" method="post">
-                    <input type="hidden" name="csrfToken" value="{{ pimcore_csrf.getCsrfToken(app.request.session) }}">
-                    <h3>{{ ('bundle_ecommerce_voucherservice_modal_cleanup-reservations-headline')|trans([],'admin') }}</h3>
-                    <div class="mb-3" style="margin-top: 20px">
-                        <div class="col col-sm-12">
-                            <label for="duration">{{ ('bundle_ecommerce_voucherservice_modal_cleanup-reservations-olderthan-x-minutes')|trans([],'admin')  }}</label>
-                            <input type="number" name="duration" id="duration" class="form-control form-control-25 text-center" min="0" value ="5"/>
+                    <div class="row">
+                        <div class="col col-sm-6">
+                            <input type="hidden" name="csrfToken" value="{{ pimcore_csrf.getCsrfToken(app.request.session) }}">
+
+                            <div class="mb-3" style="margin-top: 20px">
+                                <div class="col col-sm-12">
+                                    <label for="duration">{{ ('bundle_ecommerce_voucherservice_modal_cleanup-reservations-olderthan-x-minutes')|trans([],'admin')  }}</label>
+                                    <input type="number" name="duration" id="duration" class="form-control text-center" min="0" value ="5"/>
+                                </div>
+                                <input type="hidden" name="id" value="{{ app.request.get('id') }}">
+                            </div>
                         </div>
-                        <input type="hidden" name="id" value="{{ app.request.get('id') }}">
+                        <div class="col col-sm-6">
+                            <div class="text-start">
+                                <p>{{ 'bundle_ecommerce_voucherservice_modal_cleanup-reservations-infotext'|trans([],'admin') }}</p>
+                            </div>
+                            <button type="submit" class="btn btn-primary js-loading"
+                                    data-msg="Cleaning up Tokens, please wait.">{{ 'bundle_ecommerce_voucherservice_modal_cleanup-reservations-submit'|trans([],'admin') }}
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'bundle_ecommerce_voucherservice_modal_cancel'|trans([],'admin') }}</button>
+                        </div>
                     </div>
                 </form>
-            </div>
-
-            <div class="modal-footer">
-                <div class="col col-sm-6 text-start">
-                    <p>{{ 'bundle_ecommerce_voucherservice_modal_cleanup-reservations-infotext'|trans([],'admin') }}</p>
-                </div>
-                <button onclick="document.querySelector('.js-cleanup-reservations-modal-form').submit()" class="btn btn-primary js-loading"
-                        data-msg="Cleaning up Tokens, please wait.">{{ 'bundle_ecommerce_voucherservice_modal_cleanup-reservations-submit'|trans([],'admin') }}
-                </button>
-                <button type="button" class="btn btn-default" data-bs-dismiss="modal">{{ 'bundle_ecommerce_voucherservice_modal_cancel'|trans([],'admin') }}</button>
             </div>
         </div>
     </div>

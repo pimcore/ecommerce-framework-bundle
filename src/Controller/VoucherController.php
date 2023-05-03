@@ -232,8 +232,8 @@ class VoucherController extends FrontendController implements KernelControllerEv
      */
     public function cleanupReservationsAction(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
     {
-        $duration = $request->get('duration');
-        $id = $request->get('id');
+        $duration = (int)$request->get('duration');
+        $id = (int)$request->get('id');
 
         if (!isset($duration)) {
             return $this->redirectToRoute(
