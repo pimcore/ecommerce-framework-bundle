@@ -36,9 +36,9 @@ interface ConfigInterface
     /**
      * Returns configured attributes for product index
      *
-     * @return Attribute[]
+     * @return null|Attribute[]
      */
-    public function getAttributes(): array;
+    public function getAttributes(): ?array;
 
     /**
      * Returns full text search index attribute names for product index

@@ -62,7 +62,7 @@ abstract class AbstractWorker implements WorkerInterface
                 'categoryIds' => 'categoryIds',
             ];
 
-            foreach ($this->tenantConfig->getAttributes() as $attribute) {
+            foreach ($this->tenantConfig->getAttributes() ?? [] as $attribute) {
                 if (!$considerHideInFieldList || !$attribute->getHideInFieldlistDatatype()) {
                     $indexColumns[$attribute->getName()] = $attribute->getName();
                 }

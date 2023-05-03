@@ -175,13 +175,8 @@ abstract class AbstractConfig implements ConfigInterface
      *
      * @return Attribute[]
      */
-    public function getAttributes(): array
+    public function getAttributes(): ?array
     {
-        // TODO Pimcore 10 remove as soon as attribute factory was added to the constructor.
-        if (null === $this->attributes) {
-            throw new \RuntimeException('Attributes are not built yet. Is the service properly configured to set an attribute factory?');
-        }
-
         return $this->attributes;
     }
 
