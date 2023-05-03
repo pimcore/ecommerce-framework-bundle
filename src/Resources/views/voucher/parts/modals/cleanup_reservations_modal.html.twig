@@ -2,7 +2,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="fa-pull-right">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
                 <h3>{{ ('bundle_ecommerce_voucherservice_modal_cleanup-reservations-headline')|trans([],'admin') }}</h3>
                 <form class="form-horizontal js-cleanup-reservations-modal-form"
                       action="{{ path('pimcore_ecommerce_backend_voucher_cleanup-reservations', urlParams) }}" method="post">
