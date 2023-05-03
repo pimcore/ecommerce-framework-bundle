@@ -232,10 +232,10 @@ class VoucherController extends FrontendController implements KernelControllerEv
      */
     public function cleanupReservationsAction(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
     {
-        $duration = (int)$request->get('duration');
-        $id = (int)$request->get('id');
+        $duration = $request->get('duration');
+        $id = $request->request->getInt('id');
 
-        if (!isset($duration)) {
+        if ($duration === '') {
             return $this->redirectToRoute(
                 'pimcore_ecommerce_backend_voucher_voucher-code-tab',
                 ['error' => $this->translator->trans('bundle_ecommerce_voucherservice_msg-error-cleanup-reservations-duration-missing', [], 'admin'), 'id' => $id]
@@ -245,7 +245,7 @@ class VoucherController extends FrontendController implements KernelControllerEv
         $onlineShopVoucherSeries = DataObject::getById($id);
         if ($onlineShopVoucherSeries instanceof OnlineShopVoucherSeries) {
             if ($tokenManager = $onlineShopVoucherSeries->getTokenManager()) {
-                if ($tokenManager->cleanUpReservations($duration, $id)) {
+                if ($tokenManager->cleanUpReservations((int)$duration, $id)) {
                     return $this->redirectToRoute(
                         'pimcore_ecommerce_backend_voucher_voucher-code-tab',
                         ['success' => $this->translator->trans('bundle_ecommerce_voucherservice_msg-success-cleanup-reservations', [], 'admin'), 'id' => $id]
