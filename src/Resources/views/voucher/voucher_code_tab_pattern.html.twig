@@ -33,9 +33,9 @@
 
                     <div class="row header">
                         <div class="col col-sm-4">
-                            <button type="button" class="btn btn-primary js-modal"  data-bs-toggle="modal" data-modal="generate">{{ ('bundle_ecommerce_voucherservice_generate-button')|trans([],'admin') }}</button>
+                            <button type="button" class="btn btn-primary js-modal" data-modal="generate">{{ ('bundle_ecommerce_voucherservice_generate-button')|trans([],'admin') }}</button>
                             {% if voucherType is defined and voucherType != "VoucherTokenTypeSingle" %}
-                                <button type="button" class="btn btn-default js-modal" data-modal="cleanUp">{{ ('bundle_ecommerce_voucherservice_cleanup-button')|trans([],'admin') }}</button>
+                                <button type="button" class="btn btn-secondary js-modal" data-modal="cleanUp">{{ ('bundle_ecommerce_voucherservice_cleanup-button')|trans([],'admin') }}</button>
                             {% endif %}
                         </div>
 
@@ -185,7 +185,7 @@
                         </div>
                         <div class="col col-sm-8 text-end">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default js-modal" data-modal="cleanup-reservations"><span class="fa fa-refresh"></span>
+                                <button type="button" class="btn btn-secondary js-modal" data-modal="cleanup-reservations"><span class="fa fa-refresh"></span>
                                     {{ ('bundle_ecommerce_voucherservice_cleanup-reservations-button'|trans([],'admin')) }}
                                 </button>
                             </div>
