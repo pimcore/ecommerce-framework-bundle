@@ -18,10 +18,10 @@
         {{ encore_entry_link_tags('leaflet', null, 'pimcoreEcommerceFramework') }}
 
         {% apply spaceless %}
+            {% do pimcore_head_link().appendStylesheet(asset('/bundles/pimcoreecommerceframework/vendor/bootstrap4/css/bootstrap.css')) %}
             {% do pimcore_head_link().appendStylesheet('/bundles/pimcoreecommerceframework/vendor/fontawesome/css/fontawesome-all.min.css') %}
             {% do pimcore_head_link().appendStylesheet(asset('/bundles/pimcoreecommerceframework/css/back-office.css')) %}
-
-
+            {% do pimcore_head_script().prependFile(asset('/bundles/pimcoreecommerceframework/vendor/bootstrap4/js/bootstrap-native-v4.min.js')) %}
         {% endapply %}
 
         {% block head_stylesheets deferred %}
