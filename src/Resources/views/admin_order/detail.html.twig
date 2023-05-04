@@ -391,11 +391,13 @@
                     {% endfor %}
                 {% endfor %}
 
-                <!-- Separator -->
-                <div class="separator text-muted">
-                    <time>{{ formatter.formatDateTime(order.getOrderdate(), constant('\\Pimcore\\Localization\\IntlFormatter::DATETIME_MEDIUM')) }}</time>
-                </div>
-                <!-- /Separator -->
+                {% if order.getOrderdate() %}
+                    <!-- Separator -->
+                    <div class="separator text-muted">
+                        <time>{{ formatter.formatDateTime(order.getOrderdate(), constant('\\Pimcore\\Localization\\IntlFormatter::DATETIME_MEDIUM')) }}</time>
+                    </div>
+                    <!-- /Separator -->
+                {% endif %}
 
                 <article class="panel panel-default panel-outline">
                     <div class="panel-heading icon alert-secondary">
