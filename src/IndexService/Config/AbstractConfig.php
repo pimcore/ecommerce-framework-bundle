@@ -173,7 +173,7 @@ abstract class AbstractConfig implements ConfigInterface
     /**
      * Returns configured attributes for product index
      *
-     * @return Attribute[]
+     * @return Attribute[]|null
      */
     public function getAttributes(): ?array
     {
