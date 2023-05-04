@@ -25,7 +25,7 @@
                     </div>
                     <h2 class="d-none row fw-bold">
                         <div class="col-md-6">
-                            <a class="btn btn-secondary btn-xs"><span class="fa fa-chevron-left"></span></a>
+                            <a class="btn btn-default btn-xs"><span class="fa fa-chevron-left"></span></a>
                             {{ ('bundle_ecommerce.back-office.order')|trans([],'admin') }} <a href="#" data-action="open" data-id="{{ order.getId() }}">{{ order.getOrdernumber() }}</a>
                         </div>
                         <div class="col-md-6 text-end">
@@ -40,7 +40,7 @@
                 <div class="card-header">
                     <span class="fa fa-list-alt"></span> {{ ('bundle_ecommerce.back-office.order.order-items')|trans([],'admin') }}
                     {% if order.getComment() %}
-                        <button type="button" class="btn btn-xs btn-secondary pull-right" data-container="body" data-bs-toggle="popover" data-placement="right" title="{{ ('bundle_ecommerce.back-office.order.comment.user')|trans([],'admin') }}" data-content="{{ order.getComment()|nl2br }}">
+                        <button type="button" class="btn btn-xs btn-default pull-right" data-container="body" data-bs-toggle="popover" data-placement="right" title="{{ ('bundle_ecommerce.back-office.order.comment.user')|trans([],'admin') }}" data-content="{{ order.getComment()|nl2br }}">
                             <span class="fa fa-comment"></span>
                         </button>
                     {% endif %}
@@ -105,7 +105,7 @@
                             <td class="text-end">{{ currency.toCurrency(item.getTotalPrice()) }}</td>
                             <td>
                                 {% if item.getComment() %}
-                                    <button type="button" class="btn btn-xs btn-secondary" data-container="body" data-bs-toggle="popover" title="{{ ('bundle_ecommerce.back-office.order.comment.user')|trans([],'admin') }}" data-content="{{ item.getComment()|nl2br }}">
+                                    <button type="button" class="btn btn-xs btn-default" data-container="body" data-bs-toggle="popover" title="{{ ('bundle_ecommerce.back-office.order.comment.user')|trans([],'admin') }}" data-content="{{ item.getComment()|nl2br }}">
                                         <span class="fa fa-commnet"></span>
                                     </button>
                                 {% endif %}
@@ -391,11 +391,13 @@
                     {% endfor %}
                 {% endfor %}
 
-                <!-- Separator -->
-                <div class="separator text-muted">
-                    <time>{{ formatter.formatDateTime(order.getOrderdate(), constant('\\Pimcore\\Localization\\IntlFormatter::DATETIME_MEDIUM')) }}</time>
-                </div>
-                <!-- /Separator -->
+                {% if order.getOrderdate() %}
+                    <!-- Separator -->
+                    <div class="separator text-muted">
+                        <time>{{ formatter.formatDateTime(order.getOrderdate(), constant('\\Pimcore\\Localization\\IntlFormatter::DATETIME_MEDIUM')) }}</time>
+                    </div>
+                    <!-- /Separator -->
+                {% endif %}
 
                 <article class="panel panel-default panel-outline">
                     <div class="panel-heading icon alert-secondary">

@@ -72,8 +72,12 @@ class Currency
         return \Pimcore::getContainer()->get(IntlFormatter::class);
     }
 
-    public function toCurrency(float|int|string|Decimal $value, array|string $pattern = 'default'): string
+    public function toCurrency(null|float|int|string|Decimal $value, array|string $pattern = 'default'): string
     {
+        if($value == null) {
+            return '';
+        }
+
         if (is_array($pattern)) {
             $symbol = $pattern['display'] ? $pattern['display'] : self::USE_SYMBOL;
             $position = $pattern['position'] ? $pattern['position'] : self::RIGHT;
