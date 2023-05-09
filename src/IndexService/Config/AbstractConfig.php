@@ -32,7 +32,7 @@ abstract class AbstractConfig implements ConfigInterface
 
     protected ?AttributeFactory $attributeFactory = null;
 
-    protected array $attributes;
+    protected array $attributes = [];
 
     protected array $searchAttributes;
 
