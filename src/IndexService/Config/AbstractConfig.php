@@ -32,10 +32,7 @@ abstract class AbstractConfig implements ConfigInterface
 
     protected ?AttributeFactory $attributeFactory = null;
 
-    /**
-     * @var Attribute[]|null
-     */
-    protected ?array $attributes = null;
+    protected array $attributes;
 
     protected array $searchAttributes;
 
@@ -173,9 +170,9 @@ abstract class AbstractConfig implements ConfigInterface
     /**
      * Returns configured attributes for product index
      *
-     * @return Attribute[]|null
+     * @return Attribute[]
      */
-    public function getAttributes(): ?array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
