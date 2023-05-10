@@ -5,7 +5,7 @@ imports:
 monolog:
     channels: ['pimcore_ecommerce_sql', 'pimcore_ecommerce_es', 'pimcore_ecommerce_findologic']
     handlers:
-        usage:
+        update_payment:
             type: stream
             path: "%kernel.logs_dir%/update_payment.log"
             level: debug
