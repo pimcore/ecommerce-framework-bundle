@@ -8,8 +8,8 @@ It's recommended to have a look into the Pimcore [Events and Event Listeners doc
 
 ## Available Events
 
-- [Ecommerce::Index Service](../src/Event/IndexServiceEvents.php)
-- [Ecommerce::Checkout Manager](../src/Event/CheckoutManagerEvents.php)
-- [Ecommerce::Commit Order Processor](../src/Event/CommitOrderProcessorEvents.php)
-- [Ecommerce::Order Agent](../src/Event/OrderAgentEvents.php)
-- [Ecommerce::Order Manager](../src/Event/OrderManagerEvents.php)
+- [Ecommerce::Index Service](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/Event/IndexServiceEvents.php)
+- [Ecommerce::Checkout Manager](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/Event/CheckoutManagerEvents.php)
+- [Ecommerce::Commit Order Processor](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/Event/CommitOrderProcessorEvents.php)
+- [Ecommerce::Order Agent](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/Event/OrderAgentEvents.php)
+- [Ecommerce::Order Manager](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/Event/OrderManagerEvents.php)
