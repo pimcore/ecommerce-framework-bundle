@@ -22,7 +22,6 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
      */
     parent: {},
 
-
     /**
      * constructor
      * @param parent
@@ -135,14 +134,16 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
                     name: "label." + lang,
                     fieldLabel: t("label"),
                     width: 350,
-                    value: data.label[ lang ]
+                    value: data.label[ lang ],
+                    renderer: Ext.util.Format.htmlEncode
                 }, {
                     xtype: "textarea",
                     name: "description." + lang,
                     fieldLabel: t("description"),
                     width: 500,
                     height: 100,
-                    value: data.description[ lang ]
+                    value: data.description[ lang ],
+                    renderer: Ext.util.Format.htmlEncode
                 }]
             };
 
