@@ -45,14 +45,14 @@ class Installer extends AbstractInstaller
               `modificationDateTimestamp` int(10) NOT NULL,
               PRIMARY KEY (`id`),
               KEY `ecommerceframework_cart_userid_index` (`userid`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;',
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;',
         'ecommerceframework_cartcheckoutdata' =>
             'CREATE TABLE IF NOT EXISTS `ecommerceframework_cartcheckoutdata` (
               `cartId` int(20) NOT NULL,
               `key` varchar(150) COLLATE utf8_bin NOT NULL,
               `data` longtext,
               PRIMARY KEY (`cartId`,`key`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;',
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;',
         'ecommerceframework_cartitem' =>
             "CREATE TABLE IF NOT EXISTS `ecommerceframework_cartitem` (
               `productId` int(20) NOT NULL,
@@ -65,7 +65,7 @@ class Installer extends AbstractInstaller
               `sortIndex` INT(10) UNSIGNED NULL DEFAULT '0',
               PRIMARY KEY (`itemKey`,`cartId`,`parentItemKey`),
               KEY `cartId_parentItemKey` (`cartId`,`parentItemKey`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;",
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;",
         'ecommerceframework_vouchertoolkit_statistics' =>
             "CREATE TABLE IF NOT EXISTS `ecommerceframework_vouchertoolkit_statistics` (
                 `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -108,7 +108,7 @@ class Installer extends AbstractInstaller
                 PRIMARY KEY (`id`),
                 UNIQUE INDEX `name` (`name`),
                 INDEX `active` (`active`)
-            ) ENGINE=InnoDB AUTO_INCREMENT=0;",
+            ) ENGINE=InnoDB AUTO_INCREMENT=0 CHARSET=utf8mb4;",
     ];
 
     private array $classesToInstall = [
@@ -367,8 +367,7 @@ class Installer extends AbstractInstaller
 
                 continue;
             }
-
-            $this->getSchema()->dropTable($table);
+            $this->db->executeQuery("DROP TABLE IF EXISTS $table");
         }
     }
 

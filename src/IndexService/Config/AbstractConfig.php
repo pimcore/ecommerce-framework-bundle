@@ -32,10 +32,7 @@ abstract class AbstractConfig implements ConfigInterface
 
     protected ?AttributeFactory $attributeFactory = null;
 
-    /**
-     * @var Attribute[]|null
-     */
-    protected ?array $attributes = null;
+    protected array $attributes = [];
 
     protected array $searchAttributes;
 
@@ -177,11 +174,6 @@ abstract class AbstractConfig implements ConfigInterface
      */
     public function getAttributes(): array
     {
-        // TODO Pimcore 10 remove as soon as attribute factory was added to the constructor.
-        if (null === $this->attributes) {
-            throw new \RuntimeException('Attributes are not built yet. Is the service properly configured to set an attribute factory?');
-        }
-
         return $this->attributes;
     }
 
@@ -192,11 +184,6 @@ abstract class AbstractConfig implements ConfigInterface
      */
     public function getSearchAttributes(): array
     {
-        // TODO Pimcore 10 remove as soon as attribute factory was added to the constructor.
-        if (null === $this->attributes) {
-            throw new \RuntimeException('Search attributes are not built yet. Is the service properly configured to set an attribute factory?');
-        }
-
         return $this->searchAttributes;
     }
 
