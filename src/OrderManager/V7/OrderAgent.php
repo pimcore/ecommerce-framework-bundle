@@ -22,6 +22,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\EnvironmentInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Event\Model\OrderAgentEvent;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Event\OrderAgentEvents;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\PaymentNotAllowedException;
+use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\ResponseWithAbortedPaymentStateException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\UnsupportedException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrder;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrderItem;
@@ -526,6 +527,7 @@ class OrderAgent implements OrderAgentInterface
      *
      * @throws Exception
      * @throws UnsupportedException
+     * @throws ResponseWithAbortedPaymentStateException
      */
     public function updatePayment(StatusInterface $status): static
     {
@@ -611,7 +613,7 @@ class OrderAgent implements OrderAgentInterface
             );
             $order->save(['versionNote' => 'OrderAgent::updatePayment - aborted response received.']);
 
-            throw new UnsupportedException('Got response although payment state was already aborted, new payment state was ' . $paymentStateBackup);
+            throw new ResponseWithAbortedPaymentStateException($paymentStateBackup);
         } elseif ($currentOrderFingerPrint != $status->getInternalPaymentId()) {
             // check, if order finger print has changed since start payment - if so, throw exception because something wired is going on
             // but finish update order first in order to have logging information
