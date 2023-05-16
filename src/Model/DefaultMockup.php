@@ -61,7 +61,7 @@ class DefaultMockup implements ProductInterface, LinkGeneratorAwareInterface, In
 
     public function getParam(string $key): mixed
     {
-        return $this->params[$key];
+        return $this->params[$key] ?? null;
     }
 
     public function hasParam(string $key): bool
