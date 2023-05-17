@@ -15,6 +15,8 @@ jobs:
     poeditor:
         runs-on: ubuntu-latest
         steps:
-            -   name: Trigger workflow in pimcore/poeditor-export-action
-                run: |
-                    gh workflow run -R pimcore/poeditor-export-action poeditor-export.yaml
+            - name: Trigger workflow in pimcore/poeditor-export-action
+              env:
+                  GH_TOKEN: ${{ secrets.POEDITOR_ACTION_TRIGGER_TOKEN }}
+              run: |
+                  gh workflow run -R pimcore/poeditor-export-action poeditor-export.yaml
