@@ -33,9 +33,8 @@ class ProductDiscount implements ProductDiscountInterface
 
         $amount = Decimal::create($this->amount);
 
-        // TODO use discount()?
         if ($amount->equals(Decimal::create(0))) {
-            $amount = $priceinfo->getAmount()->mul($this->getPercent() / 100);
+            $amount = $priceinfo->getAmount()->toPercentage($this->getPercent());
         }
 
         $amount = $priceinfo->getAmount()->sub($amount);
