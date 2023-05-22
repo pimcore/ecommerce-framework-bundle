@@ -39,7 +39,7 @@ class CartDiscount implements DiscountInterface, CartActionInterface
             $amount = Decimal::fromDecimal($amount->withScale(2));
         }
 
-        $amount = $amount->mul(-1);
+        $amount = $amount->toAdditiveInverse();
 
         //make sure that one rule is applied only once
         foreach ($priceCalculator->getModificators() as &$modificator) {
