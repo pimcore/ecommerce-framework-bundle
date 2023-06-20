@@ -18,7 +18,7 @@
     "pimcore/google-marketing-bundle": "^1.0",
     "knplabs/knp-paginator-bundle": "^6.0.0",
     "symfony/webpack-encore-bundle": "^1.7",
-    "symfony/form": "6.2"
+    "symfony/form": "^6.2"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10.5",
