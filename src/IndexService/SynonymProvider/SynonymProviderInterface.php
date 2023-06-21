@@ -16,8 +16,6 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\SynonymProvider;
 
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\ElasticSearch;
-
 interface SynonymProviderInterface
 {
     /**
