@@ -330,7 +330,10 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
         //Abort orders with payment pending
         $list = $orderManager->buildOrderList();
         $list->addFieldCollection('PaymentInfo');
-        $list->setCondition('orderState = ? AND modificationDate < ?', [AbstractOrder::ORDER_STATE_PAYMENT_PENDING, $timestamp]);
+        $list->setCondition(
+            'orderState = ? AND modificationDate < ?',
+            [AbstractOrder::ORDER_STATE_PAYMENT_PENDING, $timestamp]
+        );
 
         /** @var AbstractOrder $order */
         foreach ($list as $order) {
@@ -342,16 +345,30 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
         //Abort payments with payment pending
         $list = $orderManager->buildOrderList();
         $list->addFieldCollection('PaymentInfo', 'paymentinfo');
-        $list->setCondition('`PaymentInfo~paymentinfo`.paymentState = ? AND `PaymentInfo~paymentinfo`.paymentStart < ?', [AbstractOrder::ORDER_STATE_PAYMENT_PENDING, $timestamp]);
+        $list->setCondition(
+            '`PaymentInfo~paymentinfo`.paymentState = ? AND `PaymentInfo~paymentinfo`.paymentStart < ?',
+            [AbstractOrder::ORDER_STATE_PAYMENT_PENDING, $timestamp]
+        );
 
         /** @var AbstractOrder $order */
         foreach ($list as $order) {
-            $payments = $order->getPaymentInfo();
+            $paymentInformationCollection = $order->getPaymentInfo();
 
-            foreach ($payments as $payment) {
-                if ($payment->getPaymentState() == AbstractOrder::ORDER_STATE_PAYMENT_PENDING && $payment->getPaymentStart()->getTimestamp() < $timestamp) {
-                    Logger::warn('Setting order ' . $order->getId() . ' payment ' . $payment->getInternalPaymentId() . ' to ' . AbstractOrder::ORDER_STATE_ABORTED);
-                    $payment->setPaymentState(AbstractOrder::ORDER_STATE_ABORTED);
+            /** @var AbstractPaymentInformation $paymentInfo */
+            foreach ($paymentInformationCollection as $paymentInfo) {
+                if (
+                    $paymentInfo->getPaymentState() == AbstractOrder::ORDER_STATE_PAYMENT_PENDING &&
+                    $paymentInfo->getPaymentStart()->getTimestamp() < $timestamp
+                ) {
+                    Logger::warn(
+                        sprintf (
+                            'Setting order %d payment %s to %s',
+                            $order->getId(),
+                            $paymentInfo->getInternalPaymentId(),
+                            AbstractOrder::ORDER_STATE_ABORTED
+                        )
+                    );
+                    $paymentInfo->setPaymentState(AbstractOrder::ORDER_STATE_ABORTED);
                 }
             }
             $order->save(['versionNote' => 'CommitOrderProcessor:cleanupPendingOrders- payment aborted.']);
