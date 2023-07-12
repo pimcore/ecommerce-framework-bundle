@@ -361,7 +361,7 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
                     $paymentInfo->getPaymentStart()->getTimestamp() < $timestamp
                 ) {
                     Logger::warn(
-                        sprintf (
+                        sprintf(
                             'Setting order %d payment %s to %s',
                             $order->getId(),
                             $paymentInfo->getInternalPaymentId(),
