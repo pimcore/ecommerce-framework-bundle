@@ -34,7 +34,7 @@ abstract class AbstractConfig implements ConfigInterface
 
     protected array $attributes = [];
 
-    protected array $searchAttributes;
+    protected array $searchAttributes = [];
 
     protected array $filterTypes;
 
