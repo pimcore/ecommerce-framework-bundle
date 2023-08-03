@@ -26,23 +26,23 @@ abstract class AbstractConfig implements ConfigInterface
 {
     protected string $tenantName;
 
-    protected array $attributeConfig;
+    protected array $attributeConfig = [];
 
-    protected array $searchAttributeConfig;
+    protected array $searchAttributeConfig = [];
 
     protected ?AttributeFactory $attributeFactory = null;
 
     protected array $attributes = [];
 
-    protected array $searchAttributes;
+    protected array $searchAttributes = [];
 
-    protected array $filterTypes;
+    protected array $filterTypes = [];
 
     protected ?WorkerInterface $tenantWorker = null;
 
     protected ?array $filterTypeConfig = null;
 
-    protected array $options;
+    protected array $options = [];
 
     /**
      * @param array[]|Attribute[] $attributes

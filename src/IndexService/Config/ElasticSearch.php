@@ -75,9 +75,9 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     public function __construct(
         AttributeFactory $attributeFactory,
         string $tenantName,
-        array $attributes,
-        array $searchAttributes,
-        array $filterTypes,
+        array $attributes = [],
+        array $searchAttributes = [],
+        array $filterTypes = [],
         array $options = [],
         iterable $synonymProviders = []
     ) {
