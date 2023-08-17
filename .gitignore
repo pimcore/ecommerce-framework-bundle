@@ -8,7 +8,6 @@ Thumbs.db
 /public
 /templates
 /var
-/.env
 
 # PHP-CS-Fixer
 /.php_cs
