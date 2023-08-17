@@ -2,34 +2,13 @@
 Thumbs.db
 *.log
 
-# symfony default
-/.web-server-pid
-/app/config/parameters.yml
-/build/
-/phpunit.xml
-/web/bundles/
-
-# local config
-!/app/config/local
-/app/config/local/*
-!app/config/local/.gitkeep
-
-/var/*
-!/var/.gitkeep
-!/var/classes/
-/var/classes/DataObject
-
-!/var/config
-/var/config/system.php
-/var/config/debug-mode.php
-/var/config/maintenance.php
-
-# project specific recommendations
-/var/config/tag-manager.php
-/var/config/reports.php
-
-
-/web/var/
+/bin
+/config
+/kernel
+/public
+/templates
+/var
+/.env
 
 # PHP-CS-Fixer
 /.php_cs
@@ -37,28 +16,10 @@ Thumbs.db
 
 # composer
 /composer.lock
-!/vendor
-/vendor/*
-!/vendor/.gitkeep
+/vendor
 
 # PhpStorm / IDEA
 .idea
 .idea_modules
 # NetBeans
 nbproject
-
-# codeception (only stage *.dist.yml config files)
-/codeception.yml
-/pimcore/codeception.yml
-/pimcore/tests/*.suite.yml
-/pimcore/tests/_output/*
-/pimcore/tests/_support/_generated/*
-
-# keep legacy paths ignored for easier migration
-/plugins/
-/tools/
-/website/
-
-#npm
-**/node_modules
-**/package-lock.json
