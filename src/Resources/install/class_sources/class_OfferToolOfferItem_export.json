@@ -1,5 +1,5 @@
 {
-    "description": null,
+    "description": "",
     "parentClass": "\\Pimcore\\Bundle\\EcommerceFrameworkBundle\\OfferTool\\AbstractOfferItem",
     "implementsInterfaces": "",
     "listingParentClass": "",
