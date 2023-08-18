@@ -20,13 +20,6 @@ use Pimcore\Model\DataObject\ClassDefinition\Data\Textarea;
 
 class IndexFieldSelectionField extends Textarea
 {
-    /**
-     * Static type of this element
-     *
-     * @var string
-     */
-    public string $fieldtype = 'indexFieldSelectionField';
-
     public bool $specificPriceField = false;
 
     public bool $showAllFields = false;
@@ -89,5 +82,10 @@ class IndexFieldSelectionField extends Textarea
         }
 
         return $data;
+    }
+
+    public function getFieldType(): string
+    {
+        return 'indexFieldSelectionField';
     }
 }

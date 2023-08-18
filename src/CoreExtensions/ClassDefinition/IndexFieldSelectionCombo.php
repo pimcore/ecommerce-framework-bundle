@@ -25,13 +25,6 @@ use Pimcore\Model\DataObject\ClassDefinition\Service;
 
 class IndexFieldSelectionCombo extends Select
 {
-    /**
-     * Static type of this element
-     *
-     * @var string
-     */
-    public string $fieldtype = 'indexFieldSelectionCombo';
-
     public bool $specificPriceField = false;
 
     public bool $showAllFields = false;
@@ -110,5 +103,10 @@ class IndexFieldSelectionCombo extends Select
         }
 
         return parent::jsonSerialize();
+    }
+
+    public function getFieldType(): string
+    {
+        return 'indexFieldSelectionCombo';
     }
 }
