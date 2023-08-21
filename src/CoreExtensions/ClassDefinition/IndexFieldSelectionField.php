@@ -20,6 +20,11 @@ use Pimcore\Model\DataObject\ClassDefinition\Data\Textarea;
 
 class IndexFieldSelectionField extends Textarea
 {
+    /**
+     * @deprecated Will be removed in ecommerce-framework-bundle 2, use getFieldType() instead.
+     */
+    public string $fieldtype = 'indexFieldSelectionField';
+
     public bool $specificPriceField = false;
 
     public bool $showAllFields = false;

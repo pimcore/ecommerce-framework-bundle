@@ -25,6 +25,11 @@ use Pimcore\Model\DataObject\ClassDefinition\Service;
 
 class IndexFieldSelectionCombo extends Select
 {
+    /**
+     * @deprecated Will be removed in ecommerce-framework-bundle 2, use getFieldType() instead.
+     */
+    public string $fieldtype = 'indexFieldSelectionCombo';
+
     public bool $specificPriceField = false;
 
     public bool $showAllFields = false;
