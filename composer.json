@@ -16,7 +16,7 @@
   "prefer-stable": true,
   "require": {
     "php": "~8.1.0 || ~8.2.0",
-    "pimcore/pimcore": "^11.0",
+    "pimcore/pimcore": "^11.0.7",
     "pimcore/personalization-bundle": "^1.0",
     "pimcore/google-marketing-bundle": "^1.0",
     "knplabs/knp-paginator-bundle": "^6.0.0",
