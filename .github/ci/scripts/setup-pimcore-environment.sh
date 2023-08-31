@@ -9,5 +9,3 @@ chmod 755 bin/console
 cp -r .github/ci/files/kernel kernel
 cp -r .github/ci/files/public public
 cp -r .github/ci/files/var var
-
-cp .github/ci/files/.env ./

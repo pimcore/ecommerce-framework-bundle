@@ -21,9 +21,7 @@ use Pimcore\Model\DataObject\ClassDefinition\Data\Textarea;
 class IndexFieldSelectionField extends Textarea
 {
     /**
-     * Static type of this element
-     *
-     * @var string
+     * @deprecated Will be removed in ecommerce-framework-bundle 2, use getFieldType() instead.
      */
     public string $fieldtype = 'indexFieldSelectionField';
 
@@ -89,5 +87,10 @@ class IndexFieldSelectionField extends Textarea
         }
 
         return $data;
+    }
+
+    public function getFieldType(): string
+    {
+        return 'indexFieldSelectionField';
     }
 }

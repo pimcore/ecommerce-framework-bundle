@@ -35,7 +35,7 @@ class EcommerceModel extends Model
         return parent::createClass($name, $layout, $filename, $inheritanceAllowed, $id);
     }
 
-    public function createDataChild(string $type, ?string $name = null, bool $mandatory = false, int $index = 0, bool $visibleInGridView = true, bool $visibleInSearchResult = true): Data
+    public function createDataChild(string $type, ?string $name = null, bool $mandatory = false, bool $index = false, bool $visibleInGridView = true, bool $visibleInSearchResult = true): Data
     {
         if (!$name) {
             $name = $type;
