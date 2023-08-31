@@ -26,9 +26,7 @@ use Pimcore\Model\DataObject\ClassDefinition\Service;
 class IndexFieldSelectionCombo extends Select
 {
     /**
-     * Static type of this element
-     *
-     * @var string
+     * @deprecated Will be removed in ecommerce-framework-bundle 2, use getFieldType() instead.
      */
     public string $fieldtype = 'indexFieldSelectionCombo';
 
@@ -110,5 +108,10 @@ class IndexFieldSelectionCombo extends Select
         }
 
         return parent::jsonSerialize();
+    }
+
+    public function getFieldType(): string
+    {
+        return 'indexFieldSelectionCombo';
     }
 }
