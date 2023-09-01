@@ -294,6 +294,9 @@ class OrderManager implements OrderManagerInterface
         $sourceOrder = $this->getOrderFromCart($cart);
 
         if ($sourceOrder) {
+            $tokens = $sourceOrder->getVoucherTokens();
+            $tokenVersionNote = '';
+
             //create new order object
             $tempOrdernumber = $this->createOrderNumber();
             $order = $this->getNewOrderObject();
@@ -307,10 +310,21 @@ class OrderManager implements OrderManagerInterface
             $order->setOrderdate(new Carbon());
             $order->setCartId($sourceOrder->getCartId());
 
+            if ($tokens) {
+                $tokenVersionNote = ' Token previously added but removed: ';
+                foreach ($tokens as $token) {
+                    $this->voucherService->removeAppliedTokenFromOrder($token, $sourceOrder);
+                    $this->voucherService->applyToken($token->getToken(), $cart, $order);
+                    $tokenVersionNote .= '"' . $token->getToken() . '"';
+                }
+            }
+
             $order->save(['versionNote' => 'OrderManager::recreateOrder.']);
 
             $sourceOrder->setSuccessorOrder($order);
-            $sourceOrder->save(['versionNote' => 'OrderManager::recreateOrder - save successor order.']);
+            $sourceOrder->save([
+                'versionNote' => 'OrderManager::recreateOrder - save successor order.'. $tokenVersionNote
+            ]);
         }
 
         return $this->getOrCreateOrderFromCart($cart);
