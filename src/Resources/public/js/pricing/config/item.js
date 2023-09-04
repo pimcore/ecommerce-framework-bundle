@@ -362,23 +362,33 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
                 var item = conditions[i].items.getAt(c);
 
                 try {
+                    let value = null;
                     // workaround for pimcore.object.tags.objects
                     if(item.reference)
                     {
-                        condition[ item.reference.getName() ] = item.reference.getValue();
+                        value = item.reference.getValue();
+                        condition[ item.reference.getName() ] = value;
                     }
                     else if(item.form)
                     {
-                        condition[ item.name ] = item.getForm().getFieldValues();
+                        value = item.form.getFieldValues();
+                        condition[ item.name ] = value;
                     }
                     else if(item.xtype === 'datefield')
                     {
-                        condition[ item.name ] = item.getSubmitValue();
+                        value = item.getSubmitValue();
+                        condition[ item.name ] = value;
                     }
                     else
                     {
-                        condition[ item.getName() ] = item.getValue();
+                        value = item.getValue();
+                        condition[ item.getName() ] = value;
 
+                    }
+
+                    if (item.mandatory && (!value)){
+                        Ext.MessageBox.alert(t("error"), t("mandatory_field_empty"));
+                        return false;
                     }
                 } catch (e){}
 
