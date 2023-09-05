@@ -322,9 +322,10 @@ class OrderManager implements OrderManagerInterface
 
             $sourceOrder->setSuccessorOrder($order);
             $sourceOrder->save([
-                'versionNote' => 'OrderManager::recreateOrder - save successor order.'. $tokenVersionNote
+                'versionNote' => 'OrderManager::recreateOrder - save successor order.'. $tokenVersionNote,
             ]);
         }
+
         return $this->getOrCreateOrderFromCart($cart);
     }
 
