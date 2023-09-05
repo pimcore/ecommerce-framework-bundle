@@ -310,11 +310,10 @@ class OrderManager implements OrderManagerInterface
             $order->setOrderdate(new Carbon());
             $order->setCartId($sourceOrder->getCartId());
 
-            if ($tokens) {
+            if ($tokens && $sourceOrder->getOrderState() != AbstractOrder::ORDER_STATE_COMMITTED) {
                 $tokenVersionNote = ' Token previously added but removed: ';
                 foreach ($tokens as $token) {
                     $this->voucherService->removeAppliedTokenFromOrder($token, $sourceOrder);
-                    $this->voucherService->applyToken($token->getToken(), $cart, $order);
                     $tokenVersionNote .= '"' . $token->getToken() . '"';
                 }
             }
@@ -326,7 +325,6 @@ class OrderManager implements OrderManagerInterface
                 'versionNote' => 'OrderManager::recreateOrder - save successor order.'. $tokenVersionNote
             ]);
         }
-
         return $this->getOrCreateOrderFromCart($cart);
     }
 
