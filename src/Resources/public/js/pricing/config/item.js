@@ -345,7 +345,7 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
      */
     save: function () {
         var saveData = {};
-
+        var missingMandatoryFields = [];
         // general settings
         saveData["settings"] = this.settingsForm.getForm().getFieldValues();
 
@@ -387,12 +387,17 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
                     }
 
                     if (item.mandatory && (!value)){
-                        Ext.MessageBox.alert(t("error"), t("mandatory_field_empty") + ': ' + item.fieldLabel);
-                        return false;
+                        missingMandatoryFields.push(item.fieldLabel);
                     }
                 } catch (e){}
 
             }
+
+            if (missingMandatoryFields.length > 0){
+                Ext.MessageBox.alert(t("error"), t("mandatory_field_empty") + ': ' + missingMandatoryFields.join(','));
+                return false;
+            }
+
             condition['type'] = conditions[i].type;
 
             // get the operator (AND, OR, AND_NOT)
@@ -902,6 +907,7 @@ pimcore.bundle.EcommerceFramework.pricing.conditions = {
                 xtype: "numberfield",
                 fieldLabel: t("bundle_ecommerce_pricing_config_condition_cart_amount"),
                 name: "limit",
+                mandatory: true,
                 width: 300,
                 value: data.limit
             }]
