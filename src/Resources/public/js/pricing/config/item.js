@@ -387,7 +387,7 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
                     }
 
                     if (item.mandatory && (!value)){
-                        Ext.MessageBox.alert(t("error"), t("mandatory_field_empty"));
+                        Ext.MessageBox.alert(t("error"), t("mandatory_field_empty") + ': ' + item.fieldLabel);
                         return false;
                     }
                 } catch (e){}
