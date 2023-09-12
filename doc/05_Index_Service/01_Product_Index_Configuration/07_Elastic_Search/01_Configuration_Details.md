@@ -68,7 +68,7 @@ pimcore_ecommerce_framework:
                                       - allow_list_filter
                             tokenizer:
                                 my_ngram_tokenizer:
-                                    type: nGram
+                                    type: ngram
                                     min_gram: 2
                                     max_gram: 15
                                     token_chars: [letter, digit]
