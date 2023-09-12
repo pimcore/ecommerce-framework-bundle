@@ -393,11 +393,6 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
 
             }
 
-            if (missingMandatoryFields.length > 0){
-                Ext.MessageBox.alert(t("error"), t("mandatory_field_empty") + ': ' + missingMandatoryFields.join(','));
-                return false;
-            }
-
             condition['type'] = conditions[i].type;
 
             // get the operator (AND, OR, AND_NOT)
@@ -419,6 +414,13 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
 
             conditionsData.push(condition);
         }
+
+        if (missingMandatoryFields.length > 0){
+            Ext.MessageBox.alert(t("error"), t("mandatory_field_empty") + ': ' + missingMandatoryFields.join(', '));
+            return false;
+        }
+
+
         saveData["conditions"] = conditionsData;
 
         // get defined actions
@@ -950,6 +952,7 @@ pimcore.bundle.EcommerceFramework.pricing.conditions = {
                 fieldLabel: t("bundle_ecommerce_pricing_config_condition_sold_count"),
                 name: "count",
                 width: 300,
+                mandatory: true,
                 value: data.count
             }],
         });
@@ -991,6 +994,7 @@ pimcore.bundle.EcommerceFramework.pricing.conditions = {
                 fieldLabel: t("amount"),
                 name: "amount",
                 width: 300,
+                mandatory: true,
                 value: data.amount
             }],
         });
@@ -1028,6 +1032,7 @@ pimcore.bundle.EcommerceFramework.pricing.conditions = {
                 fieldLabel: 'IP',
                 name: "ip",
                 width: 300,
+                mandatory: true,
                 value: data.ip
             }]
         });
