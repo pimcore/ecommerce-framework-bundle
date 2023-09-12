@@ -345,7 +345,7 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
      */
     save: function () {
         var saveData = {};
-
+        var missingMandatoryFields = [];
         // general settings
         saveData["settings"] = this.settingsForm.getForm().getFieldValues();
 
@@ -362,27 +362,37 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
                 var item = conditions[i].items.getAt(c);
 
                 try {
+                    let value = null;
                     // workaround for pimcore.object.tags.objects
                     if(item.reference)
                     {
-                        condition[ item.reference.getName() ] = item.reference.getValue();
+                        value = item.reference.getValue();
+                        condition[ item.reference.getName() ] = value;
                     }
                     else if(item.form)
                     {
-                        condition[ item.name ] = item.getForm().getFieldValues();
+                        value = item.form.getFieldValues();
+                        condition[ item.name ] = value;
                     }
                     else if(item.xtype === 'datefield')
                     {
-                        condition[ item.name ] = item.getSubmitValue();
+                        value = item.getSubmitValue();
+                        condition[ item.name ] = value;
                     }
                     else
                     {
-                        condition[ item.getName() ] = item.getValue();
+                        value = item.getValue();
+                        condition[ item.getName() ] = value;
 
+                    }
+
+                    if (item.mandatory && (!value)){
+                        missingMandatoryFields.push(item.fieldLabel);
                     }
                 } catch (e){}
 
             }
+
             condition['type'] = conditions[i].type;
 
             // get the operator (AND, OR, AND_NOT)
@@ -404,6 +414,13 @@ pimcore.bundle.EcommerceFramework.pricing.config.item = Class.create({
 
             conditionsData.push(condition);
         }
+
+        if (missingMandatoryFields.length > 0){
+            Ext.MessageBox.alert(t("error"), t("mandatory_field_empty") + ': ' + missingMandatoryFields.join(', '));
+            return false;
+        }
+
+
         saveData["conditions"] = conditionsData;
 
         // get defined actions
@@ -892,6 +909,7 @@ pimcore.bundle.EcommerceFramework.pricing.conditions = {
                 xtype: "numberfield",
                 fieldLabel: t("bundle_ecommerce_pricing_config_condition_cart_amount"),
                 name: "limit",
+                mandatory: true,
                 width: 300,
                 value: data.limit
             }]
@@ -934,6 +952,7 @@ pimcore.bundle.EcommerceFramework.pricing.conditions = {
                 fieldLabel: t("bundle_ecommerce_pricing_config_condition_sold_count"),
                 name: "count",
                 width: 300,
+                mandatory: true,
                 value: data.count
             }],
         });
@@ -975,6 +994,7 @@ pimcore.bundle.EcommerceFramework.pricing.conditions = {
                 fieldLabel: t("amount"),
                 name: "amount",
                 width: 300,
+                mandatory: true,
                 value: data.amount
             }],
         });
@@ -1012,6 +1032,7 @@ pimcore.bundle.EcommerceFramework.pricing.conditions = {
                 fieldLabel: 'IP',
                 name: "ip",
                 width: 300,
+                mandatory: true,
                 value: data.ip
             }]
         });
