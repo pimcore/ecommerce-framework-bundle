@@ -21,6 +21,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\IndexUpdateService;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ProductCentricBatchProcessingWorker;
 use Pimcore\Console\Traits\Parallelization;
 use Pimcore\Console\Traits\Timeout;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -28,6 +29,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal
  */
+#[AsCommand(
+    name: 'ecommerce:indexservice:process-update-index-queue',
+    description: 'Processes the ecommerce queue / store table and updates the (search) index..',
+)]
 class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
 {
     use Timeout;
@@ -70,9 +75,7 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
         self::configureTimeout($this);
 
         $this
-            ->setName('ecommerce:indexservice:process-update-queue')
-            ->setDescription('Processes the ecommerce queue / store table and updates the (search) index.')
-            ->addOption('tenant', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Tenant to perform action on (defaults to all)')
+           ->addOption('tenant', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Tenant to perform action on (defaults to all)')
         ;
     }
 

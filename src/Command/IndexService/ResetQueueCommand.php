@@ -18,6 +18,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\Command\IndexService;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ProductCentricBatchProcessingWorker;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,6 +27,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal
  */
+#[AsCommand(
+    name: 'ecommerce:index:reset-indices',
+    description: 'Resets the preparation or index-update queue (ONLY NEEDED if store table is out of sync)',
+    aliases: ['ecommerce:indexservice:reset-queue']
+)]
 class ResetQueueCommand extends AbstractIndexServiceCommand
 {
     /**
@@ -36,8 +42,6 @@ class ResetQueueCommand extends AbstractIndexServiceCommand
         parent::configure();
 
         $this
-            ->setName('ecommerce:indexservice:reset-queue')
-            ->setDescription('Resets the preparation or index-update queue (ONLY NEEDED if store table is out of sync)')
             ->addArgument('queue', InputArgument::REQUIRED, 'Queue to reset (preparation|update-index)')
             ->addOption('tenant', null, InputOption::VALUE_REQUIRED, 'Tenant to perform action on. "*" means all tenants.');
     }
@@ -47,6 +51,10 @@ class ResetQueueCommand extends AbstractIndexServiceCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // Remove in version 2.0
+        if($input->getArguments()['command'] == 'ecommerce:indexservice:reset-queue') {
+            $output->writeln('The command "portal-engine:update:index-recreate" is deprecated and will be removed in Version 2.0. Please use "ecommerce:index:reset-indices" instead.');
+        }
         if (!($tenant = $input->getOption('tenant'))) {
             throw new \Exception('No tenant given');
         }

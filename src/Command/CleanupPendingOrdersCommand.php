@@ -19,20 +19,19 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\Command;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
 use Pimcore\Console\AbstractCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
  */
+#[AsCommand(
+    name: 'ecommerce:cleanup-pending-orders',
+    description: 'Cleans up orders with state pending payment after 1h -> delegates this to commit order processor',
+)]
 class CleanupPendingOrdersCommand extends AbstractCommand
 {
-    protected function configure(): void
-    {
-        $this->setName('ecommerce:cleanup-pending-orders');
-        $this->setDescription('Cleans up orders with state pending payment after 1h -> delegates this to commit order processor');
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $checkoutManager = Factory::getInstance()->getCheckoutManager(new Cart());

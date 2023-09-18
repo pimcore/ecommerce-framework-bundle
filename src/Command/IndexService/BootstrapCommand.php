@@ -22,6 +22,7 @@ use Pimcore\Console\Traits\Parallelization;
 use Pimcore\Console\Traits\Timeout;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Listing;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,6 +30,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal
  */
+#[AsCommand(
+    name: 'ecommerce:index:create-or-update-indices',
+    description: 'Bootstrap tasks creating/updating index (for all tenants), use one of the options --create-or-update-index-structure or --update-index',
+    aliases: ['ecommerce:indexservice:bootstrap']
+)]
 class BootstrapCommand extends AbstractIndexServiceCommand
 {
     use Timeout;
@@ -56,8 +62,6 @@ class BootstrapCommand extends AbstractIndexServiceCommand
         self::configureCommand($this);
         self::configureTimeout($this);
         $this
-            ->setName('ecommerce:indexservice:bootstrap')
-            ->setDescription('Bootstrap tasks creating/updating index (for all tenants), use one of the options --create-or-update-index-structure or --update-index')
             ->addOption('create-or-update-index-structure', null, InputOption::VALUE_NONE, 'Use to create or update the index structure')
             ->addOption('update-index', null, InputOption::VALUE_NONE, 'Use to rebuild the index data')
             ->addOption('object-list-class', null, InputOption::VALUE_REQUIRED, 'The object list class to use', '\\Pimcore\\Model\\DataObject\\Product\\Listing')
@@ -74,6 +78,11 @@ class BootstrapCommand extends AbstractIndexServiceCommand
 
     protected function fetchItems(InputInterface $input, OutputInterface $output): array
     {
+        // Remove in Version 2.0
+        if($input->getArguments()['command'] == 'ecommerce:indexservice:bootstrap') {
+              $output->writeln('The command "ecommerce:indexservice:bootstrap" is deprecated and will be removed in Version 2.0. Please use "ecommerce:index:create-or-update-indices" instead.');
+
+        }
         $updateIndex = $input->getOption('update-index');
         $createOrUpdateIndexStructure = $input->getOption('create-or-update-index-structure');
 

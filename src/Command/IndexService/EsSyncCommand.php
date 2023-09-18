@@ -18,6 +18,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\Command\IndexService;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ElasticSearch\AbstractElasticSearch;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,6 +28,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal
  */
+#[AsCommand(
+    name: 'ecommerce:indexservice:elasticsearch-sync',
+    description: 'Refresh elastic search (ES) index settings, mappings via native ES-API.'
+)]
 class EsSyncCommand extends AbstractIndexServiceCommand
 {
     /**
@@ -36,10 +41,6 @@ class EsSyncCommand extends AbstractIndexServiceCommand
     {
         parent::configure();
         $this
-            ->setName('ecommerce:indexservice:elasticsearch-sync')
-            ->setDescription(
-                'Refresh elastic search (ES) index settings, mappings via native ES-API.'
-            )
             ->addArgument('mode', InputArgument::REQUIRED,
                 'reindex: Reindexes ES indices based on the their native reindexing API. Might be necessary when mapping has changed.'.PHP_EOL.
                 'update-synonyms: Activate changes in synonym files, by closing and reopening the ES index.'
