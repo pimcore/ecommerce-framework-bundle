@@ -53,7 +53,7 @@ class ResetQueueCommand extends AbstractIndexServiceCommand
     {
         // Remove in version 2.0
         if($input->getArguments()['command'] == 'ecommerce:indexservice:reset-queue') {
-            $output->writeln('The command "portal-engine:update:index-recreate" is deprecated and will be removed in Version 2.0. Please use "ecommerce:index:reset-indices" instead.');
+            $output->writeln('The command "ecommerce:indexservice:reset-queue" is deprecated and will be removed in Version 2.0. Please use "ecommerce:index:reset-indices" instead.');
         }
         if (!($tenant = $input->getOption('tenant'))) {
             throw new \Exception('No tenant given');
