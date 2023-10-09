@@ -17,6 +17,8 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\Model;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\Type\Decimal;
 use Pimcore\Localization\IntlFormatter;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Currency
 {
@@ -31,6 +33,8 @@ class Currency
     const USE_SHORTNAME = 'shortname';
 
     const USE_NAME = 'longname';
+
+    protected EventDispatcherInterface $eventDispatcher;
 
     protected string $currencyShortName;
 
@@ -65,6 +69,7 @@ class Currency
     public function __construct(string $currencyShortName)
     {
         $this->currencyShortName = $currencyShortName;
+        $this->eventDispatcher = \Pimcore::getContainer()->get('event_dispatcher');
     }
 
     protected function getFormatter(): IntlFormatter
@@ -88,6 +93,14 @@ class Currency
         if ($value instanceof Decimal) {
             $value = $value->asString();
         }
+
+        $event = new GenericEvent($value, [
+            'value' => $value,
+            'pattern' => $pattern,
+        ]);
+        $this->eventDispatcher->dispatch($event, 'ecommerce.on-currency-formatted');
+        $value = $event->getArgument('value');
+        $pattern = $event->getArgument('pattern');
 
         return $this->getFormatter()->formatCurrency($value, $this->currencyShortName, $pattern);
     }
