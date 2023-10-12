@@ -28,7 +28,7 @@ pimcore_ecommerce_framework:
                     list_class: Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order\Listing
                     # Class for order item listing
                     list_item_class: Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order\Listing\Item
-                    # Default parent folder for new orders
+                    # Default parent folder for new orders, will be parsed by strftime()
                     parent_order_folder: /order/%%Y/%%m/%%d
                 # Options for oder agent
                 order_agent:
