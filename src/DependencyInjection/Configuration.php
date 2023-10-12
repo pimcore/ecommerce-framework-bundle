@@ -381,7 +381,7 @@ final class Configuration implements ConfigurationInterface
                                         ->cannotBeEmpty()
                                     ->end()
                                     ->scalarNode('parent_order_folder')
-                                        ->info('Default parent folder for new orders')
+                                        ->info('Default parent folder for new orders, it is possible to use strftime-compatible placeholders')
                                         ->defaultValue('/order/%%Y/%%m/%%d')
                                         ->cannotBeEmpty()
                                     ->end()
