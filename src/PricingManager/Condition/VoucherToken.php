@@ -59,11 +59,7 @@ class VoucherToken implements ConditionInterface
 
     public function checkVoucherCode(string $code): bool
     {
-        if (in_array(VoucherServiceToken::getByCode($code)->getVoucherSeriesId(), $this->allowListIds)) {
-            return true;
-        }
-
-        return false;
+        return in_array(VoucherServiceToken::getByCode($code)?->getVoucherSeriesId(), $this->allowListIds);
     }
 
     public function toJSON(): string
