@@ -2,7 +2,7 @@
 
 As floating point numbers (`float`, `double`) are not able to represent numbers exactly (see [here](http://floating-point-gui.de/)
 if you want to know details), and exact numbers are a strict demand to e-commerce applications the E-Commerce Framrwork
-uses [`Decimal`](https://github.com/pimcore/pimcore/blob/11.x/bundles/EcommerceFrameworkBundle/Type/Decimal.php)
+uses [`Decimal`](https://github.com/pimcore/ecommerce-framework-bundle/tree/1.x/src/Type/Decimal.php)
 value objects instead of floats to represent prices. These value objects internally store the represented value as integer
 by defining a fixed amount of supported digits (so-called `scale`) after the comma and by multiplying the actual value
 with the given scale on construction. The scale is set to 4 by default, but can be changed globally in the `pimcore_ecommerce_framework.decimal_scale`
@@ -12,8 +12,8 @@ An example: Given a scale of 4, a `Decimal` will internally represent a number o
 `123.45 * 10^4 = 1234500`. 
  
 To calculate with these values, the `Decimal` class exposes methods like `add()`, `sub()`, `mul()`, `div()` and others
-to run calculations without having to deal with the internal scale representation. For details see the [Decimal class definition](../../src/Type/Decimal.php)
-and the corresponding [test](../../tests/Ecommerce/Type/DecimalTest.php)
+to run calculations without having to deal with the internal scale representation. For details see the [Decimal class definition](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/Type/Decimal.php)
+and the corresponding [test](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/tests/Ecommerce/Type/DecimalTest.php)
 which contains a lot of usage examples and describes the `Decimal` behaviour quite well.
 
 > **Important**: The `Decimal` is designed as *immutable* value object. Every operation yields a *new* instance of a `Decimal`
@@ -81,7 +81,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Type\Decimal;
 var_dump(Decimal::create('123.55555', 4, PHP_ROUND_HALF_DOWN)->asString()); // 123.5555
 var_dump(Decimal::create('123.55555', 4, PHP_ROUND_HALF_UP)->asString());   // 123.5556
 ```
-
+../../
 Please be aware that as rounding is applied only when exceeding the scale, the following can happen: 
 
 ```
