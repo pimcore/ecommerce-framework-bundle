@@ -7,7 +7,7 @@ value objects instead of floats to represent prices. These value objects interna
 by defining a fixed amount of supported digits (so-called `scale`) after the comma and by multiplying the actual value
 with the given scale on construction. The scale is set to 4 by default, but can be changed globally in the `pimcore_ecommerce_framework.decimal_scale`
 config entry.
-Decimal
+
 An example: Given a scale of 4, a `Decimal` will internally represent a number of `123.45` as `1234500` by calculating
 `123.45 * 10^4 = 1234500`. 
  
@@ -81,7 +81,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Type\Decimal;
 var_dump(Decimal::create('123.55555', 4, PHP_ROUND_HALF_DOWN)->asString()); // 123.5555
 var_dump(Decimal::create('123.55555', 4, PHP_ROUND_HALF_UP)->asString());   // 123.5556
 ```
-../../
+
 Please be aware that as rounding is applied only when exceeding the scale, the following can happen: 
 
 ```

@@ -12,7 +12,7 @@ Each product can have its own Availability System.
 An availability system is a class implementing `Pimcore\Bundle\EcommerceFrameworkBundle\AvailabilitySystem\AvailabilitySystemInterface` which 
 is defined as service and registered with a name in the `pimcore_ecommerce_framework.availability_systems` configuration tree. 
 
-Currently, the framework ships only with a [sample implementation](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/AvailabilitySystem/AvailabilitySystem.php#L20)
+Currently, the framework ships only with a [sample implementation](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/AvailabilitySystem/AvailabilitySystem.php#L21)
 which you can use as starting point.
 
 There are 3 places where the configuration of Availability Systems takes place: 
