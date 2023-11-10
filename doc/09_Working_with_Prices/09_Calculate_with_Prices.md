@@ -7,13 +7,13 @@ value objects instead of floats to represent prices. These value objects interna
 by defining a fixed amount of supported digits (so-called `scale`) after the comma and by multiplying the actual value
 with the given scale on construction. The scale is set to 4 by default, but can be changed globally in the `pimcore_ecommerce_framework.decimal_scale`
 config entry.
-
+Decimal
 An example: Given a scale of 4, a `Decimal` will internally represent a number of `123.45` as `1234500` by calculating
 `123.45 * 10^4 = 1234500`. 
  
 To calculate with these values, the `Decimal` class exposes methods like `add()`, `sub()`, `mul()`, `div()` and others
-to run calculations without having to deal with the internal scale representation. For details see the [Decimal class definition](https://github.com/pimcore/pimcore/blob/11.x/bundles/EcommerceFrameworkBundle/Type/Decimal.php)
-and the corresponding [test](https://github.com/pimcore/pimcore/blob/11.x/tests/ecommerce/Type/DecimalTest.php)
+to run calculations without having to deal with the internal scale representation. For details see the [Decimal class definition](../../src/Type/Decimal.php)
+and the corresponding [test](../../tests/Ecommerce/Type/DecimalTest.php)
 which contains a lot of usage examples and describes the `Decimal` behaviour quite well.
 
 > **Important**: The `Decimal` is designed as *immutable* value object. Every operation yields a *new* instance of a `Decimal`
