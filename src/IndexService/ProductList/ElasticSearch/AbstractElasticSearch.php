@@ -28,7 +28,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
 
 abstract class AbstractElasticSearch implements ProductListInterface
 {
-    const LIMIT_UNLIMITED = 'unlimited';
+    const LIMIT_UNLIMITED = -1;
 
     const INTEGER_MAX_VALUE = 2147483647;     // Elasticsearch Integer.MAX_VALUE is 2^31-1
 
