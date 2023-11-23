@@ -329,7 +329,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
             $quantity = null;
 
             // get avatar
-            $user = User::getById($note->getUser());
+            $user = $note->getUser() ? User::getById($note->getUser()) : null;
             $avatar = $user ? sprintf('/admin/user/get-image?id=%d', $user->getId()) : null;
 
             // group events
