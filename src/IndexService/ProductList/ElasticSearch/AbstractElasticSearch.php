@@ -321,7 +321,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     }
 
     /**
-     * Pass "unlimited" to do da Scroll Request
+     * Pass -1 to do da Scroll Request
      *
      * @param int $limit
      *
@@ -329,11 +329,11 @@ abstract class AbstractElasticSearch implements ProductListInterface
      */
     public function setLimit(int $limit): void
     {
-        if ($this->limit != $limit) {
+        if ($this->limit !== $limit) {
             $this->products = null;
         }
 
-        if ($limit == static::LIMIT_UNLIMITED) {
+        if ($limit === static::LIMIT_UNLIMITED) {
             $this->limit = 100;
             $this->doScrollRequest = true;
         } else {
