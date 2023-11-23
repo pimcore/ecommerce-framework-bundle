@@ -40,13 +40,13 @@ class Input extends AbstractFilterType
         $field = $this->getField($filterDefinition);
         $preSelect = $this->getPreSelect($filterDefinition);
 
-        $value = $params[$field] ?? null;
+        $value = $params[$field] ?? '';
         $isReload = $params['is_reload'] ?? null;
 
         if ($value == AbstractFilterType::EMPTY_STRING) {
-            $value = null;
+            $value = '';
         } elseif (empty($value) && !$isReload) {
-            $value = $preSelect;
+            $value = $preSelect ?? '';
         }
 
         $value = trim($value);
