@@ -321,7 +321,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     }
 
     /**
-     * Pass -1 to do da Scroll Request
+     * Pass -1 to enable the unlimited scroll request
      *
      * @param int $limit
      *
