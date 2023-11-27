@@ -28,7 +28,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
 
 abstract class AbstractElasticSearch implements ProductListInterface
 {
-    const LIMIT_UNLIMITED = 'unlimited';
+    const LIMIT_UNLIMITED = -1;
 
     const INTEGER_MAX_VALUE = 2147483647;     // Elasticsearch Integer.MAX_VALUE is 2^31-1
 
@@ -321,7 +321,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     }
 
     /**
-     * Pass "unlimited" to do da Scroll Request
+     * Pass -1 to enable the unlimited scroll request
      *
      * @param int $limit
      *
@@ -329,11 +329,11 @@ abstract class AbstractElasticSearch implements ProductListInterface
      */
     public function setLimit(int $limit): void
     {
-        if ($this->limit != $limit) {
+        if ($this->limit !== $limit) {
             $this->products = null;
         }
 
-        if ($limit == static::LIMIT_UNLIMITED) {
+        if ($limit === static::LIMIT_UNLIMITED) {
             $this->limit = 100;
             $this->doScrollRequest = true;
         } else {
