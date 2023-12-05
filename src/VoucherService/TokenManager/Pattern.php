@@ -257,7 +257,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     {
         $separatorCount = $this->configuration->getSeparatorCount();
         $separator = $this->configuration->getSeparator();
-        $prefix = $this->configuration->getPrefix() ?? '';
+        $prefix = (string)$this->configuration->getPrefix();
         if (!empty($separator)) {
             if (!empty($prefix)) {
                 return strlen($prefix) + 1 + (int) floor($this->configuration->getLength() / $separatorCount) + $this->configuration->getLength();
