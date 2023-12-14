@@ -158,6 +158,10 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
             $item->setSubItems($subItems);
         }
 
+        if (!empty($params)) {
+            $item->setCustomProperties($params);
+        }
+
         $this->items[$itemKey] = $item;
 
         // trigger cart has been modified
