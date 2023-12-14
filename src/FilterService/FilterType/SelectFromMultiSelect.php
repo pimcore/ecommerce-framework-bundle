@@ -67,7 +67,9 @@ class SelectFromMultiSelect extends AbstractFilterType
             $value = $preSelect;
         }
 
-        $value = trim($value);
+        if($value) {
+            $value = trim($value);
+        }
 
         $currentFilter[$field] = $value;
         $db = Db::get();
