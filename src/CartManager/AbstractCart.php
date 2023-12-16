@@ -158,7 +158,9 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
             $item->setSubItems($subItems);
         }
 
-        $item->setCustomProperties($params);
+        if (method_exists($item, 'setCustomProperties')) {
+            $item->setCustomProperties($params);
+        }
 
         $this->items[$itemKey] = $item;
 
