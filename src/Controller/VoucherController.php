@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\TokenManager\ExportableTokenManagerInterface;
-use Pimcore\Controller\FrontendController;
 use Pimcore\Controller\KernelControllerEventInterface;
+use Pimcore\Controller\UserAwareController;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Localizedfield;
 use Pimcore\Model\DataObject\OnlineShopVoucherSeries;
@@ -37,7 +37,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  *
  * @internal
  */
-class VoucherController extends FrontendController implements KernelControllerEventInterface
+class VoucherController extends UserAwareController implements KernelControllerEventInterface
 {
     protected TokenStorageUserResolver $tokenResolver;
 
