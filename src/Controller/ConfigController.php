@@ -16,8 +16,10 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
+use Pimcore\Controller\KernelControllerEventInterface;
 use Pimcore\Controller\UserAwareController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -28,7 +30,7 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @internal
  */
-class ConfigController extends UserAwareController
+class ConfigController extends UserAwareController implements KernelControllerEventInterface
 {
     /**
      * ConfigController constructor.
@@ -38,6 +40,11 @@ class ConfigController extends UserAwareController
     public function __construct(private RouterInterface $router)
     {
         $this->router = $router;
+    }
+
+    public function onKernelControllerEvent(ControllerEvent $event): void
+    {
+        $this->checkPermission('bundle_ecommerce_back-office_order');
     }
 
     /**

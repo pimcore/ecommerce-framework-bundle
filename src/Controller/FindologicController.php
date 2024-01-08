@@ -16,9 +16,11 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
-use Pimcore\Controller\FrontendController;
+use Pimcore\Controller\KernelControllerEventInterface;
+use Pimcore\Controller\UserAwareController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * Class FindologicController
@@ -27,8 +29,13 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @internal
  */
-class FindologicController extends FrontendController
+class FindologicController extends UserAwareController implements KernelControllerEventInterface
 {
+    public function onKernelControllerEvent(ControllerEvent $event): void
+    {
+        $this->checkPermission('bundle_ecommerce_back-office_order');
+    }
+
     /**
      * create xml output for findologic
      */
