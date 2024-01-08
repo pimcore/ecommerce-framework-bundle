@@ -43,10 +43,7 @@ class PricingController extends UserAwareController implements KernelControllerE
     public function onKernelControllerEvent(ControllerEvent $event): void
     {
         // permission check
-        $access = $this->getPimcoreUser()->isAllowed('bundle_ecommerce_pricing_rules');
-        if (!$access) {
-            throw new \Exception('this function requires "bundle_ecommerce_pricing_rules" permission!');
-        }
+        $this->checkPermission('bundle_ecommerce_pricing_rules');
     }
 
     /**

@@ -68,6 +68,8 @@ class AdminOrderController extends UserAwareController implements KernelControll
 
     public function onKernelControllerEvent(ControllerEvent $event): void
     {
+        $this->checkPermission('bundle_ecommerce_back-office_order');
+
         // set language
         $user = $this->tokenResolver->getUser();
 
