@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
+use Pimcore\Controller\KernelControllerEventInterface;
 use Pimcore\Controller\UserAwareController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -29,7 +30,7 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @internal
  */
-class ConfigController extends UserAwareController
+class ConfigController extends UserAwareController implements KernelControllerEventInterface
 {
     /**
      * ConfigController constructor.

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
 use Pimcore\Controller\FrontendController;
+use Pimcore\Controller\KernelControllerEventInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -28,7 +29,7 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
  *
  * @internal
  */
-class FindologicController extends FrontendController
+class FindologicController extends FrontendController implements KernelControllerEventInterface
 {
     public function onKernelControllerEvent(ControllerEvent $event): void
     {
