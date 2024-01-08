@@ -46,7 +46,6 @@ class IndexController extends UserAwareController implements KernelControllerEve
         $this->checkPermission('bundle_ecommerce_back-office_order');
     }
 
-
     /**
      * @Route("/get-filter-groups", name="pimcore_ecommerceframework_index_getfiltergroups", methods={"GET"})
      *
