@@ -24,6 +24,7 @@ use Pimcore\Controller\UserAwareController;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -38,6 +39,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class IndexController extends UserAwareController
 {
     use JsonHelperTrait;
+
+    public function onKernelControllerEvent(ControllerEvent $event): void
+    {
+        $this->checkPermission('bundle_ecommerce_back-office_order');
+    }
+
 
     /**
      * @Route("/get-filter-groups", name="pimcore_ecommerceframework_index_getfiltergroups", methods={"GET"})

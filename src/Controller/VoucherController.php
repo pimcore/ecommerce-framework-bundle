@@ -55,6 +55,8 @@ class VoucherController extends FrontendController implements KernelControllerEv
 
     public function onKernelControllerEvent(ControllerEvent $event): void
     {
+        $this->checkPermission('bundle_ecommerce_pricing_rules');
+
         // set language
         $user = $this->tokenResolver->getUser();
 
