@@ -67,7 +67,7 @@ class SelectFromMultiSelect extends AbstractFilterType
             $value = $preSelect;
         }
 
-        if($value) {
+        if ($value) {
             $value = trim($value);
         }
 
