@@ -77,7 +77,7 @@ class SelectCategory extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterServ
         $currentFilter[$filterDefinition->getField()] = $value;
 
         if (!empty($value)) {
-            $value = trim($value);
+            $value = trim((string)$value);
             $productList->addCondition($value, $filterDefinition->getField());
         }
 
