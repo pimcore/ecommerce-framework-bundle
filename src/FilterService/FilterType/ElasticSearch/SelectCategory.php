@@ -70,7 +70,7 @@ class SelectCategory extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterServ
         } elseif (empty($value) && !$isReload && method_exists($filterDefinition, 'getPreSelect')) {
             $value = $filterDefinition->getPreSelect();
             if ($value instanceof ElementInterface) {
-                $value = $value->getId();
+                $value = (string)$value->getId();
             }
         }
 
