@@ -19,6 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\TokenManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
+use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\VoucherServiceException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrder;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractVoucherTokenType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Reservation;
@@ -259,6 +260,8 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
             if ($token->check((int)$this->configuration->getUsages())) {
                 return true;
             }
+
+            throw new VoucherServiceException('Max usage limit reached.', VoucherServiceException::ERROR_CODE_NO_MORE_USAGES);
         }
 
         return false;
