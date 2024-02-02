@@ -184,6 +184,9 @@ See also [Demo](https://github.com/pimcore/demo/blob/11.x/config/ecommerce/base-
 
 Following steps are necessary to add additional custom properties to cart items: 
 
-1) Extend `CartItem` implementation and extend it with your custom property fields and getters/setters. 
-2) Extend `Cart` implementation and make use your custom `CartItem` implementation is used.
-3) Provide the custom properties as key-value pairs in `params` parameter in `addItem` and `updateItem` of `Cart` or `CartManager`. 
+1) Extend `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem` implementation and add your custom properties including getters/setters. 
+2) Extend `Cart::getCartItemClassName` implementation and make sure your custom `CartItem` implementation gets returned.
+3) Provide the custom properties as key-value pairs in `$params` parameter in the following methods:
+   1) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\AbstractCart::addItem`
+   2) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\AbstractCart::updateItem`
+   3) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartManagerInterface::addToCart`
