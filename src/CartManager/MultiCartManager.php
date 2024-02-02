@@ -116,7 +116,7 @@ class MultiCartManager implements CartManagerInterface
      * @param string|null $key
      * @param string|null $itemKey
      * @param bool $replace
-     * @param array $params
+     * @param array $customProperties
      * @param array $subProducts
      * @param string|null $comment
      *
@@ -130,7 +130,7 @@ class MultiCartManager implements CartManagerInterface
         string $key = null,
         string $itemKey = null,
         bool $replace = false,
-        array $params = [],
+        array $customProperties = [],
         array $subProducts = [],
         string $comment = null
     ): string {
@@ -142,7 +142,7 @@ class MultiCartManager implements CartManagerInterface
 
         $cart = $this->carts[$key];
 
-        $itemKey = $cart->addItem($product, $count, $itemKey, $replace, $params, $subProducts, $comment);
+        $itemKey = $cart->addItem($product, $count, $itemKey, $replace, $customProperties, $subProducts, $comment);
         $this->save();
 
         return $itemKey;

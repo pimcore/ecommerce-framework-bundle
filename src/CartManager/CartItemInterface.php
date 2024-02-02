@@ -113,5 +113,10 @@ interface CartItemInterface
      */
     public function getName(): string;
 
-    public function setCustomProperties(array $params): void;
+    /**
+     * @return array
+     */
+    public function getCustomProperties(): array;
+
+    public function setCustomProperties(array $customProperties): void;
 }

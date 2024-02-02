@@ -40,7 +40,7 @@ interface CartManagerInterface extends ComponentInterface
      * @param string|null $key            - optional key of cart where the item should be added to
      * @param string|null $itemKey   - optional item key
      * @param bool $replace          - replace item if same key already exists
-     * @param array $params          - optional addtional item information
+     * @param array $customProperties          - optional additional item information
      * @param AbstractSetProductEntry[] $subProducts
      * @param string|null $comment
      *
@@ -52,7 +52,7 @@ interface CartManagerInterface extends ComponentInterface
         string $key = null,
         string $itemKey = null,
         bool $replace = false,
-        array $params = [],
+        array $customProperties = [],
         array $subProducts = [],
         string $comment = null
     ): string;

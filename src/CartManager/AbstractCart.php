@@ -84,13 +84,13 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
      * @param int $count
      * @param string|null $itemKey
      * @param bool $replace
-     * @param array $params
+     * @param array $customProperties
      * @param AbstractSetProductEntry[] $subProducts
      * @param string|null $comment
      *
      * @return string
      */
-    public function addItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string
+    public function addItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $customProperties = [], array $subProducts = [], string $comment = null): string
     {
         if (empty($itemKey)) {
             $itemKey = (string) $product->getId();
@@ -100,7 +100,7 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
             }
         }
 
-        return $this->updateItem($itemKey, $product, $count, $replace, $params, $subProducts, $comment);
+        return $this->updateItem($itemKey, $product, $count, $replace, $customProperties, $subProducts, $comment);
     }
 
     /**
@@ -108,13 +108,13 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
      * @param CheckoutableInterface&Concrete $product
      * @param int $count
      * @param bool $replace
-     * @param array $params
+     * @param array $customProperties
      * @param AbstractSetProductEntry[] $subProducts
      * @param string|null $comment
      *
      * @return string
      */
-    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string
+    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $customProperties = [], array $subProducts = [], string $comment = null): string
     {
         //load items first in order to lazyload items (if they are lazy loaded)
         $this->getItems();
@@ -158,7 +158,7 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
             $item->setSubItems($subItems);
         }
 
-        $item->setCustomProperties($params);
+        $item->setCustomProperties($customProperties);
 
         $this->items[$itemKey] = $item;
 
