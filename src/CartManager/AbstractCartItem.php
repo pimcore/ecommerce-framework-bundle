@@ -57,6 +57,8 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
      */
     protected ?int $addedDateTimestamp = null;
 
+    protected array $customProperties = [];
+
     public function __construct()
     {
         $this->setAddedDate(new \DateTime());
@@ -297,5 +299,24 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     public function setIsLoading(bool $isLoading): void
     {
         $this->isLoading = $isLoading;
+    }
+
+    /**
+     * Sets custom properties to CartItem when provided in AbstractCart::addItem
+     *
+     * @param array $customProperties
+     * @return void
+     */
+    public function setCustomProperties(array $customProperties): void
+    {
+        $this->customProperties = $customProperties;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomProperties(): array
+    {
+        return $this->customProperties;
     }
 }

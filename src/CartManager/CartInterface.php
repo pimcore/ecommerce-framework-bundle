@@ -70,26 +70,26 @@ interface CartInterface
      * @param int $count
      * @param string|null $itemKey
      * @param bool $replace replace if item with same key exists
-     * @param array $params optional additional item information
+     * @param array $customProperties optional additional item information
      * @param AbstractSetProductEntry[] $subProducts
      * @param string|null $comment
      *
      * @return string $itemKey
      */
-    public function addItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string;
+    public function addItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $customProperties = [], array $subProducts = [], string $comment = null): string;
 
     /**
      * @param string $itemKey
      * @param CheckoutableInterface $product
      * @param int $count
      * @param bool $replace replace if item with same key exists
-     * @param array $params optional additional item information
+     * @param array $customProperties optional additional item information
      * @param array $subProducts
      * @param string|null $comment
      *
      * @return string $itemKey
      */
-    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string;
+    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $customProperties = [], array $subProducts = [], string $comment = null): string;
 
     /**
      * updates count of specific cart item
