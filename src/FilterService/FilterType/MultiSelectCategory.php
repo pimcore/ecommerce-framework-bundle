@@ -30,7 +30,7 @@ class MultiSelectCategory extends AbstractFilterType
         $rawValues = $productList->getGroupByValues($filterDefinition->getField(), true);
         $values = [];
 
-        /** @var array<string, boolean> $availableRelations */
+        /** @var array<string, bool> $availableRelations */
         $availableRelations = [];
         if (!$filterDefinition instanceof FilterCategoryMultiselect) {
             throw new InvalidConfigException('invalid configuration');
