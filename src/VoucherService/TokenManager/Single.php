@@ -207,7 +207,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     public function applyToken(string $code, CartInterface $cart, AbstractOrder $order): OnlineShopVoucherToken|bool
     {
         if ($token = Token::getByCode($code)) {
-            if ($token->check($this->configuration->getUsages(), true)) {
+            if ($token->check((int)$this->configuration->getUsages(), true)) {
                 if ($token->apply()) {
                     $orderToken = \Pimcore\Model\DataObject\OnlineShopVoucherToken::getByToken($code, 1);
                     if (!$orderToken instanceof \Pimcore\Model\DataObject\OnlineShopVoucherToken) {

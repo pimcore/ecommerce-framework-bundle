@@ -708,7 +708,7 @@ class OrderManager implements OrderManagerInterface
 
             //add new tokens - which are the remaining entries of $flippedVoucherTokens
             foreach ($flippedVoucherTokens as $code => $x) {
-                $this->voucherService->applyToken($code, $cart, $order);
+                $this->voucherService->applyToken((string)$code, $cart, $order);
             }
         }
     }
