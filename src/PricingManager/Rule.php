@@ -120,7 +120,7 @@ class Rule extends AbstractModel implements RuleInterface
                         return $this;
                     }
             }
-            $this->$method($value ?? '');
+            $this->$method($value);
         }
 
         return $this;
