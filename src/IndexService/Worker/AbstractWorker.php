@@ -135,18 +135,7 @@ abstract class AbstractWorker implements WorkerInterface
     protected function convertArray(array|string $data): array|string
     {
         if (is_array($data)) {
-            // One-dimensional array
-            if(count($data) == count($data, COUNT_RECURSIVE)) {
-                return WorkerInterface::MULTISELECT_DELIMITER . implode(WorkerInterface::MULTISELECT_DELIMITER, $data) . WorkerInterface::MULTISELECT_DELIMITER;
-            }
-
-            // Two-dimensional array
-            $string = WorkerInterface::MULTISELECT_DELIMITER;
-            foreach($data as $d) {
-                $string .= implode(WorkerInterface::MULTISELECT_DELIMITER, $d);
-            }
-            $string .= WorkerInterface::MULTISELECT_DELIMITER;
-            return $string;
+            return WorkerInterface::MULTISELECT_DELIMITER . implode(WorkerInterface::MULTISELECT_DELIMITER, $data) . WorkerInterface::MULTISELECT_DELIMITER;
         }
 
         return $data;
