@@ -300,10 +300,6 @@ class Dao
         return $this->lastRecordCount;
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
     public function quoteIdentifier(string $value): string
     {
         return $this->db->quoteIdentifier($value);
