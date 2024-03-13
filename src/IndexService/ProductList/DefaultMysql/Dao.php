@@ -304,7 +304,7 @@ class Dao
      * @param string $value
      * @return string
      */
-    public function quoteIdentifier($value)
+    public function quoteIdentifier(string $value): string
     {
         return $this->db->quoteIdentifier($value);
     }
