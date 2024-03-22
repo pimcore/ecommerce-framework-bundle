@@ -18,20 +18,19 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\Command\Voucher;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
 use Pimcore\Console\AbstractCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
  */
+#[AsCommand(
+    name: 'ecommerce:voucher:cleanup-statistics',
+    description: 'House keeping for Voucher Usage Statistics - cleans up all old data.',
+)]
 class CleanupStatisticsCommand extends AbstractCommand
 {
-    protected function configure(): void
-    {
-        $this->setName('ecommerce:voucher:cleanup-statistics');
-        $this->setDescription('House keeping for Voucher Usage Statistics - cleans up all old data.');
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output->writeln('<comment>*</comment> Cleaning up <info>statistics</info>');
