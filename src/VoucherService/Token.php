@@ -88,7 +88,7 @@ class Token extends AbstractModel
     public function check(int $maxUsages = null, bool $isCheckout = false): bool
     {
         if (isset($maxUsages)) {
-            if ($this->getUsages() + Reservation::getReservationCount($this->getToken()) - (int)$isCheckout <= $maxUsages) {
+            if ($this->getUsages() + Reservation::getReservationCount($this->getToken()) - (int)$isCheckout < $maxUsages) {
                 return true;
             }
 
