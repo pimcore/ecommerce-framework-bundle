@@ -49,7 +49,7 @@ class Bracket implements BracketInterface
     public function check(EnvironmentInterface $environment): bool
     {
         // A bracket without conditions is not restricted and thus doesn't fail
-        if (empty($this->conditions)) {
+        if (!$this->conditions) {
             return true;
         }
 
