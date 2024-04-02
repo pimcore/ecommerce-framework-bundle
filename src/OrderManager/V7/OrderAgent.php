@@ -310,7 +310,7 @@ class OrderAgent implements OrderAgentInterface
 
         // update authorizedData
         $authorizedData = $paymentProvider->getAuthorizedData();
-        foreach ((array)$authorizedData as $field => $value) {
+        foreach ($authorizedData as $field => $value) {
             $setter = 'setAuth_' . $field;
             if (method_exists($providerData, $setter)) {
                 $providerData->{$setter}($value);
@@ -318,7 +318,7 @@ class OrderAgent implements OrderAgentInterface
         }
 
         if (method_exists($providerData, 'setPaymentFinished')) {
-            $providerData->setPaymentFinished(new \DateTime());
+            $providerData->setPaymentFinished(new Carbon());
         }
 
         if (method_exists($providerData, 'setConfigurationKey')) {
