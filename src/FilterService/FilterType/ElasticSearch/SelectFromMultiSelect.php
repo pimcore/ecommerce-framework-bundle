@@ -41,7 +41,9 @@ class SelectFromMultiSelect extends \Pimcore\Bundle\EcommerceFrameworkBundle\Fil
             $value = $preSelect;
         }
 
-        $value = trim($value);
+        if (!empty($value)) {
+            $value = trim($value);
+        }
 
         $currentFilter[$field] = $value;
 
