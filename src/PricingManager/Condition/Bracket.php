@@ -28,17 +28,17 @@ class Bracket implements BracketInterface
     protected array $conditions = [];
 
     /**
-     * @var string[] BracketInterface::OPERATOR_*
+     * @var list<string|null> BracketInterface::OPERATOR_*
      */
     protected array $operator = [];
 
     /**
      * @param ConditionInterface $condition
-     * @param string $operator BracketInterface::OPERATOR_*
+     * @param string|null $operator BracketInterface::OPERATOR_*
      *
      * @return $this
      */
-    public function addCondition(ConditionInterface $condition, string $operator): static
+    public function addCondition(ConditionInterface $condition, ?string $operator): static
     {
         $this->conditions[] = $condition;
         $this->operator[] = $operator;
@@ -49,7 +49,7 @@ class Bracket implements BracketInterface
     public function check(EnvironmentInterface $environment): bool
     {
         // A bracket without conditions is not restricted and thus doesn't fail
-        if (empty($this->conditions)) {
+        if (!$this->conditions) {
             return true;
         }
 
