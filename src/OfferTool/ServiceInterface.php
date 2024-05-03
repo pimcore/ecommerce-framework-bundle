@@ -26,10 +26,8 @@ interface ServiceInterface
     const DISCOUNT_TYPE_AMOUNT = 'amount';
 
     /**
-     * @param CartInterface $cart
      * @param CartItemInterface[] $excludeItems
      *
-     * @return AbstractOffer
      */
     public function createNewOfferFromCart(CartInterface $cart, array $excludeItems = []): AbstractOffer;
 
@@ -38,7 +36,6 @@ interface ServiceInterface
     public function updateTotalPriceOfOffer(AbstractOffer $offer): AbstractOffer;
 
     /**
-     * @param CartInterface $cart
      *
      * @return AbstractOffer[]
      */

@@ -153,7 +153,6 @@ abstract class AbstractOrder extends Concrete
     /**
      * returns latest payment info entry
      *
-     * @return AbstractPaymentInformation|null
      */
     public function getLastPaymentInfo(): ?AbstractPaymentInformation
     {
@@ -318,14 +317,12 @@ abstract class AbstractOrder extends Concrete
     /**
      * Get cartHash - Cart Hash
      *
-     * @return int|null
      */
     abstract public function getCartHash(): ?int;
 
     /**
      * Set cartHash - Cart Hash
      *
-     * @param int|null $cartHash
      *
      * @return $this
      */

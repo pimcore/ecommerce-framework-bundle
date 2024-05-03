@@ -74,7 +74,6 @@ class PriceInfo implements PriceInfoInterface
      * Checks if environment changed based on hash
      * if so, resets valid rules
      *
-     * @return bool
      */
     protected function environmentHashChanged(): bool
     {
@@ -90,9 +89,6 @@ class PriceInfo implements PriceInfoInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRules(bool $forceRecalc = false): array
     {
         if ($forceRecalc || $this->validRules === null) {
@@ -115,9 +111,6 @@ class PriceInfo implements PriceInfoInterface
         return $this->validRules;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPrice(): PriceInterface
     {
         $price = clone $this->priceInfo->getPrice();
@@ -144,9 +137,6 @@ class PriceInfo implements PriceInfoInterface
         return $price;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTotalPrice(): PriceInterface
     {
         $price = clone $this->priceInfo->getPrice();
@@ -159,33 +149,21 @@ class PriceInfo implements PriceInfoInterface
         return $price;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isMinPrice(): bool
     {
         return $this->priceInfo->isMinPrice();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getQuantity(): int|string
     {
         return $this->priceInfo->getQuantity();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setQuantity(int|string $quantity): void
     {
         $this->priceInfo->setQuantity($quantity);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPriceSystem(PriceSystemInterface $priceSystem): static
     {
         $this->priceInfo->setPriceSystem($priceSystem);
@@ -193,9 +171,6 @@ class PriceInfo implements PriceInfoInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setProduct(CheckoutableInterface $product): static
     {
         $this->priceInfo->setProduct($product);
@@ -203,9 +178,6 @@ class PriceInfo implements PriceInfoInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProduct(): ?CheckoutableInterface
     {
         return $this->priceInfo->getProduct();
@@ -268,9 +240,6 @@ class PriceInfo implements PriceInfoInterface
         return $price;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDiscountPercent(): float
     {
         $percent = $this->getPrice()->getAmount()->discountPercentageOf(

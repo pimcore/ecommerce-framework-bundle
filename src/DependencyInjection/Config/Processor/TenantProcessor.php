@@ -28,9 +28,7 @@ class TenantProcessor
      * Merges tenant configs with an optional _defaults key which is applied
      * to every tenant and removed afterwards.
      *
-     * @param array $config
      *
-     * @return array
      */
     public function mergeTenantConfig(array $config): array
     {

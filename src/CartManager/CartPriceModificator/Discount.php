@@ -39,7 +39,6 @@ class Discount implements DiscountInterface
     /**
      * modificator name
      *
-     * @return string
      */
     public function getName(): string
     {
@@ -53,10 +52,7 @@ class Discount implements DiscountInterface
     /**
      * modify price
      *
-     * @param PriceInterface $currentSubTotal
-     * @param CartInterface $cart
      *
-     * @return ModificatedPrice
      */
     public function modify(PriceInterface $currentSubTotal, CartInterface $cart): ModificatedPrice
     {

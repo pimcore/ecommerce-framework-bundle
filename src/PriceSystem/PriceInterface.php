@@ -33,7 +33,6 @@ interface PriceInterface
     /**
      * Returns $grossAmount
      *
-     * @return Decimal
      */
     public function getAmount(): Decimal;
 
@@ -45,7 +44,6 @@ interface PriceInterface
      * Sets amount of price, depending on $priceMode and $recalc it sets net price or gross price and recalculates the
      * corresponding net or gross price.
      *
-     * @param Decimal $amount
      * @param string $priceMode - default to PRICE_MODE_GROSS
      * @param bool $recalc - default to false
      */
@@ -54,14 +52,12 @@ interface PriceInterface
     /**
      * Returns gross amount of price
      *
-     * @return Decimal
      */
     public function getGrossAmount(): Decimal;
 
     /**
      * Returns net amount of price
      *
-     * @return Decimal
      */
     public function getNetAmount(): Decimal;
 
@@ -75,7 +71,6 @@ interface PriceInterface
     /**
      * Returns tax entry combination mode needed for tax calculation
      *
-     * @return string|null
      */
     public function getTaxEntryCombinationMode(): ?string;
 
@@ -83,10 +78,7 @@ interface PriceInterface
      * Sets gross amount of price. If $recalc is set to true, corresponding net price
      * is calculated based on tax entries and tax entry combination mode.
      *
-     * @param Decimal $grossAmount
-     * @param bool $recalc
      *
-     * @return void
      */
     public function setGrossAmount(Decimal $grossAmount, bool $recalc = false): void;
 
@@ -94,28 +86,21 @@ interface PriceInterface
      * Sets net amount of price. If $recalc is set to true, corresponding gross price
      * is calculated based on tax entries and tax entry combination mode.
      *
-     * @param Decimal $netAmount
-     * @param bool $recalc
      *
-     * @return void
      */
     public function setNetAmount(Decimal $netAmount, bool $recalc = false): void;
 
     /**
      * Sets tax entries for price.
      *
-     * @param array $taxEntries
      *
-     * @return void
      */
     public function setTaxEntries(array $taxEntries): void;
 
     /**
      * Sets $taxEntryCombinationMode for price.
      *
-     * @param string|null $taxEntryCombinationMode
      *
-     * @return void
      */
     public function setTaxEntryCombinationMode(?string $taxEntryCombinationMode = null): void;
 }

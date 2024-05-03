@@ -20,9 +20,6 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Model\CheckoutableInterface;
 
 class AvailabilitySystem implements AvailabilitySystemInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getAvailabilityInfo(CheckoutableInterface $product, int $quantityScale = 1, array $products = null): Availability|AvailabilityInterface
     {
         return new Availability($product, true);

@@ -32,7 +32,6 @@ class FilterService
     protected array $filterTypes = [];
 
     /**
-     * @param FilterGroupHelper $filterGroupHelper
      * @param AbstractFilterType[] $filterTypes
      */
     public function __construct(FilterGroupHelper $filterGroupHelper, array $filterTypes)
@@ -120,7 +119,6 @@ class FilterService
      * @param ProductListInterface $productList current product list (with all set filters) to get available options and counts
      * @param array $currentFilter current filter for this filter definition
      *
-     * @return array
      */
     public function getFilterValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter): array
     {
@@ -132,11 +130,6 @@ class FilterService
     /**
      * Adds condition - delegates it to the AbstractFilterType instance
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     * @param array $params
-     * @param bool $isPrecondition
      *
      * @return array updated currentFilter array
      */

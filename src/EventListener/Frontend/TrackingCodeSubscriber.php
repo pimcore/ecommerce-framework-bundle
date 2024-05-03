@@ -47,9 +47,6 @@ class TrackingCodeSubscriber implements EventSubscriberInterface
         $this->twig = $twig;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

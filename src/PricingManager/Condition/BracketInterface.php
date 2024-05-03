@@ -27,7 +27,6 @@ interface BracketInterface extends ConditionInterface
     const OPERATOR_AND_NOT = 'and_not';
 
     /**
-     * @param ConditionInterface $condition
      * @param string $operator BracketInterface::OPERATOR_*
      *
      * @return $this
@@ -37,7 +36,6 @@ interface BracketInterface extends ConditionInterface
     /**
      * Returns all defined conditions with given type
      *
-     * @param string $typeClass
      *
      * @return ConditionInterface[]
      */

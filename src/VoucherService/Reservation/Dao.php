@@ -36,8 +36,6 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
     }
 
     /**
-     * @param string $code
-     * @param CartInterface|null $cart
      *
      * @throws NotFoundException
      */
@@ -76,11 +74,6 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
         return true;
     }
 
-    /**
-     * @param int|null $seriesId
-     *
-     * @return bool|int
-     */
     public static function getReservedTokenCount(int $seriesId = null): bool|int
     {
         $db = \Pimcore\Db::get();

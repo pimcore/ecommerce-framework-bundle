@@ -34,7 +34,6 @@ interface SynonymProviderInterface
      * return a list of options that can be configured per options provider and can be used for the
      * implementation of the synonym provider.
      *
-     * @return array
      */
     public function getOptions(): array;
 }

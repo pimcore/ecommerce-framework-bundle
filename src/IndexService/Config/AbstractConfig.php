@@ -75,7 +75,6 @@ abstract class AbstractConfig implements ConfigInterface
     /**
      * Attribute configuration
      *
-     * @return array
      */
     public function getAttributeConfig(): array
     {
@@ -122,9 +121,6 @@ abstract class AbstractConfig implements ConfigInterface
         // noop - to implemented by configs supporting options
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
         $this->checkTenantWorker($tenantWorker);
@@ -135,7 +131,6 @@ abstract class AbstractConfig implements ConfigInterface
      * Checks if tenant worker matches prerequisites (config wrapped in worker is this instance and instance has no
      * worker set yet).
      *
-     * @param WorkerInterface $tenantWorker
      */
     protected function checkTenantWorker(WorkerInterface $tenantWorker): void
     {
@@ -149,9 +144,6 @@ abstract class AbstractConfig implements ConfigInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTenantWorker(): WorkerInterface
     {
         // the worker is expected to call setTenantWorker as soon as possible
@@ -180,7 +172,6 @@ abstract class AbstractConfig implements ConfigInterface
     /**
      * Returns full text search index attribute names for product index
      *
-     * @return array
      */
     public function getSearchAttributes(): array
     {
@@ -190,7 +181,6 @@ abstract class AbstractConfig implements ConfigInterface
     /**
      * return all supported filter types for product index
      *
-     * @return array|null
      */
     public function getFilterTypeConfig(): ?array
     {
@@ -203,8 +193,6 @@ abstract class AbstractConfig implements ConfigInterface
     }
 
     /**
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return AbstractCategory[]
      */
@@ -217,7 +205,6 @@ abstract class AbstractConfig implements ConfigInterface
      * creates an array of sub ids for the given object
      * use that function, if one object should be indexed more than once (e.g. if field collections are in use)
      *
-     * @param IndexableInterface $object
      *
      * @return IndexableInterface[]
      */
@@ -229,10 +216,7 @@ abstract class AbstractConfig implements ConfigInterface
     /**
      * checks if there are some zombie subIds around and returns them for cleanup
      *
-     * @param IndexableInterface $object
-     * @param array $subIds
      *
-     * @return array
      */
     public function getSubIdsToCleanup(IndexableInterface $object, array $subIds): array
     {
@@ -243,10 +227,7 @@ abstract class AbstractConfig implements ConfigInterface
      * creates virtual parent id for given sub id
      * default is getOSParentId
      *
-     * @param IndexableInterface $object
-     * @param int $subId
      *
-     * @return int|string|null
      */
     public function createVirtualParentIdForSubId(IndexableInterface $object, int $subId): int|string|null
     {
@@ -257,10 +238,8 @@ abstract class AbstractConfig implements ConfigInterface
      * Gets object by id, can consider subIds and therefore return e.g. an array of values
      * always returns object itself - see also getObjectMockupById
      *
-     * @param int $objectId
      * @param bool $onlyMainObject - only returns main object
      *
-     * @return DataObject|null
      */
     public function getObjectById(int $objectId, bool $onlyMainObject = false): ?DataObject
     {
@@ -271,9 +250,7 @@ abstract class AbstractConfig implements ConfigInterface
      * Gets object mockup by id, can consider subIds and therefore return e.g. an array of values
      * always returns a object mockup if available
      *
-     * @param int $objectId
      *
-     * @return IndexableInterface|null
      */
     public function getObjectMockupById(int $objectId): ?IndexableInterface
     {
@@ -288,9 +265,7 @@ abstract class AbstractConfig implements ConfigInterface
     /**
      * returns column type for id
      *
-     * @param bool $isPrimary
      *
-     * @return string
      */
     public function getIdColumnType(bool $isPrimary): string
     {

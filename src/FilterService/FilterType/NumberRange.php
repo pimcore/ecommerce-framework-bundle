@@ -22,7 +22,6 @@ use Pimcore\Db;
 
 class NumberRange extends AbstractFilterType
 {
-    /** @inheritDoc */
     public function getFilterValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter): array
     {
         return [

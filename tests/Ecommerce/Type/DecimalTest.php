@@ -344,9 +344,6 @@ class DecimalTest extends TestCase
     /**
      * @dataProvider immutableOperationProvider
      *
-     * @param int $input
-     * @param int $expected
-     * @param string $operation
      * @param array ...$arguments
      */
     public function testImmutableOperations(int $input, int $expected, string $operation, ...$arguments): void

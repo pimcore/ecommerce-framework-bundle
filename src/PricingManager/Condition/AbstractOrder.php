@@ -28,7 +28,6 @@ abstract class AbstractOrder implements ConditionInterface
     /**
      * Persistent cache for all conditions inheriting from AbstractOrder
      *
-     * @var array
      */
     private static array $cache = [];
 

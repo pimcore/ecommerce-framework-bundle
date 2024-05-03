@@ -26,11 +26,7 @@ use Pimcore\Model\Element\ElementInterface;
 class SelectCategory extends AbstractFilterType
 {
     /**
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -81,12 +77,7 @@ class SelectCategory extends AbstractFilterType
 
     /**
      * @param FilterCategory $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     * @param array $params
-     * @param bool $isPrecondition
      *
-     * @return array
      */
     public function addCondition(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter, array $params, bool $isPrecondition = false): array
     {

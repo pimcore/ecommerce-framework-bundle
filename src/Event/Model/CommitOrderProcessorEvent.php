@@ -32,9 +32,6 @@ class CommitOrderProcessorEvent extends Event
     /**
      * CommitOrderProcessorEvent constructor.
      *
-     * @param CommitOrderProcessorInterface $commitOrderProcessor
-     * @param AbstractOrder|null $order
-     * @param array $arguments
      */
     public function __construct(CommitOrderProcessorInterface $commitOrderProcessor, ?AbstractOrder $order, array $arguments = [])
     {

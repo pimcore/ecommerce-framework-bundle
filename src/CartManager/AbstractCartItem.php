@@ -30,7 +30,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     /**
      * flag needed for preventing call modified on cart when loading cart from storage
      *
-     * @var bool
      */
     protected bool $isLoading = false;
 
@@ -167,7 +166,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     /**
      * @param CartItemInterface[] $subItems
      *
-     * @return void
      */
     public function setSubItems(array $subItems): void
     {
@@ -244,9 +242,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
         return $this->getPriceInfo()->getTotalPrice();
     }
 
-    /**
-     * @param \DateTime|null $date
-     */
     public function setAddedDate(\DateTime $date = null): void
     {
         if ($date) {
@@ -279,7 +274,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     /**
      * get item name
      *
-     * @return string
      */
     public function getName(): string
     {
@@ -290,7 +284,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
      * Flag needed for preventing call modified on cart when loading cart from storage
      * only for internal usage
      *
-     * @param bool $isLoading
      *
      * @internal
      */

@@ -106,8 +106,6 @@ abstract class AbstractWorker implements WorkerInterface
     /**
      * cleans up all old zombie data
      *
-     * @param IndexableInterface $object
-     * @param array $subObjectIds
      */
     protected function doCleanupOldZombieData(IndexableInterface $object, array $subObjectIds): void
     {
@@ -120,7 +118,6 @@ abstract class AbstractWorker implements WorkerInterface
     /**
      * actually deletes all sub entries from index. original object is delivered too, but keep in mind, that this might be empty.
      *
-     * @param int $subObjectId
      * @param IndexableInterface|null $object - might be empty (when object doesn't exist any more in pimcore
      */
     abstract protected function doDeleteFromIndex(int $subObjectId, IndexableInterface $object = null): void;
@@ -128,9 +125,7 @@ abstract class AbstractWorker implements WorkerInterface
     /**
      * Checks if given data is array and returns converted data suitable for search backend. For mysql it is a string with special delimiter.
      *
-     * @param array|string $data
      *
-     * @return array|string
      */
     protected function convertArray(array|string $data): array|string
     {

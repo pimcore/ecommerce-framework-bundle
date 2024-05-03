@@ -26,9 +26,7 @@ class DefaultElasticSearchSubTenantConfig extends ElasticSearch
     /**
      * checks, if product should be in index for current tenant (not subtenant)
      *
-     * @param IndexableInterface $object
      *
-     * @return bool
      */
     public function inIndex(IndexableInterface $object): bool
     {
@@ -46,8 +44,6 @@ class DefaultElasticSearchSubTenantConfig extends ElasticSearch
      * In this case tenants are also Pimcore objects and are assigned to product objects.
      * This method extracts assigned tenants and returns an array of subtenant-IDs
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return array $subTenantData
      */

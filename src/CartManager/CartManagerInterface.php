@@ -28,7 +28,6 @@ interface CartManagerInterface extends ComponentInterface
      * Is also responsible for checking if guest cart class should be used or not,
      * by calling \Pimcore\Bundle\EcommerceFrameworkBundle\Environment::getUseGuestCart();
      *
-     * @return string
      */
     public function getCartClassName(): string;
 
@@ -36,13 +35,11 @@ interface CartManagerInterface extends ComponentInterface
      * Adds item to given cart
      *
      * @param CheckoutableInterface $product - product to add
-     * @param int $count
      * @param string|null $key            - optional key of cart where the item should be added to
      * @param string|null $itemKey   - optional item key
      * @param bool $replace          - replace item if same key already exists
      * @param array $params          - optional addtional item information
      * @param AbstractSetProductEntry[] $subProducts
-     * @param string|null $comment
      *
      * @return string - item key
      */
@@ -60,10 +57,8 @@ interface CartManagerInterface extends ComponentInterface
     /**
      * Removes item from given cart
      *
-     * @param string $itemKey
      * @param string|null $key     - optional identification of cart in case of multi cart
      *
-     * @return void
      */
     public function removeFromCart(string $itemKey, string $key = null): void;
 
@@ -72,25 +67,20 @@ interface CartManagerInterface extends ComponentInterface
      *
      * @param string|null $key - optional identification of cart in case of multi cart
      *
-     * @return CartInterface
      */
     public function getCart(string $key = null): CartInterface;
 
     /**
      * Returns cart by name
      *
-     * @param string $name
      *
-     * @return null|CartInterface
      */
     public function getCartByName(string $name): ?CartInterface;
 
     /**
      * Returns cart by name, if it does not exist, it will be created
      *
-     * @param string $name
      *
-     * @return CartInterface
      */
     public function getOrCreateCartByName(string $name): CartInterface;
 
@@ -106,7 +96,6 @@ interface CartManagerInterface extends ComponentInterface
      *
      * @param string|null $key - optional identification of cart in case of multi cart
      *
-     * @return void
      */
     public function clearCart(string $key = null): void;
 
@@ -124,7 +113,6 @@ interface CartManagerInterface extends ComponentInterface
      *
      * @param string|null $key - optional identification of cart in case of multi cart
      *
-     * @return void
      */
     public function deleteCart(string $key = null): void;
 
@@ -137,7 +125,6 @@ interface CartManagerInterface extends ComponentInterface
     /**
      * Resets cart manager - carts need to be reloaded after reset() is called
      *
-     * @return void
      */
     public function reset(): void;
 }

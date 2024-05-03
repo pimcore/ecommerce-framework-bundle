@@ -73,7 +73,6 @@ class SessionCart extends AbstractCart implements CartInterface
     }
 
     /**
-     * @return void
      *
      * @throws \Exception if the cart is not yet saved.
      */
@@ -112,8 +111,6 @@ class SessionCart extends AbstractCart implements CartInterface
     /**
      * @static
      *
-     * @param int $userId
-     *
      * @return SessionCart[]
      */
     public static function getAllCartsForUser(int $userId): array
@@ -131,7 +128,6 @@ class SessionCart extends AbstractCart implements CartInterface
     }
 
     /**
-     * @return array
      *
      * @internal
      */

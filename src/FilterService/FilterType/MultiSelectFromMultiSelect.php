@@ -65,11 +65,6 @@ class MultiSelectFromMultiSelect extends SelectFromMultiSelect
     }
 
     /**
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     * @param array $params
-     * @param bool $isPrecondition
      *
      * @return string[]
      */

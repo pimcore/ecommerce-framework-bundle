@@ -23,7 +23,6 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\ElasticSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\ElasticSearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractCategory;
-use Pimcore\Bundle\EcommerceFrameworkBundle\Model\DefaultMockup;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
 
 abstract class AbstractElasticSearch implements ProductListInterface
@@ -42,14 +41,12 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Timeout for a request in seconds
      *
-     * @var int
      */
     protected int $timeout = 10;
 
     /**
      * Name of the index
      *
-     * @var string
      */
     protected string $indexName = '';
 
@@ -97,7 +94,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
      * contains a mapping from productId => array Index
      * useful when you have to merge child products to there parent and you don't want to iterate each time over the list
      *
-     * @var array
      */
     protected array $productPositionMap = [];
 
@@ -137,7 +133,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
         return $this;
     }
 
-    /** @inheritDoc */
     public function getProducts(): array
     {
         if ($this->products === null) {
@@ -150,7 +145,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Returns the Mapping of the productId => position
      *
-     * @return array
      */
     public function getProductPositionMap(): array
     {
@@ -169,7 +163,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
      * Fieldname is optional but highly recommended - needed for resetting condition based on fieldname
      * and exclude functionality in group by results
      *
-     * @param array|string $condition
      * @param string $fieldname - must be set for elastic search
      */
     public function addCondition(array|string $condition, string $fieldname = ''): void
@@ -182,7 +175,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Reset condition for fieldname
      *
-     * @param string $fieldname
      */
     public function resetCondition(string $fieldname): void
     {
@@ -194,8 +186,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Adds relation condition to product list
      *
-     * @param string $fieldname
-     * @param string|array $condition
      */
     public function addRelationCondition(string $fieldname, string|array $condition): void
     {
@@ -221,7 +211,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
      * Fieldname is optional but highly recommended - needed for resetting condition based on fieldname
      * and exclude functionality in group by results
      *
-     * @param string|array $condition
      * @param string $fieldname - must be set for elastic search
      */
     public function addQueryCondition(string|array $condition, string $fieldname = ''): void
@@ -234,7 +223,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Reset query condition for fieldname
      *
-     * @param string $fieldname
      */
     public function resetQueryCondition(string $fieldname): void
     {
@@ -246,8 +234,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Adds price condition to product list
      *
-     * @param float|null $from
-     * @param float|null $to
      */
     public function addPriceCondition(float $from = null, float $to = null): void
     {
@@ -272,9 +258,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * sets order direction
      *
-     * @param string $order
      *
-     * @return void
      */
     public function setOrder(string $order): void
     {
@@ -285,7 +269,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * gets order direction
      *
-     * @return string|null
      */
     public function getOrder(): ?string
     {
@@ -301,7 +284,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
      * Array of arrays (field name, direction)
      * Array containing your sort configuration [self::ADVANCED_SORT => <sort_config as array>]
      *
-     * @return void
      */
     public function setOrderKey(array|string $orderKey): void
     {
@@ -323,9 +305,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Pass -1 to enable the unlimited scroll request
      *
-     * @param int $limit
      *
-     * @return void
      */
     public function setLimit(int $limit): void
     {
@@ -433,7 +413,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Returns the Elasticsearch query parameters
      *
-     * @return array
      */
     public function getQuery(): array
     {
@@ -493,7 +472,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * First case: no price filtering and no price sorting
      *
-     * @return array
      */
     protected function loadWithoutPriceFilterWithoutPriceSorting(): array
     {
@@ -519,7 +497,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Second case: no price filtering but price sorting
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -566,7 +543,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Third case: price filtering but no price sorting
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -578,7 +554,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Forth case: price filtering and price sorting
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -590,12 +565,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * build the complete query
      *
-     * @param array $params
-     * @param array $boolFilters
-     * @param array $queryFilters
-     * @param string|null $variantMode
      *
-     * @return array
      */
     protected function buildQuery(array $params, array $boolFilters, array $queryFilters, string $variantMode = null): array
     {
@@ -636,9 +606,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * builds system conditions
      *
-     * @param array $boolFilters
      *
-     * @return array
      */
     protected function buildSystemConditions(array $boolFilters): array
     {
@@ -663,10 +631,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * builds relation conditions of user specific query conditions
      *
-     * @param array $boolFilters
-     * @param array $excludedFieldnames
      *
-     * @return array
      */
     protected function buildRelationConditions(array $boolFilters, array $excludedFieldnames): array
     {
@@ -688,10 +653,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * builds filter condition of user specific conditions
      *
-     * @param array $boolFilters
-     * @param array $excludedFieldnames
      *
-     * @return array
      */
     protected function buildFilterConditions(array $boolFilters, array $excludedFieldnames): array
     {
@@ -713,10 +675,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * builds query condition of query filters
      *
-     * @param array $queryFilters
-     * @param array $excludedFieldnames
      *
-     * @return array
      */
     protected function buildQueryConditions(array $queryFilters, array $excludedFieldnames): array
     {
@@ -751,9 +710,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * loads element by id
      *
-     * @param int $elementId
      *
-     * @return DefaultMockup|null
      */
     protected function loadElementById(int $elementId): ?\Pimcore\Bundle\EcommerceFrameworkBundle\Model\DefaultMockup
     {
@@ -791,10 +748,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     }
 
     /**
-     * @param string $fieldname
-     * @param bool $countValues
-     * @param bool $fieldnameShouldBeExcluded
-     * @param array $aggregationConfig
      *
      * @throws \Exception
      */
@@ -843,7 +796,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * resets all set prepared group by values
      *
-     * @return void
      */
     public function resetPreparedGroupByValues(): void
     {
@@ -855,11 +807,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * loads group by values based on system either from local variable if prepared or directly from product index
      *
-     * @param string $fieldname
-     * @param bool $countValues
      * @param bool $fieldnameShouldBeExcluded => set to false for and-conditions
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -871,11 +819,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * loads group by values based on fieldname either from local variable if prepared or directly from product index
      *
-     * @param string $fieldname
-     * @param bool $countValues
      * @param bool $fieldnameShouldBeExcluded => set to false for and-conditions
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -887,11 +831,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * loads group by values based on relation fieldname either from local variable if prepared or directly from product index
      *
-     * @param string $fieldname
-     * @param bool $countValues
      * @param bool $fieldnameShouldBeExcluded => set to false for and-conditions
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -903,11 +843,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * checks if group by values are loaded and returns them
      *
-     * @param string $fieldname
-     * @param bool $countValues
-     * @param bool $fieldnameShouldBeExcluded
      *
-     * @return array
      */
     protected function doGetGroupByValues(string $fieldname, bool $countValues = false, bool $fieldnameShouldBeExcluded = true): array
     {
@@ -1061,9 +997,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * process the result array from elasticsearch
      *
-     * @param array $result
      *
-     * @return void
      */
     protected function processResult(array $result): void
     {
@@ -1092,9 +1026,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
      * Deep search for buckets in result aggregations array, as the structure of the result array
      * may differ dependent on the used aggregations (i.e. date filters, nested aggr, ...)
      *
-     * @param array $aggregations
      *
-     * @return array
      */
     protected function searchForBuckets(array $aggregations): array
     {
@@ -1121,9 +1053,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
     /**
      * Recursively convert aggregation data (sub-aggregations possible)
      *
-     * @param array $bucket
      *
-     * @return array
      */
     protected function convertBucketValues(array $bucket): array
     {
@@ -1243,7 +1173,6 @@ abstract class AbstractElasticSearch implements ProductListInterface
      * @param int $offset Page offset
      * @param int $itemCountPerPage Number of items per page
      *
-     * @return array
      */
     public function getItems(int $offset, int $itemCountPerPage): array
     {

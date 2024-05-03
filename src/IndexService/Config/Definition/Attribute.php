@@ -139,12 +139,7 @@ class Attribute
     /**
      * Get value from object, running through getter if defined
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
-     * @param ConfigInterface|null $tenantConfig
-     * @param mixed $default
      *
-     * @return mixed
      */
     public function getValue(IndexableInterface $object, int $subObjectId = null, ConfigInterface $tenantConfig = null, mixed $default = null): mixed
     {
@@ -167,9 +162,7 @@ class Attribute
     /**
      * Interpret value with interpreter if defined
      *
-     * @param mixed $value
      *
-     * @return mixed
      */
     public function interpretValue(mixed $value): mixed
     {

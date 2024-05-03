@@ -85,9 +85,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * cancel order item and refund payment
      *
-     * @param AbstractOrderItem $item
      *
-     * @return Note
      *
      * @throws \Exception
      */
@@ -129,10 +127,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * change order item
      *
-     * @param AbstractOrderItem $item
-     * @param float $amount
      *
-     * @return Note
      *
      * @throws Exception
      */
@@ -161,10 +156,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * start item complaint
      *
-     * @param AbstractOrderItem $item
-     * @param float $quantity
      *
-     * @return Note
      */
     public function itemComplaint(AbstractOrderItem $item, float $quantity): Note
     {
@@ -182,10 +174,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * set a item state
      *
-     * @param AbstractOrderItem $item
-     * @param string $state
      *
-     * @return Note
      *
      * @throws Exception
      */
@@ -280,8 +269,6 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * @param PaymentInterface $paymentProvider
-     * @param AbstractOrder|null $sourceOrder
      *
      * @return $this
      *
@@ -372,7 +359,7 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws PaymentNotAllowedException
      * @throws Exception
@@ -420,7 +407,6 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * @return PaymentInfo
      *
      * @throws Exception
      * @throws UnsupportedException
@@ -448,9 +434,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * generates internal payment id for current order
      *
-     * @param int|null $paymentInfoCount
      *
-     * @return string
      */
     protected function generateInternalPaymentId(int $paymentInfoCount = null): string
     {
@@ -469,7 +453,6 @@ class OrderAgent implements OrderAgentInterface
      *  - creation date
      *  - all product numbers
      *
-     * @return int
      */
     protected function getFingerprintOfOrder(): int
     {
@@ -492,7 +475,6 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * @return AbstractOrder
      *
      * @throws Exception
      * @throws UnsupportedException
@@ -521,7 +503,6 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * @param StatusInterface $status
      *
      * @return $this
      *
@@ -633,8 +614,6 @@ class OrderAgent implements OrderAgentInterface
     /**
      * Hook to extract and save additional information in payment information
      *
-     * @param StatusInterface $status
-     * @param AbstractPaymentInformation $currentPaymentInformation
      */
     protected function extractAdditionalPaymentInformation(StatusInterface $status, AbstractPaymentInformation $currentPaymentInformation): void
     {

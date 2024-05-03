@@ -26,23 +26,19 @@ interface FindologicConfigInterface extends ConfigInterface
     /**
      * returns findologic client parameters defined in the tenant config
      *
-     * @param string|null $setting
      *
-     * @return array|string|null
      */
     public function getClientConfig(string $setting = null): array|string|null;
 
     /**
      * returns condition for current subtenant
      *
-     * @return array
      */
     public function getSubTenantCondition(): array;
 
     /**
      * creates and returns tenant worker suitable for this tenant configuration
      *
-     * @return DefaultFindologicWorker
      */
     public function getTenantWorker(): DefaultFindologicWorker;
 }

@@ -123,7 +123,7 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws UnsupportedException
      */
@@ -142,9 +142,6 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
         return $this->commitOrderPayment($paymentStatus, $paymentProvider);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function committedOrderWithSamePaymentExists(StatusInterface|array $paymentResponseParams, PaymentInterface $paymentProvider): ?AbstractOrder
     {
         if (!$paymentResponseParams instanceof StatusInterface) {
@@ -175,7 +172,7 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws UnsupportedException|PaymentNotSuccessfulException
      * @throws \Exception
@@ -252,18 +249,12 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
      * Method for applying additional data to the order object based on payment information
      * Called in commitOrderPayment() just after updatePayment on OrderAgent is called
      *
-     * @param AbstractOrder $order
-     * @param StatusInterface $paymentStatus
-     * @param PaymentInterface $paymentProvider
      */
     protected function applyAdditionalDataToOrder(AbstractOrder $order, StatusInterface $paymentStatus, PaymentInterface $paymentProvider): void
     {
         // nothing to do by default
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function commitOrder(AbstractOrder $order): AbstractOrder
     {
         $this->eventDispatcher->dispatch(new CommitOrderProcessorEvent($this, $order), CommitOrderProcessorEvents::PRE_COMMIT_ORDER);
@@ -287,7 +278,6 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
     /**
      * Implementation-specific processing of order, must be implemented in subclass (e.g. sending order to ERP-system)
      *
-     * @param AbstractOrder $order
      */
     protected function processOrder(AbstractOrder $order): void
     {

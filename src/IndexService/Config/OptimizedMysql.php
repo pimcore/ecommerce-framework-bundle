@@ -29,11 +29,7 @@ class OptimizedMysql extends DefaultMysql implements MockupConfigInterface
     /**
      * creates object mockup for given data
      *
-     * @param int $objectId
-     * @param array $data
-     * @param array $relations
      *
-     * @return DefaultMockup
      */
     public function createMockupObject(int $objectId, array $data, array $relations): DefaultMockup
     {
@@ -44,9 +40,7 @@ class OptimizedMysql extends DefaultMysql implements MockupConfigInterface
      * Gets object mockup by id, can consider subIds and therefore return e.g. an array of values
      * always returns a object mockup if available
      *
-     * @param int $objectId
      *
-     * @return DefaultMockup
      */
     public function getObjectMockupById(int $objectId): DefaultMockup
     {
@@ -56,9 +50,6 @@ class OptimizedMysql extends DefaultMysql implements MockupConfigInterface
         return $worker->getMockupFromCache($objectId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
         if (!$tenantWorker instanceof OptimizedMysqlWorker) {

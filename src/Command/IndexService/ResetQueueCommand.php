@@ -28,9 +28,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ResetQueueCommand extends AbstractIndexServiceCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         parent::configure();
@@ -42,9 +39,6 @@ class ResetQueueCommand extends AbstractIndexServiceCommand
             ->addOption('tenant', null, InputOption::VALUE_REQUIRED, 'Tenant to perform action on. "*" means all tenants.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!($tenant = $input->getOption('tenant'))) {

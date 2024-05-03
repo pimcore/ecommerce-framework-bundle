@@ -26,7 +26,6 @@ interface IndexableInterface
     /**
      * defines if product is included into the product index. If false, product doesn't appear in product index.
      *
-     * @return bool
      */
     public function getOSDoIndexProduct(): bool;
 
@@ -35,7 +34,6 @@ interface IndexableInterface
      * there should either be a attribute in pro product object or
      * it should be overwritten in mapped sub classes of product classes
      *
-     * @return string|null
      */
     public function getPriceSystemName(): ?string;
 
@@ -44,9 +42,7 @@ interface IndexableInterface
      * there should either be a attribute in pro product object or
      * it should be overwritten in mapped sub classes of product classes in case of multiple criteria for product active state
      *
-     * @param bool $inProductList
      *
-     * @return bool
      */
     public function isActive(bool $inProductList = false): bool;
 
@@ -54,7 +50,6 @@ interface IndexableInterface
      * returns product type for product index (either object or variant).
      * by default it returns type of object, but it may be overwritten if necessary.
      *
-     * @return string|null
      */
     public function getOSIndexType(): ?string;
 
@@ -62,7 +57,6 @@ interface IndexableInterface
      * returns parent id for product index.
      * by default it returns id of parent object, but it may be overwritten if necessary.
      *
-     * @return int|string|null
      */
     public function getOSParentId(): int|string|null;
 
@@ -77,7 +71,6 @@ interface IndexableInterface
     /**
      * returns the class id of the object
      *
-     * @return string|null
      */
     public function getClassId(): ?string;
 }

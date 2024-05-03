@@ -54,7 +54,6 @@ class SessionCartItem extends AbstractCartItem implements CartItemInterface
     }
 
     /**
-     * @return array
      *
      * @internal
      */

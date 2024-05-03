@@ -37,9 +37,7 @@ class Gift implements GiftInterface
     /**
      * set gift product
      *
-     * @param AbstractProduct $product
      *
-     * @return GiftInterface
      */
     public function setProduct(AbstractProduct $product): GiftInterface
     {
@@ -76,7 +74,6 @@ class Gift implements GiftInterface
     /**
      * dont cache the entire product object
      *
-     * @return array
      *
      * @internal
      */

@@ -30,9 +30,7 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
     }
 
     /**
-     * @param int $id
      *
-     * @return bool|string
      *
      * @throws NotFoundException
      */

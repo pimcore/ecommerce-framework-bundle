@@ -27,8 +27,6 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\RuleInterface;
 interface CartPriceCalculatorInterface
 {
     /**
-     * @param EnvironmentInterface $environment
-     * @param CartInterface $cart
      * @param CartPriceModificatorInterface[] $modificators
      */
     public function __construct(EnvironmentInterface $environment, CartInterface $cart, array $modificators = []);
@@ -47,7 +45,6 @@ interface CartPriceCalculatorInterface
     /**
      * Reset calculations
      *
-     * @return void
      */
     public function reset(): void;
 
@@ -75,18 +72,14 @@ interface CartPriceCalculatorInterface
     /**
      * Manually add a modificator to this cart. By default they are loaded from the configuration.
      *
-     * @param CartPriceModificatorInterface $modificator
      *
-     * @return CartPriceCalculatorInterface
      */
     public function addModificator(CartPriceModificatorInterface $modificator): CartPriceCalculatorInterface;
 
     /**
      * Manually remove a modificator from this cart.
      *
-     * @param CartPriceModificatorInterface $modificator
      *
-     * @return CartPriceCalculatorInterface
      */
     public function removeModificator(CartPriceModificatorInterface $modificator): CartPriceCalculatorInterface;
 

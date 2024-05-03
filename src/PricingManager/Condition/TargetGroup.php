@@ -44,7 +44,6 @@ class TargetGroup implements ConditionInterface
     }
 
     /**
-     * @return array
      *
      * @internal
      */

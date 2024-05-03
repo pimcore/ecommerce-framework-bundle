@@ -25,18 +25,14 @@ interface ExportableTokenManagerInterface
     /**
      * Export tokens to CSV
      *
-     * @param array $params
      *
-     * @return string
      */
     public function exportCsv(array $params): string;
 
     /**
      * Export tokens to plain text list
      *
-     * @param array $params
      *
-     * @return string
      */
     public function exportPlain(array $params): string;
 }

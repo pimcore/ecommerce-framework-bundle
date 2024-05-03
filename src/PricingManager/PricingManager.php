@@ -31,14 +31,12 @@ class PricingManager implements PricingManagerInterface
     /**
      * Condition name => class mapping
      *
-     * @var array
      */
     protected array $conditionMapping = [];
 
     /**
      * Action name => class mapping
      *
-     * @var array
      */
     protected array $actionMapping = [];
 
@@ -112,7 +110,6 @@ class PricingManager implements PricingManagerInterface
     }
 
     /**
-     * @param CartInterface $cart
      *
      * @return RuleInterface[]
      */
@@ -229,9 +226,7 @@ class PricingManager implements PricingManagerInterface
     /**
      * Factory
      *
-     * @param string $type
      *
-     * @return ConditionInterface
      *
      * @throws InvalidConfigException
      */
@@ -249,9 +244,7 @@ class PricingManager implements PricingManagerInterface
     /**
      * Factory
      *
-     * @param string $type
      *
-     * @return ActionInterface
      *
      * @throws InvalidConfigException
      */
@@ -267,9 +260,7 @@ class PricingManager implements PricingManagerInterface
     }
 
     /**
-     * @param PriceSystemPriceInfoInterface $priceInfo
      *
-     * @return PriceInfoInterface
      *
      * @throws InvalidConfigException
      */

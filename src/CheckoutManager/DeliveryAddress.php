@@ -26,17 +26,11 @@ class DeliveryAddress extends AbstractStep implements CheckoutStepInterface
      */
     const PRIVATE_NAMESPACE = 'delivery_address';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'deliveryaddress';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function commit(mixed $data): bool
     {
         $this->cart->setCheckoutData(self::PRIVATE_NAMESPACE, json_encode($data));
@@ -44,9 +38,6 @@ class DeliveryAddress extends AbstractStep implements CheckoutStepInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): mixed
     {
         $data = json_decode((string) $this->cart->getCheckoutData(self::PRIVATE_NAMESPACE));

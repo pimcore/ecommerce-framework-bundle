@@ -53,7 +53,6 @@ class Listing extends AbstractOrderList implements OrderListInterface
     /**
      * get query builder
      *
-     * @return DoctrineQueryBuilder
      */
     public function getQueryBuilder(): DoctrineQueryBuilder
     {
@@ -196,7 +195,6 @@ class Listing extends AbstractOrderList implements OrderListInterface
     }
 
     /**
-     * @param string $classId
      *
      * @return $this
      *
@@ -220,7 +218,6 @@ class Listing extends AbstractOrderList implements OrderListInterface
     /**
      * join for item / sub items
      *
-     * @param DoctrineQueryBuilder $select
      *
      * @return $this
      */
@@ -264,8 +261,6 @@ class Listing extends AbstractOrderList implements OrderListInterface
     }
 
     /**
-     * @param string $condition
-     * @param string|null $value
      *
      * @return $this
      */

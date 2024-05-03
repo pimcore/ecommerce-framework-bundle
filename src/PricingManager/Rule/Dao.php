@@ -32,7 +32,6 @@ class Dao extends AbstractDao
     /**
      * Contains all valid columns in the database table
      *
-     * @var array
      */
     protected array $validColumns = [];
 
@@ -43,7 +42,6 @@ class Dao extends AbstractDao
     /**
      * Get the valid columns from the database
      *
-     * @return void
      */
     public function init(): void
     {
@@ -51,7 +49,6 @@ class Dao extends AbstractDao
     }
 
     /**
-     * @param int $id
      *
      * @throws NotFoundException
      */
@@ -76,7 +73,6 @@ class Dao extends AbstractDao
     /**
      * Save object to database
      *
-     * @return void
      */
     public function save(): void
     {
@@ -122,7 +118,6 @@ class Dao extends AbstractDao
     /**
      * Deletes object from database
      *
-     * @return void
      */
     public function delete(): void
     {

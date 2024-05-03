@@ -50,56 +50,48 @@ class Factory
     /**
      * Tenant specific cart managers
      *
-     * @var CartManagerLocatorInterface
      */
     private CartManagerLocatorInterface $cartManagers;
 
     /**
      * Tenant specific order managers
      *
-     * @var OrderManagerLocatorInterface
      */
     private OrderManagerLocatorInterface $orderManagers;
 
     /**
      * Pricing managers registered by tenant
      *
-     * @var PricingManagerLocatorInterface
      */
     private PricingManagerLocatorInterface $pricingManagers;
 
     /**
      * Price systems registered by name
      *
-     * @var PriceSystemLocatorInterface
      */
     private PriceSystemLocatorInterface $priceSystems;
 
     /**
      * Availability systems registered by name
      *
-     * @var AvailabilitySystemLocatorInterface
      */
     private AvailabilitySystemLocatorInterface $availabilitySystems;
 
     /**
      * Checkout manager factories registered by tenant
      *
-     * @var CheckoutManagerFactoryLocatorInterface
      */
     private CheckoutManagerFactoryLocatorInterface $checkoutManagerFactories;
 
     /**
      * Commit order processors registered by tenant
      *
-     * @var CommitOrderProcessorLocatorInterface
      */
     private CommitOrderProcessorLocatorInterface $commitOrderProcessors;
 
     /**
      * Filter services registered by ^tenant
      *
-     * @var FilterServiceLocatorInterface
      */
     private FilterServiceLocatorInterface $filterServices;
 
@@ -108,15 +100,6 @@ class Factory
      * injected through a service locator which is indexed by tenant/name. All other services
      * are loaded from the container on demand to make sure only services needed are built.
      *
-     * @param ContainerInterface $container
-     * @param CartManagerLocatorInterface $cartManagers
-     * @param OrderManagerLocatorInterface $orderManagers
-     * @param PricingManagerLocatorInterface $pricingManagers
-     * @param PriceSystemLocatorInterface $priceSystems
-     * @param AvailabilitySystemLocatorInterface $availabilitySystems
-     * @param CheckoutManagerFactoryLocatorInterface $checkoutManagerFactories
-     * @param CommitOrderProcessorLocatorInterface $commitOrderProcessors
-     * @param FilterServiceLocatorInterface $filterServices
      */
     public function __construct(
         ContainerInterface $container,
@@ -154,9 +137,7 @@ class Factory
      * Returns cart manager for a specific tenant. If no tenant is passed it will fall back to the current
      * checkout tenant or to "default" if no current checkout tenant is set.
      *
-     * @param string|null $tenant
      *
-     * @return CartManagerInterface
      */
     public function getCartManager(string $tenant = null): CartManagerInterface
     {
@@ -167,9 +148,7 @@ class Factory
      * Returns order manager for a specific tenant. If no tenant is passed it will fall back to the current
      * checkout tenant or to "default" if no current checkout tenant is set.
      *
-     * @param string|null $tenant
      *
-     * @return OrderManagerInterface
      */
     public function getOrderManager(string $tenant = null): OrderManagerInterface
     {
@@ -180,9 +159,7 @@ class Factory
      * Returns pricing manager for a specific tenant. If no tenant is passed it will fall back to the current
      * checkout tenant or to "default" if no current checkout tenant is set.
      *
-     * @param string|null $tenant
      *
-     * @return PricingManagerInterface
      */
     public function getPricingManager(string $tenant = null): PricingManagerInterface
     {
@@ -192,9 +169,7 @@ class Factory
     /**
      * Returns a price system by name. Falls back to "default" if no name is passed.
      *
-     * @param string|null $name
      *
-     * @return PriceSystemInterface
      */
     public function getPriceSystem(string $name = null): PriceSystemInterface
     {
@@ -204,9 +179,7 @@ class Factory
     /**
      * Returns an availability system by name. Falls back to "default" if no name is passed.
      *
-     * @param string|null $name
      *
-     * @return AvailabilitySystemInterface
      */
     public function getAvailabilitySystem(string $name = null): AvailabilitySystemInterface
     {
@@ -217,10 +190,7 @@ class Factory
      * Returns checkout manager for a specific tenant. If no tenant is passed it will fall back to the current
      * checkout tenant or to "default" if no current checkout tenant is set.
      *
-     * @param CartInterface $cart
-     * @param string|null $tenant
      *
-     * @return CheckoutManagerInterface
      */
     public function getCheckoutManager(CartInterface $cart, string $tenant = null): CheckoutManagerInterface
     {
@@ -232,9 +202,7 @@ class Factory
     /**
      * Returns a commit order processor which is configured for a specific checkout manager
      *
-     * @param string|null $tenant
      *
-     * @return CommitOrderProcessorInterface
      */
     public function getCommitOrderProcessor(string $tenant = null): CommitOrderProcessorInterface
     {
@@ -249,7 +217,6 @@ class Factory
     /**
      * Returns the index service which holds a collection of all index workers
      *
-     * @return IndexService
      */
     public function getIndexService(): IndexService
     {
@@ -260,9 +227,7 @@ class Factory
      * Returns the filter service for the currently set assortment tenant. Falls back to "default" if no tenant is passed
      * and there is no current assortment tenant set.
      *
-     * @param string|null $tenant
      *
-     * @return FilterService
      */
     public function getFilterService(string $tenant = null): FilterService
     {
@@ -287,9 +252,7 @@ class Factory
     /**
      * Builds a token manager for a specific token configuration
      *
-     * @param AbstractVoucherTokenType $configuration
      *
-     * @return TokenManagerInterface
      */
     public function getTokenManager(AbstractVoucherTokenType $configuration): TokenManagerInterface
     {

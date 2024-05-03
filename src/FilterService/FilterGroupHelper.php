@@ -38,9 +38,7 @@ class FilterGroupHelper
      *
      * might be overwritten, if new column groups are necessary
      *
-     * @param string $columnGroup
      *
-     * @return string
      */
     protected function getColumnTypeForColumnGroup(string $columnGroup): string
     {
@@ -50,11 +48,7 @@ class FilterGroupHelper
     /**
      * returns all possible group by values for given column group, product list and field combination
      *
-     * @param string $columnGroup
-     * @param ProductListInterface $productList
-     * @param string $field
      *
-     * @return array
      */
     public function getGroupByValuesForFilterGroup(string $columnGroup, ProductListInterface $productList, string $field): array
     {

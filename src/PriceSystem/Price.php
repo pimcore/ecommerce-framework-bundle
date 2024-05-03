@@ -58,9 +58,6 @@ class Price implements PriceInterface
         return $this->minPrice;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAmount(Decimal $amount, string $priceMode = self::PRICE_MODE_GROSS, bool $recalc = false): void
     {
         switch ($priceMode) {
@@ -77,9 +74,6 @@ class Price implements PriceInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAmount(): Decimal
     {
         return $this->grossAmount;
@@ -95,17 +89,11 @@ class Price implements PriceInterface
         return $this->currency;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGrossAmount(): Decimal
     {
         return $this->grossAmount;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNetAmount(): Decimal
     {
         return $this->netAmount;
@@ -119,17 +107,11 @@ class Price implements PriceInterface
         return $this->taxEntries;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTaxEntryCombinationMode(): ?string
     {
         return $this->taxEntryCombinationMode;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setGrossAmount(Decimal $grossAmount, bool $recalc = false): void
     {
         $this->grossAmount = $grossAmount;
@@ -139,9 +121,6 @@ class Price implements PriceInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setNetAmount(Decimal $netAmount, bool $recalc = false): void
     {
         $this->netAmount = $netAmount;
@@ -151,17 +130,11 @@ class Price implements PriceInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTaxEntries(array $taxEntries): void
     {
         $this->taxEntries = $taxEntries;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTaxEntryCombinationMode(?string $taxEntryCombinationMode = null): void
     {
         $this->taxEntryCombinationMode = $taxEntryCombinationMode;
@@ -170,7 +143,6 @@ class Price implements PriceInterface
     /**
      * Calls calculation service and updates taxes
      *
-     * @param string $calculationMode
      */
     protected function updateTaxes(string $calculationMode): void
     {

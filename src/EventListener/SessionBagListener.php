@@ -88,7 +88,6 @@ class SessionBagListener implements EventSubscriberInterface
     /**
      * Clears all session bags filled from the e-commerce framework
      *
-     * @param SessionInterface $session
      */
     public function clearSession(SessionInterface $session): void
     {

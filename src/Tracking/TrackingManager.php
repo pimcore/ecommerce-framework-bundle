@@ -58,7 +58,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Register a tracker
      *
-     * @param TrackerInterface $tracker
      */
     public function registerTracker(TrackerInterface $tracker): void
     {
@@ -126,8 +125,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track product impression
      *
-     * @param ProductInterface $product
-     * @param string $list
      */
     public function trackProductImpression(ProductInterface $product, string $list = 'default'): void
     {
@@ -141,7 +138,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track product view
      *
-     * @param ProductInterface $product
      */
     public function trackProductView(ProductInterface $product): void
     {
@@ -155,7 +151,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track a cart update
      *
-     * @param CartInterface $cart
      */
     public function trackCartUpdate(CartInterface $cart): void
     {
@@ -169,9 +164,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track product add to cart
      *
-     * @param CartInterface $cart
-     * @param ProductInterface $product
-     * @param float|int $quantity
      */
     public function trackCartProductActionAdd(CartInterface $cart, ProductInterface $product, float|int $quantity = 1): void
     {
@@ -185,9 +177,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track product remove from cart
      *
-     * @param CartInterface $cart
-     * @param ProductInterface $product
-     * @param float|int $quantity
      */
     public function trackCartProductActionRemove(CartInterface $cart, ProductInterface $product, float|int $quantity = 1): void
     {
@@ -201,7 +190,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track start checkout with first step
      *
-     * @param CartInterface $cart
      */
     public function trackCheckout(CartInterface $cart): void
     {
@@ -215,7 +203,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track checkout complete
      *
-     * @param AbstractOrder $order
      */
     public function trackCheckoutComplete(AbstractOrder $order): void
     {
@@ -237,10 +224,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track checkout step
      *
-     * @param CheckoutManagerCheckoutStepInterface $step
-     * @param CartInterface $cart
-     * @param string|null $stepNumber
-     * @param string|null $checkoutOption
      */
     public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, string $stepNumber = null, string $checkoutOption = null): void
     {

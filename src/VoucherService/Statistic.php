@@ -45,10 +45,7 @@ class Statistic extends \Pimcore\Model\AbstractModel
     }
 
     /**
-     * @param int $seriesId
-     * @param int|null $usagePeriod
      *
-     * @return bool|array
      *
      * @throws \Exception
      */

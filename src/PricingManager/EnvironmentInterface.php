@@ -90,14 +90,12 @@ interface EnvironmentInterface
     /**
      * returns in with execution mode the system is - either product or cart
      *
-     * @return string
      */
     public function getExecutionMode(): string;
 
     /**
      * returns hash of environment based on its content
      *
-     * @return string
      */
     public function getHash(): string;
 }

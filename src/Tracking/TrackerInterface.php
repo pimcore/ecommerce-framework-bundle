@@ -21,14 +21,12 @@ interface TrackerInterface
     /**
      * Returns assortment tenants the tracker should be activated for.
      *
-     * @return array
      */
     public function getAssortmentTenants(): array;
 
     /**
      * Returns checkout tenants the tracker should be activated for.
      *
-     * @return array
      */
     public function getCheckoutTenants(): array;
 }

@@ -80,10 +80,8 @@ class Token extends AbstractModel
     }
 
     /**
-     * @param int|null $maxUsages
      * @param bool $isCheckout In the checkout there is one reservation more, the one of the current order.
      *
-     * @return bool
      */
     public function check(int $maxUsages = null, bool $isCheckout = false): bool
     {

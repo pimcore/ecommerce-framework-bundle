@@ -25,9 +25,6 @@ class TenantProcessorTest extends TestCase
 {
     private TenantProcessor $processor;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->processor = new TenantProcessor();
