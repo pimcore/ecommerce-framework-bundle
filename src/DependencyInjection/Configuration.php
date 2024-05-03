@@ -72,9 +72,6 @@ final class Configuration implements ConfigurationInterface
         $this->indexWorkerConfigMapper = new DefaultWorkerConfigMapper();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('pimcore_ecommerce_framework');
@@ -1131,10 +1128,7 @@ final class Configuration implements ConfigurationInterface
     /**
      * Normalizes properties from old to new names to easy migration
      *
-     * @param array $data
-     * @param array $map
      *
-     * @return array
      */
     private function remapProperties(array $data, array $map): array
     {

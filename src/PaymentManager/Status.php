@@ -21,43 +21,34 @@ class Status implements StatusInterface
     /**
      * internal pimcore order status - see also constants \Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrder::ORDER_STATE_*
      *
-     * @var string
      */
     protected string $status;
 
     /**
      * pimcore internal payment id, necessary to identify payment information in order object
      *
-     * @var string
      */
     protected string $internalPaymentId;
 
     /**
      * payment reference from payment provider
      *
-     * @var string
      */
     protected string $paymentReference;
 
     /**
      * payment message provided from payment provider - e.g. error message on error
      *
-     * @var string
      */
     protected string $message;
 
     /**
      * additional payment data
      *
-     * @var array
      */
     protected array $data = [];
 
     /**
-     * @param string $internalPaymentId
-     * @param string $paymentReference
-     * @param string $message
-     * @param string $status
      * @param array  $data  extended data
      */
     public function __construct(string $internalPaymentId, string $paymentReference, string $message, string $status, array $data = [])

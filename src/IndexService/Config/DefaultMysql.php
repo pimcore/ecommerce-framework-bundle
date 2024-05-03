@@ -60,8 +60,6 @@ class DefaultMysql extends AbstractConfig implements MysqlConfigInterface
     /**
      * in case of subtenants returns a data structure containing all sub tenants
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return mixed $subTenantData
      */
@@ -73,20 +71,13 @@ class DefaultMysql extends AbstractConfig implements MysqlConfigInterface
     /**
      * populates index for tenant relations based on gived data
      *
-     * @param mixed $objectId
-     * @param mixed $subTenantData
-     * @param mixed $subObjectId
      *
-     * @return void
      */
     public function updateSubTenantEntries(mixed $objectId, mixed $subTenantData, mixed $subObjectId = null): void
     {
         return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
         if (!$tenantWorker instanceof DefaultMysqlWorker) {

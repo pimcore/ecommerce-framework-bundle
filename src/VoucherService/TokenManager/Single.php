@@ -108,9 +108,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     /**
      * Get data for export
      *
-     * @param array $params
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -153,11 +151,6 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
         return false;
     }
 
-    /**
-     * @param array|null $filter
-     *
-     * @return array|bool
-     */
     public function getCodes(array $filter = null): bool|array
     {
         return Token\Listing::getCodes($this->seriesId, $filter);
@@ -234,10 +227,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     /**
      * cleans up the token usage and the ordered token object if necessary
      *
-     * @param OnlineShopVoucherToken $tokenObject
-     * @param AbstractOrder $order
      *
-     * @return bool
      */
     public function removeAppliedTokenFromOrder(OnlineShopVoucherToken $tokenObject, AbstractOrder $order): bool
     {

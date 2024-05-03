@@ -22,9 +22,6 @@ class DefaultClassificationStore implements InterpreterInterface
 {
     /**
      * @param Classificationstore|null $value
-     * @param array|null $config
-     *
-     * @return array|null
      *
      * @throws \Exception
      */
@@ -57,9 +54,7 @@ class DefaultClassificationStore implements InterpreterInterface
     /**
      * Get all keys from objects store - including inherited information
      *
-     * @param Classificationstore $store
      *
-     * @return array
      */
     public function getAllKeysFromStore(Classificationstore $store): array
     {

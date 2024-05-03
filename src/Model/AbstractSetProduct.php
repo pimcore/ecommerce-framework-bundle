@@ -49,10 +49,8 @@ abstract class AbstractSetProduct extends AbstractProduct
      * default implementation checks if set product is active, given products are bookable and set product has a valid price
      * if no products given, mandatory products are used
      *
-     * @param int $quantityScale
      * @param AbstractSetProductEntry[]|null $products
      *
-     * @return bool
      */
     public function getOSIsBookable(int $quantityScale = 1, array $products = null): bool
     {
@@ -81,10 +79,7 @@ abstract class AbstractSetProduct extends AbstractProduct
     /**
      * Delivers min price for given products or with default mandatory products of set product
      *
-     * @param int|null $quantityScale
-     * @param array|null $products
      *
-     * @return PriceInterface
      *
      * @throws UnsupportedException
      */
@@ -96,10 +91,7 @@ abstract class AbstractSetProduct extends AbstractProduct
     /**
      * Delivers priceinfo with min price for given products or with  default mandatory products of set product
      *
-     * @param int|null $quantityScale
-     * @param array|null $products
      *
-     * @return PriceInfoInterface
      *
      * @throws UnsupportedException
      */
@@ -113,10 +105,7 @@ abstract class AbstractSetProduct extends AbstractProduct
     }
 
     /**
-     * @param int|null $quantity
      * @param AbstractSetProductEntry[]|null $products
-     *
-     * @return AvailabilityInterface
      *
      * @throws UnsupportedException
      */
@@ -137,8 +126,6 @@ abstract class AbstractSetProduct extends AbstractProduct
      * checks if all mandatory of set products are set in given product list
      *
      * @param  AbstractSetProductEntry[] $products
-     *
-     * @return void
      *
      * @throws UnsupportedException
      */

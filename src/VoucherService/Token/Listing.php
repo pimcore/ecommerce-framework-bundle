@@ -37,8 +37,6 @@ class Listing extends \Pimcore\Model\Listing\AbstractListing implements Paginate
     }
 
     /**
-     * @param int|null $seriesId
-     * @param array $filter
      *
      * @throws \Exception
      */
@@ -327,7 +325,6 @@ class Listing extends \Pimcore\Model\Listing\AbstractListing implements Paginate
      * @param int $offset Page offset
      * @param int $itemCountPerPage Number of items per page
      *
-     * @return array
      */
     public function getItems(int $offset, int $itemCountPerPage): array
     {

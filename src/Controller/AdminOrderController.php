@@ -91,11 +91,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
     /**
      * @Route("/list", name="pimcore_ecommerce_backend_admin-order_list", methods={"GET"})
      *
-     * @param Request $request
-     * @param IntlFormatter $formatter
-     * @param PaginatorInterface $paginator
      *
-     * @return Response
      */
     public function listAction(Request $request, IntlFormatter $formatter, PaginatorInterface $paginator): Response
     {
@@ -198,12 +194,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
     /**
      * @Route("/detail", name="pimcore_ecommerce_backend_admin-order_detail", methods={"GET"})
      *
-     * @param Request $request
-     * @param ClientInterface $client
-     * @param IntlFormatter $formatter
-     * @param LocaleServiceInterface $localeService
      *
-     * @return Response
      */
     public function detailAction(
         Request $request,
@@ -384,10 +375,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
     /**
      * @Route("/item-cancel", name="pimcore_ecommerce_backend_admin-order_item-cancel", methods={"GET", "POST"})
      *
-     * @param Request $request
-     * @param CsrfProtectionHandler $csrfProtection
      *
-     * @return Response
      */
     public function itemCancelAction(Request $request, CsrfProtectionHandler $csrfProtection): Response
     {

@@ -33,7 +33,6 @@ class Bracket implements BracketInterface
     protected array $operator = [];
 
     /**
-     * @param ConditionInterface $condition
      * @param string|null $operator BracketInterface::OPERATOR_*
      *
      * @return $this
@@ -124,7 +123,6 @@ class Bracket implements BracketInterface
     }
 
     /**
-     * @param string $string
      *
      * @return $this
      *
@@ -145,7 +143,6 @@ class Bracket implements BracketInterface
     }
 
     /**
-     * @param string $typeClass
      *
      * @return ConditionInterface[]
      */

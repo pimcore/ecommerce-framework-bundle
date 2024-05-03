@@ -111,9 +111,6 @@ class OptimizedMysql extends AbstractMockupCacheWorker implements BatchProcessin
     /**
      * updates all index tables, delegates subtenant updates to tenant config and updates mockup cache
      *
-     * @param int $objectId
-     * @param array|null $data
-     * @param array|null $metadata
      */
     public function doUpdateIndex(int $objectId, array $data = null, array $metadata = null): void
     {

@@ -25,8 +25,6 @@ class SnippetResponse extends AbstractResponse
     /**
      * SnippetResponse constructor.
      *
-     * @param AbstractOrder $order
-     * @param string $snippet
      */
     public function __construct(AbstractOrder $order, string $snippet)
     {

@@ -33,17 +33,11 @@ class PaymentProviderInstaller extends AbstractInstaller
      */
     protected array $bricksToInstall = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeInstalled(): bool
     {
         return !$this->isInstalled();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUninstalled(): bool
     {
         return $this->isInstalled();
@@ -59,9 +53,6 @@ class PaymentProviderInstaller extends AbstractInstaller
         $this->unInstallBricks();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isInstalled(): bool
     {
         $installed = false;
@@ -78,9 +69,6 @@ class PaymentProviderInstaller extends AbstractInstaller
         return (bool) $installed;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function needsReloadAfterInstall(): bool
     {
         return true;

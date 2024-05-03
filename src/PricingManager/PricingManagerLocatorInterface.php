@@ -19,11 +19,6 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager;
 
 interface PricingManagerLocatorInterface
 {
-    /**
-     * @param string|null $tenant
-     *
-     * @return PricingManagerInterface
-     */
     public function getPricingManager(string $tenant = null): PricingManagerInterface;
 
     public function hasPricingManager(string $tenant): bool;

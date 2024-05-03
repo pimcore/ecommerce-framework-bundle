@@ -32,7 +32,6 @@ interface TokenManagerInterface
      * Checks if the configuration objects contains valid values to
      * generate the new token(s).
      *
-     * @return bool
      */
     public function isValidSetting(): bool;
 
@@ -41,7 +40,6 @@ interface TokenManagerInterface
      *
      * @param array|null $filter Associative with the indices: "usage" and "olderThan".
      *
-     * @return bool
      */
     public function cleanUpCodes(?array $filter = []): bool;
 
@@ -49,10 +47,7 @@ interface TokenManagerInterface
      * Checks a token code, if it is available for putting into cart
      * e.g. it is not reserved or used, or other tokenType specific settings.
      *
-     * @param string $code
-     * @param CartInterface $cart
      *
-     * @return bool
      *
      * @throws \Pimcore\Bundle\EcommerceFrameworkBundle\Exception\VoucherServiceException
      */
@@ -61,10 +56,7 @@ interface TokenManagerInterface
     /**
      * Adds a reservation to a specific token code.
      *
-     * @param string $code
-     * @param CartInterface $cart
      *
-     * @return bool
      *
      * @throws \Pimcore\Bundle\EcommerceFrameworkBundle\Exception\VoucherServiceException
      */
@@ -74,11 +66,7 @@ interface TokenManagerInterface
      * Creates token object and adds it to order, increases token usage and
      * clears the reservation of the token.
      *
-     * @param string $code
-     * @param CartInterface $cart
-     * @param AbstractOrder $order
      *
-     * @return bool|\Pimcore\Model\DataObject\OnlineShopVoucherToken
      *
      * @throws \Pimcore\Bundle\EcommerceFrameworkBundle\Exception\VoucherServiceException
      */
@@ -87,29 +75,21 @@ interface TokenManagerInterface
     /**
      * Removes the reservation of a token code.
      *
-     * @param string $code
-     * @param CartInterface $cart
      *
-     * @return bool
      */
     public function releaseToken(string $code, CartInterface $cart): bool;
 
     /**
      * cleans up the token usage and the ordered token object if necessary
      *
-     * @param \Pimcore\Model\DataObject\OnlineShopVoucherToken $tokenObject
-     * @param AbstractOrder $order
      *
-     * @return bool
      */
     public function removeAppliedTokenFromOrder(OnlineShopVoucherToken $tokenObject, AbstractOrder $order): bool;
 
     /**
      * Get the codes of a voucher series, optionally a filter array can be passed.
      *
-     * @param array|null $filter
      *
-     * @return array|bool
      */
     public function getCodes(array $filter = null): bool|array;
 
@@ -122,10 +102,7 @@ interface TokenManagerInterface
     /**
      * Removes reservations
      *
-     * @param int $duration
-     * @param int|null $seriesId
      *
-     * @return bool
      */
     public function cleanUpReservations(int $duration = 0, ?int $seriesId = null): bool;
 
@@ -134,7 +111,6 @@ interface TokenManagerInterface
      * Gets the codes according to paging and filter params and sets
      * error/success messages, settings and statistics for view.
      *
-     * @param array $viewParamsBag
      * @param array $params All params, especially for filtering and ordering token codes.
      *
      * @return string The path of the template to display.

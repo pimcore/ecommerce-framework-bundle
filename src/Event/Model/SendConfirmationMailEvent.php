@@ -36,9 +36,6 @@ class SendConfirmationMailEvent extends Event
     /**
      * SendConfirmationMailEvent constructor.
      *
-     * @param CommitOrderProcessorInterface $commitOrderProcessor
-     * @param AbstractOrder $order
-     * @param string $confirmationMailConfig
      */
     public function __construct(CommitOrderProcessorInterface $commitOrderProcessor, AbstractOrder $order, string $confirmationMailConfig)
     {

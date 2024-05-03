@@ -49,7 +49,6 @@ interface CartItemInterface
     /**
      * @param CartItemInterface[] $subItems
      *
-     * @return void
      */
     public function setSubItems(array $subItems): void;
 
@@ -73,28 +72,18 @@ interface CartItemInterface
     /**
      * @static
      *
-     * @param int|string $cartId
-     * @param string $itemKey
-     * @param string $parentKey
      *
-     * @return CartItemInterface|null
      */
     public static function getByCartIdItemKey(int|string $cartId, string $itemKey, string $parentKey = ''): ?CartItemInterface;
 
     /**
      * @static
      *
-     * @param int|string $cartId
      */
     public static function removeAllFromCart(int|string $cartId): void;
 
     public function save(): void;
 
-    /**
-     * @param \DateTime|null $date
-     *
-     * @return void
-     */
     public function setAddedDate(\DateTime $date = null): void;
 
     public function getAddedDate(): \DateTime;
@@ -109,7 +98,6 @@ interface CartItemInterface
     /**
      * get item name
      *
-     * @return string
      */
     public function getName(): string;
 }

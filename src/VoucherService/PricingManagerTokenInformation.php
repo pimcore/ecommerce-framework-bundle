@@ -23,14 +23,12 @@ class PricingManagerTokenInformation
     /**
      * Entered voucher token code
      *
-     * @var string
      */
     protected string $tokenCode;
 
     /**
      * Corresponding voucher token object
      *
-     * @var Token
      */
     protected Token $tokenObject;
 
@@ -46,7 +44,6 @@ class PricingManagerTokenInformation
     /**
      * Flag that indicates if no pricing rules are defined for the given voucher token at all.
      *
-     * @var bool
      */
     protected bool $hasNoValidRule = false;
 

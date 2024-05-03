@@ -33,39 +33,28 @@ interface OrderAgentInterface
     /**
      * cancel order item and refund payment
      *
-     * @param OrderItem $item
      *
-     * @return Note
      */
     public function itemCancel(OrderItem $item): Note;
 
     /**
      * start item complaint
      *
-     * @param OrderItem $item
-     * @param float $quantity
      *
-     * @return Note
      */
     public function itemComplaint(OrderItem $item, float $quantity): Note;
 
     /**
      * change order item
      *
-     * @param OrderItem $item
-     * @param float $amount
      *
-     * @return Note
      */
     public function itemChangeAmount(OrderItem $item, float $amount): Note;
 
     /**
      * set a item state
      *
-     * @param OrderItem $item
-     * @param string $state
      *
-     * @return Note
      */
     public function itemSetState(OrderItem $item, string $state): Note;
 
@@ -75,12 +64,6 @@ interface OrderAgentInterface
 
     public function getPaymentProvider(): PaymentInterface;
 
-    /**
-     * @param PaymentInterface $paymentProvider
-     * @param AbstractOrder|null $sourceOrder
-     *
-     * @return OrderAgentInterface
-     */
     public function setPaymentProvider(PaymentInterface $paymentProvider, AbstractOrder $sourceOrder = null): OrderAgentInterface;
 
     /**
@@ -90,7 +73,6 @@ interface OrderAgentInterface
      *
      * throws exception when payment info exists
      *
-     * @return AbstractPaymentInformation
      *
      * @throws UnsupportedException
      */
@@ -103,7 +85,6 @@ interface OrderAgentInterface
      * if true -> returns existing payment info
      * if false -> creates new payment info (and aborts existing PENDING payment infos)
      *
-     * @return AbstractPaymentInformation
      *
      * @throws UnsupportedException
      */
@@ -112,7 +93,6 @@ interface OrderAgentInterface
     /**
      * Returns current payment info of order, or null if none exists
      *
-     * @return null|AbstractPaymentInformation
      */
     public function getCurrentPendingPaymentInfo(): ?AbstractPaymentInformation;
 
@@ -124,7 +104,6 @@ interface OrderAgentInterface
      *
      * only possible when payment state is PENDING, otherwise exception is thrown
      *
-     * @return Order
      *
      * @throws UnsupportedException
      */

@@ -43,11 +43,6 @@ class ProcessPreparationQueueCommand extends AbstractIndexServiceCommand
 
     protected IndexService $indexService;
 
-    /**
-     * @param IndexUpdateService $indexUpdateService
-     * @param IndexService $indexService
-     * @param string|null $name
-     */
     public function __construct(IndexUpdateService $indexUpdateService, IndexService $indexService, string $name = null)
     {
         parent::__construct($name);
@@ -55,9 +50,6 @@ class ProcessPreparationQueueCommand extends AbstractIndexServiceCommand
         $this->indexService = $indexService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         parent::configure();

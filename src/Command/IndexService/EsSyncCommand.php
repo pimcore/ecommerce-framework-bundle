@@ -29,9 +29,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EsSyncCommand extends AbstractIndexServiceCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         parent::configure();
@@ -51,9 +48,6 @@ class EsSyncCommand extends AbstractIndexServiceCommand
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $mode = $input->getArgument('mode');

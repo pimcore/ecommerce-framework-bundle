@@ -29,10 +29,7 @@ class TaxCalculationService
     /**
      * Updates taxes in given price by using its tax entries and net or gross amount based on the given $calculationMode
      *
-     * @param PriceInterface $price
      * @param string $calculationMode - valid options are TaxCalculationService::CALCULATION_FROM_NET (default) and TaxCalculationService::CALCULATION_FROM_GROSS
-     *
-     * @return PriceInterface
      *
      * @throws UnsupportedException
      */
@@ -51,9 +48,7 @@ class TaxCalculationService
     /**
      * Calculates taxes based on the net amount of the price and the tax entries
      *
-     * @param PriceInterface $price
      *
-     * @return PriceInterface
      *
      * @throws UnsupportedException
      */
@@ -102,9 +97,7 @@ class TaxCalculationService
     /**
      * Calculates taxes based on the gross amount of the price and the tax entries
      *
-     * @param PriceInterface $price
      *
-     * @return PriceInterface
      *
      * @throws UnsupportedException
      */

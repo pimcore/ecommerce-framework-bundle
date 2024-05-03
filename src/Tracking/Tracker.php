@@ -34,11 +34,6 @@ abstract class Tracker implements TrackerInterface
     /**
      * Tracker constructor.
      *
-     * @param TrackingItemBuilderInterface $trackingItemBuilder
-     * @param Environment $twig
-     * @param array $options
-     * @param array $assortmentTenants
-     * @param array $checkoutTenants
      */
     public function __construct(
         TrackingItemBuilderInterface $trackingItemBuilder,
@@ -90,10 +85,7 @@ abstract class Tracker implements TrackerInterface
     /**
      * Remove null values from an object, keep protected keys in any case
      *
-     * @param array $data
-     * @param array $protectedKeys
      *
-     * @return array
      */
     protected function filterNullValues(array $data, array $protectedKeys = []): array
     {
@@ -108,17 +100,11 @@ abstract class Tracker implements TrackerInterface
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAssortmentTenants(): array
     {
         return $this->assortmentTenants;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCheckoutTenants(): array
     {
         return $this->checkoutTenants;

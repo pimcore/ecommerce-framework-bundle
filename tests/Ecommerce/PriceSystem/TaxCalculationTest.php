@@ -34,9 +34,6 @@ class TaxCalculationTest extends EcommerceTestCase
 {
     private TaxCalculationService $calculationService;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();

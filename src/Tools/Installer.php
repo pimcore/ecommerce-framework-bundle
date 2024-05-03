@@ -180,9 +180,6 @@ class Installer extends AbstractInstaller
         $this->uninstallTables();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isInstalled(): bool
     {
         $installed = false;
@@ -199,17 +196,11 @@ class Installer extends AbstractInstaller
         return (bool) $installed;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeInstalled(): bool
     {
         return !$this->isInstalled();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUninstalled(): bool
     {
         return $this->isInstalled();

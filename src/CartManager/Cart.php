@@ -142,7 +142,6 @@ class Cart extends AbstractCart implements CartInterface
     /**
      * @param string $countSubItems - use one of COUNT_MAIN_ITEMS_ONLY, COUNT_MAIN_OR_SUB_ITEMS, COUNT_MAIN_AND_SUB_ITEMS
      *
-     * @return int
      */
     public function getItemCount(string $countSubItems = self::COUNT_MAIN_ITEMS_ONLY): int
     {
@@ -179,9 +178,7 @@ class Cart extends AbstractCart implements CartInterface
     /**
      * @static
      *
-     * @param int $userId
      *
-     * @return array
      */
     public static function getAllCartsForUser(int $userId): array
     {

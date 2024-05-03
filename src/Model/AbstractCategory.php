@@ -30,7 +30,6 @@ class AbstractCategory extends \Pimcore\Model\DataObject\Concrete
      *
      * all products if category shoes or shirts are visible in queries for category football
      *
-     * @return bool
      */
     public function getOSProductsInParentCategoryVisible(): bool
     {

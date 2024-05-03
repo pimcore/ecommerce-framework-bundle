@@ -24,7 +24,6 @@ interface CategoryInterface extends ConditionInterface
     /**
      * @param AbstractCategory[] $categories
      *
-     * @return CategoryInterface
      */
     public function setCategories(array $categories): CategoryInterface;
 

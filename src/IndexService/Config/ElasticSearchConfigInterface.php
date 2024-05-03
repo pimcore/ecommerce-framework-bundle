@@ -27,14 +27,12 @@ interface ElasticSearchConfigInterface extends ConfigInterface
     /**
      * returns condition for current subtenant
      *
-     * @return array
      */
     public function getSubTenantCondition(): array;
 
     /**
      * creates and returns tenant worker suitable for this tenant configuration
      *
-     * @return WorkerInterface
      */
     public function getTenantWorker(): WorkerInterface;
 
@@ -47,20 +45,13 @@ interface ElasticSearchConfigInterface extends ConfigInterface
      */
     public function getSynonymProviders(): array;
 
-    /**
-     * @param string|null $property
-     *
-     * @return array|string|null
-     */
     public function getClientConfig(string $property = null): array|string|null;
 
     /**
      * returns the full field name
      *
-     * @param string $fieldName
      * @param bool $considerSubFieldNames - activate to consider subfield names like name.analyzed or score definitions like name^3
      *
-     * @return string
      */
     public function getFieldNameMapped(string $fieldName, bool $considerSubFieldNames = false): string;
 
@@ -68,7 +59,6 @@ interface ElasticSearchConfigInterface extends ConfigInterface
      * returns short field name based on full field name
      * also considers subfield names like name.analyzed etc.
      *
-     * @param string $fullFieldName
      *
      * @return false|int|string
      */

@@ -26,14 +26,12 @@ interface BatchProcessingWorkerInterface extends WorkerInterface
     /**
      * fills queue based on path
      *
-     * @param IndexableInterface $object
      */
     public function fillupPreparationQueue(IndexableInterface $object): void;
 
     /**
      * prepare data for index creation and store is in store table
      *
-     * @param IndexableInterface $object
      *
      * @return array returns the processed subobjects that can be used for the index update.
      */
@@ -42,14 +40,12 @@ interface BatchProcessingWorkerInterface extends WorkerInterface
     /**
      * resets the store table by marking all items as "in preparation", so items in store will be regenerated
      *
-     * @return void
      */
     public function resetPreparationQueue(): void;
 
     /**
      * resets the store table to initiate a re-indexing
      *
-     * @return void
      */
     public function resetIndexingQueue(): void;
 }

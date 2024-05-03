@@ -29,42 +29,36 @@ interface PriceInfoInterface
     /**
      * Returns single price
      *
-     * @return PriceInterface
      */
     public function getPrice(): PriceInterface;
 
     /**
      * Returns total price (single price * quantity)
      *
-     * @return PriceInterface
      */
     public function getTotalPrice(): PriceInterface;
 
     /**
      * Returns if price is a minimal price (e.g. when having many product variants they might have a from price)
      *
-     * @return bool
      */
     public function isMinPrice(): bool;
 
     /**
      * Returns quantity
      *
-     * @return int|string
      */
     public function getQuantity(): int|string;
 
     /**
      * Numeric quantity or constant PriceInterfaceInfo::MIN_PRICE
      *
-     * @param int|string $quantity
      */
     public function setQuantity(int|string $quantity): void;
 
     /**
      * Relation to price system
      *
-     * @param PriceSystemInterface $priceSystem
      *
      * @return $this
      */
@@ -73,7 +67,6 @@ interface PriceInfoInterface
     /**
      * Relation to product
      *
-     * @param CheckoutableInterface $product
      *
      * @return $this
      */
@@ -82,7 +75,6 @@ interface PriceInfoInterface
     /**
      * Returns product
      *
-     * @return CheckoutableInterface|null
      */
     public function getProduct(): ?CheckoutableInterface;
 }

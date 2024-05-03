@@ -88,7 +88,6 @@ interface OrderListInterface extends SeekableIterator, ArrayAccess, PaginateList
      * enable product query
      * table alias: product
      *
-     * @param string $classId
      *
      * @return $this
      */
@@ -98,7 +97,6 @@ interface OrderListInterface extends SeekableIterator, ArrayAccess, PaginateList
      * enable customer query
      * table alias: customer
      *
-     * @param string $classId
      *
      * @return $this
      */
@@ -113,8 +111,6 @@ interface OrderListInterface extends SeekableIterator, ArrayAccess, PaginateList
     public function joinPricingRule(): static;
 
     /**
-     * @param string $condition
-     * @param string|null $value
      *
      * @return $this
      */

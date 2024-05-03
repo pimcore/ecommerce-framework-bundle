@@ -29,7 +29,6 @@ abstract class AbstractSearch implements OrderListFilterInterface
     /**
      * Search value
      *
-     * @var string
      */
     protected string $value;
 
@@ -41,14 +40,12 @@ abstract class AbstractSearch implements OrderListFilterInterface
     /**
      * Return the string coming before LIKE, e.g. 'order.invoiceEmail'
      *
-     * @return string
      */
     abstract protected function getConditionColumn(): string;
 
     /**
      * Pad the value with wildcards
      *
-     * @return string
      */
     protected function getConditionValue(): string
     {
@@ -74,7 +71,6 @@ abstract class AbstractSearch implements OrderListFilterInterface
     /**
      * Override if necessary (e.g. join a table)
      *
-     * @param OrderListInterface $orderList
      */
     protected function prepareApply(OrderListInterface $orderList): void
     {

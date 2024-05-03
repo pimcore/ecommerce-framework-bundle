@@ -70,10 +70,8 @@ class DefaultService implements ServiceInterface
     }
 
     /**
-     * @param CartInterface $cart
      * @param CartItemInterface[] $excludeItems
      *
-     * @return AbstractOffer
      */
     public function createNewOfferFromCart(CartInterface $cart, array $excludeItems = []): AbstractOffer
     {
@@ -224,9 +222,7 @@ class DefaultService implements ServiceInterface
      * transforms price before set to the offer tool item.
      * can be used e.g. for adding vat, ...
      *
-     * @param Decimal $price
      *
-     * @return Decimal
      */
     protected function priceTransformationHook(Decimal $price): Decimal
     {

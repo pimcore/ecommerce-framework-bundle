@@ -28,34 +28,27 @@ abstract class AbstractFilterDefinition extends DataObject\Concrete implements D
     /**
      * returns page limit for product list
      *
-     * @abstract
      *
-     * @return float|null
      */
     abstract public function getPageLimit(): ?float;
 
     /**
      * returns list of available fields for sorting ascending
      *
-     * @abstract
      *
-     * @return string|null
      */
     abstract public function getOrderByAsc(): ?string;
 
     /**
      * returns list of available fields for sorting descending
      *
-     * @abstract
      *
-     * @return string|null
      */
     abstract public function getOrderByDesc(): ?string;
 
     /**
      * return array of field collections for preconditions
      *
-     * @abstract
      *
      * @return Fieldcollection<AbstractFilterDefinitionType>|null
      */
@@ -64,7 +57,6 @@ abstract class AbstractFilterDefinition extends DataObject\Concrete implements D
     /**
      * return array of field collections for filters
      *
-     * @abstract
      *
      * @return Fieldcollection<AbstractFilterDefinitionType>|null
      */
@@ -73,9 +65,7 @@ abstract class AbstractFilterDefinition extends DataObject\Concrete implements D
     /**
      * enables inheritance for field collections, if xxxInheritance field is available and set to string 'true'
      *
-     * @param string $key
      *
-     * @return Fieldcollection|null
      */
     public function preGetValue(string $key): ?Fieldcollection
     {

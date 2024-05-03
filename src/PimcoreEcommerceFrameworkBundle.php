@@ -35,17 +35,11 @@ class PimcoreEcommerceFrameworkBundle extends AbstractPimcoreBundle implements D
 {
     use BundleAdminClassicTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getVersion(): string
     {
         return sprintf('%s build %s', Version::getVersion(), Version::getRevision());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new RegisterConfiguredServicesPass());

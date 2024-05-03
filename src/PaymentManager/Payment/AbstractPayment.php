@@ -58,9 +58,6 @@ abstract class AbstractPayment implements PaymentInterface
         throw new \RuntimeException('applyRecurringPaymentCondition not implemented for ' . get_class($this));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigurationKey(): string
     {
         return $this->configurationKey;

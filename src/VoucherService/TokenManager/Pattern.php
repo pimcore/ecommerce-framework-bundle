@@ -75,7 +75,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * @param array|null $filter Associative with the indices: "usage" and "olderThan".
      *
-     * @return bool
      */
     public function cleanUpCodes(?array $filter = []): bool
     {
@@ -83,10 +82,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     }
 
     /**
-     * @param string $code
-     * @param CartInterface $cart
      *
-     * @return bool
      *
      * @throws VoucherServiceException
      */
@@ -106,10 +102,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     }
 
     /**
-     * @param string $code
-     * @param CartInterface $cart
      *
-     * @return bool
      *
      * @throws VoucherServiceException
      */
@@ -127,11 +120,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     }
 
     /**
-     * @param string $code
-     * @param CartInterface $cart
-     * @param AbstractOrder $order
      *
-     * @return bool|OnlineShopVoucherToken
      *
      * @throws VoucherServiceException
      *
@@ -163,10 +152,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * cleans up the token usage and the ordered token object if necessary
      *
-     * @param OnlineShopVoucherToken $tokenObject
-     * @param AbstractOrder $order
      *
-     * @return bool
      */
     public function removeAppliedTokenFromOrder(OnlineShopVoucherToken $tokenObject, AbstractOrder $order): bool
     {
@@ -185,11 +171,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
         return Reservation::releaseToken($code);
     }
 
-    /**
-     * @param array|null $filter
-     *
-     * @return array|bool
-     */
     public function getCodes(array $filter = null): bool|array
     {
         return Token\Listing::getCodes($this->seriesId, $filter);
@@ -251,7 +232,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
      * Gets the final length of the token, incl.
      * prefix and separators.
      *
-     * @return  int
      */
     public function getFinalTokenLength(): int
     {
@@ -272,7 +252,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * Calculates the probability to hit an existing value on a token generation.
      *
-     * @return float
      */
     public function getInsertProbability(): float
     {
@@ -313,7 +292,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * Generates a single code.
      *
-     * @return string
      */
     protected function generateCode(): string
     {
@@ -358,7 +336,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
      * @param array|string $tokens One or more tokens.
      * @param array $cTokens Array of tokens.
      *
-     * @return bool
      */
     protected function tokenExists(array|string $tokens, array $cTokens): bool
     {
@@ -377,9 +354,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * Builds an insert query for an array of tokens.
      *
-     * @param array $insertTokens
      *
-     * @return string
      */
     protected function buildInsertQuery(array $insertTokens): string
     {
@@ -405,7 +380,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
      * Returns false if the generation is not possible, due to set insert
      * probability MAX_INSERT_PROBABILITY.
      *
-     * @return array|bool
      */
     public function generateCodes(): bool|array
     {
@@ -494,8 +468,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * Creates an array with the indices of days of the given usage period.
      *
-     * @param array $data
-     * @param int $usagePeriod
      */
     protected function prepareUsageStatisticData(array &$data, int $usagePeriod): void
     {
@@ -512,10 +484,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * Prepares the view and returns the according template for rendering.
      *
-     * @param array $viewParamsBag
-     * @param array $params
      *
-     * @return string
      */
     public function prepareConfigurationView(array &$viewParamsBag, array $params): string
     {
@@ -574,9 +543,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * Get data for export
      *
-     * @param array $params
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -599,9 +566,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function cleanUpReservations(int $duration = 0, ?int $seriesId = null): bool
     {
         return Reservation::cleanUpReservations($duration, $this->seriesId);
@@ -611,9 +575,7 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
      * Checks whether an index for the given name parameter exists in
      * the character pool member array.
      *
-     * @param string $poolName
      *
-     * @return bool
      */
     protected function characterPoolExists(string $poolName): bool
     {
@@ -623,7 +585,6 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     /**
      * Generates and returns an example token to the given settings.
      *
-     * @return string
      */
     public function getExampleToken(): string
     {

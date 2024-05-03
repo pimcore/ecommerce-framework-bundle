@@ -36,12 +36,6 @@ class TaxEntry
 
     protected ?string $taxId = null;
 
-    /**
-     * @param float $percent
-     * @param Decimal $amount
-     * @param string|null $taxId
-     * @param TaxEntryFieldcollection|null $entry
-     */
     public function __construct(float $percent, Decimal $amount, string $taxId = null, TaxEntryFieldcollection $entry = null)
     {
         $this->percent = $percent;
@@ -85,9 +79,6 @@ class TaxEntry
         return $this->taxId;
     }
 
-    /**
-     * @param string|null $taxId
-     */
     public function setTaxId(string $taxId = null): void
     {
         $this->taxId = $taxId;
@@ -97,7 +88,6 @@ class TaxEntry
      * Converts tax rate configuration of given OnlineShopTaxClass to TaxEntries that can be used for
      * tax calculation.
      *
-     * @param OnlineShopTaxClass $taxClass
      *
      * @return TaxEntry[]
      */

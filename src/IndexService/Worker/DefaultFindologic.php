@@ -41,7 +41,6 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
     /**
      * findologic supported fields
      *
-     * @var array
      */
     protected array $supportedFields = [
         'id', 'ordernumber', 'name', 'summary', 'description', 'price',
@@ -60,7 +59,6 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
     /**
      * creates or updates necessary index structures (like database tables and so on)
      *
-     * @return void
      */
     public function createOrUpdateIndexStructures(): void
     {
@@ -70,9 +68,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
     /**
      * deletes given element from index
      *
-     * @param IndexableInterface $object
      *
-     * @return void
      */
     public function deleteFromIndex(IndexableInterface $object): void
     {
@@ -82,9 +78,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
     /**
      * updates given element in index
      *
-     * @param IndexableInterface $object
      *
-     * @return void
      */
     public function updateIndex(IndexableInterface $object): void
     {
@@ -98,11 +92,6 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
         $this->fillupPreparationQueue($object);
     }
 
-    /**
-     * @param int $objectId
-     * @param array|null $data
-     * @param array|null $metadata
-     */
     protected function doUpdateIndex(int $objectId, array $data = null, array $metadata = null): void
     {
         $xml = $this->createXMLElement();
@@ -269,10 +258,6 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
         $this->saveToMockupCache($objectId, $data);
     }
 
-    /**
-     * @param int $subObjectId
-     * @param IndexableInterface|null $object
-     */
     protected function doDeleteFromIndex(int $subObjectId, IndexableInterface $object = null): void
     {
         $this->db->executeQuery(sprintf('DELETE FROM %1$s WHERE id = %2$d', $this->getExportTableName(), $subObjectId));

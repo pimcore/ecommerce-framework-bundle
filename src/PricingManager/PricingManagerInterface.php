@@ -25,7 +25,6 @@ interface PricingManagerInterface
     public function applyProductRules(PriceSystemPriceInfoInterface $priceinfo): PriceSystemPriceInfoInterface;
 
     /**
-     * @param CartInterface $cart
      *
      * @return RuleInterface[] applied rules
      */
@@ -34,23 +33,19 @@ interface PricingManagerInterface
     /**
      * Get map from action name to used class
      *
-     * @return array
      */
     public function getActionMapping(): array;
 
     /**
      * Get map from condition name to used class
      *
-     * @return array
      */
     public function getConditionMapping(): array;
 
     /**
      * Factory
      *
-     * @param string $type
      *
-     * @return ConditionInterface
      *
      * @throws InvalidConfigException
      */
@@ -59,25 +54,20 @@ interface PricingManagerInterface
     /**
      * Factory
      *
-     * @param string $type
      *
-     * @return ActionInterface
      */
     public function getAction(string $type): ActionInterface;
 
     /**
      * Factory
      *
-     * @return EnvironmentInterface
      */
     public function getEnvironment(): EnvironmentInterface;
 
     /**
      * Wraps price info in pricing manager price info
      *
-     * @param PriceSystemPriceInfoInterface $priceInfo
      *
-     * @return PriceSystemPriceInfoInterface|PriceInfoInterface
      */
     public function getPriceInfo(PriceSystemPriceInfoInterface $priceInfo): PriceInfoInterface|PriceSystemPriceInfoInterface;
 }

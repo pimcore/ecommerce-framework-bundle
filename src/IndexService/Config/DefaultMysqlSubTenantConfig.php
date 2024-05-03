@@ -31,9 +31,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
 
     protected Connection $db;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(
         AttributeFactory $attributeFactory,
         string $tenantName,
@@ -53,7 +50,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
     /**
      * returns table name of product index
      *
-     * @return string
      */
     public function getTablename(): string
     {
@@ -63,7 +59,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
     /**
      * returns table name of product index reations
      *
-     * @return string
      */
     public function getRelationTablename(): string
     {
@@ -73,7 +68,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
     /**
      * return table name of product index tenant relations for subtenants
      *
-     * @return string
      */
     public function getTenantRelationTablename(): string
     {
@@ -83,9 +77,7 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
     /**
      * checks, if product should be in index for current tenant (not subtenant)
      *
-     * @param IndexableInterface $object
      *
-     * @return bool
      */
     public function inIndex(IndexableInterface $object): bool
     {
@@ -103,7 +95,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
      * In this case adds join statement to tenant relation table. But in theory any needed join statement can be
      * added here.
      *
-     * @return string
      */
     public function getJoins(): string
     {
@@ -120,7 +111,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
      *
      * In this case just adds the condition that subtenant_id equals the current subtenant
      *
-     * @return string
      */
     public function getCondition(): string
     {
@@ -138,8 +128,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
      * In this case tenants are also Pimcore objects and are assigned to product objects.
      * This method extracts assigned tenants and returns an array of [object-ID, subtenant-ID]
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return array $subTenantData
      */
@@ -166,11 +154,7 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
      *
      * In this case deletes all entries of given object from tenant relation table and adds the new ones.
      *
-     * @param mixed $objectId
-     * @param mixed $subTenantData
-     * @param mixed $subObjectId
      *
-     * @return void
      */
     public function updateSubTenantEntries(mixed $objectId, mixed $subTenantData, mixed $subObjectId = null): void
     {

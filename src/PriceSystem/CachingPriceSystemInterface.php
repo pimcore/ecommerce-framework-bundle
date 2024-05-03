@@ -22,20 +22,14 @@ interface CachingPriceSystemInterface extends PriceSystemInterface
     /**
      * Loads price infos once for given product entries and caches them
      *
-     * @param array $productEntries
-     * @param array $options
      *
-     * @return mixed
      */
     public function loadPriceInfos(array $productEntries, array $options): mixed;
 
     /**
      * Clears cached price infos
      *
-     * @param array $productEntries
-     * @param array $options
      *
-     * @return mixed
      */
     public function clearPriceInfos(array $productEntries, array $options): mixed;
 }

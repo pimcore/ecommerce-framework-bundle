@@ -215,9 +215,6 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepareDataForIndex(IndexableInterface $object): array
     {
         $subObjectIds = $this->tenantConfig->createSubIdsForObject($object);
@@ -369,9 +366,6 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
         return $processedSubObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resetPreparationQueue(): void
     {
         Logger::info('Index-Actions - Resetting preparation queue');
@@ -387,9 +381,6 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resetIndexingQueue(): void
     {
         Logger::info('Index-Actions - Resetting index queue');

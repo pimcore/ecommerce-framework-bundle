@@ -30,7 +30,6 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
     /**
      * Contains all valid columns in the database table
      *
-     * @var array
      */
     protected array $validColumns = [];
 
@@ -39,7 +38,6 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
     /**
      * Get the valid columns from the database
      *
-     * @return void
      */
     public function init(): void
     {
@@ -47,9 +45,6 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
     }
 
     /**
-     * @param int|string $cartId
-     * @param string $itemKey
-     * @param string $parentKey
      *
      * @throws NotFoundException
      */
@@ -102,7 +97,6 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
     /**
      * Deletes object from database
      *
-     * @return void
      */
     public function delete(): void
     {

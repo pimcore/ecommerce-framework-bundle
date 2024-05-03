@@ -61,7 +61,6 @@ class DefaultFindologic implements ProductListInterface
     /**
      * json result from findologic
      *
-     * @var \SimpleXMLElement
      */
     protected \SimpleXMLElement $response;
 
@@ -101,7 +100,6 @@ class DefaultFindologic implements ProductListInterface
         $this->referer = $_SERVER['HTTP_REFERER'];
     }
 
-    /** @inheritDoc */
     public function getProducts(): array
     {
         if ($this->products === null) {
@@ -128,8 +126,6 @@ class DefaultFindologic implements ProductListInterface
      * Fieldname is optional but highly recommended - needed for resetting condition based on fieldname
      * and exclude functionality in group by results
      *
-     * @param string|array $condition
-     * @param string $fieldname
      */
     public function addQueryCondition(string|array $condition, string $fieldname = ''): void
     {
@@ -140,7 +136,6 @@ class DefaultFindologic implements ProductListInterface
     /**
      * Reset query condition for fieldname
      *
-     * @param string $fieldname
      */
     public function resetQueryCondition(string $fieldname): void
     {
@@ -166,10 +161,6 @@ class DefaultFindologic implements ProductListInterface
         $this->addCondition($condition, $fieldname);
     }
 
-    /**
-     * @param float|null $from
-     * @param float|null $to
-     */
     public function addPriceCondition(?float $from = null, ?float $to = null): void
     {
         $this->products = null;
@@ -331,9 +322,7 @@ class DefaultFindologic implements ProductListInterface
     /**
      * builds system conditions
      *
-     * @param array $filter
      *
-     * @return array
      */
     protected function buildSystemConditions(array $filter): array
     {
@@ -362,9 +351,7 @@ class DefaultFindologic implements ProductListInterface
     /**
      * builds filter condition of user specific conditions
      *
-     * @param array $params
      *
-     * @return array
      */
     protected function buildFilterConditions(array $params): array
     {
@@ -396,9 +383,7 @@ class DefaultFindologic implements ProductListInterface
     /**
      * create category path
      *
-     * @param AbstractCategory $currentCat
      *
-     * @return string
      */
     public function buildCategoryTree(AbstractCategory $currentCat): string
     {
@@ -414,9 +399,7 @@ class DefaultFindologic implements ProductListInterface
     /**
      * builds query condition of query filters
      *
-     * @param array $params
      *
-     * @return array
      */
     protected function buildQueryConditions(array $params): array
     {
@@ -460,9 +443,6 @@ class DefaultFindologic implements ProductListInterface
      * prepares all group by values for given field names and cache them in local variable
      * considers both - normal values and relation values
      *
-     * @param string $fieldname
-     * @param bool $countValues
-     * @param bool $fieldnameShouldBeExcluded
      *
      * @throws \Exception
      */
@@ -474,7 +454,6 @@ class DefaultFindologic implements ProductListInterface
     /**
      * resets all set prepared group by values
      *
-     * @return void
      */
     public function resetPreparedGroupByValues(): void
     {
@@ -506,11 +485,7 @@ class DefaultFindologic implements ProductListInterface
     /**
      * loads group by values based on relation fieldname either from local variable if prepared or directly from product index
      *
-     * @param string $fieldname
-     * @param bool $countValues
      * @param bool $fieldnameShouldBeExcluded => set to false for and-conditions
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -646,9 +621,7 @@ class DefaultFindologic implements ProductListInterface
     }
 
     /**
-     * @param array $params
      *
-     * @return \SimpleXMLElement
      *
      * @throws \Exception
      */
@@ -718,7 +691,6 @@ class DefaultFindologic implements ProductListInterface
      * @param int $offset Page offset
      * @param int $itemCountPerPage Number of items per page
      *
-     * @return array
      */
     public function getItems(int $offset, int $itemCountPerPage): array
     {

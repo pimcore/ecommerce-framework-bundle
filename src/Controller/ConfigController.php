@@ -35,7 +35,6 @@ class ConfigController extends UserAwareController implements KernelControllerEv
     /**
      * ConfigController constructor.
      *
-     * @param RouterInterface $router
      */
     public function __construct(private RouterInterface $router)
     {
@@ -50,7 +49,6 @@ class ConfigController extends UserAwareController implements KernelControllerEv
     /**
      * @Route("/js-config", name="pimcore_ecommerceframework_config_jsconfig", methods={"GET"})
      *
-     * @return Response
      */
     public function jsConfigAction(): Response
     {

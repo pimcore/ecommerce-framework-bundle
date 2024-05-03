@@ -37,7 +37,6 @@ class Ecommerce extends AbstractAnalyticsTracker implements CheckoutCompleteInte
     /**
      * Track checkout complete
      *
-     * @param AbstractOrder $order
      */
     public function trackCheckoutComplete(AbstractOrder $order): void
     {
@@ -55,10 +54,8 @@ class Ecommerce extends AbstractAnalyticsTracker implements CheckoutCompleteInte
     }
 
     /**
-     * @param Transaction $transaction
      * @param ProductAction[] $items
      *
-     * @return array
      */
     protected function buildCheckoutCompleteCalls(Transaction $transaction, array $items): array
     {
@@ -78,9 +75,7 @@ class Ecommerce extends AbstractAnalyticsTracker implements CheckoutCompleteInte
      *
      * @note city, state, country were dropped as they were optional and never used
      *
-     * @param Transaction $transaction
      *
-     * @return array
      */
     protected function transformTransaction(Transaction $transaction): array
     {
@@ -97,9 +92,7 @@ class Ecommerce extends AbstractAnalyticsTracker implements CheckoutCompleteInte
     /**
      * Transform product action into classic analytics data array
      *
-     * @param ProductAction $item
      *
-     * @return array
      */
     protected function transformProductAction(ProductAction $item): array
     {

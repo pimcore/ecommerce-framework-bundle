@@ -37,10 +37,6 @@ class OrderManagerItemEvent extends Event
     /**
      * OrderManagerItemEvent constructor.
      *
-     * @param CartItemInterface $cartItem
-     * @param bool $isGiftItem
-     * @param AbstractOrderItem|null $orderItem
-     * @param array $arguments
      */
     public function __construct(CartItemInterface $cartItem, bool $isGiftItem, ?AbstractOrderItem $orderItem, array $arguments = [])
     {

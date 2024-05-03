@@ -29,9 +29,6 @@ class PreprocessErrorEvent extends Event
     /**
      * PreprocessErrorEvent constructor.
      *
-     * @param \Throwable $exception
-     * @param bool $throwException
-     * @param int $subObjectId
      */
     public function __construct(\Throwable $exception, bool $throwException = true, int $subObjectId = 0)
     {

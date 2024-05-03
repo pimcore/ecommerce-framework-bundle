@@ -62,7 +62,6 @@ class DefaultMysql implements ProductListInterface
         $this->resource = new DefaultMysql\Dao($this, $this->logger);
     }
 
-    /** @inheritDoc */
     public function getProducts(): array
     {
         if ($this->products === null) {
@@ -124,8 +123,6 @@ class DefaultMysql implements ProductListInterface
      * Fieldname is optional but highly recommended - needed for resetting condition based on fieldname
      * and exclude functionality in group by results
      *
-     * @param string|array $condition
-     * @param string $fieldname
      */
     public function addQueryCondition(string|array $condition, string $fieldname = ''): void
     {
@@ -136,7 +133,6 @@ class DefaultMysql implements ProductListInterface
     /**
      * Reset query condition for fieldname
      *
-     * @param string $fieldname
      */
     public function resetQueryCondition(string $fieldname): void
     {
@@ -144,10 +140,6 @@ class DefaultMysql implements ProductListInterface
         unset($this->queryConditions[$fieldname]);
     }
 
-    /**
-     * @param float|null $from
-     * @param float|null $to
-     */
     public function addPriceCondition(?float $from = null, ?float $to = null): void
     {
         $this->products = null;
@@ -289,7 +281,6 @@ class DefaultMysql implements ProductListInterface
     /**
      * First case: no price filtering and no price sorting
      *
-     * @return array
      */
     protected function loadWithoutPriceFilterWithoutPriceSorting(): array
     {
@@ -302,7 +293,6 @@ class DefaultMysql implements ProductListInterface
     /**
      * Second case: no price filtering but price sorting
      *
-     * @return array
      *
      * @throws \Exception
      *
@@ -333,7 +323,6 @@ class DefaultMysql implements ProductListInterface
     /**
      * Third case: price filtering but no price sorting
      *
-     * @return array
      *
      * @throws \Exception
      *
@@ -349,7 +338,6 @@ class DefaultMysql implements ProductListInterface
     /**
      * Forth case: price filtering and price sorting
      *
-     * @return array
      *
      * @throws \Exception
      *
@@ -365,9 +353,7 @@ class DefaultMysql implements ProductListInterface
     /**
      * loads element by id
      *
-     * @param int $elementId
      *
-     * @return IndexableInterface|null
      */
     protected function loadElementById(int $elementId): ?IndexableInterface
     {
@@ -388,7 +374,6 @@ class DefaultMysql implements ProductListInterface
     /**
      * resets all set prepared group by values
      *
-     * @return void
      */
     public function resetPreparedGroupByValues(): void
     {
@@ -420,11 +405,7 @@ class DefaultMysql implements ProductListInterface
     /**
      * loads group by values based on relation fieldname either from local variable if prepared or directly from product index
      *
-     * @param string $fieldname
-     * @param bool $countValues
      * @param bool $fieldnameShouldBeExcluded => set to false for and-conditions
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -435,11 +416,7 @@ class DefaultMysql implements ProductListInterface
     }
 
     /**
-     * @param string $fieldname
-     * @param bool $countValues
      * @param bool $fieldnameShouldBeExcluded => set to false for and-conditions
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -457,11 +434,7 @@ class DefaultMysql implements ProductListInterface
     }
 
     /**
-     * @param string $fieldname
-     * @param bool $countValues
      * @param bool $fieldnameShouldBeExcluded => set to false for and-conditions
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -647,10 +620,7 @@ class DefaultMysql implements ProductListInterface
      * returns order by statement for simularity calculations based on given fields and object ids
      * returns cosine simularity calculation
      *
-     * @param array $fields
-     * @param int $objectId
      *
-     * @return string
      */
     public function buildSimularityOrderBy(array $fields, int $objectId): string
     {
@@ -660,10 +630,7 @@ class DefaultMysql implements ProductListInterface
     /**
      * returns where statement for fulltext search index
      *
-     * @param array $fields
-     * @param string $searchstring
      *
-     * @return string
      */
     public function buildFulltextSearchWhere(array $fields, string $searchstring): string
     {
@@ -700,7 +667,6 @@ class DefaultMysql implements ProductListInterface
      * @param int $offset Page offset
      * @param int $itemCountPerPage Number of items per page
      *
-     * @return array
      */
     public function getItems(int $offset, int $itemCountPerPage): array
     {
@@ -735,7 +701,6 @@ class DefaultMysql implements ProductListInterface
     }
 
     /**
-     * @return array
      *
      * @internal
      */
@@ -762,7 +727,6 @@ class DefaultMysql implements ProductListInterface
     /**
      * this is needed for ZF1 Paginator
      *
-     * @return string
      */
     public function getCacheIdentifier(): string
     {
