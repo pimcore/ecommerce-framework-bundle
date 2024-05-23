@@ -356,7 +356,7 @@ pimcore_ecommerce_framework:
 
             # default path for new offers
             offer_parent_path:   /offertool/offers/*Y*/*M*
-            #parent_folder_path:   /offertool/offers/%%Y/%%m # deprecated and discouraged, use order_parent_path instead
+            #parent_folder_path:   /offertool/offers/%%Y/%%m # deprecated and discouraged, use offer_parent_path instead
     
     # Configuration of Tracking Manager
     tracking_manager:
