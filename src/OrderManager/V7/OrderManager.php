@@ -586,7 +586,7 @@ class OrderManager implements OrderManagerInterface
                 $parentFolderOption = (string)$this->options['order_parent_path'];
 
                 // The asterisks must be either 0 or be in pairs to be a valid
-                if (substr_count($parentFolderOption, '*') % 2 !== 0){
+                if (substr_count($parentFolderOption, '*') % 2 !== 0) {
                     throw new \InvalidArgumentException('Invalid parent order folder path. Please make sure that the path is properly formatted.');
                 }
 
