@@ -582,15 +582,15 @@ class OrderManager implements OrderManagerInterface
         // processing config and setting options
         // BC Layer to check if the newer config is properly set, otherwise use the former one
         if (empty($this->orderParentFolder)) {
-            if ($this->options['order_parent_path']){
+            if ($this->options['order_parent_path']) {
                 $parentFolderId = (string)$this->options['order_parent_path'];
 
                 $pattern = '/\*([^\*]+)\*/';
-                $parentFolderPath = preg_replace_callback($pattern, function($matches) {
+                $parentFolderPath = preg_replace_callback($pattern, function ($matches) {
                     return CarbonImmutable::now()->isoFormat($matches[1]);
                 }, $parentFolderId);
 
-            }else{
+            } else {
                 trigger_deprecation(
                     'pimcore/ecommerce-framework-bundle',
                     '1.1',
@@ -600,7 +600,6 @@ class OrderManager implements OrderManagerInterface
                 $parentFolderId = (string)$this->options['parent_order_folder'];
                 $parentFolderPath = strftime($parentFolderId, time());
             }
-
 
             if (is_numeric($parentFolderId)) {
                 $parentFolderId = (int)$parentFolderId;
