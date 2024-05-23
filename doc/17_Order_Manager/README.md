@@ -29,7 +29,11 @@ pimcore_ecommerce_framework:
                     # Class for order item listing
                     list_item_class: Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order\Listing\Item
                     # Default parent folder for new orders, will be parsed by strftime()
-                    parent_order_folder: /order/%%Y/%%m/%%d
+                    # @deprecated since pimcore/ecommerce-framework-bundle v1.1.0, please use `order_parent_path` instead 
+                    # NB: this configuration node will be ignored when the new one is set
+                    parent_order_folder: /order/%%Y/%%m/%%d # deprecated and discouraged
+                    # Default parent folder for new order items, can use Carbon date format parameters wrapped by `*` eg. *D*
+                    order_parent_path: /order/*Y*/*M*/*D*
                 # Options for oder agent
                 order_agent:
                     # service ID of order agent factory - builds order agents individual to each order
@@ -44,5 +48,6 @@ pimcore_ecommerce_framework:
             # inherits from _defaults, but sets another order folder
             otherFolder:
                 options:
-                    parent_order_folder: /order_otherfolder/%%Y/%%m/%%d
+                    # parent_order_folder: /order_otherfolder/%%Y/%%m/%%d # deprecated and discouraged
+                    order_parent_path: /order_otherfolder/*Y*/*M*/*D*
 ```

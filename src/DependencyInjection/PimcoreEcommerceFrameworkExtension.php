@@ -597,7 +597,7 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
 
         $container->setParameter(
             'pimcore_ecommerce.offer_tool.order_storage.parent_folder_path',
-            $config['order_storage']['parent_folder_path']
+            $config['order_storage']['offer_parent_path'] ?? $config['order_storage']['parent_folder_path']
         );
     }
 

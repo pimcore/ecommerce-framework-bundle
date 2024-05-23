@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItemInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\EnvironmentInterface;
@@ -116,6 +117,7 @@ class OrderManager implements OrderManagerInterface
             'list_class' => Listing::class,
             'list_item_class' => Listing\Item::class,
             'parent_order_folder' => '/order/%Y/%m/%d',
+            'order_parent_path' => '/order/*YY*',
         ]);
 
         foreach ($classProperties as $classProperty) {
@@ -577,14 +579,33 @@ class OrderManager implements OrderManagerInterface
      */
     protected function getOrderParentFolder(): Folder
     {
+        // processing config and setting options
+        // BC Layer to check if the newer config is properly set, otherwise use the former one
         if (empty($this->orderParentFolder)) {
-            // processing config and setting options
-            $parentFolderId = (string)$this->options['parent_order_folder'];
+            if ($this->options['order_parent_path']){
+                $parentFolderId = (string)$this->options['order_parent_path'];
+
+                $pattern = '/\*([^\*]+)\*/';
+                $parentFolderPath = preg_replace_callback($pattern, function($matches) {
+                    return CarbonImmutable::now()->isoFormat($matches[1]);
+                }, $parentFolderId);
+
+            }else{
+                trigger_deprecation(
+                    'pimcore/ecommerce-framework-bundle',
+                    '1.1',
+                    'Please use `order_parent_path` instead of `parent_order_folder`, as strftime() is deprecated.'
+                );
+
+                $parentFolderId = (string)$this->options['parent_order_folder'];
+                $parentFolderPath = strftime($parentFolderId, time());
+            }
+
 
             if (is_numeric($parentFolderId)) {
                 $parentFolderId = (int)$parentFolderId;
             } else {
-                $p = Service::createFolderByPath(strftime($parentFolderId, time()));
+                $p = Service::createFolderByPath($parentFolderPath);
                 $parentFolderId = $p->getId();
                 unset($p);
             }
