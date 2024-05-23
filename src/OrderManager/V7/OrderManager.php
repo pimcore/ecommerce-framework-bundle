@@ -583,12 +583,17 @@ class OrderManager implements OrderManagerInterface
         // BC Layer to check if the newer config is properly set, otherwise use the former one
         if (empty($this->orderParentFolder)) {
             if ($this->options['order_parent_path']) {
-                $parentFolderId = (string)$this->options['order_parent_path'];
+                $parentFolderOption = (string)$this->options['order_parent_path'];
+
+                // The asterisks must be either 0 or be in pairs to be a valid
+                if (substr_count($parentFolderOption, '*') % 2 !== 0){
+                    throw new \InvalidArgumentException('Invalid parent order folder path. Please make sure that the path is properly formatted.');
+                }
 
                 $pattern = '/\*([^\*]+)\*/';
                 $parentFolderPath = preg_replace_callback($pattern, function ($matches) {
                     return CarbonImmutable::now()->isoFormat($matches[1]);
-                }, $parentFolderId);
+                }, $parentFolderOption);
 
             } else {
                 trigger_deprecation(
@@ -597,12 +602,12 @@ class OrderManager implements OrderManagerInterface
                     'Please use `order_parent_path` instead of `parent_order_folder`, as strftime() is deprecated.'
                 );
 
-                $parentFolderId = (string)$this->options['parent_order_folder'];
-                $parentFolderPath = strftime($parentFolderId, time());
+                $parentFolderOption = (string)$this->options['parent_order_folder'];
+                $parentFolderPath = strftime($parentFolderOption, time());
             }
 
-            if (is_numeric($parentFolderId)) {
-                $parentFolderId = (int)$parentFolderId;
+            if (is_numeric($parentFolderOption)) {
+                $parentFolderId = (int)$parentFolderOption;
             } else {
                 $p = Service::createFolderByPath($parentFolderPath);
                 $parentFolderId = $p->getId();
