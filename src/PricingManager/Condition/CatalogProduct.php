@@ -166,6 +166,7 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
             );
 
             $result = null;
+
             return $result;
         }
 
