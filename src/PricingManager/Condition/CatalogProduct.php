@@ -57,16 +57,13 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
 
         // test
         foreach ($productsPool as $currentProduct) {
-            // check all valid products
-            foreach ($this->productIds as $productId) {
-                /** @var Concrete $currentProductCheck */
-                $currentProductCheck = $currentProduct;
-                while ($currentProductCheck instanceof CheckoutableInterface) {
-                    if ($currentProductCheck->getId() === $productId) {
-                        return true;
-                    }
-                    $currentProductCheck = $currentProductCheck->getParent();
+            /** @var Concrete $currentProductCheck */
+            $currentProductCheck = $currentProduct;
+            while ($currentProductCheck instanceof CheckoutableInterface) {
+                if (in_array($currentProductCheck->getId(), $this->productIds)) {
+                    return true;
                 }
+                $currentProductCheck = $currentProductCheck->getParent();
             }
         }
 
