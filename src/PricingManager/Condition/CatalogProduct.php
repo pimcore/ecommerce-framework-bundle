@@ -150,7 +150,7 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
      *
      * @todo: move the lazy initialization into {@see getProducts()} for Pimcore 12
      */
-    public function &__get(string $name)
+    public function &__get(string $name): mixed
     {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
 
