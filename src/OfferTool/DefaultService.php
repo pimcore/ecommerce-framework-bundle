@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OfferTool;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItemInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
@@ -49,7 +50,23 @@ class DefaultService implements ServiceInterface
 
         $this->offerClass = $offerClass;
         $this->offerItemClass = $offerItemClass;
-        $this->parentFolderPath = strftime($parentFolderPath, time());
+
+        $maybeStrftime = str_contains($parentFolderPath, '%');
+        if (substr_count($parentFolderPath, '*') % 2 === 0 && !$maybeStrftime) {
+            $pattern = '/\*([^\*]+)\*/';
+            $offerParentPath = preg_replace_callback($pattern, function ($matches) {
+                return CarbonImmutable::now()->isoFormat($matches[1]);
+            }, $parentFolderPath);
+        } else {
+            trigger_deprecation(
+                'pimcore/ecommerce-framework-bundle',
+                '1.1',
+                'Please use `offer_parent_path` instead of `offer_tool:order_storage:parent_folder_path`, as strftime() is deprecated.'
+            );
+            $offerParentPath = strftime($parentFolderPath, time());
+        }
+
+        $this->parentFolderPath = $offerParentPath;
     }
 
     protected function getParentFolder(): Folder
