@@ -111,14 +111,7 @@ class AbstractRuleTest extends EcommerceTestCase
     }
 
     /**
-     * @param int $id
-     * @param float $grossPrice
-     * @param PricingManagerInterface|null $pricingManager
-     * @param array $categories
-     * @param array $taxes
-     * @param string $combinationType
      *
-     * @return CheckoutableInterface
      *
      * @throws \TypeError
      */
@@ -258,7 +251,6 @@ class AbstractRuleTest extends EcommerceTestCase
     }
 
     /**
-     * @param array $definitions
      *
      * @return ActionInterface[]
      */
@@ -316,7 +308,6 @@ class AbstractRuleTest extends EcommerceTestCase
     }
 
     /**
-     * @param array $ruleDefinitions
      *
      * @return RuleInterface[]
      */
@@ -345,12 +336,6 @@ class AbstractRuleTest extends EcommerceTestCase
         return $rules;
     }
 
-    /**
-     * @param int $id
-     * @param int|null $parentId
-     *
-     * @return AbstractProduct
-     */
     protected function mockProductForCondition(int $id, int $parentId = null): AbstractProduct
     {
         $product = $this->getMockBuilder(AbstractProduct::class)->getMock();

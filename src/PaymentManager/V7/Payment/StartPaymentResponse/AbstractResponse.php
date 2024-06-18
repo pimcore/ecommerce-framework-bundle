@@ -25,7 +25,6 @@ abstract class AbstractResponse implements StartPaymentResponseInterface
     /**
      * AbstractResponse constructor.
      *
-     * @param AbstractOrder $order
      */
     public function __construct(AbstractOrder $order)
     {

@@ -40,7 +40,6 @@ class CheckoutManagerFactory implements CheckoutManagerFactoryInterface
     /**
      * Array of checkout step definitions
      *
-     * @var array
      */
     protected array $checkoutStepDefinitions = [];
 

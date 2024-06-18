@@ -37,7 +37,6 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
     }
 
     /**
-     * @param string $code
      *
      * @throws NotFoundException
      */
@@ -51,11 +50,6 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
         $this->model->setValue('id', $result['id']);
     }
 
-    /**
-     * @param CartInterface|null $cart
-     *
-     * @return bool
-     */
     public function isReserved(CartInterface $cart = null): bool
     {
         $reservation = Reservation::get($this->model->getToken(), $cart);

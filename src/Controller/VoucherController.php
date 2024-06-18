@@ -43,10 +43,6 @@ class VoucherController extends UserAwareController implements KernelControllerE
 
     protected TranslatorInterface $translator;
 
-    /**
-     * @param TokenStorageUserResolver $tokenStorageUserResolver
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TokenStorageUserResolver $tokenStorageUserResolver, TranslatorInterface $translator)
     {
         $this->tokenResolver = $tokenStorageUserResolver;

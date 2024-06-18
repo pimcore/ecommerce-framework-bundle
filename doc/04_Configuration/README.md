@@ -120,11 +120,13 @@ pimcore_ecommerce_framework:
             default:
                 order_manager_id: Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderManager
                 options:
-                    parent_order_folder: /orders/default/%%Y/%%m/%%d
+                    # parent_order_folder: /orders/default/%%Y/%%m/%%d # deprecated and discouraged
+                    order_parent_path: /orders/default/*Y*/*M*/*D*
             b2b:
                 order_manager_id: Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderManager
                 options:
-                    parent_order_folder: /orders/b2b/%%Y/%%m/%%d 
+                    # parent_order_folder: /orders/b2b/%%Y/%%m/%%d # deprecated and discouraged
+                    order_parent_path: /orders/b2b/*Y*/*M*/*D*
 ```
 
 As you can see we define 2 tenants `default` and `b2b` with the same order manager ID but with different options for

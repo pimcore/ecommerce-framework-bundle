@@ -47,9 +47,6 @@ class BootstrapCommand extends AbstractIndexServiceCommand
         $this->indexService = $indexService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         parent::configure();

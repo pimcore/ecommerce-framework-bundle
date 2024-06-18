@@ -28,8 +28,6 @@ class IndexFieldSelection
     public string|array|null $preSelect;
 
     /**
-     * @param string|null $tenant
-     * @param string $field
      * @param string|string[] $preSelect
      */
     public function __construct(?string $tenant, string $field, array|string|null $preSelect)

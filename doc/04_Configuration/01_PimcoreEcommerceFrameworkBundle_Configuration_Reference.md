@@ -128,7 +128,8 @@ pimcore_ecommerce_framework:
                     list_item_class:      Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order\Listing\Item
 
                     # Default parent folder for new orders
-                    parent_order_folder:  /order/%%Y/%%m/%%d
+                    # parent_order_folder: /order/%%Y/%%m/%%d # deprecated and discouraged
+                    order_parent_path: /order/*Y*/*M*/*D*
                 order_agent:
 
                     # Service id for order agent factory
@@ -354,8 +355,9 @@ pimcore_ecommerce_framework:
             offer_item_class:     Pimcore\Model\DataObject\OfferToolOfferItem
 
             # default path for new offers
-            parent_folder_path:   /offertool/offers/%%Y/%%m
-
+            offer_parent_path:   /offertool/offers/*Y*/*M*
+            #parent_folder_path:   /offertool/offers/%%Y/%%m # deprecated and discouraged, use offer_parent_path instead
+    
     # Configuration of Tracking Manager
     tracking_manager:
 

@@ -28,23 +28,19 @@ interface CheckoutStepInterface
     /**
      * Returns checkout step name
      *
-     * @return string
      */
     public function getName(): string;
 
     /**
      * Returns saved data of step
      *
-     * @return mixed
      */
     public function getData(): mixed;
 
     /**
      * Sets delivered data and commits step
      *
-     * @param mixed $data
      *
-     * @return bool
      */
     public function commit(mixed $data): bool;
 }

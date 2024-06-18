@@ -31,7 +31,6 @@ interface TrackingManagerInterface extends
     /**
      * Returns the current javascript tracking codes for all trackers
      *
-     * @return string
      */
     public function getTrackedCodes(): string;
 

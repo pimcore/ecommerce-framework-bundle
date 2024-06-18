@@ -25,8 +25,6 @@ class UrlResponse extends AbstractResponse
     /**
      * UrlResponse constructor.
      *
-     * @param AbstractOrder $order
-     * @param string $url
      */
     public function __construct(AbstractOrder $order, string $url)
     {

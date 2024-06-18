@@ -49,7 +49,6 @@ class IndexController extends UserAwareController implements KernelControllerEve
     /**
      * @Route("/get-filter-groups", name="pimcore_ecommerceframework_index_getfiltergroups", methods={"GET"})
      *
-     * @return JsonResponse
      */
     public function getFilterGroupsAction(): JsonResponse
     {
@@ -123,11 +122,7 @@ class IndexController extends UserAwareController implements KernelControllerEve
     /**
      * @Route("/get-fields", name="pimcore_ecommerceframework_index_getfields", methods={"GET"})
      *
-     * @param Request $request
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param TranslatorInterface $translator
      *
-     * @return JsonResponse
      */
     public function getFieldsAction(Request $request, EventDispatcherInterface $eventDispatcher, TranslatorInterface $translator): JsonResponse
     {
@@ -181,9 +176,7 @@ class IndexController extends UserAwareController implements KernelControllerEve
     /**
      * @Route("/get-all-tenants", name="pimcore_ecommerceframework_index_getalltenants", methods={"GET"})
      *
-     * @param TranslatorInterface $translator
      *
-     * @return JsonResponse
      */
     public function getAllTenantsAction(TranslatorInterface $translator): JsonResponse
     {

@@ -23,11 +23,7 @@ interface AvailabilitySystemInterface
     /**
      * Get availability info for a given product
      *
-     * @param CheckoutableInterface $product
-     * @param int $quantityScale
-     * @param array|null $products
      *
-     * @return AvailabilityInterface
      */
     public function getAvailabilityInfo(CheckoutableInterface $product, int $quantityScale = 1, array $products = null): AvailabilityInterface;
 }

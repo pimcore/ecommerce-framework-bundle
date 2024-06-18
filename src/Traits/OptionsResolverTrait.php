@@ -30,10 +30,7 @@ trait OptionsResolverTrait
      * Runs options through options resolver. Supports multiple options resolvers identified
      * by name (e.g. for sub-options)
      *
-     * @param array $options
-     * @param string $resolverName
      *
-     * @return array
      */
     protected function resolveOptions(array $options, string $resolverName = 'default'): array
     {
@@ -43,9 +40,7 @@ trait OptionsResolverTrait
     /**
      * Sets up and returns a named options resolver
      *
-     * @param string $resolverName
      *
-     * @return OptionsResolver
      */
     protected function getOptionsResolver(string $resolverName = 'default'): OptionsResolver
     {
@@ -60,8 +55,6 @@ trait OptionsResolverTrait
     /**
      * Set up options resolver (add defaults, set required fields, ...)
      *
-     * @param string $resolverName
-     * @param OptionsResolver $resolver
      *
      * @throws \InvalidArgumentException If no resolver with the given name is supported
      */

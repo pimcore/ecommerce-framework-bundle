@@ -74,9 +74,6 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
         $resolver->setAllowedTypes('price_type', 'string');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createPriceInfoInstance(int|string|null $quantityScale, CheckoutableInterface $product, array $products): AbstractPriceInfo
     {
         $taxClass = $this->getTaxClassForProduct($product);
@@ -98,9 +95,6 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
         return new AttributePriceInfo($price, $quantityScale, $totalPrice);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function filterProductIds(array $productIds, ?float $fromPrice, ?float $toPrice, string $order, int $offset, int $limit): array
     {
         throw new UnsupportedException(__METHOD__  . ' is not supported for ' . get_class($this));
@@ -109,10 +103,8 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
     /**
      * Calculates prices from product
      *
-     * @param CheckoutableInterface $product
      * @param CheckoutableInterface[] $products
      *
-     * @return Decimal
      */
     protected function calculateAmount(CheckoutableInterface $product, array $products): Decimal
     {
@@ -142,7 +134,6 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
     /**
      * Returns default currency based on environment settings
      *
-     * @return Currency
      */
     protected function getDefaultCurrency(): Currency
     {
@@ -152,9 +143,7 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
     /**
      * Creates instance of PriceInterface
      *
-     * @param Decimal $amount
      *
-     * @return PriceInterface
      */
     protected function getPriceClassInstance(Decimal $amount): PriceInterface
     {

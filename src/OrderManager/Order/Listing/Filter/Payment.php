@@ -30,7 +30,6 @@ class Payment implements OrderListFilterInterface
     /**
      * Allowed origin values
      *
-     * @var array
      */
     protected array $allowedValues = [
         self::PAYMENT_STATE_OK,

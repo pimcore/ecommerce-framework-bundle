@@ -47,7 +47,6 @@ class Environment implements EnvironmentInterface
      * This value will not be stored into the session and is only valid for current process
      * set with setCurrentCheckoutTenant('tenant', false');
      *
-     * @var string|null
      */
     protected ?string $currentTransientCheckoutTenant = null;
 
@@ -182,7 +181,6 @@ class Environment implements EnvironmentInterface
     /**
      * sets current assortment tenant which is used for indexing and product lists
      *
-     * @param string|null $tenant
      */
     public function setCurrentAssortmentTenant(?string $tenant): void
     {
@@ -194,7 +192,6 @@ class Environment implements EnvironmentInterface
     /**
      * gets current assortment tenant which is used for indexing and product lists
      *
-     * @return string|null
      */
     public function getCurrentAssortmentTenant(): ?string
     {
@@ -206,7 +203,6 @@ class Environment implements EnvironmentInterface
     /**
      * sets current assortment sub tenant which is used for indexing and product lists
      *
-     * @param string|null $subTenant
      */
     public function setCurrentAssortmentSubTenant(?string $subTenant): void
     {
@@ -218,7 +214,6 @@ class Environment implements EnvironmentInterface
     /**
      * gets current assortment tenant which is used for indexing and product lists
      *
-     * @return string|null
      */
     public function getCurrentAssortmentSubTenant(): ?string
     {
@@ -230,7 +225,6 @@ class Environment implements EnvironmentInterface
     /**
      * sets current checkout tenant which is used for cart and checkout manager
      *
-     * @param string $tenant
      * @param bool $persistent - if set to false, tenant is not stored to session and only valid for current process
      */
     public function setCurrentCheckoutTenant(string $tenant, bool $persistent = true): void
@@ -248,7 +242,6 @@ class Environment implements EnvironmentInterface
     /**
      * gets current assortment tenant which is used for cart and checkout manager
      *
-     * @return string|null
      */
     public function getCurrentCheckoutTenant(): ?string
     {
@@ -260,7 +253,6 @@ class Environment implements EnvironmentInterface
     /**
      * gets current system locale
      *
-     * @return null|string
      */
     public function getSystemLocale(): ?string
     {

@@ -26,9 +26,7 @@ class SelectClassificationStoreAttributes extends AbstractFilterType
     /**
      * extract list of excluded keys from filter definition
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
      *
-     * @return array
      */
     protected function extractExcludedKeys(AbstractFilterDefinitionType $filterDefinition): array
     {
@@ -42,9 +40,6 @@ class SelectClassificationStoreAttributes extends AbstractFilterType
         return $excludedKeys;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function sortResult(AbstractFilterDefinitionType $filterDefinition, array $keyCollection): array
     {
         if (!method_exists($filterDefinition, 'getKeyIdPriorityOrder') || empty($filterDefinition->getKeyIdPriorityOrder())) {
@@ -64,9 +59,6 @@ class SelectClassificationStoreAttributes extends AbstractFilterType
         return $sortedCollection + $keyCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepareGroupByValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList): void
     {
         $field = $this->getField($filterDefinition);
@@ -126,9 +118,6 @@ class SelectClassificationStoreAttributes extends AbstractFilterType
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addCondition(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter, array $params, bool $isPrecondition = false): array
     {
         $field = $this->getField($filterDefinition);

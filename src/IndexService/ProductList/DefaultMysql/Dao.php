@@ -216,10 +216,7 @@ class Dao
     /**
      * returns order by statement for simularity calculations based on given fields and object ids
      *
-     * @param array $fields
-     * @param int $objectId
      *
-     * @return string
      */
     public function buildSimularityOrderBy(array $fields, int $objectId): string
     {
@@ -275,10 +272,7 @@ class Dao
     /**
      * returns where statement for fulltext search index
      *
-     * @param array $fields
-     * @param string $searchstring
      *
-     * @return string
      */
     public function buildFulltextSearchWhere(array $fields, string $searchstring): string
     {
@@ -293,10 +287,14 @@ class Dao
     /**
      * get the record count for the last select query
      *
-     * @return int
      */
     public function getLastRecordCount(): int
     {
         return $this->lastRecordCount;
+    }
+
+    public function quoteIdentifier(string $value): string
+    {
+        return $this->db->quoteIdentifier($value);
     }
 }

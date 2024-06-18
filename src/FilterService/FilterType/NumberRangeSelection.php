@@ -26,10 +26,6 @@ class NumberRangeSelection extends AbstractFilterType
 {
     /**
      * @param FilterNumberRangeSelection $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     *
-     * @return array
      *
      * @throws \Exception
      */

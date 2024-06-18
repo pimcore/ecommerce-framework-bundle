@@ -54,7 +54,6 @@ class AbstractSetProductEntry
     /**
      * returns id of set product
      *
-     * @return int
      */
     public function getId(): int
     {

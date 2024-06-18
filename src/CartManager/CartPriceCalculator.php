@@ -48,7 +48,6 @@ class CartPriceCalculator implements CartPriceCalculatorInterface
      * Standard modificators are handled as configuration as they may
      * be reinitialized on demand (e.g. inside AJAX calls).
      *
-     * @var array
      */
     protected array $modificatorConfig = [];
 
@@ -128,9 +127,7 @@ class CartPriceCalculator implements CartPriceCalculatorInterface
     }
 
     /**
-     * @param bool $ignorePricingRules
      *
-     * @return void
      *
      * @throws UnsupportedException
      */
@@ -266,7 +263,6 @@ class CartPriceCalculator implements CartPriceCalculatorInterface
     /**
      * gets default currency object based on the default currency locale defined in the environment
      *
-     * @return Currency
      */
     protected function getDefaultCurrency(): Currency
     {
@@ -276,10 +272,7 @@ class CartPriceCalculator implements CartPriceCalculatorInterface
     /**
      * Possibility to overwrite the price object that should be used
      *
-     * @param Decimal $amount
-     * @param Currency $currency
      *
-     * @return PriceInterface
      */
     protected function getDefaultPriceObject(Decimal $amount, Currency $currency): PriceInterface
     {

@@ -38,9 +38,6 @@ class PaymentManager implements PaymentManagerInterface
         return $this->providerTypes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProvider(string $name): PaymentInterface
     {
         if (!$this->providers->has($name)) {

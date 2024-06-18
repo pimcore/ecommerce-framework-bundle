@@ -30,14 +30,12 @@ class CatalogCategory extends AbstractObjectListCondition implements CategoryInt
     /**
      * Serialized category IDs
      *
-     * @var array
      */
     protected array $categoryIds = [];
 
     /**
      * @param AbstractCategory[] $categories
      *
-     * @return CategoryInterface
      */
     public function setCategories(array $categories): CategoryInterface
     {
@@ -92,7 +90,6 @@ class CatalogCategory extends AbstractObjectListCondition implements CategoryInt
     /**
      * Don't cache the entire category object
      *
-     * @return array
      *
      * @internal
      */

@@ -34,7 +34,6 @@ class Decimal
     /**
      * Precision after comma - actual amount will be amount divided by 10^scale
      *
-     * @var int
      */
     private int $scale;
 
@@ -42,8 +41,6 @@ class Decimal
      * Builds a value from an integer. The integer amount here must be the final value with
      * conversion factor already applied.
      *
-     * @param int $amount
-     * @param int $scale
      */
     protected function __construct(int $amount, int $scale)
     {
@@ -54,7 +51,6 @@ class Decimal
     /**
      * Sets the global default scale to be used
      *
-     * @param int $scale
      */
     public static function setDefaultScale(int $scale): void
     {
@@ -113,11 +109,7 @@ class Decimal
      * scale: 4
      * amount: 15 * 10^4 = 150000, scale: 4
      *
-     * @param float|int|string|self $amount
-     * @param int|null $scale
-     * @param int|null $roundingMode
      *
-     * @return self
      *
      * @throws \TypeError
      */
@@ -226,10 +218,7 @@ class Decimal
      * new object will be returned. Please note that this will potentially imply precision
      * loss when converting to a lower scale.
      *
-     * @param Decimal $amount
-     * @param int|null $scale
      *
-     * @return Decimal
      */
     public static function fromDecimal(Decimal $amount, int $scale = null): self
     {
@@ -247,9 +236,7 @@ class Decimal
     /**
      * Create a zero value object
      *
-     * @param int|null $scale
      *
-     * @return Decimal
      */
     public static function zero(int $scale = null): self
     {
@@ -259,7 +246,6 @@ class Decimal
     /**
      * Returns the used scale factor
      *
-     * @return int
      */
     public function getScale(): int
     {
@@ -271,7 +257,6 @@ class Decimal
      *
      * WARNING: use this with caution as the represented value depends on the scale!
      *
-     * @return int
      */
     public function asRawValue(): int
     {
@@ -281,7 +266,6 @@ class Decimal
     /**
      * Returns a numeric representation
      *
-     * @return int|float
      */
     public function asNumeric(): float|int
     {
@@ -292,9 +276,7 @@ class Decimal
      * Returns a string representation. Digits default to the scale. If $digits is passed,
      * the string will be truncated to the given amount of digits without any rounding.
      *
-     * @param int|null $digits
      *
-     * @return string
      */
     public function asString(int $digits = null): string
     {
@@ -334,7 +316,7 @@ class Decimal
         $fractionalPart = '0';
 
         if (false !== strpos($amount, '.')) {
-            list($integerPart, $fractionalPart) = explode('.', $amount);
+            [$integerPart, $fractionalPart] = explode('.', $amount);
         }
 
         if ($digits === 0) {
@@ -383,11 +365,9 @@ class Decimal
     /**
      * Checks if value is equal to other value
      *
-     * @param Decimal $other
      *
      * @todo Assert same scale before comparing?
      *
-     * @return bool
      */
     public function equals(Decimal $other): bool
     {
@@ -397,9 +377,7 @@ class Decimal
     /**
      * Checks if value is not equal to other value
      *
-     * @param Decimal $other
      *
-     * @return bool
      */
     public function notEquals(Decimal $other): bool
     {
@@ -409,9 +387,7 @@ class Decimal
     /**
      * Compares a value to another one
      *
-     * @param Decimal $other
      *
-     * @return int
      */
     public function compare(Decimal $other): int
     {
@@ -427,9 +403,7 @@ class Decimal
     /**
      * Compares this > other
      *
-     * @param Decimal $other
      *
-     * @return bool
      */
     public function greaterThan(Decimal $other): bool
     {
@@ -439,9 +413,7 @@ class Decimal
     /**
      * Compares this >= other
      *
-     * @param Decimal $other
      *
-     * @return bool
      */
     public function greaterThanOrEqual(Decimal $other): bool
     {
@@ -451,9 +423,7 @@ class Decimal
     /**
      * Compares this < other
      *
-     * @param Decimal $other
      *
-     * @return bool
      */
     public function lessThan(Decimal $other): bool
     {
@@ -463,9 +433,7 @@ class Decimal
     /**
      * Compares this <= other
      *
-     * @param Decimal $other
      *
-     * @return bool
      */
     public function lessThanOrEqual(Decimal $other): bool
     {
@@ -475,7 +443,6 @@ class Decimal
     /**
      * Checks if amount is zero
      *
-     * @return bool
      */
     public function isZero(): bool
     {
@@ -485,7 +452,6 @@ class Decimal
     /**
      * Checks if amount is positive. Not: zero is NOT handled as positive.
      *
-     * @return bool
      */
     public function isPositive(): bool
     {
@@ -495,7 +461,6 @@ class Decimal
     /**
      * Checks if amount is negative
      *
-     * @return bool
      */
     public function isNegative(): bool
     {
@@ -595,7 +560,6 @@ class Decimal
      * @example Decimal::create(5)->toAdditiveInverse() = -5
      * @example Decimal::create(-5)->toAdditiveInverse() = 5
      *
-     * @return Decimal
      */
     public function toAdditiveInverse(): self
     {
@@ -608,10 +572,7 @@ class Decimal
      * @example Decimal::create(100)->toPercentage(30) = 30
      * @example Decimal::create(50)->toPercentage(50) = 25
      *
-     * @param mixed $percentage
-     * @param int|null $roundingMode
      *
-     * @return Decimal
      */
     public function toPercentage(mixed $percentage, int $roundingMode = null): self
     {
@@ -640,9 +601,7 @@ class Decimal
      * @example Decimal::create(100)->percentageOf(Decimal::create(50)) = 200
      * @example Decimal::create(50)->percentageOf(Decimal::create(100)) = 50
      *
-     * @param Decimal $other
      *
-     * @return int|float
      */
     public function percentageOf(Decimal $other): float|int
     {
@@ -660,9 +619,7 @@ class Decimal
      *
      * @example Decimal::create(30)->discountPercentageOf(Decimal::create(100)) = 70
      *
-     * @param Decimal $other
      *
-     * @return int|float
      */
     public function discountPercentageOf(Decimal $other): float|int
     {

@@ -24,7 +24,6 @@ interface CatalogProductInterface extends ConditionInterface
     /**
      * @param AbstractProduct[] $products
      *
-     * @return CatalogProductInterface
      */
     public function setProducts(array $products): CatalogProductInterface;
 

@@ -31,10 +31,6 @@ class SelectCategory extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterServ
 
     /**
      * @param FilterCategory $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -70,7 +66,7 @@ class SelectCategory extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterServ
         } elseif (empty($value) && !$isReload && method_exists($filterDefinition, 'getPreSelect')) {
             $value = $filterDefinition->getPreSelect();
             if ($value instanceof ElementInterface) {
-                $value = $value->getId();
+                $value = (string)$value->getId();
             }
         }
 

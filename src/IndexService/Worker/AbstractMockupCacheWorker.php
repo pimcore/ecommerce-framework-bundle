@@ -30,16 +30,13 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
     /**
      * returns prefix for cache key
      *
-     * @return string
      */
     abstract protected function getMockupCachePrefix(): string;
 
     /**
      * creates mockup cache key
      *
-     * @param int $objectId
      *
-     * @return string
      */
     protected function createMockupCacheKey(int $objectId): string
     {
@@ -49,7 +46,6 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
     /**
      * deletes element from mockup cache
      *
-     * @param int $objectId
      */
     protected function deleteFromMockupCache(int $objectId): void
     {
@@ -60,10 +56,7 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
     /**
      * updates mockup cache, delegates creation of mockup object to tenant config
      *
-     * @param int $objectId
-     * @param array|null $data
      *
-     * @return DefaultMockup
      *
      * @throws InvalidConfigException
      */
@@ -109,9 +102,7 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
     /**
      * gets mockup from cache and if not in cache, adds it to cache
      *
-     * @param int $objectId
      *
-     * @return DefaultMockup
      */
     public function getMockupFromCache(int $objectId): DefaultMockup
     {

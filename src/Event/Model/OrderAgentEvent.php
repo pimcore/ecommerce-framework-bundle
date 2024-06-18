@@ -29,8 +29,6 @@ class OrderAgentEvent extends Event
     /**
      * OrderAgentEvent constructor.
      *
-     * @param OrderAgentInterface $orderAgent
-     * @param array $arguments
      */
     public function __construct(OrderAgentInterface $orderAgent, array $arguments = [])
     {

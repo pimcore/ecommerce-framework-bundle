@@ -39,23 +39,19 @@ interface CheckoutManagerInterface
     /**
      * Returns checkout step with given name
      *
-     * @param string $stepName
      *
-     * @return CheckoutStepInterface|null
      */
     public function getCheckoutStep(string $stepName): ?CheckoutStepInterface;
 
     /**
      * Returns current checkout step
      *
-     * @return CheckoutStepInterface
      */
     public function getCurrentStep(): CheckoutStepInterface;
 
     /**
      * Returns the cart the checkout is started with
      *
-     * @return CartInterface
      */
     public function getCart(): CartInterface;
 
@@ -64,10 +60,7 @@ interface CheckoutManagerInterface
      *
      * All previous steps must be committed, otherwise committing step is not allowed
      *
-     * @param CheckoutStepInterface $step
-     * @param  mixed $data
      *
-     * @return bool
      */
     public function commitStep(CheckoutStepInterface $step, mixed $data): bool;
 
@@ -75,14 +68,12 @@ interface CheckoutManagerInterface
      * Checks if checkout is finished (= all checkout steps are committed)
      * only a finished checkout can be committed
      *
-     * @return bool
      */
     public function isFinished(): bool;
 
     /**
      * Returns if there currently is an active payment (init or pending)
      *
-     * @return bool
      */
     public function hasActivePayment(): bool;
 
@@ -90,7 +81,6 @@ interface CheckoutManagerInterface
      * Init payment for checkout - only possible if payment provider is configured
      * creates PaymentInformation with init state, does not change order state
      *
-     * @return AbstractPaymentInformation
      *
      * @throws UnsupportedException
      */
@@ -100,9 +90,7 @@ interface CheckoutManagerInterface
      * Starts payment for checkout and also starts payment provider
      * - only possible if payment provider is configured
      *
-     * @param AbstractRequest $paymentConfig
      *
-     * @return StartPaymentResponseInterface
      *
      * @throws UnsupportedException
      */
@@ -119,7 +107,6 @@ interface CheckoutManagerInterface
      *
      * Only possible when payment state is PENDING, otherwise exception is thrown
      *
-     * @return null|AbstractOrder
      *
      * @throws UnsupportedException
      */
@@ -128,7 +115,6 @@ interface CheckoutManagerInterface
     /**
      * Returns order (creates it if not available yet)
      *
-     * @return AbstractOrder
      */
     public function getOrder(): AbstractOrder;
 
@@ -145,9 +131,7 @@ interface CheckoutManagerInterface
      *
      * Delegates to commit order processor
      *
-     * @param array|StatusInterface $paymentResponseParams
      *
-     * @return AbstractOrder
      */
     public function handlePaymentResponseAndCommitOrderPayment(StatusInterface|array $paymentResponseParams): AbstractOrder;
 
@@ -155,10 +139,8 @@ interface CheckoutManagerInterface
      * Start and commits payment based on a previously performed payment
      * provided via the source order.
      *
-     * @param AbstractOrder $sourceOrder
      * @param string $customerId             Only allow recurring payment to be performed on source-orders of the same user
      *
-     * @return AbstractOrder
      */
     public function startAndCommitRecurringOrderPayment(AbstractOrder $sourceOrder, string $customerId): AbstractOrder;
 
@@ -169,7 +151,6 @@ interface CheckoutManagerInterface
      *
      * Delegates to commit order processor
      *
-     * @return AbstractOrder
      */
     public function commitOrder(): AbstractOrder;
 
@@ -177,21 +158,18 @@ interface CheckoutManagerInterface
      * Returns if checkout process and subsequently order is committed
      * basically checks, if order is available and if this order is committed
      *
-     * @return bool
      */
     public function isCommitted(): bool;
 
     /**
      * Returns payment adapter
      *
-     * @return PaymentInterface|null
      */
     public function getPayment(): ?PaymentInterface;
 
     /**
      * Cleans up orders with state pending payment after 1h -> delegates this to commit order processor
      *
-     * @return void
      */
     public function cleanUpPendingOrders(): void;
 }

@@ -34,6 +34,7 @@ use Pimcore\Logger;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -123,7 +124,7 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws UnsupportedException
      */
@@ -142,9 +143,6 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
         return $this->commitOrderPayment($paymentStatus, $paymentProvider);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function committedOrderWithSamePaymentExists(StatusInterface|array $paymentResponseParams, PaymentInterface $paymentProvider): ?AbstractOrder
     {
         if (!$paymentResponseParams instanceof StatusInterface) {
@@ -175,7 +173,7 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws UnsupportedException|PaymentNotSuccessfulException
      * @throws \Exception
@@ -252,18 +250,12 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
      * Method for applying additional data to the order object based on payment information
      * Called in commitOrderPayment() just after updatePayment on OrderAgent is called
      *
-     * @param AbstractOrder $order
-     * @param StatusInterface $paymentStatus
-     * @param PaymentInterface $paymentProvider
      */
     protected function applyAdditionalDataToOrder(AbstractOrder $order, StatusInterface $paymentStatus, PaymentInterface $paymentProvider): void
     {
         // nothing to do by default
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function commitOrder(AbstractOrder $order): AbstractOrder
     {
         $this->eventDispatcher->dispatch(new CommitOrderProcessorEvent($this, $order), CommitOrderProcessorEvents::PRE_COMMIT_ORDER);
@@ -287,7 +279,6 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
     /**
      * Implementation-specific processing of order, must be implemented in subclass (e.g. sending order to ERP-system)
      *
-     * @param AbstractOrder $order
      */
     protected function processOrder(AbstractOrder $order): void
     {
@@ -329,7 +320,6 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
 
         //Abort orders with payment pending
         $list = $orderManager->buildOrderList();
-        $list->addFieldCollection('PaymentInfo');
         $list->setCondition(
             'orderState = ? AND modificationDate < ?',
             [AbstractOrder::ORDER_STATE_PAYMENT_PENDING, $timestamp]
@@ -339,7 +329,14 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
         foreach ($list as $order) {
             Logger::warn('Setting order ' . $order->getId() . ' to ' . AbstractOrder::ORDER_STATE_ABORTED);
             $order->setOrderState(AbstractOrder::ORDER_STATE_ABORTED);
-            $order->save(['versionNote' => 'CommitOrderProcessor::cleanUpPendingOrders - set state to aborted.']);
+            $parameters = ['versionNote' => 'CommitOrderProcessor::cleanUpPendingOrders - set state to aborted.'];
+
+            $pendingOrderEvent = new CommitOrderProcessorEvent($this, $order, ['parameters' => $parameters]);
+            $this->eventDispatcher->dispatch($pendingOrderEvent, CommitOrderProcessorEvents::PRE_CLEANUP_PENDING_ORDER);
+            $order = $pendingOrderEvent->getOrder();
+            $parameters = array_merge($parameters, $pendingOrderEvent->getArgument('parameters'));
+
+            $order->save($parameters);
         }
 
         //Abort payments with payment pending
@@ -353,6 +350,7 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
         /** @var AbstractOrder $order */
         foreach ($list as $order) {
             $paymentInformationCollection = $order->getPaymentInfo();
+            $parameters = ['versionNote' => 'CommitOrderProcessor::cleanUpPendingOrders - set state to aborted.'];
 
             /** @var AbstractPaymentInformation $paymentInfo */
             foreach ($paymentInformationCollection as $paymentInfo) {
@@ -369,9 +367,14 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
                         )
                     );
                     $paymentInfo->setPaymentState(AbstractOrder::ORDER_STATE_ABORTED);
+
+                    $pendingPaymentEvent = new GenericEvent($paymentInfo, ['parameters' => $parameters]);
+                    $this->eventDispatcher->dispatch($pendingPaymentEvent, CommitOrderProcessorEvents::PRE_CLEANUP_PENDING_PAYMENT);
+                    $paymentInfo = $pendingPaymentEvent->getSubject();
+                    $parameters = array_merge($parameters, $pendingPaymentEvent->getArgument('parameters'));
                 }
             }
-            $order->save(['versionNote' => 'CommitOrderProcessor:cleanupPendingOrders- payment aborted.']);
+            $order->save($parameters);
         }
     }
 }

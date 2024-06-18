@@ -28,9 +28,6 @@ class PaymentNotSuccessfulException extends AbstractEcommerceException
     /**
      * PaymentNotSuccessfulException constructor.
      *
-     * @param AbstractOrder $order
-     * @param StatusInterface $status
-     * @param string $message
      */
     public function __construct(AbstractOrder $order, StatusInterface $status, string $message)
     {

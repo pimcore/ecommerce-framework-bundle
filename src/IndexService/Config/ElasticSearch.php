@@ -45,7 +45,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * contains the mapping for the fields in Elasticsearch
      *
-     * @var array
      */
     protected array $fieldMapping = [
         'id' => 'system.id',
@@ -68,7 +67,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     protected iterable $synonymProviders = [];
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @param SynonymProviderInterface[] $synonymProviders
      */
@@ -172,7 +171,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         return $parts;
     }
 
-    /** @inheritDoc */
     public function getFieldNameMapped(string $fieldName, bool $considerSubFieldNames = false): string
     {
         if (isset($this->fieldMapping[$fieldName])) {
@@ -192,7 +190,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         return $fieldName;
     }
 
-    /** @inheritDoc */
     public function getReverseMappedFieldName(string $fullFieldName): bool|int|string
     {
         //check for direct match of field name
@@ -220,11 +217,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         return $fullFieldName;
     }
 
-    /**
-     * @param string|null $property
-     *
-     * @return array|string|null
-     */
     public function getClientConfig(string $property = null): array|string|null
     {
         if ($property) {
@@ -242,9 +234,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * checks, if product should be in index for current tenant
      *
-     * @param IndexableInterface $object
      *
-     * @return bool
      */
     public function inIndex(IndexableInterface $object): bool
     {
@@ -254,8 +244,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * in case of subtenants returns a data structure containing all sub tenants
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return array $subTenantData
      */
@@ -267,11 +255,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * populates index for tenant relations based on gived data
      *
-     * @param mixed $objectId
-     * @param mixed $subTenantData
-     * @param mixed $subObjectId
      *
-     * @return void
      */
     public function updateSubTenantEntries(mixed $objectId, mixed $subTenantData, mixed $subObjectId = null): void
     {
@@ -282,7 +266,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * returns condition for current subtenant
      *
-     * @return array
      */
     public function getSubTenantCondition(): array
     {
@@ -293,9 +276,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
         if (!$tenantWorker instanceof DefaultElasticSearchWorker) {
@@ -311,11 +291,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * creates object mockup for given data
      *
-     * @param int $objectId
-     * @param array $data
-     * @param array $relations
      *
-     * @return DefaultMockup
      */
     public function createMockupObject(int $objectId, array $data, array $relations): DefaultMockup
     {
@@ -326,9 +302,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
      * Gets object mockup by id, can consider subIds and therefore return e.g. an array of values
      * always returns a object mockup if available
      *
-     * @param int $objectId
      *
-     * @return IndexableInterface|null
      */
     public function getObjectMockupById(int $objectId): ?IndexableInterface
     {

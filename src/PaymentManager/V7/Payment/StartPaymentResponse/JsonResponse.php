@@ -25,8 +25,6 @@ class JsonResponse extends AbstractResponse
     /**
      * JsonResponse constructor.
      *
-     * @param AbstractOrder $order
-     * @param string $jsonString
      */
     public function __construct(AbstractOrder $order, string $jsonString)
     {

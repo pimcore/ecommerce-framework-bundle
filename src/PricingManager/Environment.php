@@ -47,7 +47,6 @@ class Environment implements EnvironmentInterface
     /**
      * Execution mode of system - either product or cart
      *
-     * @var string
      */
     protected string $executionMode = EnvironmentInterface::EXECUTION_MODE_PRODUCT;
 
@@ -153,7 +152,6 @@ class Environment implements EnvironmentInterface
     /**
      * returns hash of environment based on its content
      *
-     * @return string
      */
     public function getHash(): string
     {

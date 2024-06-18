@@ -44,7 +44,6 @@ abstract class AbstractOfferItem extends Concrete
     abstract public function getProductName(): ?string;
 
     /**
-     * @param string|null $productName
      *
      * @return $this
      *
@@ -53,7 +52,6 @@ abstract class AbstractOfferItem extends Concrete
     abstract public function setProductName(?string $productName): static;
 
     /**
-     * @return float|null
      *
      * @throws UnsupportedException
      */

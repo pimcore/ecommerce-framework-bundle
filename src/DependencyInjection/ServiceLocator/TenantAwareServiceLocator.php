@@ -30,7 +30,6 @@ abstract class TenantAwareServiceLocator
     /**
      * If true the locator will not fall back to the default tenant if a tenant is requested but not existing
      *
-     * @var bool
      */
     protected bool $strictTenants = false;
 

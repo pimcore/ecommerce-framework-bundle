@@ -33,7 +33,6 @@ interface PriceInfoInterface extends PriceSystemPriceInfoInterface
     /**
      * Returns all valid rules, if forceRecalc, recalculation of valid rules is forced
      *
-     * @param bool $forceRecalc
      *
      * @return RuleInterface[]
      */
@@ -66,7 +65,6 @@ interface PriceInfoInterface extends PriceSystemPriceInfoInterface
     /**
      * Get discount in percent
      *
-     * @return float
      */
     public function getDiscountPercent(): float;
 

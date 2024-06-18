@@ -32,9 +32,6 @@ class DeliveryDate extends AbstractStep implements CheckoutStepInterface
         return 'deliverydate';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function commit(mixed $data): bool
     {
         if (empty($data->instantly) && empty($data->date)) {
@@ -53,9 +50,6 @@ class DeliveryDate extends AbstractStep implements CheckoutStepInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): mixed
     {
         $data = new \stdClass();

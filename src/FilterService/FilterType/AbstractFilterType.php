@@ -97,11 +97,7 @@ abstract class AbstractFilterType
      * renders and returns the rendered html snippet for the current filter
      * based on settings in the filter definition and the current filter params.
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
      *
-     * @return string
      */
     public function getFilterFrontend(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter): string
     {
@@ -115,28 +111,16 @@ abstract class AbstractFilterType
      * returns the raw data for the current filter based on settings in the
      * filter definition and the current filter params.
      *
-     * @abstract
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
      *
-     * @return array
      */
     abstract public function getFilterValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter): array;
 
     /**
      * adds necessary conditions to the product list implementation based on the currently set filter params.
      *
-     * @abstract
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     * @param array $params
-     * @param bool $isPrecondition
      *
-     * @return array
      *
      * @throws InvalidConfigException
      */
@@ -145,8 +129,6 @@ abstract class AbstractFilterType
     /**
      * calls prepareGroupByValues of productlist if necessary
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
      *
      */
     public function prepareGroupByValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList): void
@@ -157,10 +139,7 @@ abstract class AbstractFilterType
     /**
      * sort result
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param array $result
      *
-     * @return array
      */
     protected function sortResult(AbstractFilterDefinitionType $filterDefinition, array $result): array
     {
@@ -170,10 +149,7 @@ abstract class AbstractFilterType
     /**
      * renders filter template
      *
-     * @param string $template
-     * @param array $parameters
      *
-     * @return string
      */
     protected function render(string $template, array $parameters = []): string
     {

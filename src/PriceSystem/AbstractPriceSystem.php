@@ -35,9 +35,6 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
         $this->pricingManagers = $pricingManagers;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriceInfo(CheckoutableInterface $product, int|string $quantityScale = null, array $products = null): PriceInfoInterface
     {
         return $this->initPriceInfoInstance($quantityScale, $product, $products);
@@ -48,10 +45,8 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
      * set any price values
      *
      * @param int|string|null $quantityScale Numeric or string (allowed values: PriceInfoInterface::MIN_PRICE)
-     * @param CheckoutableInterface $product
      * @param CheckoutableInterface[] $products
      *
-     * @return PriceInfoInterface
      */
     protected function initPriceInfoInstance(int|string|null $quantityScale, CheckoutableInterface $product, array $products): PriceInfoInterface
     {
@@ -78,10 +73,8 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
 
     /**
      * @param int|string|null $quantityScale Numeric or string (allowed values: PriceInfoInterface::MIN_PRICE)
-     * @param CheckoutableInterface $product
      * @param CheckoutableInterface[] $products
      *
-     * @return AbstractPriceInfo
      */
     abstract public function createPriceInfoInstance(int|string|null $quantityScale, CheckoutableInterface $product, array $products): AbstractPriceInfo;
 
@@ -91,7 +84,6 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
      *
      * Should be overwritten in custom price systems with suitable implementation.
      *
-     * @return OnlineShopTaxClass
      */
     protected function getDefaultTaxClass(): OnlineShopTaxClass
     {
@@ -112,9 +104,7 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
     /**
      * Returns OnlineShopTaxClass for given CheckoutableInterface.
      *
-     * @param CheckoutableInterface $product
      *
-     * @return OnlineShopTaxClass
      */
     public function getTaxClassForProduct(CheckoutableInterface $product): OnlineShopTaxClass
     {
@@ -124,9 +114,7 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
     /**
      * Returns OnlineShopTaxClass for given CartPriceModificatorInterface
      *
-     * @param CartPriceModificatorInterface $modificator
      *
-     * @return OnlineShopTaxClass
      */
     public function getTaxClassForPriceModification(CartPriceModificatorInterface $modificator): OnlineShopTaxClass
     {

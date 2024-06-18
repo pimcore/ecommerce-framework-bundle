@@ -38,14 +38,12 @@ abstract class AbstractOfferToolProduct extends \Pimcore\Model\DataObject\Concre
     /**
      * should be overwritten in mapped sub classes of product classes
      *
-     * @return string|null
      */
     abstract public function getOSName(): ?string;
 
     /**
      * should be overwritten in mapped sub classes of product classes
      *
-     * @return string|null
      */
     abstract public function getOSProductNumber(): ?string;
 
@@ -53,7 +51,6 @@ abstract class AbstractOfferToolProduct extends \Pimcore\Model\DataObject\Concre
      * defines the name of the availability system for this product.
      * for offline tool there are no availability systems implemented
      *
-     * @return string
      */
     public function getAvailabilitySystemName(): string
     {
@@ -142,7 +139,6 @@ abstract class AbstractOfferToolProduct extends \Pimcore\Model\DataObject\Concre
     /**
      * @throws UnsupportedException
      *
-     * @return string|null
      */
     public function getProductGroup(): ?string
     {

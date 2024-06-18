@@ -32,7 +32,6 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
     /**
      * Serialized product IDs
      *
-     * @var array
      */
     protected array $productIds = [];
 
@@ -109,7 +108,6 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
     /**
      * Don't cache the entire product object
      *
-     * @return array
      *
      * @internal
      */
@@ -129,7 +127,6 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
     /**
      * @param AbstractProduct[] $products
      *
-     * @return CatalogProductInterface
      */
     public function setProducts(array $products): CatalogProductInterface
     {
@@ -138,7 +135,6 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
         return $this;
     }
 
-    /** @inheritDoc */
     public function getProducts(): array
     {
         return $this->products;

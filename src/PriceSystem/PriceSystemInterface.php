@@ -31,21 +31,13 @@ interface PriceSystemInterface
      * @param int|string|null $quantityScale - Numeric or string (allowed values: PriceInfoInterface::MIN_PRICE)
      * @param CheckoutableInterface[]|null $products
      *
-     * @return PriceInfoInterface
      */
     public function getPriceInfo(CheckoutableInterface $product, int|string $quantityScale = null, array $products = null): PriceInfoInterface;
 
     /**
      * Filters and orders given product IDs based on price information
      *
-     * @param array $productIds
-     * @param float|null $fromPrice
-     * @param float|null $toPrice
-     * @param string $order
-     * @param int $offset
-     * @param int $limit
      *
-     * @return array
      */
     public function filterProductIds(array $productIds, ?float $fromPrice, ?float $toPrice, string $order, int $offset, int $limit): array;
 
@@ -54,9 +46,7 @@ interface PriceSystemInterface
      *
      * Should be overwritten in custom price systems with suitable implementation.
      *
-     * @param CheckoutableInterface&Concrete $product
      *
-     * @return OnlineShopTaxClass
      */
     public function getTaxClassForProduct(CheckoutableInterface $product): OnlineShopTaxClass;
 
@@ -65,9 +55,7 @@ interface PriceSystemInterface
      *
      * Should be overwritten in custom price systems with suitable implementation.
      *
-     * @param CartPriceModificatorInterface $modificator
      *
-     * @return OnlineShopTaxClass
      */
     public function getTaxClassForPriceModification(CartPriceModificatorInterface $modificator): OnlineShopTaxClass;
 }

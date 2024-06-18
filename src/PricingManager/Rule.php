@@ -88,8 +88,6 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * load model with serializes data from db
      *
-     * @param string $key
-     * @param mixed $value
      *
      * @return $this
      *
@@ -139,8 +137,6 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param string $label
-     * @param string|null $locale
      *
      * @return $this
      */
@@ -151,11 +147,6 @@ class Rule extends AbstractModel implements RuleInterface
         return $this;
     }
 
-    /**
-     * @param string|null $locale
-     *
-     * @return string
-     */
     public function getLabel(?string $locale = null): string
     {
         return $this->label[$this->getLanguage($locale)] ?? '';
@@ -174,8 +165,6 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param string $description
-     * @param string|null $locale
      *
      * @return $this
      */
@@ -186,11 +175,6 @@ class Rule extends AbstractModel implements RuleInterface
         return $this;
     }
 
-    /**
-     * @param string|null $locale
-     *
-     * @return string|null
-     */
     public function getDescription(?string $locale = null): ?string
     {
         return $this->description[$this->getLanguage($locale)] ?? null;
@@ -285,9 +269,7 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * test all conditions if this rule is valid
      *
-     * @param EnvironmentInterface $environment
      *
-     * @return bool
      */
     public function check(EnvironmentInterface $environment): bool
     {
@@ -302,7 +284,6 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * checks if rule has at least one action that changes product price (and not cart price)
      *
-     * @return bool
      */
     public function hasProductActions(): bool
     {
@@ -318,7 +299,6 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * checks if rule has at least one action that changes cart price
      *
-     * @return bool
      */
     public function hasCartActions(): bool
     {
@@ -356,9 +336,7 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * gets current language
      *
-     * @param string|null $language
      *
-     * @return string
      */
     protected function getLanguage(string $language = null): string
     {
@@ -370,7 +348,6 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param string $typeClass
      *
      * @return ConditionInterface[]
      */

@@ -101,7 +101,6 @@ abstract class AbstractOffer extends Concrete
     /**
      * @throws UnsupportedException
      *
-     * @return mixed
      */
     public function getCustomer(): mixed
     {
@@ -110,8 +109,6 @@ abstract class AbstractOffer extends Concrete
 
     /**
      * @throws UnsupportedException
-     *
-     * @param mixed $customer
      *
      * @return $this
      */

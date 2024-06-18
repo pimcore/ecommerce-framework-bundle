@@ -24,11 +24,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7\OrderManagerInterfac
 class ThrowExceptionStrategy implements HandlePendingPaymentsStrategyInterface
 {
     /**
-     * @param AbstractOrder $order
-     * @param CartInterface $cart
-     * @param OrderManagerInterface $orderManager
      *
-     * @return AbstractOrder
      *
      * @throws PaymentNotAllowedException
      * @throws \Pimcore\Bundle\EcommerceFrameworkBundle\Exception\UnsupportedException

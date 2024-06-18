@@ -26,45 +26,34 @@ interface TrackingItemBuilderInterface
     /**
      * Build a product view object
      *
-     * @param ProductInterface $product
      *
-     * @return ProductAction
      */
     public function buildProductViewItem(ProductInterface $product): ProductAction;
 
     /**
      * Build a product action item object
      *
-     * @param ProductInterface $product
-     * @param int $quantity
      *
-     * @return ProductAction
      */
     public function buildProductActionItem(ProductInterface $product, int $quantity = 1): ProductAction;
 
     /**
      * Build a product impression object
      *
-     * @param ProductInterface $product
-     * @param string $list
      *
-     * @return ProductImpression
      */
     public function buildProductImpressionItem(ProductInterface $product, string $list = 'default'): ProductImpression;
 
     /**
      * Build a checkout transaction object
      *
-     * @param AbstractOrder $order
      *
-     * @return Transaction
      */
     public function buildCheckoutTransaction(AbstractOrder $order): Transaction;
 
     /**
      * Build checkout items
      *
-     * @param AbstractOrder $order
      *
      * @return ProductAction[]
      */
@@ -73,7 +62,6 @@ interface TrackingItemBuilderInterface
     /**
      * Build checkout items by cart
      *
-     * @param CartInterface $cart
      *
      * @return ProductAction[]
      */
@@ -82,10 +70,7 @@ interface TrackingItemBuilderInterface
     /**
      * Build a checkout item object
      *
-     * @param AbstractOrder $order
-     * @param AbstractOrderItem $orderItem
      *
-     * @return ProductAction
      */
     public function buildCheckoutItem(AbstractOrder $order, AbstractOrderItem $orderItem): ProductAction;
 }

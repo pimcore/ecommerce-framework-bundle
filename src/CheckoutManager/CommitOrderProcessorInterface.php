@@ -26,10 +26,7 @@ interface CommitOrderProcessorInterface
     /**
      * Checks if order is already committed and payment information with same internal payment id has same state
      *
-     * @param array|StatusInterface $paymentResponseParams
-     * @param PaymentInterface $paymentProvider
      *
-     * @return null|AbstractOrder
      *
      * @throws \Exception
      * @throws UnsupportedException
@@ -44,10 +41,7 @@ interface CommitOrderProcessorInterface
      *
      * Can be used by controllers to commit orders with payment
      *
-     * @param array|StatusInterface $paymentResponseParams
-     * @param PaymentInterface $paymentProvider
      *
-     * @return AbstractOrder
      */
     public function handlePaymentResponseAndCommitOrderPayment(StatusInterface|array $paymentResponseParams, PaymentInterface $paymentProvider): AbstractOrder;
 
@@ -59,27 +53,21 @@ interface CommitOrderProcessorInterface
      *
      * Use this for committing order when payment is activated
      *
-     * @param StatusInterface $paymentStatus
-     * @param PaymentInterface $paymentProvider
      * @param AbstractOrder|null $sourceOrder Source order for recurring payment
      *
-     * @return AbstractOrder
      */
     public function commitOrderPayment(StatusInterface $paymentStatus, PaymentInterface $paymentProvider, AbstractOrder $sourceOrder = null): AbstractOrder;
 
     /**
      * Commits order
      *
-     * @param AbstractOrder $order
      *
-     * @return AbstractOrder
      */
     public function commitOrder(AbstractOrder $order): AbstractOrder;
 
     /**
      * Cleans up orders with state pending payment after 1h
      *
-     * @return void
      */
     public function cleanUpPendingOrders(): void;
 }

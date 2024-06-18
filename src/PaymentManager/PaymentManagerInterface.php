@@ -25,9 +25,7 @@ interface PaymentManagerInterface
     /**
      * Get a payment provider by name
      *
-     * @param string $name
      *
-     * @return PaymentInterface
      *
      * @throws ProviderNotFoundException
      */
@@ -36,7 +34,6 @@ interface PaymentManagerInterface
     /**
      * Get configured payment providers
      *
-     * @return array
      */
     public function getProviderTypes(): array;
 }

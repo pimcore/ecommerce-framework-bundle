@@ -26,8 +26,6 @@ class FormResponse extends AbstractResponse
     /**
      * FormResponse constructor.
      *
-     * @param AbstractOrder $order
-     * @param FormBuilderInterface $form
      */
     public function __construct(AbstractOrder $order, FormBuilderInterface $form)
     {

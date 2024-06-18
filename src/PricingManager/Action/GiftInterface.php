@@ -27,9 +27,7 @@ interface GiftInterface extends ActionInterface, CartActionInterface
     /**
      * Set gift product
      *
-     * @param AbstractProduct $product
      *
-     * @return GiftInterface
      */
     public function setProduct(AbstractProduct $product): GiftInterface;
 

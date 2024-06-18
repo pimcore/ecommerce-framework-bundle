@@ -110,7 +110,6 @@ abstract class AbstractOrderItem extends Concrete
     /**
      * is the order item cancel able
      *
-     * @return bool
      */
     public function isCancelAble(): bool
     {
@@ -120,7 +119,6 @@ abstract class AbstractOrderItem extends Concrete
     /**
      * is the order item edit able
      *
-     * @return bool
      */
     public function isEditAble(): bool
     {
@@ -130,7 +128,6 @@ abstract class AbstractOrderItem extends Concrete
     /**
      * ist eine rückerstattung erlaubt
      *
-     * @return bool
      */
     public function isComplaintAble(): bool
     {

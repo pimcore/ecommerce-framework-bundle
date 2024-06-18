@@ -23,7 +23,6 @@ interface ProductViewInterface
     /**
      * Track product view
      *
-     * @param ProductInterface $product
      */
     public function trackProductView(ProductInterface $product): void;
 }

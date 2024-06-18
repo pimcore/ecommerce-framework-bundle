@@ -37,8 +37,6 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Merge values into properties
      *
-     * @param array $data
-     * @param bool $overwrite
      *
      * @return $this
      */
@@ -63,8 +61,6 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Add an additional attribute.
      *
-     * @param string $attribute
-     * @param mixed $value
      *
      * @return $this
      */
@@ -78,9 +74,7 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Get an additional attribute.
      *
-     * @param string $attribute
      *
-     * @return mixed
      */
     public function getAdditionalAttribute(string $attribute): mixed
     {
@@ -90,7 +84,6 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Get all additional attributes.
      *
-     * @return array
      */
     public function getAdditionalAttributes(): array
     {
@@ -100,7 +93,6 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Serialize all non-null properties
      *
-     * @return array
      */
     public function jsonSerialize(): array
     {

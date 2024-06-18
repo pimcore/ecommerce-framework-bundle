@@ -65,9 +65,6 @@ class GoogleTagManager extends Tracker implements
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function trackProductImpression(ProductInterface $product, string $list = 'default'): void
     {
         $item = $this->trackingItemBuilder->buildProductImpressionItem($product, $list);
@@ -210,9 +207,7 @@ class GoogleTagManager extends Tracker implements
     /**
      * Transform product action into data array
      *
-     * @param ProductAction $item
      *
-     * @return array
      */
     protected function transformProductAction(ProductAction $item): array
     {
@@ -235,9 +230,7 @@ class GoogleTagManager extends Tracker implements
     /**
      * Transform product action into data array
      *
-     * @param ProductImpression $item
      *
-     * @return array
      */
     protected function transformProductImpression(ProductImpression $item): array
     {
@@ -261,9 +254,7 @@ class GoogleTagManager extends Tracker implements
     /**
      * Transform transaction into data array
      *
-     * @param Transaction $transaction
      *
-     * @return array
      */
     protected function transformTransaction(Transaction $transaction): array
     {

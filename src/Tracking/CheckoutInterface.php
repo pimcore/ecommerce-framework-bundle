@@ -23,7 +23,6 @@ interface CheckoutInterface
     /**
      * Track start checkout with first step
      *
-     * @param CartInterface $cart
      */
     public function trackCheckout(CartInterface $cart): void;
 }

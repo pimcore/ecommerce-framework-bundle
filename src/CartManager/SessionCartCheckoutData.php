@@ -65,7 +65,6 @@ class SessionCartCheckoutData extends AbstractCartCheckoutData
     }
 
     /**
-     * @return array
      *
      * @internal
      */

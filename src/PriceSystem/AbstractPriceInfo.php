@@ -38,33 +38,21 @@ class AbstractPriceInfo implements PriceInfoInterface
         return new static(func_get_args());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setQuantity(int|string $quantity): void
     {
         $this->quantity = $quantity;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getQuantity(): int|string
     {
         return $this->quantity;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isMinPrice(): bool
     {
         return $this->getQuantity() === self::MIN_PRICE;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPriceSystem(PriceSystemInterface $priceSystem): static
     {
         $this->priceSystem = $priceSystem;
@@ -77,25 +65,16 @@ class AbstractPriceInfo implements PriceInfoInterface
         return $this->priceSystem;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPrice(): PriceInterface
     {
         throw new UnsupportedException(__METHOD__ . ' is not supported for ' . get_class($this));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTotalPrice(): PriceInterface
     {
         throw new UnsupportedException(__METHOD__ . ' is not supported for ' . get_class($this));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setProduct(CheckoutableInterface $product): static
     {
         $this->product = $product;
@@ -103,9 +82,6 @@ class AbstractPriceInfo implements PriceInfoInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProduct(): ?CheckoutableInterface
     {
         return $this->product;

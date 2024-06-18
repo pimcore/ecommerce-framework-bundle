@@ -69,10 +69,7 @@ class DefaultService implements VoucherServiceInterface
     }
 
     /**
-     * @param string $code
-     * @param CartInterface  $cart
      *
-     * @return bool
      *
      * @throws VoucherServiceException
      */
@@ -124,10 +121,7 @@ class DefaultService implements VoucherServiceInterface
      * Gets the correct token manager and calls removeAppliedTokenFromOrder(), which cleans up the
      * token usage and the ordered token object if necessary, removes the token object from the order.
      *
-     * @param \Pimcore\Model\DataObject\OnlineShopVoucherToken $tokenObject
-     * @param AbstractOrder $order
      *
-     * @return bool
      */
     public function removeAppliedTokenFromOrder(\Pimcore\Model\DataObject\OnlineShopVoucherToken $tokenObject, AbstractOrder $order): bool
     {
@@ -155,8 +149,6 @@ class DefaultService implements VoucherServiceInterface
     }
 
     /**
-     * @param CartInterface $cart
-     * @param string|null $locale
      *
      * @return PricingManagerTokenInformation[]
      *

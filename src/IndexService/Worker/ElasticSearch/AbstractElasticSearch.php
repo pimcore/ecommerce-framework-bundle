@@ -48,7 +48,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * Default value for the mapping of custom attributes
      *
-     * @var bool
      */
     protected bool $storeCustomAttributes = true;
 
@@ -58,14 +57,12 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      * index name of elastic search must be lower case
      * the index name is an alias to indexname-versionnumber
      *
-     * @var string
      */
     protected string $indexName;
 
     /**
      * The Version number of the Index (we increase the Version number if the mapping cant be changed (reindexing process))
      *
-     * @var int|null
      */
     protected ?int $indexVersion = null;
 
@@ -78,7 +75,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * name for routing param for ES bulk requests
      *
-     * @var string
      */
     protected string $routingParamName = 'routing';
 
@@ -94,7 +90,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * should custom attributes be stored separately
      *
-     * @return bool
      */
     public function getStoreCustomAttributes(): bool
     {
@@ -104,7 +99,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * Do store custom attributes
      *
-     * @param bool $storeCustomAttributes
      */
     public function setStoreCustomAttributes(bool $storeCustomAttributes): void
     {
@@ -168,9 +162,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
         return $this;
     }
 
-    /**
-     * @param Client|null $elasticSearchClient
-     */
     public function setElasticSearchClient(?Client $elasticSearchClient): void
     {
         $this->elasticSearchClient = $elasticSearchClient;
@@ -281,9 +272,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      * creates mapping attributes based on system attributes, in product index defined attributes and relations
      * can be overwritten in order to consider additional mappings for sub tenants
      *
-     * @param bool $includeTypes
      *
-     * @return array
      */
     public function getSystemAttributes(bool $includeTypes = false): array
     {
@@ -311,7 +300,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * deletes given element from index
      *
-     * @param IndexableInterface $object
      *
      * @throws \Exception
      */
@@ -335,7 +323,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * updates given element in index
      *
-     * @param IndexableInterface $object
      *
      * @throws \Throwable
      */
@@ -438,9 +425,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      * override this method if you need to add custom data
      * which should not be stored in the store data
      *
-     * @param array|string $data
      *
-     * @return array|string
      */
     protected function doPreIndexDataModification(array|string $data): array|string
     {
@@ -567,9 +552,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      *
      * return array in this case
      *
-     * @param array|string $data
      *
-     * @return array|string
      */
     protected function convertArray(array|string $data): array|string
     {
@@ -577,8 +560,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     }
 
     /**
-     * @param int $objectId
-     * @param IndexableInterface|null $object
      *
      * @throws \Exception
      */
@@ -762,7 +743,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * puts current mapping to index with given name
      *
-     * @param string $indexName
      *
      * @throws \Exception
      */
@@ -850,7 +830,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * Get the next index version, e.g. if currently 13, then 14 will be returned.
      *
-     * @return int
      */
     protected function getNextIndexVersion(): int
     {

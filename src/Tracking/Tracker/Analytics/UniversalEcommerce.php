@@ -37,7 +37,6 @@ class UniversalEcommerce extends AbstractAnalyticsTracker implements CheckoutCom
     /**
      * Track checkout complete
      *
-     * @param AbstractOrder $order
      */
     public function trackCheckoutComplete(AbstractOrder $order): void
     {
@@ -55,10 +54,8 @@ class UniversalEcommerce extends AbstractAnalyticsTracker implements CheckoutCom
     }
 
     /**
-     * @param Transaction $transaction
      * @param ProductAction[] $items
      *
-     * @return array
      */
     protected function buildCheckoutCompleteCalls(Transaction $transaction, array $items): array
     {
@@ -79,9 +76,7 @@ class UniversalEcommerce extends AbstractAnalyticsTracker implements CheckoutCom
     /**
      * Transform transaction into universal data object
      *
-     * @param Transaction $transaction
      *
-     * @return array
      */
     protected function transformTransaction(Transaction $transaction): array
     {
@@ -99,9 +94,7 @@ class UniversalEcommerce extends AbstractAnalyticsTracker implements CheckoutCom
     /**
      * Transform product action into universal data object
      *
-     * @param ProductAction $item
      *
-     * @return array
      */
     protected function transformProductAction(ProductAction $item): array
     {

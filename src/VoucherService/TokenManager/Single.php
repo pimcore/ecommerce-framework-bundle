@@ -19,6 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\TokenManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
+use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\VoucherServiceException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrder;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractVoucherTokenType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Reservation;
@@ -107,9 +108,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     /**
      * Get data for export
      *
-     * @param array $params
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -152,11 +151,6 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
         return false;
     }
 
-    /**
-     * @param array|null $filter
-     *
-     * @return array|bool
-     */
     public function getCodes(array $filter = null): bool|array
     {
         return Token\Listing::getCodes($this->seriesId, $filter);
@@ -207,7 +201,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     public function applyToken(string $code, CartInterface $cart, AbstractOrder $order): OnlineShopVoucherToken|bool
     {
         if ($token = Token::getByCode($code)) {
-            if ($token->check($this->configuration->getUsages(), true)) {
+            if ($token->check((int)$this->configuration->getUsages(), true)) {
                 if ($token->apply()) {
                     $orderToken = \Pimcore\Model\DataObject\OnlineShopVoucherToken::getByToken($code, 1);
                     if (!$orderToken instanceof \Pimcore\Model\DataObject\OnlineShopVoucherToken) {
@@ -233,10 +227,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     /**
      * cleans up the token usage and the ordered token object if necessary
      *
-     * @param OnlineShopVoucherToken $tokenObject
-     * @param AbstractOrder $order
      *
-     * @return bool
      */
     public function removeAppliedTokenFromOrder(OnlineShopVoucherToken $tokenObject, AbstractOrder $order): bool
     {
@@ -259,6 +250,8 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
             if ($token->check((int)$this->configuration->getUsages())) {
                 return true;
             }
+
+            throw new VoucherServiceException('Max usage limit reached.', VoucherServiceException::ERROR_CODE_NO_MORE_USAGES);
         }
 
         return false;

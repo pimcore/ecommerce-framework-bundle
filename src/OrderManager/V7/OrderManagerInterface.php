@@ -49,25 +49,20 @@ interface OrderManagerInterface
     /**
      * Looks if order object for given cart exists and returns it - it does not create it!
      *
-     * @param CartInterface $cart
      *
-     * @return AbstractOrder|null
      */
     public function getOrderFromCart(CartInterface $cart): ?AbstractOrder;
 
     /**
      * Returns order based on given payment status
      *
-     * @param StatusInterface $paymentStatus
      *
-     * @return AbstractOrder|null
      */
     public function getOrderByPaymentStatus(StatusInterface $paymentStatus): ?AbstractOrder;
 
     /**
      * Builds order listing
      *
-     * @return \Pimcore\Model\DataObject\Listing\Concrete
      *
      * @throws \Exception
      */
@@ -76,7 +71,6 @@ interface OrderManagerInterface
     /**
      * Build order item listing
      *
-     * @return \Pimcore\Model\DataObject\Listing\Concrete
      *
      * @throws \Exception
      */
@@ -85,10 +79,7 @@ interface OrderManagerInterface
     public function cartHasPendingPayments(CartInterface $cart): bool;
 
     /**
-     * @param CartInterface $cart
-     * @param AbstractOrder $order
      *
-     * @return bool
      *
      * @throws UnsupportedException
      */
