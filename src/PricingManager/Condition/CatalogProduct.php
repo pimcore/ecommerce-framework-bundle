@@ -27,14 +27,14 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
     /**
      * @var AbstractProduct[]
      *
-     * @deprecated Will be internal in Pimcore 12
+     * @deprecated Will be internal in version 2 of the ecommerce framework
      */
     protected array $products = [];
 
     /**
      * Serialized product IDs
      *
-     * @deprecated Will be internal in Pimcore 12
+     * @deprecated Will be internal in version 2 of the ecommerce framework
      */
     protected array $productIds = [];
 
@@ -148,7 +148,7 @@ class CatalogProduct extends AbstractObjectListCondition implements CatalogProdu
     /**
      * This lazily initializes the "products" property in a backwards compatible way.
      *
-     * @todo: move the lazy initialization into {@see getProducts()} for Pimcore 12
+     * @todo: move the lazy initialization into {@see getProducts()} for version 2 of the ecommerce framework
      */
     public function &__get(string $name): mixed
     {
