@@ -202,7 +202,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         $fieldNamePart = $fullFieldName;
         while (!empty($fieldNamePart)) {
             // cut off part after last .
-            $fieldNamePart = substr($fieldNamePart, 0,(int) strripos($fieldNamePart, '.'));
+            $fieldNamePart = substr($fieldNamePart, 0, (int) strripos($fieldNamePart, '.'));
 
             // search for mapping with field name part
             $fieldName = array_search($fieldNamePart, $this->fieldMapping);
