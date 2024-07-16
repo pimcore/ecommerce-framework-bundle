@@ -21,6 +21,7 @@
     "pimcore/google-marketing-bundle": "^1.0",
     "knplabs/knp-paginator-bundle": "^6.0.0",
     "symfony/webpack-encore-bundle": "^1.13.2",
+    "rybakit/twig-deferred-extension": "^3.0",
     "symfony/form": "^6.2"
   },
   "require-dev": {
@@ -31,6 +32,9 @@
     "codeception/module-symfony":"^3.1.1",
     "elasticsearch/elasticsearch": "^8.0",
     "pimcore/elasticsearch-client": "^1.0.0"
+  },
+  "conflict": {
+    "twig/twig": "^3.9.0"
   },
   "suggest": {
     "elasticsearch/elasticsearch": "Required for Elastic Search service",
