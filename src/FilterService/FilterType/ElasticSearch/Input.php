@@ -42,7 +42,10 @@ class Input extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\Filte
             $value = $preSelect;
         }
 
-        $value = trim($value);
+        if(is_string($value)){
+            $value = trim($value);
+        }
+
         $currentFilter[$field] = $value;
 
         if (!empty($value)) {
