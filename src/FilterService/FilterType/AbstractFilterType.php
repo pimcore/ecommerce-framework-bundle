@@ -81,7 +81,7 @@ abstract class AbstractFilterType
         return $template;
     }
 
-    protected function getPreSelect(AbstractFilterDefinitionType $filterDefinition): array|string|null
+    protected function getPreSelect(AbstractFilterDefinitionType $filterDefinition): array|string|int|null
     {
         $field = $filterDefinition->getField();
         if ($field instanceof IndexFieldSelection) {
