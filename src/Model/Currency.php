@@ -73,7 +73,7 @@ class Currency
 
     public function toCurrency(null|float|int|string|Decimal $value, array|string $pattern = 'default'): string
     {
-        if($value == null) {
+        if ($value == null) {
             return '';
         }
 
