@@ -56,7 +56,7 @@ class DefaultBrickGetterSequenceToMultiselect implements GetterInterface
                         if (is_bool($value) || $source['forceBool']) {
                             $values[] = $source['fieldname'];
                         } else {
-                            if(is_array($value)) {
+                            if (is_array($value)) {
                                 $values = array_merge($values, $value);
                             } else {
                                 $values[] = $value;
@@ -77,7 +77,7 @@ class DefaultBrickGetterSequenceToMultiselect implements GetterInterface
                         if (is_bool($value) || $source['forceBool']) {
                             $values[] = $source['fieldname'];
                         } else {
-                            if(is_array($value)) {
+                            if (is_array($value)) {
                                 $values = array_merge($values, $value);
                             } else {
                                 $values[] = $value;
