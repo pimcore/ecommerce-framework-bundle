@@ -41,9 +41,3 @@ parameters:
 			    reportUnmatched: false
 			    count: 1
 			    path: src/Type/Decimal.php
-
-			-
-			    message: "#^Method Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\OfferTool\\\\AbstractOfferToolProduct\\:\\:getById\\(\\)\\ should return static\\(Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\OfferTool\\\\AbstractOfferToolProduct\\)\\|null but returns Pimcore\\\\Bundle\\\\EcommerceFrameworkBundle\\\\OfferTool\\\\AbstractOfferToolProduct\\.$#"
-			    reportUnmatched: false
-			    count: 1
-			    path: src/Type/Decimal.php
