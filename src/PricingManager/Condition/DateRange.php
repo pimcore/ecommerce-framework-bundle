@@ -73,13 +73,13 @@ class DateRange implements DateRangeInterface
         $json = json_decode($string);
 
         $starting = \DateTime::createFromFormat('d.m.Y', $json->starting, new DateTimeZone('UTC'));
-        if($starting instanceof \DateTime) {
+        if ($starting instanceof \DateTime) {
             $starting->setTime(0, 0, 0);
             $this->setStarting($starting);
         }
 
         $ending = \DateTime::createFromFormat('d.m.Y', $json->ending, new DateTimeZone('UTC'));
-        if($ending instanceof \DateTime) {
+        if ($ending instanceof \DateTime) {
             $ending->setTime(23, 59, 59);
             $this->setEnding($ending);
         }
