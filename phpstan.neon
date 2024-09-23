@@ -5,11 +5,11 @@ parameters:
     bootstrapFiles:
         - phpstan-bootstrap.php
 
-    checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
 
     ignoreErrors:
         - '~^Unsafe usage of new static\(\)~'
+        - identifier: missingType.generics
 
 includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
