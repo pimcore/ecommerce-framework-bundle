@@ -105,7 +105,7 @@
         {% include "@PimcoreEcommerceFramework/includes/paging.html.twig" with {'paginationVariables': paginator.getPaginationData() } %}
     {% endif %}
 
-    {% do pimcore_head_script().captureStart() %}
+    {% set inlineScript %}
             //datepicker
             flatpickr(".date", {allowInput: true});
 
@@ -116,7 +116,9 @@
                 });
             });
 
-    {% do pimcore_head_script().captureEnd() %}
+    {% endset %}
+
+    {% do pimcore_head_script().appendScript(inlineScript ~ "") %}
 {% endblock %}
 
 

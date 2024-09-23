@@ -24,7 +24,7 @@
             {% do pimcore_head_script().prependFile(asset('/bundles/pimcoreecommerceframework/vendor/bootstrap4/js/bootstrap-native-v4.min.js')) %}
         {% endapply %}
 
-        {% block head_stylesheets deferred %}
+        {% block head_stylesheets %}
             {{ pimcore_head_link() }}
         {% endblock %}
 
@@ -79,7 +79,7 @@
     </div>
 
     {# output scripts added before #}
-    {% block scripts deferred %}
+    {% block scripts %}
         {{ pimcore_head_script() }}
     {% endblock %}
 
