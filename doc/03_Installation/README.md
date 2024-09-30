@@ -40,13 +40,13 @@ The installer does following tasks:
 If either classes, field collections, object bricks or tables already exist, the installation cannot be started. 
 
 After this installation routine, additional configurations have to be made - most important Product and ProductCategory.
-Please see [Configuration](./04_Configuration/README.md) for further information on available options.
+Please see [Configuration](../04_Configuration/README.md) for further information on available options.
 
 
 ## Configure Product and Product Category Class
 The E-Commerce Framework installation does not create classes for products and product categories. That is because the 
 framework does not limit you on specific classes or class structures. Literally every class can act as a product or product 
-category class and it is also possible to have several product classes (if necessary). 
+category class, and it is also possible to have several product classes (if necessary). 
 
 The only requirement is, that the classes have to be 'prepared' for being products or product categories. 
 
@@ -84,23 +84,23 @@ Possibly the index update scripts need to be adapted.
 
 The E-Commerce Framework is split up into multiple components which can be configured individually. For further reading please see:
 
-- [Configuration](./04_Configuration/README.md) describes configuration features valid for the whole framework configuration
-- [PimcoreEcommerceFrameworkBundle Configuration Reference](./04_Configuration/01_PimcoreEcommerceFrameworkBundle_Configuration_Reference.md)
+- [Configuration](../04_Configuration/README.md) describes configuration features valid for the whole framework configuration
+- [PimcoreEcommerceFrameworkBundle Configuration Reference](../04_Configuration/01_PimcoreEcommerceFrameworkBundle_Configuration_Reference.md)
   contains a reference of the whole configuration tree
   
-Please see the following sections for a description of each component and and a configuration reference describing
+Please see the following sections for a description of each component and a configuration reference describing
 the configuration entries relevant to the component:
 
-- [Cart Manager](./11_Cart_Manager.md)
-- [Price Systems](./09_Working_with_Prices/README.md)
-- [Availability Systems](./10_Working_with_Availabilities.md)
-- [Checkout Manager and Checkout Steps](./13_Checkout_Manager/README.md)
-- [Payment Providers](./15_Payment/README.md)
-- [Index Service and which attributes should be in the Product Index](./05_Index_Service/README.md)
-- [Pricing Manager](./09_Working_with_Prices/05_Pricing_Rules.md)
+- [Cart Manager](../11_Cart_Manager.md)
+- [Price Systems](../09_Working_with_Prices/README.md)
+- [Availability Systems](../10_Working_with_Availabilities.md)
+- [Checkout Manager and Checkout Steps](../13_Checkout_Manager/README.md)
+- [Payment Providers](../15_Payment/README.md)
+- [Index Service and which attributes should be in the Product Index](../05_Index_Service/README.md)
+- [Pricing Manager](../09_Working_with_Prices/05_Pricing_Rules.md)
 - ...
 
 For detailed information see comments within the configuration file. Depending on your use case, you might not need 
 all components configured in the configuration file. 
 
-> During development you will return to the configuration and adjust the settings multiple times. 
+> During development, you will return to the configuration and adjust the settings multiple times. 
