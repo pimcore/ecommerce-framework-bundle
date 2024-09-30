@@ -32,10 +32,14 @@ class CartDiscount implements DiscountInterface, CartActionInterface
     {
         $priceCalculator = $environment->getCart()->getPriceCalculator();
 
+        $subTotal = $priceCalculator->getSubTotal()->getAmount();
         $amount = Decimal::create($this->amount);
-        if ($amount->isZero()) {
-            $amount = $priceCalculator->getSubTotal()->getAmount()->toPercentage($this->getPercent());
-            //round to 2 digits for further calculations to avoid rounding issues at later point
+        if ($subTotal->sub($amount)->isNegative()) {
+            // prevent discounted amount to be higher than the subtotal
+            $amount = $subTotal;
+        } elseif ($amount->isZero()) {
+            $amount = $subTotal->toPercentage($this->getPercent());
+            // round to 2 digits for further calculations to avoid rounding issues at later point
             $amount = Decimal::fromDecimal($amount->withScale(2));
         }
 
