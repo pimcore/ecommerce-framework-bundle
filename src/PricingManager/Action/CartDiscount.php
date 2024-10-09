@@ -28,9 +28,6 @@ class CartDiscount implements DiscountInterface, CartActionInterface
 
     protected float $percent = 0;
 
-    /**
-     * @deprecated CartDiscount will reduce the total cart price without affecting added price modifications.
-     */
     protected bool $onlyDiscountCart = false;
 
     public function executeOnCart(EnvironmentInterface $environment): ActionInterface
@@ -48,12 +45,6 @@ class CartDiscount implements DiscountInterface, CartActionInterface
             $amount = $subTotal->toPercentage($this->getPercent());
             // round to 2 digits for further calculations to avoid rounding issues at later point
             $amount = Decimal::fromDecimal($amount->withScale(2));
-        } elseif (!$this->onlyDiscountCart) {
-            trigger_deprecation(
-                'pimcore/ecommerce-framework-bundle',
-                '1.2.2',
-                'Applying discounts not only to the cart is deprecated and will be removed in version 1.3. Cart discounts will reduce the total cart price without affecting added price modifications.'
-            );
         }
 
         $amount = $amount->toAdditiveInverse();
