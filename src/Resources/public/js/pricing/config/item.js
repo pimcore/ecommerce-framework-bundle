@@ -1346,6 +1346,13 @@ pimcore.bundle.EcommerceFramework.pricing.actions = {
                     value: data.percent,
                     maxValue: 100,
                     minValue: 0
+                }, {
+                    xtype: "checkbox",
+                    width: 100,
+                    labelWidth: 120,
+                    fieldLabel: t("bundle_ecommerce_pricing_config_action_cart_discount_only_discount_cart"),
+                    name: "onlyDiscountCart",
+                    value: data.onlyDiscountCart,
                 }
             ]
         });
