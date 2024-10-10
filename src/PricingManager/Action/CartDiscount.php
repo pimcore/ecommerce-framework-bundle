@@ -28,14 +28,22 @@ class CartDiscount implements DiscountInterface, CartActionInterface
 
     protected float $percent = 0;
 
+    protected bool $onlyDiscountCart = false;
+
     public function executeOnCart(EnvironmentInterface $environment): ActionInterface
     {
         $priceCalculator = $environment->getCart()->getPriceCalculator();
 
+        $subTotal = $priceCalculator->getSubTotal()->getAmount();
+
         $amount = Decimal::create($this->amount);
-        if ($amount->isZero()) {
-            $amount = $priceCalculator->getSubTotal()->getAmount()->toPercentage($this->getPercent());
-            //round to 2 digits for further calculations to avoid rounding issues at later point
+
+        if ($this->onlyDiscountCart && $subTotal->sub($amount)->isNegative()) {
+            // prevent discounted amount to be higher than the subtotal
+            $amount = $subTotal;
+        } elseif ($amount->isZero()) {
+            $amount = $subTotal->toPercentage($this->getPercent());
+            // round to 2 digits for further calculations to avoid rounding issues at later point
             $amount = Decimal::fromDecimal($amount->withScale(2));
         }
 
@@ -66,6 +74,7 @@ class CartDiscount implements DiscountInterface, CartActionInterface
             'type' => 'CartDiscount',
             'amount' => $this->getAmount(),
             'percent' => $this->getPercent(),
+            'onlyDiscountCart' => $this->onlyDiscountCart(),
         ]);
     }
 
@@ -86,6 +95,8 @@ class CartDiscount implements DiscountInterface, CartActionInterface
 
             $this->setPercent($json->percent);
         }
+
+        $this->setOnlyDiscountCart($json->onlyDiscountCart ?? false);
 
         return $this;
     }
@@ -108,5 +119,15 @@ class CartDiscount implements DiscountInterface, CartActionInterface
     public function getPercent(): float
     {
         return $this->percent;
+    }
+
+    public function setOnlyDiscountCart(bool $onlyDiscountCart): void
+    {
+        $this->onlyDiscountCart = $onlyDiscountCart;
+    }
+
+    public function onlyDiscountCart(): bool
+    {
+        return $this->onlyDiscountCart;
     }
 }
