@@ -96,7 +96,7 @@ class MultiSelectCategory extends AbstractFilterType
                     $category = $category->getId();
                 }
 
-                $category = '%,' . trim($category) . ',%';
+                $category = '%,' . trim((string)$category) . ',%';
 
                 $conditions[] = $filterDefinition->getField() . ' LIKE ' . $db->quote($category);
             }
