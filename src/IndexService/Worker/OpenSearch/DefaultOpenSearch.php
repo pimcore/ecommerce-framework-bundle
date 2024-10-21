@@ -16,12 +16,11 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch;
 
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\OpenSearch\DefaultOpenSearch as ProductList;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 
 class DefaultOpenSearch extends AbstractOpenSearch
 {
-
     public function getProductList(): ProductListInterface
     {
         return new ProductList($this->tenantConfig);

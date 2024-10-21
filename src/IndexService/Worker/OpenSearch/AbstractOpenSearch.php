@@ -673,6 +673,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
         }
 
         reset($result);
+
         return key($result);
     }
 
@@ -1057,7 +1058,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
                 throw new Exception($errorMessage);
             }
 
-//only write log message once a minute to not spam up log file when running update index
+            //only write log message once a minute to not spam up log file when running update index
             if ($this->lastLockLogTimestamp < time() - 60) {
                 $this->lastLockLogTimestamp = time();
                 Logger::warning($errorMessage . ' (will suppress subsequent log messages of same type for next 60 seconds)');
