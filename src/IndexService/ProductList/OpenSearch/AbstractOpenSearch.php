@@ -14,7 +14,7 @@ declare(strict_types=1);
  *  @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
-namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ElasticSearch;
+namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\OpenSearch;
 
 use Elastic\Elasticsearch\Client;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
@@ -25,7 +25,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductList
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractCategory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
 
-abstract class AbstractElasticSearch implements ProductListInterface
+abstract class AbstractOpenSearch implements ProductListInterface
 {
     const LIMIT_UNLIMITED = -1;
 
@@ -506,7 +506,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
         $this->hitData = [];
 
         unset($params['body']['sort']);     // don't send the sort parameter, because it doesn't exist with offline sorting
-        $params['body']['size'] = 10000;    // won't work with more than 10000 items in the result (elasticsearch limit)
+        $params['body']['size'] = 10000;    // won't work with more than 10000 items in the result (opensearch limit)
         $params['body']['from'] = 0;
         $result = $this->sendRequest($params);
         $objectRaws = [];

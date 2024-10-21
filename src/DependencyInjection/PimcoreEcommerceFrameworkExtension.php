@@ -32,6 +32,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\PriceSystem\PriceSystemLocator;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\PricingManagerLocator;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\PricingManagerLocatorInterface;
 use Pimcore\Bundle\ElasticsearchClientBundle\DependencyInjection\PimcoreElasticsearchClientExtension;
+use Pimcore\Bundle\OpenSearchClientBundle\DependencyInjection\PimcoreOpenSearchClientExtension;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
@@ -472,6 +473,13 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
                 $worker->addMethodCall(
                     'setElasticSearchClient',
                     [new Reference(PimcoreElasticsearchClientExtension::CLIENT_SERVICE_PREFIX . $tenantConfig['config_options']['es_client_name'])]
+                );
+            }
+
+            if (!empty($tenantConfig['config_options']['opensearch_client_name'])) {
+                $worker->addMethodCall(
+                    'setOpenSearchClient',
+                    [new Reference(PimcoreOpenSearchClientExtension::CLIENT_SERVICE_PREFIX . $tenantConfig['config_options']['opensearch_client_name'])]
                 );
             }
 

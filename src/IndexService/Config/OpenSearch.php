@@ -29,18 +29,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Service\Attribute\Required;
 
 /**
- * Default configuration for elastic search as product index implementation.
+ * Default configuration for open search as product index implementation.
  *
  */
-class ElasticSearch extends AbstractConfig implements MockupConfigInterface, SearchConfigInterface
+class OpenSearch extends AbstractConfig implements MockupConfigInterface, SearchConfigInterface
 {
     use OptionsResolverTrait;
 
     protected array $clientConfig = [];
 
     protected array $indexSettings = [];
-
-    protected array $elasticSearchClientParams = [];
 
     /**
      * contains the mapping for the fields in Elasticsearch
@@ -151,8 +149,8 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Sea
         $resolver->setDefault('store', true);
         $resolver->setAllowedTypes('store', 'bool');
 
-        $resolver->setDefined('es_client_name');
-        $resolver->setAllowedTypes('es_client_name', 'string');
+        $resolver->setDefined('opensearch_client_name');
+        $resolver->setAllowedTypes('opensearch_client_name', 'string');
     }
 
     protected function extractPossibleFirstSubFieldnameParts(string $fieldName): array
