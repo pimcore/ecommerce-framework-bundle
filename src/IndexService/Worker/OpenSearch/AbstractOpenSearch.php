@@ -19,7 +19,6 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch
 use Doctrine\DBAL\Connection;
 use Exception;
 use OpenSearch\Client;
-use OpenSearch\Common\Exceptions\Missing404Exception;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Interpreter\RelationInterpreterInterface;
@@ -42,10 +41,6 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
     const RELATION_FIELD = 'parentchildrelation';
 
     const REINDEXING_LOCK_KEY = 'opensearch_reindexing_lock';
-
-    const DEFAULT_TIMEOUT_MS_FRONTEND = 20000; // 20 seconds
-
-    const DEFAULT_TIMEOUT_MS_BACKEND =  120000; // 2 minutes
 
     /**
      * Default value for the mapping of custom attributes
@@ -123,31 +118,26 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
 
     public function getIndexVersion(): int
     {
-        if ($this->indexVersion === null) {
-            $this->indexVersion = 0;
-            $osClient = $this->getOpenSearchClient();
+        if ($this->indexVersion !== null) {
+            return $this->indexVersion;
+        }
 
-            try {
-                $result = $osClient->indices()->getAlias([
-                    'name' => $this->indexName,
-                ]);
+        $this->indexVersion = 0;
+        $osClient = $this->getOpenSearchClient();
+        $result = $osClient->indices()->getAlias([
+            'name' => $this->indexName,
+        ]);
 
-                if (is_array($result)) {
-                    $aliasIndexName = array_key_first($result);
-                    preg_match('/'.$this->indexName.'-(\d+)/', $aliasIndexName, $matches);
-                    if (is_array($matches) && count($matches) > 1) {
-                        $version = (int)$matches[1];
-                        if ($version > $this->indexVersion) {
-                            $this->indexVersion = $version;
-                        }
-                    }
-                }
-            } catch (Missing404Exception $e) {
-                if ($e->getCode() === 404) {
-                    $this->indexVersion = 0;
-                } else {
-                    throw $e;
-                }
+        if (empty($result)) {
+            return $this->indexVersion;
+        }
+
+        $aliasIndexName = array_key_first($result);
+        preg_match('/'.$this->indexName.'-(\d+)/', $aliasIndexName, $matches);
+        if (is_array($matches) && count($matches) > 1) {
+            $version = (int)$matches[1];
+            if ($version > $this->indexVersion) {
+                $this->indexVersion = $version;
             }
         }
 
@@ -661,21 +651,15 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
      *
      * @return string|null null if no index is found.
      */
-    public function fetchEsActiveIndex(): ?string
+    public function fetchActiveIndex(): ?string
     {
         $osClient = $this->getOpenSearchClient();
-
-        try {
-            $result = $osClient->indices()->getAlias(['index' => $this->indexName]);
-        } catch (Exception $e) {
-            Logger::error((string) $e);
-
+        $result = $osClient->indices()->getAlias(['index' => $this->indexName]);
+        if (empty($result)) {
             return null;
         }
 
-        reset($result);
-
-        return key($result);
+        return key(reset($result));
     }
 
     /**
@@ -702,7 +686,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
             ];
             $result = $osClient->indices()->updateAliases($params);
             if (!$result) {
-                throw new Exception('Alias '.$this->indexName.' could not be created.');
+                throw new Exception('Alias ' . $this->indexName . ' could not be created.');
             }
         }
     }

@@ -41,10 +41,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
 
     const REINDEXING_LOCK_KEY = 'elasticsearch_reindexing_lock';
 
-    const DEFAULT_TIMEOUT_MS_FRONTEND = 20000; // 20 seconds
-
-    const DEFAULT_TIMEOUT_MS_BACKEND =  120000; // 2 minutes
-
     /**
      * Default value for the mapping of custom attributes
      *
