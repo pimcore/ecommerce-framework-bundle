@@ -19,6 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch
 use Doctrine\DBAL\Connection;
 use Exception;
 use OpenSearch\Client;
+use OpenSearch\Common\Exceptions\Missing404Exception;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Interpreter\RelationInterpreterInterface;
@@ -141,7 +142,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
                         }
                     }
                 }
-            } catch (ClientResponseException $e) {
+            } catch (Missing404Exception $e) {
                 if ($e->getCode() === 404) {
                     $this->indexVersion = 0;
                 } else {

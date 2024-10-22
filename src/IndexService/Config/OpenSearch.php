@@ -20,7 +20,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\EnvironmentInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\Definition\Attribute;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Interpreter\RelationInterpreterInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\SynonymProvider\SynonymProviderInterface;
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ElasticSearch\AbstractElasticSearch as DefaultElasticSearchWorker;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\AbstractOpenSearch as DefaultOpenSearchWorker;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\WorkerInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\DefaultMockup;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
@@ -276,10 +276,10 @@ class OpenSearch extends AbstractConfig implements MockupConfigInterface, Search
 
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
-        if (!$tenantWorker instanceof DefaultElasticSearchWorker) {
+        if (!$tenantWorker instanceof DefaultOpenSearchWorker) {
             throw new \InvalidArgumentException(sprintf(
                 'Worker must be an instance of %s',
-                DefaultElasticSearchWorker::class
+                DefaultOpenSearchWorker::class
             ));
         }
 
