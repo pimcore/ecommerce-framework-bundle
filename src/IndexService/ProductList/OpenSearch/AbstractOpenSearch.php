@@ -21,9 +21,9 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\AbstractOpenSearch as Worker;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractCategory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\AbstractOpenSearch as Worker;
 
 abstract class AbstractOpenSearch implements ProductListInterface
 {
