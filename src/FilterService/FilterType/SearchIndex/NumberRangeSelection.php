@@ -14,38 +14,51 @@ declare(strict_types=1);
  *  @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
-namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\OpenSearch;
+namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\SearchIndex;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\AbstractFilterType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractFilterDefinitionType;
+use Pimcore\Model\DataObject\Fieldcollection\Data\FilterNumberRangeSelection;
 
-class Select extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\Select
+class NumberRangeSelection extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\NumberRangeSelection
 {
     public function prepareGroupByValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList): void
     {
         $productList->prepareGroupByValues($this->getField($filterDefinition), true);
     }
 
+    /**
+     * @param FilterNumberRangeSelection $filterDefinition
+     *
+     */
     public function addCondition(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter, array $params, bool $isPrecondition = false): array
     {
         $field = $this->getField($filterDefinition);
-        $preSelect = $this->getPreSelect($filterDefinition);
+        $rawValue = $params[$field] ?? null;
 
-        $value = $params[$field] ?? null;
-        $isReload = $params['is_reload'] ?? null;
-
-        if ($value == AbstractFilterType::EMPTY_STRING) {
+        if (!empty($rawValue) && $rawValue != AbstractFilterType::EMPTY_STRING) {
+            $values = explode('-', $rawValue);
+            $value['from'] = trim($values[0]);
+            $value['to'] = trim($values[1]);
+        } elseif ($rawValue == AbstractFilterType::EMPTY_STRING) {
             $value = null;
-        } elseif (empty($value) && !$isReload) {
-            $value = $preSelect;
+        } else {
+            $value['from'] = $filterDefinition->getPreSelectFrom();
+            $value['to'] = $filterDefinition->getPreSelectTo();
         }
 
-        $value = trim((string)$value);
         $currentFilter[$field] = $value;
 
-        if (!empty($value)) {
-            $productList->addCondition(trim($value), $field);
+        if (!empty($value) && ($value['from'] !== null || $value['to'] !== null)) {
+            $range = [];
+            if (!empty($value['from'])) {
+                $range['gte'] = $value['from'];
+            }
+            if (!empty($value['to'])) {
+                $range['lte'] = $value['to'];
+            }
+            $productList->addCondition(['range' => ['attributes.' . $field => $range]], $field);
         }
 
         return $currentFilter;

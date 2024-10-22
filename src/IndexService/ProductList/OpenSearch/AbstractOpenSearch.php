@@ -16,14 +16,14 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\OpenSearch;
 
-use Elastic\Elasticsearch\Client;
+use OpenSearch\Client;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\ElasticSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractCategory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\AbstractOpenSearch as Worker;
 
 abstract class AbstractOpenSearch implements ProductListInterface
 {
@@ -1096,31 +1096,31 @@ abstract class AbstractOpenSearch implements ProductListInterface
     protected function sendRequest(array $params): array
     {
         $worker = $this->tenantConfig->getTenantWorker();
-        if (!$worker instanceof \Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ElasticSearch\AbstractElasticSearch) {
-            throw new InvalidConfigException('Invalid worker configured, AbstractElasticSearch compatible worker expected.');
+        if (!$worker instanceof Worker) {
+            throw new InvalidConfigException('Invalid worker configured, AbstractOpenSearch compatible worker expected.');
         }
 
         /**
-         * @var Client $esClient
+         * @var Client $osClient
          */
-        $esClient = $worker->getElasticSearchClient();
+        $osClient = $worker->getOpenSearchClient();
         $result = [];
 
-        if ($esClient instanceof Client) {
+        if ($osClient instanceof Client) {
             if ($this->doScrollRequest) {
                 $params = array_merge(['scroll' => $this->scrollRequestKeepAlive], $params);
                 //kind of dirty hack :/
                 $params['body']['size'] = $this->getLimit();
             }
 
-            $result = $esClient->search($params)->asArray();
+            $result = $osClient->search($params);
 
             if ($this->doScrollRequest) {
                 $additionalHits = [];
                 $scrollId = $result['_scroll_id'];
 
                 while (true) {
-                    $additionalResult = $esClient->scroll(['scroll_id' => $scrollId, 'scroll' => $this->scrollRequestKeepAlive])->asArray();
+                    $additionalResult = $osClient->scroll(['scroll_id' => $scrollId, 'scroll' => $this->scrollRequestKeepAlive]);
 
                     if (count($additionalResult['hits']['hits'])) {
                         $additionalHits = array_merge($additionalHits, $additionalResult['hits']['hits']);
