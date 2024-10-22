@@ -80,6 +80,7 @@ class IndexSyncCommand extends AbstractIndexServiceCommand
                 match ($mode) {
                     'reindex' => $elasticWorker->startReindexMode(),
                     'update-synonyms' => $elasticWorker->updateSynonyms(),
+                    default => null,
                 };
             } catch (Exception $e) {
                 $output->writeln("<error>Failed to process tenant \"{$tenantName}\" (mode \"{$mode}\")...</error>");
