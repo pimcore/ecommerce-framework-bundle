@@ -19,6 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\OpenS
 use OpenSearch\Client;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\AbstractOpenSearch as Worker;
@@ -29,7 +30,7 @@ abstract class AbstractOpenSearch implements ProductListInterface
 {
     const LIMIT_UNLIMITED = -1;
 
-    const INTEGER_MAX_VALUE = 2147483647;     // Elasticsearch Integer.MAX_VALUE is 2^31-1
+    const INTEGER_MAX_VALUE = 2147483647;     // Opensearch Integer.MAX_VALUE is 2^31-1
 
     const ADVANCED_SORT = 'advanced_sort';
 
@@ -411,7 +412,7 @@ abstract class AbstractOpenSearch implements ProductListInterface
     }
 
     /**
-     * Returns the Elasticsearch query parameters
+     * Returns the Opensearch query parameters
      *
      */
     public function getQuery(): array
@@ -714,7 +715,7 @@ abstract class AbstractOpenSearch implements ProductListInterface
      */
     protected function loadElementById(int $elementId): ?\Pimcore\Bundle\EcommerceFrameworkBundle\Model\DefaultMockup
     {
-        /** @var ElasticSearch $tenantConfig */
+        /** @var OpenSearch $tenantConfig */
         $tenantConfig = $this->getTenantConfig();
         $mockup = null;
         if (isset($this->hitData[$elementId])) {
@@ -879,7 +880,7 @@ abstract class AbstractOpenSearch implements ProductListInterface
     {
         // create general filters and queries
         $toExcludeFieldnames = [];
-        /** @var ElasticSearch $tenantConfig */
+        /** @var OpenSearch $tenantConfig */
         $tenantConfig = $this->getTenantConfig();
         foreach ($this->preparedGroupByValues as $fieldname => $config) {
             if ($config['fieldnameShouldBeExcluded']) {
@@ -1211,7 +1212,7 @@ abstract class AbstractOpenSearch implements ProductListInterface
      *
      * @param int $productId the Pimcore product Id.
      *
-     * @return float the score returned by Elastic Search.
+     * @return float the score returned by OpenSearch.
      *
      * @throws \Exception if loadFromSource mode is not true.
      */
