@@ -77,11 +77,11 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
 
     protected LoggerInterface $logger;
 
-    public function __construct(SearchConfigInterface $tenantConfig, Connection $db, EventDispatcherInterface $eventDispatcher, LoggerInterface $pimcoreEcommerceEsLogger)
+    public function __construct(SearchConfigInterface $tenantConfig, Connection $db, EventDispatcherInterface $eventDispatcher, LoggerInterface $pimcoreEcommerceOsLogger)
     {
         parent::__construct($tenantConfig, $db, $eventDispatcher);
-        $this->logger = $pimcoreEcommerceEsLogger;
-        $this->indexName = ($tenantConfig->getClientConfig('indexName')) ? strtolower($tenantConfig->getClientConfig('indexName')) : strtolower($this->name);
+        $this->logger = $pimcoreEcommerceOsLogger;
+        $this->indexName = strtolower(($tenantConfig->getClientConfig('indexName')) ?: $this->name);
     }
 
     /**
@@ -231,7 +231,8 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
                     }
                 }
 
-                if ($type == ProductListInterface::PRODUCT_TYPE_OBJECT) { //object doesn't support index or store
+                //object doesn't support index or store
+                if ($type === ProductListInterface::PRODUCT_TYPE_OBJECT) {
                     $mapping = ['type' => $type];
                 }
 
@@ -239,7 +240,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
                     $mapping['store'] = false;
                 }
 
-                if ($type == ProductListInterface::PRODUCT_TYPE_OBJECT || $type == 'nested') {
+                if ($type === ProductListInterface::PRODUCT_TYPE_OBJECT || $type === 'nested') {
                     unset($mapping['store']);
                 }
 
