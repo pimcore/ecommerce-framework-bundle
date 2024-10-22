@@ -462,7 +462,7 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
 
             if (!empty($tenantConfig['config_options'])) {
                 $config->setArgument('$options', $tenantConfig['config_options']);
-                $this->registerIndexServiceElasticSearchSynonymProviders($tenantConfig['config_options'], $config, $container);
+                $this->registerIndexServiceSynonymProviders($tenantConfig['config_options'], $config, $container);
             }
 
             $worker = new ChildDefinition($tenantConfig['worker_id']);
@@ -494,7 +494,7 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
     /**
      * Register synonym providers and their options per tenant config.
      */
-    private function registerIndexServiceElasticSearchSynonymProviders(
+    private function registerIndexServiceSynonymProviders(
         array $tenantConfigOptions,
         Definition $config,
         ContainerBuilder $container
