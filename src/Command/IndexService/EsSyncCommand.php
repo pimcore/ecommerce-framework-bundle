@@ -61,7 +61,7 @@ class EsSyncCommand extends AbstractIndexServiceCommand
     {
         $mode = $input->getArgument('mode');
         $tenantName = $input->getOption('tenant');
-        dd($mode);
+
         $indexService = Factory::getInstance()->getIndexService();
         $tenantList = $tenantName ? [$tenantName] : $indexService->getTenants();
 
