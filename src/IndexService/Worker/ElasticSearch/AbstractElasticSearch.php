@@ -24,6 +24,9 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInte
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Interpreter\RelationInterpreterInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\BatchProcessingWorkerInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\IndexRefreshInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ProductCentricBatchProcessingWorker;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
 use Pimcore\Logger;
 use Pimcore\Model\Tool\TmpStore;
@@ -33,7 +36,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * @property ElasticSearch $tenantConfig
  */
-abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessingWorker implements Worker\BatchProcessingWorkerInterface
+abstract class AbstractElasticSearch extends ProductCentricBatchProcessingWorker implements IndexRefreshInterface
 {
     const STORE_TABLE_NAME = 'ecommerceframework_productindex_store_elastic';
 

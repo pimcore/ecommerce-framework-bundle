@@ -23,6 +23,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Interpreter\RelationInterpreterInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\IndexRefreshInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ProductCentricBatchProcessingWorker;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
 use Pimcore\Db;
@@ -34,7 +35,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * @property OpenSearch $tenantConfig
  */
-abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
+abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker implements IndexRefreshInterface
 {
     const STORE_TABLE_NAME = 'ecommerceframework_productindex_store_opensearch';
 
@@ -897,14 +898,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
 
     /**
      *
-     * Perform a synonym update on the currently selected ES index, if necessary.
+     * Perform a synonym update on the currently selected index, if necessary.
      *
-     * Attention: the current index will be closed and opened, so it won't be available for a tiny moment (typically some milliseconds).
+     * Attention: the current index will be closed and opened, so it won't be available for a moment (typically some milliseconds).
      *
      * @param string $indexNameOverride if given, then that index will be used instead of the current index.
      * @param bool $skipComparison if explicitly set to true, then the comparison whether the synonyms between the current index settings
      *        and the local index settings vary, will be skipped, and the index settings will be updated regardless.
-     * @param bool $skipLocking if explictly set to true, then no global lock will be activated / released.
+     * @param bool $skipLocking if explicitly set to true, then no global lock will be activated / released.
      *
      * @throws Exception is thrown if the synonym transmission fails.
      */
