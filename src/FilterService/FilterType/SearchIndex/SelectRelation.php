@@ -14,13 +14,13 @@ declare(strict_types=1);
  *  @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
-namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\ElasticSearch;
+namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\SearchIndex;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\AbstractFilterType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractFilterDefinitionType;
 
-class Select extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\Select
+class SelectRelation extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\SelectRelation
 {
     public function prepareGroupByValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList): void
     {
@@ -35,17 +35,19 @@ class Select extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\Filt
         $value = $params[$field] ?? null;
         $isReload = $params['is_reload'] ?? null;
 
-        if ($value == AbstractFilterType::EMPTY_STRING) {
+        if (empty($value) && !$isReload) {
+            $o = $preSelect;
+            if (!empty($o)) {
+                $value = $o;
+            }
+        } elseif ($value == AbstractFilterType::EMPTY_STRING) {
             $value = null;
-        } elseif (empty($value) && !$isReload) {
-            $value = $preSelect;
         }
 
-        $value = trim((string)$value);
         $currentFilter[$field] = $value;
 
         if (!empty($value)) {
-            $productList->addCondition(trim($value), $field);
+            $productList->addRelationCondition($field, $value);
         }
 
         return $currentFilter;

@@ -16,11 +16,12 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
 
+use InvalidArgumentException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\EnvironmentInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\Definition\Attribute;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Interpreter\RelationInterpreterInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\SynonymProvider\SynonymProviderInterface;
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ElasticSearch\AbstractElasticSearch as DefaultElasticSearchWorker;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\AbstractOpenSearch as DefaultOpenSearchWorker;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\WorkerInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\DefaultMockup;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
@@ -29,18 +30,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Service\Attribute\Required;
 
 /**
- * Default configuration for elastic search as product index implementation.
+ * Default configuration for open search as product index implementation.
  *
  */
-class ElasticSearch extends AbstractConfig implements MockupConfigInterface, SearchConfigInterface
+class OpenSearch extends AbstractConfig implements MockupConfigInterface, SearchConfigInterface
 {
     use OptionsResolverTrait;
 
     protected array $clientConfig = [];
 
     protected array $indexSettings = [];
-
-    protected array $elasticSearchClientParams = [];
 
     /**
      * contains the mapping for the fields in Elasticsearch
@@ -151,8 +150,8 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Sea
         $resolver->setDefault('store', true);
         $resolver->setAllowedTypes('store', 'bool');
 
-        $resolver->setDefined('es_client_name');
-        $resolver->setAllowedTypes('es_client_name', 'string');
+        $resolver->setDefined('opensearch_client_name');
+        $resolver->setAllowedTypes('opensearch_client_name', 'string');
     }
 
     protected function extractPossibleFirstSubFieldnameParts(string $fieldName): array
@@ -278,10 +277,10 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Sea
 
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
-        if (!$tenantWorker instanceof DefaultElasticSearchWorker) {
-            throw new \InvalidArgumentException(sprintf(
+        if (!$tenantWorker instanceof DefaultOpenSearchWorker) {
+            throw new InvalidArgumentException(sprintf(
                 'Worker must be an instance of %s',
-                DefaultElasticSearchWorker::class
+                DefaultOpenSearchWorker::class
             ));
         }
 

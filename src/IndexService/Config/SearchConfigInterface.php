@@ -22,7 +22,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\WorkerInterface;
 /**
  * Interface for IndexService Tenant Configurations using elastic search as index
  */
-interface ElasticSearchConfigInterface extends ConfigInterface
+interface SearchConfigInterface extends ConfigInterface
 {
     /**
      * returns condition for current subtenant

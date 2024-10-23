@@ -14,23 +14,24 @@ declare(strict_types=1);
  *  @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
-namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ElasticSearch;
+namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\OpenSearch;
 
-use Elastic\Elasticsearch\Client;
+use OpenSearch\Client;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\ElasticSearch;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\TenantConfigInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\AbstractOpenSearch as Worker;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractCategory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
 
-abstract class AbstractElasticSearch implements ProductListInterface, TenantConfigInterface
+abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigInterface
 {
     const LIMIT_UNLIMITED = -1;
 
-    const INTEGER_MAX_VALUE = 2147483647;     // Elasticsearch Integer.MAX_VALUE is 2^31-1
+    const INTEGER_MAX_VALUE = 2147483647;     // Opensearch Integer.MAX_VALUE is 2^31-1
 
     const ADVANCED_SORT = 'advanced_sort';
 
@@ -412,7 +413,7 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
     }
 
     /**
-     * Returns the Elasticsearch query parameters
+     * Returns the Opensearch query parameters
      *
      */
     public function getQuery(): array
@@ -507,7 +508,7 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
         $this->hitData = [];
 
         unset($params['body']['sort']);     // don't send the sort parameter, because it doesn't exist with offline sorting
-        $params['body']['size'] = 10000;    // won't work with more than 10000 items in the result (elasticsearch limit)
+        $params['body']['size'] = 10000;    // won't work with more than 10000 items in the result (opensearch limit)
         $params['body']['from'] = 0;
         $result = $this->sendRequest($params);
         $objectRaws = [];
@@ -715,7 +716,7 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
      */
     protected function loadElementById(int $elementId): ?\Pimcore\Bundle\EcommerceFrameworkBundle\Model\DefaultMockup
     {
-        /** @var ElasticSearch $tenantConfig */
+        /** @var OpenSearch $tenantConfig */
         $tenantConfig = $this->getTenantConfig();
         $mockup = null;
         if (isset($this->hitData[$elementId])) {
@@ -880,7 +881,7 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
     {
         // create general filters and queries
         $toExcludeFieldnames = [];
-        /** @var ElasticSearch $tenantConfig */
+        /** @var OpenSearch $tenantConfig */
         $tenantConfig = $this->getTenantConfig();
         foreach ($this->preparedGroupByValues as $fieldname => $config) {
             if ($config['fieldnameShouldBeExcluded']) {
@@ -1097,31 +1098,31 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
     protected function sendRequest(array $params): array
     {
         $worker = $this->tenantConfig->getTenantWorker();
-        if (!$worker instanceof \Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ElasticSearch\AbstractElasticSearch) {
-            throw new InvalidConfigException('Invalid worker configured, AbstractElasticSearch compatible worker expected.');
+        if (!$worker instanceof Worker) {
+            throw new InvalidConfigException('Invalid worker configured, AbstractOpenSearch compatible worker expected.');
         }
 
         /**
-         * @var Client $esClient
+         * @var Client $osClient
          */
-        $esClient = $worker->getElasticSearchClient();
+        $osClient = $worker->getOpenSearchClient();
         $result = [];
 
-        if ($esClient instanceof Client) {
+        if ($osClient instanceof Client) {
             if ($this->doScrollRequest) {
                 $params = array_merge(['scroll' => $this->scrollRequestKeepAlive], $params);
                 //kind of dirty hack :/
                 $params['body']['size'] = $this->getLimit();
             }
 
-            $result = $esClient->search($params)->asArray();
+            $result = $osClient->search($params);
 
             if ($this->doScrollRequest) {
                 $additionalHits = [];
                 $scrollId = $result['_scroll_id'];
 
                 while (true) {
-                    $additionalResult = $esClient->scroll(['scroll_id' => $scrollId, 'scroll' => $this->scrollRequestKeepAlive])->asArray();
+                    $additionalResult = $osClient->scroll(['scroll_id' => $scrollId, 'scroll' => $this->scrollRequestKeepAlive]);
 
                     if (count($additionalResult['hits']['hits'])) {
                         $additionalHits = array_merge($additionalHits, $additionalResult['hits']['hits']);
@@ -1212,7 +1213,7 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
      *
      * @param int $productId the Pimcore product Id.
      *
-     * @return float the score returned by Elastic Search.
+     * @return float the score returned by OpenSearch.
      *
      * @throws \Exception if loadFromSource mode is not true.
      */

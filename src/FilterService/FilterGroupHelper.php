@@ -77,8 +77,7 @@ class FilterGroupHelper
             $values = $productList->getGroupByValues($field);
 
             sort($values);
-
-            foreach ($values as $v) {
+            foreach (array_filter($values) as $v) {
                 $helper = explode(WorkerInterface::MULTISELECT_DELIMITER, $v);
                 foreach ($helper as $h) {
                     $data[$h] = ['key' => $h, 'value' => $h];
