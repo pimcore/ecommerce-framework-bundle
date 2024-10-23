@@ -21,5 +21,4 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
  */
 interface ElasticSearchConfigInterface extends SearchConfigInterface
 {
-
 }
