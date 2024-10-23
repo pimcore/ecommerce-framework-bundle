@@ -32,7 +32,7 @@ use Symfony\Contracts\Service\Attribute\Required;
  * Default configuration for elastic search as product index implementation.
  *
  */
-class ElasticSearch extends AbstractConfig implements MockupConfigInterface, SearchConfigInterface
+class ElasticSearch extends AbstractConfig implements MockupConfigInterface, ElasticSearchConfigInterface
 {
     use OptionsResolverTrait;
 
