@@ -26,6 +26,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
+ *
  * @deprecated will be removed in 2.0.0 - use the new IndexSyncCommand instead
  */
 class EsSyncCommand extends AbstractIndexServiceCommand
