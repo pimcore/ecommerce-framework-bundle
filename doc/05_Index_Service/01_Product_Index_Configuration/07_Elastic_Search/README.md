@@ -25,6 +25,12 @@ As a result, during reindex the results delivered by Product Lists can contain o
 
 To manually start a reindex, following command can be used: `bin/console ecommerce:indexservice:search-index-sync reindex`. 
 
+:::caution
+
+The existing command `bin/console ecommerce:indexservice:search-elasticsearch-sync reindex` is deprecated and will be removed in 2.0.0.
+
+:::
+
 ## Indexing of Classification Store Attributes
 
 With elasticsearch it is possible to index all attributes of [Classification Store](https://github.com/pimcore/pimcore/tree/11.x/doc/05_Objects/01_Object_Classes/01_Data_Types/15_Classification_Store.md) 
