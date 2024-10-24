@@ -589,8 +589,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
 
         $osClient = $this->getOpenSearchClient();
 
-        $result = $osClient->indices()->exists(['index' => $this->getIndexNameVersion()]);
-
+        $result = $osClient->indices()->exists(
+            [
+                'index' => $this->getIndexNameVersion(),
+                'client' => [
+                    'ignore' => [404],
+                ]
+            ]
+        );
         if (!$result) {
             $indexName = $this->getIndexNameVersion();
             $this->createOsIndex($indexName);
