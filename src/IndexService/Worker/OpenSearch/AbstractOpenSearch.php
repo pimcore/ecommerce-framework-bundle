@@ -594,7 +594,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
                 'index' => $this->getIndexNameVersion(),
                 'client' => [
                     'ignore' => [404],
-                ]
+                ],
             ]
         );
         if (!$result) {
