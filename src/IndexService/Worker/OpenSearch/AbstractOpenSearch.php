@@ -126,6 +126,9 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
         $osClient = $this->getOpenSearchClient();
         $result = $osClient->indices()->getAlias([
             'name' => $this->indexName,
+            'client' => [
+                'ignore' => [404],
+            ],
         ]);
 
         if (empty($result)) {
@@ -661,7 +664,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
     public function fetchActiveIndex(): ?string
     {
         $osClient = $this->getOpenSearchClient();
-        $result = $osClient->indices()->getAlias(['index' => $this->indexName]);
+        $result = $osClient->indices()->getAlias(
+            [
+                'index' => $this->indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if (empty($result)) {
             return null;
         }
