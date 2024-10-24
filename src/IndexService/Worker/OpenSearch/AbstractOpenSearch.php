@@ -678,7 +678,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
     {
         $osClient = $this->getOpenSearchClient();
         //create alias for new index if alias doesn't exist so far
-        $aliasExists = $osClient->indices()->existsAlias(['name' => $this->indexName]);
+        $aliasExists = $osClient->indices()->existsAlias(
+            [
+                'name' => $this->indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if (!$aliasExists) {
             Logger::info("Index-Actions - create alias for index since it doesn't exist at all. Name: " . $this->indexName);
             $params['body'] = [
@@ -756,7 +763,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
     protected function deleteOsIndexIfExisting(string $indexName): void
     {
         $osClient = $this->getOpenSearchClient();
-        $result = $osClient->indices()->exists(['index' => $indexName]);
+        $result = $osClient->indices()->exists(
+            [
+                'index' => $indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if ($result) {
             Logger::info('Deleted index '.$indexName.'.');
             $result = $osClient->indices()->delete(['index' => $indexName]);
@@ -774,7 +788,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
     protected function blockIndexWrite(string $indexName): void
     {
         $osClient = $this->getOpenSearchClient();
-        $result = $osClient->indices()->exists(['index' => $indexName]);
+        $result = $osClient->indices()->exists(
+            [
+                'index' => $indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if ($result) {
             Logger::info('Block write index '.$indexName.'.');
             $osClient->indices()->putSettings([
@@ -798,7 +819,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
     protected function unblockIndexWrite(string $indexName): void
     {
         $osClient = $this->getOpenSearchClient();
-        $result = $osClient->indices()->exists(['index' => $indexName]);
+        $result = $osClient->indices()->exists(
+            [
+                'index' => $indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if ($result) {
             Logger::info('Unlock write index '.$indexName.'.');
             $osClient->indices()->putSettings([
