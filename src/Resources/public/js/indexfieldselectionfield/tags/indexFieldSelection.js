@@ -62,10 +62,10 @@ pimcore.object.tags.indexFieldSelection = Class.create(pimcore.object.tags.selec
                     load: function(store) {
                         if(this.data) {
                             if(this.preSelectCombobox.rendered) {
-                                this.preSelectCombobox.setValue(this.data.preSelect?.split(',').map(Number));
+                                this.preSelectCombobox.setValue(this.getPreselectValue());
                             } else {
                                 this.preSelectCombobox.addListener("afterRender", function() {
-                                    this.preSelectCombobox.setValue(this.data.preSelect?.split(',').map(Number));
+                                    this.preSelectCombobox.setValue(this.getPreselectValue());
                                 }.bind(this));
                             }
                         }
@@ -239,10 +239,10 @@ pimcore.object.tags.indexFieldSelection = Class.create(pimcore.object.tags.selec
 
         if(this.fieldConfig.multiPreSelect == 'local_single' || this.fieldConfig.multiPreSelect == 'local_multi') {
             if(this.preSelectCombobox.rendered) {
-                this.preSelectCombobox.setValue(this.data.preSelect?.split(',').map(Number));
+                this.preSelectCombobox.setValue(this.getPreselectValue());
             } else {
                 this.preSelectCombobox.addListener("afterRender", function() {
-                    this.preSelectCombobox.setValue(this.data.preSelect?.split(',').map(Number));
+                    this.preSelectCombobox.setValue(this.getPreselectValue());
                 }.bind(this));
             }
         }
@@ -262,5 +262,12 @@ pimcore.object.tags.indexFieldSelection = Class.create(pimcore.object.tags.selec
 
     isDirty: function() {
         return this.fieldsCombobox.isDirty() || (this.preSelectCombobox && this.preSelectCombobox.isDirty());
+    },
+
+    getPreselectValue: function() {
+        if(this.fieldConfig.filterGroups?.includes('relation')) {
+            return this.data.preSelect?.split(',').map(Number);
+        }
+        return this.data.preSelect?.split(',');
     }
 });
