@@ -22,6 +22,9 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductList
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractFilterDefinitionType;
 use Pimcore\Model\DataObject\Fieldcollection\Data\FilterMultiSelectFromMultiSelect;
 
+/**
+ * @deprecated This class will be moved to the SearchIndex namespace in version 2.0.0.
+ */
 class MultiSelectFromMultiSelect extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\MultiSelectFromMultiSelect
 {
     public function prepareGroupByValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList): void

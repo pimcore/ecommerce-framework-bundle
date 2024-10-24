@@ -14,31 +14,33 @@ declare(strict_types=1);
  *  @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
-namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\ElasticSearch;
+namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\SearchIndex;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\AbstractFilterType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractFilterDefinitionType;
-use Pimcore\Model\DataObject\Fieldcollection\Data\FilterMultiRelation;
+use Pimcore\Model\DataObject\Fieldcollection\Data\FilterMultiSelectFromMultiSelect;
 
-/**
- * @deprecated This class will be moved to the SearchIndex namespace in version 2.0.0.
- */
-class MultiSelectRelation extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\MultiSelectRelation
+class MultiSelectFromMultiSelect extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\MultiSelectFromMultiSelect
 {
     public function prepareGroupByValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList): void
     {
-        if (!$filterDefinition instanceof FilterMultiRelation) {
+        $useAndCondition = false;
+
+        if (!$filterDefinition instanceof FilterMultiSelectFromMultiSelect) {
             throw new InvalidConfigException('invalid configuration');
         }
+
+        $useAndCondition = $filterDefinition->getUseAndCondition();
+
         $field = $this->getField($filterDefinition);
-        $productList->prepareGroupByRelationValues($field, true, !$filterDefinition->getUseAndCondition());
+        $productList->prepareGroupByValues($field, true, !$useAndCondition);
     }
 
     /**
-     * @param FilterMultiRelation $filterDefinition
      *
+     * @return string[]
      */
     public function addCondition(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter, array $params, bool $isPrecondition = false): array
     {
@@ -49,20 +51,15 @@ class MultiSelectRelation extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filte
         $isReload = $params['is_reload'] ?? null;
 
         if (empty($value) && !$isReload) {
-            $objects = $preSelect;
-            $value = [];
-
-            if (!is_array($objects)) {
-                $objects = explode(',', $objects);
+            if (is_array($preSelect)) {
+                $value = $preSelect;
+            } else {
+                $value = explode(',', $preSelect);
             }
 
-            if (is_array($objects)) {
-                foreach ($objects as $o) {
-                    if (is_object($o)) {
-                        $value[] = $o->getId();
-                    } else {
-                        $value[] = $o;
-                    }
+            foreach ($value as $key => $v) {
+                if (!$v) {
+                    unset($value[$key]);
                 }
             }
         } elseif (!empty($value) && in_array(AbstractFilterType::EMPTY_STRING, $value)) {
@@ -72,20 +69,21 @@ class MultiSelectRelation extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filte
         $currentFilter[$field] = $value;
 
         if (!empty($value)) {
-            $quotedValues = [];
-            foreach ($value as $v) {
-                if (!empty($v)) {
-                    $quotedValues[] = $v;
-                }
+            if (!$filterDefinition instanceof FilterMultiSelectFromMultiSelect) {
+                throw new InvalidConfigException('invalid configuration');
             }
-            if (!empty($quotedValues)) {
-                if ($filterDefinition->getUseAndCondition()) {
-                    foreach ($quotedValues as $value) {
-                        $productList->addRelationCondition($field, $value);
-                    }
-                } else {
-                    $productList->addRelationCondition($field, ['terms' => ['relations.' . $field => $quotedValues]]);
+
+            if ($filterDefinition->getUseAndCondition()) {
+                foreach ($value as $entry) {
+                    $productList->addCondition(['term' => ['attributes.' . $field => $entry]], $field);
                 }
+            } else {
+                $boolArray = [];
+                foreach ($value as $entry) {
+                    $boolArray[] = ['term' => ['attributes.' . $field => $entry]];
+                }
+
+                $productList->addCondition(['bool' => ['should' => $boolArray, 'minimum_should_match' => 1]], $field);
             }
         }
 

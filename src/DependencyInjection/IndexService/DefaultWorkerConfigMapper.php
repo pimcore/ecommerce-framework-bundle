@@ -21,10 +21,12 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\DefaultFindologi
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\DefaultMysql as DefaultMysqlConfig;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\DefaultMysqlSubTenantConfig;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\ElasticSearch;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OptimizedMysql as OptimizedMysqlConfig;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\DefaultFindologic;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\DefaultMysql;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ElasticSearch\DefaultElasticSearch8;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\DefaultOpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OptimizedMysql;
 
 /**
@@ -40,6 +42,7 @@ class DefaultWorkerConfigMapper
         DefaultMysqlConfig::class => DefaultMysql::class,
         DefaultMysqlSubTenantConfig::class => DefaultMysql::class,
         ElasticSearch::class => DefaultElasticSearch8::class,
+        OpenSearch::class => DefaultOpenSearch::class,
         DefaultFindologicConfig::class => DefaultFindologic::class,
     ];
 

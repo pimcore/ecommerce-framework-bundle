@@ -30,10 +30,11 @@ Therefore `\Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\Abs
 Each Filter Type needs to be defined as service and registered on the `pimcore_ecommerce_framework.filter_service` configuration.
 The framework already defines a number of core filter types in [filter_service_filter_types.yaml](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/Resources/config/filter_service_filter_types.yaml).
 
-> FilterTypes are dependent of the used index backend. You need to use different FilterTypes when using MySQL or ElasticSearch etc. 
+> FilterTypes are dependent of the used index backend. You need to use different FilterTypes when using MySQL, ElasticSearch or OpenSearch etc. 
 > Pimcore ships with FilterTypes implementations for all supported index backends. For details see for example 
 > [Elasticsearch Config](03_Elastic_Search/README.md).  
- 
+> [OpenSearch Config](05_Open_Search/README.md).
+
 ```yaml
 pimcore_ecommerce_framework:
     filter_service:
