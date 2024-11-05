@@ -16,13 +16,7 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
 
-/**
- * @deprecated This interface will be removed in version 2.0.0 Use SearchConfigInterface instead.
- */
-<<<<<<<< HEAD:src/IndexService/Config/SearchConfigInterface.php
+
 interface SearchConfigInterface extends ConfigInterface
-========
-interface ElasticSearchConfigInterface extends SearchConfigInterface
->>>>>>>> origin/2.x:src/IndexService/Config/ElasticSearchConfigInterface.php
 {
 }
