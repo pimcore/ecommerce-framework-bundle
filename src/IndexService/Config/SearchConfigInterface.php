@@ -18,4 +18,5 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
 
 interface SearchConfigInterface extends ConfigInterface
 {
+    public function getClientConfig(string $setting = null): array|string|null;
 }
