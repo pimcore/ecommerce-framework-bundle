@@ -22,6 +22,9 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductList
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractFilterDefinitionType;
 use Pimcore\Model\DataObject\Fieldcollection\Data\FilterInputfield;
 
+/**
+ * @deprecated This class will be moved to the SearchIndex namespace in version 2.0.0.
+ */
 class Input extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\Input
 {
     public function addCondition(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter, array $params, bool $isPrecondition = false): array
