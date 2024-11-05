@@ -23,7 +23,13 @@ All queries that take place during reindex go to the old index. As soon the rein
 to the newly created index and the old index is deleted.  
 As a result, during reindex the results delivered by Product Lists can contain old data. 
 
-To manually start a reindex, following command can be used: `bin/console ecommerce:indexservice:elasticsearch-sync reindex`. 
+To manually start a reindex, following command can be used: `bin/console ecommerce:indexservice:search-index-sync reindex`. 
+
+:::caution
+
+The existing command `bin/console ecommerce:indexservice:search-elasticsearch-sync reindex` is deprecated and will be removed in 2.0.0.
+
+:::
 
 ## Indexing of Classification Store Attributes
 
