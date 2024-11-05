@@ -118,6 +118,10 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
 
     public function __construct(SearchConfigInterface $tenantConfig)
     {
+        trigger_error(
+            'ElasticSearchConfigInterface is deprecated. Use SearchConfigInterface instead.',
+            E_USER_DEPRECATED
+        );
         $this->tenantName = $tenantConfig->getTenantName();
         $this->tenantConfig = $tenantConfig;
     }

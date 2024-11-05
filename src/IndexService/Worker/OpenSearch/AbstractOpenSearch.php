@@ -127,6 +127,9 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
         $osClient = $this->getOpenSearchClient();
         $result = $osClient->indices()->getAlias([
             'name' => $this->indexName,
+            'client' => [
+                'ignore' => [404],
+            ],
         ]);
 
         if (empty($result)) {
@@ -590,8 +593,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
 
         $osClient = $this->getOpenSearchClient();
 
-        $result = $osClient->indices()->exists(['index' => $this->getIndexNameVersion()]);
-
+        $result = $osClient->indices()->exists(
+            [
+                'index' => $this->getIndexNameVersion(),
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if (!$result) {
             $indexName = $this->getIndexNameVersion();
             $this->createOsIndex($indexName);
@@ -656,7 +665,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
     public function fetchActiveIndex(): ?string
     {
         $osClient = $this->getOpenSearchClient();
-        $result = $osClient->indices()->getAlias(['index' => $this->indexName]);
+        $result = $osClient->indices()->getAlias(
+            [
+                'index' => $this->indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if (empty($result)) {
             return null;
         }
@@ -673,7 +689,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
     {
         $osClient = $this->getOpenSearchClient();
         //create alias for new index if alias doesn't exist so far
-        $aliasExists = $osClient->indices()->existsAlias(['name' => $this->indexName]);
+        $aliasExists = $osClient->indices()->existsAlias(
+            [
+                'name' => $this->indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if (!$aliasExists) {
             Logger::info("Index-Actions - create alias for index since it doesn't exist at all. Name: " . $this->indexName);
             $params['body'] = [
@@ -751,7 +774,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
     protected function deleteOsIndexIfExisting(string $indexName): void
     {
         $osClient = $this->getOpenSearchClient();
-        $result = $osClient->indices()->exists(['index' => $indexName]);
+        $result = $osClient->indices()->exists(
+            [
+                'index' => $indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if ($result) {
             Logger::info('Deleted index '.$indexName.'.');
             $result = $osClient->indices()->delete(['index' => $indexName]);
@@ -769,7 +799,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
     protected function blockIndexWrite(string $indexName): void
     {
         $osClient = $this->getOpenSearchClient();
-        $result = $osClient->indices()->exists(['index' => $indexName]);
+        $result = $osClient->indices()->exists(
+            [
+                'index' => $indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if ($result) {
             Logger::info('Block write index '.$indexName.'.');
             $osClient->indices()->putSettings([
@@ -793,7 +830,14 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
     protected function unblockIndexWrite(string $indexName): void
     {
         $osClient = $this->getOpenSearchClient();
-        $result = $osClient->indices()->exists(['index' => $indexName]);
+        $result = $osClient->indices()->exists(
+            [
+                'index' => $indexName,
+                'client' => [
+                    'ignore' => [404],
+                ],
+            ]
+        );
         if ($result) {
             Logger::info('Unlock write index '.$indexName.'.');
             $osClient->indices()->putSettings([

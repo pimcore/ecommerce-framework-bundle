@@ -74,6 +74,7 @@ class FilterGroupHelper
                 }
             }
         } elseif ($columnType == 'multiselect') {
+            $productList->prepareGroupByValues($field);
             $values = $productList->getGroupByValues($field);
 
             sort($values);
