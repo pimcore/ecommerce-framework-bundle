@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
 
-
 interface SearchConfigInterface extends ConfigInterface
 {
 }
