@@ -9,8 +9,8 @@
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ * @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
+ * @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Rule;
@@ -67,7 +67,7 @@ class Dao extends AbstractDao
     public function create(): void
     {
         $this->db->insert(self::TABLE_NAME, []);
-        $this->model->setId((int) $this->db->lastInsertId());
+        $this->model->setId((int)$this->db->lastInsertId());
     }
 
     /**
@@ -76,13 +76,18 @@ class Dao extends AbstractDao
      */
     public function save(): void
     {
-        $this->db->beginTransaction();
-        if (!$this->model->getId()) {
-            $this->create();
-        }
+        try {
+            $this->db->beginTransaction();
+            if (!$this->model->getId()) {
+                $this->create();
+            }
 
-        $this->update();
-        $this->db->commit();
+            $this->update();
+            $this->db->commit();
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
     }
 
     public function update(): void
