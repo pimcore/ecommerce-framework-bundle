@@ -76,11 +76,13 @@ class Dao extends AbstractDao
      */
     public function save(): void
     {
+        $this->db->beginTransaction();
         if (!$this->model->getId()) {
             $this->create();
         }
 
         $this->update();
+        $this->db->commit();
     }
 
     public function update(): void
