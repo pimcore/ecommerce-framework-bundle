@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * Pimcore
@@ -14,11 +13,8 @@ declare(strict_types=1);
  *  @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
-namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
+namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\OpenSearch;
 
-/**
- * @deprecated This interface will be removed in version 2.0.0 Use SearchConfigInterface instead.
- */
-interface ElasticSearchConfigInterface extends SearchConfigInterface
+class DefaultOpenSearch extends AbstractOpenSearch
 {
 }

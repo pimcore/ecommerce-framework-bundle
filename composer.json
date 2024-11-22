@@ -29,11 +29,12 @@
     "codeception/codeception": "^5.0.11",
     "codeception/module-asserts": "^2.0.1",
     "codeception/module-symfony":"^3.1.1",
-    "elasticsearch/elasticsearch": "^8.0",
-    "pimcore/elasticsearch-client": "^1.0.0"
+    "pimcore/elasticsearch-client": "^1.0.0",
+    "pimcore/opensearch-client": "^1.0.0"
   },
   "suggest": {
     "elasticsearch/elasticsearch": "Required for Elastic Search service",
+    "pimcore/elasticsearch-client": "Required for Open Search service",
     "webmozarts/console-parallelization": "Required for parallelization of console commands"
   },
   "autoload": {

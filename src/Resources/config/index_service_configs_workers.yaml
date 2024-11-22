@@ -41,6 +41,8 @@ services:
     Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\DefaultFindologic:
         parent: Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\AbstractConfig
 
+    Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch:
+        parent: Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\AbstractConfig
 
     #
     # WORKERS
@@ -63,4 +65,7 @@ services:
         parent: Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\AbstractWorker
 
     Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\DefaultFindologic:
+        parent: Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\AbstractWorker
+
+    Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch\DefaultOpenSearch:
         parent: Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\AbstractWorker
