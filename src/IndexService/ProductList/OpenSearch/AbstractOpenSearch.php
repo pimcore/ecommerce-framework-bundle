@@ -165,7 +165,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      * Fieldname is optional but highly recommended - needed for resetting condition based on fieldname
      * and exclude functionality in group by results
      *
-     * @param string $fieldname - must be set for elastic search
+     * @param string $fieldname - must be set for open search
      */
     public function addCondition(array|string $condition, string $fieldname = ''): void
     {
@@ -213,7 +213,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      * Fieldname is optional but highly recommended - needed for resetting condition based on fieldname
      * and exclude functionality in group by results
      *
-     * @param string $fieldname - must be set for elastic search
+     * @param string $fieldname - must be set for open search
      */
     public function addQueryCondition(string|array $condition, string $fieldname = ''): void
     {
@@ -987,7 +987,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
             // send request
             $result = $this->sendRequest($params);
 
-            // process result from elasticsearch
+            // process result from opensearch
             $this->processResult($result);
         } else {
             $this->preparedGroupByValuesResults = [];
@@ -997,7 +997,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
     }
 
     /**
-     * process the result array from elasticsearch
+     * process the result array from opensearch
      *
      *
      */
@@ -1093,7 +1093,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
     }
 
     /**
-     * send a request to elasticsearch
+     * send a request to opensearch
      */
     protected function sendRequest(array $params): array
     {
