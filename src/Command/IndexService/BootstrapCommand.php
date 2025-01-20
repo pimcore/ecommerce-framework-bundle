@@ -41,7 +41,7 @@ class BootstrapCommand extends AbstractIndexServiceCommand
 
     protected IndexService $indexService;
 
-    public function __construct(IndexService $indexService, string $name = null)
+    public function __construct(IndexService $indexService, ?string $name = null)
     {
         parent::__construct($name);
         $this->indexService = $indexService;

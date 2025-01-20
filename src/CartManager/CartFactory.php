@@ -54,7 +54,7 @@ class CartFactory implements CartFactoryInterface
         return $this->options['cart_class_name'];
     }
 
-    public function create(EnvironmentInterface $environment, string $name, string $id = null, array $options = []): CartInterface
+    public function create(EnvironmentInterface $environment, string $name, ?string $id = null, array $options = []): CartInterface
     {
         $cart = $this->createCartInstance($environment, $name, $id, $options);
         $cart->save();
@@ -62,7 +62,7 @@ class CartFactory implements CartFactoryInterface
         return $cart;
     }
 
-    protected function createCartInstance(EnvironmentInterface $environment, string $name, string $id = null, array $options = []): CartInterface
+    protected function createCartInstance(EnvironmentInterface $environment, string $name, ?string $id = null, array $options = []): CartInterface
     {
         $class = $this->getCartClassName($environment);
 

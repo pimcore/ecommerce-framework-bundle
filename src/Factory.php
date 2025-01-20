@@ -139,7 +139,7 @@ class Factory
      *
      *
      */
-    public function getCartManager(string $tenant = null): CartManagerInterface
+    public function getCartManager(?string $tenant = null): CartManagerInterface
     {
         return $this->cartManagers->getCartManager($tenant);
     }
@@ -150,7 +150,7 @@ class Factory
      *
      *
      */
-    public function getOrderManager(string $tenant = null): OrderManagerInterface
+    public function getOrderManager(?string $tenant = null): OrderManagerInterface
     {
         return $this->orderManagers->getOrderManager($tenant);
     }
@@ -161,7 +161,7 @@ class Factory
      *
      *
      */
-    public function getPricingManager(string $tenant = null): PricingManagerInterface
+    public function getPricingManager(?string $tenant = null): PricingManagerInterface
     {
         return $this->pricingManagers->getPricingManager($tenant);
     }
@@ -171,7 +171,7 @@ class Factory
      *
      *
      */
-    public function getPriceSystem(string $name = null): PriceSystemInterface
+    public function getPriceSystem(?string $name = null): PriceSystemInterface
     {
         return $this->priceSystems->getPriceSystem($name);
     }
@@ -181,7 +181,7 @@ class Factory
      *
      *
      */
-    public function getAvailabilitySystem(string $name = null): AvailabilitySystemInterface
+    public function getAvailabilitySystem(?string $name = null): AvailabilitySystemInterface
     {
         return $this->availabilitySystems->getAvailabilitySystem($name);
     }
@@ -192,7 +192,7 @@ class Factory
      *
      *
      */
-    public function getCheckoutManager(CartInterface $cart, string $tenant = null): CheckoutManagerInterface
+    public function getCheckoutManager(CartInterface $cart, ?string $tenant = null): CheckoutManagerInterface
     {
         $factory = $this->checkoutManagerFactories->getCheckoutManagerFactory($tenant);
 
@@ -204,7 +204,7 @@ class Factory
      *
      *
      */
-    public function getCommitOrderProcessor(string $tenant = null): CommitOrderProcessorInterface
+    public function getCommitOrderProcessor(?string $tenant = null): CommitOrderProcessorInterface
     {
         return $this->commitOrderProcessors->getCommitOrderProcessor($tenant);
     }
@@ -229,7 +229,7 @@ class Factory
      *
      *
      */
-    public function getFilterService(string $tenant = null): FilterService
+    public function getFilterService(?string $tenant = null): FilterService
     {
         return $this->filterServices->getFilterService($tenant);
     }

@@ -30,17 +30,17 @@ interface RuleInterface
      *
      * @return $this
      */
-    public function setLabel(string $label, string $locale = null): static;
+    public function setLabel(string $label, ?string $locale = null): static;
 
-    public function getLabel(string $locale = null): string;
+    public function getLabel(?string $locale = null): string;
 
     /**
      *
      * @return $this
      */
-    public function setDescription(string $description, string $locale = null): static;
+    public function setDescription(string $description, ?string $locale = null): static;
 
-    public function getDescription(string $locale = null): ?string;
+    public function getDescription(?string $locale = null): ?string;
 
     public function setCondition(ConditionInterface $condition): static;
 

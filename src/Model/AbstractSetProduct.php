@@ -52,7 +52,7 @@ abstract class AbstractSetProduct extends AbstractProduct
      * @param AbstractSetProductEntry[]|null $products
      *
      */
-    public function getOSIsBookable(int $quantityScale = 1, array $products = null): bool
+    public function getOSIsBookable(int $quantityScale = 1, ?array $products = null): bool
     {
         if ($this->isActive()) {
             if (empty($products)) {
@@ -83,7 +83,7 @@ abstract class AbstractSetProduct extends AbstractProduct
      *
      * @throws UnsupportedException
      */
-    public function getOSPrice(int $quantityScale = null, array $products = null): PriceInterface
+    public function getOSPrice(?int $quantityScale = null, ?array $products = null): PriceInterface
     {
         return $this->getOSPriceInfo($quantityScale, $products)->getPrice();
     }
@@ -95,7 +95,7 @@ abstract class AbstractSetProduct extends AbstractProduct
      *
      * @throws UnsupportedException
      */
-    public function getOSPriceInfo(int $quantityScale = null, ?array $products = null): PriceInfoInterface
+    public function getOSPriceInfo(?int $quantityScale = null, ?array $products = null): PriceInfoInterface
     {
         if (!is_array($products)) {
             $products = $this->getMandatoryProductEntries();
@@ -109,7 +109,7 @@ abstract class AbstractSetProduct extends AbstractProduct
      *
      * @throws UnsupportedException
      */
-    public function getOSAvailabilityInfo(int $quantity = null, ?array $products = null): AvailabilityInterface
+    public function getOSAvailabilityInfo(?int $quantity = null, ?array $products = null): AvailabilityInterface
     {
         if ($quantity === null) {
             $quantity = 1;

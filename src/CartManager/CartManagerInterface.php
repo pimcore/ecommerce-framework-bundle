@@ -45,13 +45,13 @@ interface CartManagerInterface extends ComponentInterface
      */
     public function addToCart(
         CheckoutableInterface $product,
-        int $count,
-        string $key = null,
-        string $itemKey = null,
-        bool $replace = false,
-        array $params = [],
-        array $subProducts = [],
-        string $comment = null
+        int                   $count,
+        ?string               $key = null,
+        ?string               $itemKey = null,
+        bool                  $replace = false,
+        array                 $params = [],
+        array                 $subProducts = [],
+        ?string               $comment = null
     ): string;
 
     /**
@@ -60,7 +60,7 @@ interface CartManagerInterface extends ComponentInterface
      * @param string|null $key     - optional identification of cart in case of multi cart
      *
      */
-    public function removeFromCart(string $itemKey, string $key = null): void;
+    public function removeFromCart(string $itemKey, ?string $key = null): void;
 
     /**
      * Returns cart
@@ -68,7 +68,7 @@ interface CartManagerInterface extends ComponentInterface
      * @param string|null $key - optional identification of cart in case of multi cart
      *
      */
-    public function getCart(string $key = null): CartInterface;
+    public function getCart(?string $key = null): CartInterface;
 
     /**
      * Returns cart by name
@@ -97,7 +97,7 @@ interface CartManagerInterface extends ComponentInterface
      * @param string|null $key - optional identification of cart in case of multi cart
      *
      */
-    public function clearCart(string $key = null): void;
+    public function clearCart(?string $key = null): void;
 
     /**
      * Creates new cart
@@ -114,7 +114,7 @@ interface CartManagerInterface extends ComponentInterface
      * @param string|null $key - optional identification of cart in case of multi cart
      *
      */
-    public function deleteCart(string $key = null): void;
+    public function deleteCart(?string $key = null): void;
 
     /**
      * Creates price calculator for given cart

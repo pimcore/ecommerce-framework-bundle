@@ -19,7 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\CheckoutManager;
 
 interface CommitOrderProcessorLocatorInterface
 {
-    public function getCommitOrderProcessor(string $tenant = null): CommitOrderProcessorInterface;
+    public function getCommitOrderProcessor(?string $tenant = null): CommitOrderProcessorInterface;
 
     public function hasCommitOrderProcessor(string $tenant): bool;
 }

@@ -150,7 +150,7 @@ class IndexUpdateService
      * @param string[]|null $tenantNameList optional list of tenant names for which the update should happen. If null, then the parameter
      *        will be ignored. If the array is empty, then no update will take place.
      */
-    public function resetIdsInPreparation(array $idList, string $triggerInfo, array $tenantNameList = null): void
+    public function resetIdsInPreparation(array $idList, string $triggerInfo, ?array $tenantNameList = null): void
     {
         $this->resetIds($idList, $triggerInfo, false, $tenantNameList);
     }
@@ -164,7 +164,7 @@ class IndexUpdateService
      * @param string[]|null $tenantNameList optional list of tenant names for which the update should happen. If null, then the parameter
      *        will be ignored. If the array is empty, then no update will take place.
      */
-    public function resetIdsUpdateIndex(array $idList, string $triggerInfo, array $tenantNameList = null): void
+    public function resetIdsUpdateIndex(array $idList, string $triggerInfo, ?array $tenantNameList = null): void
     {
         $this->resetIds($idList, $triggerInfo, true, $tenantNameList);
     }
@@ -180,7 +180,7 @@ class IndexUpdateService
      * @param string[]|null $tenantNameList optional list of tenant names for which the update should happen. If null, then the parameter
      *        will be ignored. If the array is empty, then no update will take place.
      */
-    protected function resetIds(array $idList, string $triggerInfo, bool $onlyResetUpdateIndex = false, array $tenantNameList = null): void
+    protected function resetIds(array $idList, string $triggerInfo, bool $onlyResetUpdateIndex = false, ?array $tenantNameList = null): void
     {
         if (count($idList) === 0) {
             return;

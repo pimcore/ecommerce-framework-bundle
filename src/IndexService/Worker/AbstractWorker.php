@@ -120,7 +120,7 @@ abstract class AbstractWorker implements WorkerInterface
      *
      * @param IndexableInterface|null $object - might be empty (when object doesn't exist any more in pimcore
      */
-    abstract protected function doDeleteFromIndex(int $subObjectId, IndexableInterface $object = null): void;
+    abstract protected function doDeleteFromIndex(int $subObjectId, ?IndexableInterface $object = null): void;
 
     /**
      * Checks if given data is array and returns converted data suitable for search backend. For mysql it is a string with special delimiter.

@@ -219,9 +219,9 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
 
     abstract public function releaseToken(string $code, CartInterface $cart): bool;
 
-    abstract public function getCodes(array $filter = null): bool|array;
+    abstract public function getCodes(?array $filter = null): bool|array;
 
-    abstract public function getStatistics(int $usagePeriod = null): bool|array;
+    abstract public function getStatistics(?int $usagePeriod = null): bool|array;
 
     abstract public function getConfiguration(): AbstractVoucherTokenType;
 

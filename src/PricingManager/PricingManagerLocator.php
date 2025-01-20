@@ -22,7 +22,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\UnsupportedException;
 
 class PricingManagerLocator extends CheckoutTenantAwareServiceLocator implements PricingManagerLocatorInterface
 {
-    public function getPricingManager(string $tenant = null): PricingManagerInterface
+    public function getPricingManager(?string $tenant = null): PricingManagerInterface
     {
         return $this->locate($tenant);
     }

@@ -91,7 +91,7 @@ class CheckoutManager implements CheckoutManagerInterface
         CommitOrderProcessorLocatorInterface $commitOrderProcessors,
         array $checkoutSteps,
         EventDispatcherInterface $eventDispatcher,
-        PaymentInterface $paymentProvider = null
+        ?PaymentInterface $paymentProvider = null
     ) {
         $this->cart = $cart;
         $this->environment = $environment;

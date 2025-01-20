@@ -106,7 +106,7 @@ class IndexService
      *
      *
      */
-    public function getGeneralSearchAttributes(string $tenant = null): array
+    public function getGeneralSearchAttributes(?string $tenant = null): array
     {
         try {
             $tenantWorker = $this->resolveTenantWorker($tenant);
@@ -155,7 +155,7 @@ class IndexService
      *
      *
      */
-    public function getIndexAttributes(bool $considerHideInFieldList = false, string $tenant = null): array
+    public function getIndexAttributes(bool $considerHideInFieldList = false, ?string $tenant = null): array
     {
         try {
             $tenantWorker = $this->resolveTenantWorker($tenant);
@@ -172,7 +172,7 @@ class IndexService
      *
      *
      */
-    public function getAllFilterGroups(string $tenant = null): array
+    public function getAllFilterGroups(?string $tenant = null): array
     {
         try {
             $tenantWorker = $this->resolveTenantWorker($tenant);
@@ -189,7 +189,7 @@ class IndexService
      *
      *
      */
-    public function getIndexAttributesByFilterGroup(string $filterType, string $tenant = null): array
+    public function getIndexAttributesByFilterGroup(string $filterType, ?string $tenant = null): array
     {
         try {
             $tenantWorker = $this->resolveTenantWorker($tenant);
@@ -236,7 +236,7 @@ class IndexService
      *
      * @throws WorkerNotFoundException
      */
-    protected function resolveTenantWorker(string $tenant = null): WorkerInterface
+    protected function resolveTenantWorker(?string $tenant = null): WorkerInterface
     {
         if (null === $tenant) {
             $tenant = $this->environment->getCurrentAssortmentTenant();

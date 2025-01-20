@@ -22,7 +22,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\UnsupportedException;
 
 class AvailabilitySystemLocator extends NameServiceLocator implements AvailabilitySystemLocatorInterface
 {
-    public function getAvailabilitySystem(string $name = null): AvailabilitySystemInterface
+    public function getAvailabilitySystem(?string $name = null): AvailabilitySystemInterface
     {
         return $this->locate($name);
     }

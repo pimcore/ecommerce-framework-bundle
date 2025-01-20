@@ -53,7 +53,7 @@ class PricingManager implements PricingManagerInterface
         array $conditionMapping,
         array $actionMapping,
         array $options = [],
-        VisitorInfoStorageInterface $visitorInfoStorage = null
+        ?VisitorInfoStorageInterface $visitorInfoStorage = null
     ) {
         $this->conditionMapping = $conditionMapping;
         $this->actionMapping = $actionMapping;

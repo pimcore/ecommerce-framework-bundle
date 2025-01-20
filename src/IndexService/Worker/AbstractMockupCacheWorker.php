@@ -60,7 +60,7 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
      *
      * @throws InvalidConfigException
      */
-    public function saveToMockupCache(int $objectId, array $data = null): DefaultMockup
+    public function saveToMockupCache(int $objectId, ?array $data = null): DefaultMockup
     {
         if (empty($data)) {
             $data = $this->db->fetchOne('SELECT data FROM ' . $this->getStoreTableName() . ' WHERE id = ? AND tenant = ?', [$objectId, $this->name]);

@@ -264,7 +264,7 @@ class Listing extends AbstractOrderList implements OrderListInterface
      *
      * @return $this
      */
-    public function addCondition(string $condition, string $value = null): static
+    public function addCondition(string $condition, ?string $value = null): static
     {
         if (null === $value) {
             $value = [];

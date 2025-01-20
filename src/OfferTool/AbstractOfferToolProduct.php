@@ -112,7 +112,7 @@ abstract class AbstractOfferToolProduct extends \Pimcore\Model\DataObject\Concre
     /**
      * returns availability info based on given quantity
      */
-    public function getOSAvailabilityInfo(int $quantity = null): AvailabilityInterface
+    public function getOSAvailabilityInfo(?int $quantity = null): AvailabilityInterface
     {
         return $this->getAvailabilitySystemImplementation()->getAvailabilityInfo($this, $quantity);
     }

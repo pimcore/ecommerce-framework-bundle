@@ -196,7 +196,7 @@ abstract class AbstractConfig implements ConfigInterface
      *
      * @return AbstractCategory[]
      */
-    public function getCategories(IndexableInterface $object, int $subObjectId = null): array
+    public function getCategories(IndexableInterface $object, ?int $subObjectId = null): array
     {
         return $object->getCategories();
     }
