@@ -216,10 +216,10 @@ class EnhancedEcommerce extends AbstractAnalyticsTracker implements
     }
 
     public function trackEvent(
-        string  $eventCategory,
-        string  $eventAction,
+        string $eventCategory,
+        string $eventAction,
         ?string $eventLabel = null,
-        ?int    $eventValue = null
+        ?int $eventValue = null
     ): void {
         $parameters = [
             'eventCategory' => $eventCategory,

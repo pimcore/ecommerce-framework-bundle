@@ -59,14 +59,14 @@ class CheckoutManagerFactory implements CheckoutManagerFactoryInterface
     protected ?EventDispatcherInterface $eventDispatcher = null;
 
     public function __construct(
-        EnvironmentInterface                 $environment,
-        OrderManagerLocatorInterface         $orderManagers,
+        EnvironmentInterface $environment,
+        OrderManagerLocatorInterface $orderManagers,
         CommitOrderProcessorLocatorInterface $commitOrderProcessors,
-        array                                $checkoutStepDefinitions,
-        ?PaymentInterface                    $paymentProvider = null,
-        array                                $options = [],
-        ?ServiceLocator                      $handlePendingPaymentStrategyLocator = null,
-        ?EventDispatcherInterface            $eventDispatcher = null
+        array $checkoutStepDefinitions,
+        ?PaymentInterface $paymentProvider = null,
+        array $options = [],
+        ?ServiceLocator $handlePendingPaymentStrategyLocator = null,
+        ?EventDispatcherInterface $eventDispatcher = null
     ) {
         $this->environment = $environment;
         $this->orderManagers = $orderManagers;

@@ -48,17 +48,17 @@ class Attribute
     private bool $hideInFieldlistDatatype = false;
 
     public function __construct(
-        string                $name,
-        ?string               $fieldName = null,
-        ?string               $type = null,
-        ?string               $locale = null,
-        ?string               $filterGroup = null,
-        array                 $options = [],
-        ?GetterInterface      $getter = null,
-        array                 $getterOptions = [],
+        string $name,
+        ?string $fieldName = null,
+        ?string $type = null,
+        ?string $locale = null,
+        ?string $filterGroup = null,
+        array $options = [],
+        ?GetterInterface $getter = null,
+        array $getterOptions = [],
         ?InterpreterInterface $interpreter = null,
-        array                 $interpreterOptions = [],
-        bool                  $hideInFieldlistDatatype = false
+        array $interpreterOptions = [],
+        bool $hideInFieldlistDatatype = false
     ) {
         $this->name = $name;
         $this->fieldName = $fieldName ?? $name;
