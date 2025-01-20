@@ -269,10 +269,10 @@ class TrackingManager implements TrackingManagerInterface
     }
 
     public function trackEvent(
-        string  $eventCategory,
-        string  $eventAction,
+        string $eventCategory,
+        string $eventAction,
         ?string $eventLabel = null,
-        ?int    $eventValue = null
+        ?int $eventValue = null
     ): void {
         foreach ($this->getTrackers() as $tracker) {
             if ($tracker instanceof TrackEventInterface) {
