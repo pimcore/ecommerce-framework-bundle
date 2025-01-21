@@ -49,14 +49,14 @@ class Attribute
 
     public function __construct(
         string $name,
-        string $fieldName = null,
-        string $type = null,
-        string $locale = null,
-        string $filterGroup = null,
+        ?string $fieldName = null,
+        ?string $type = null,
+        ?string $locale = null,
+        ?string $filterGroup = null,
         array $options = [],
-        GetterInterface $getter = null,
+        ?GetterInterface $getter = null,
         array $getterOptions = [],
-        InterpreterInterface $interpreter = null,
+        ?InterpreterInterface $interpreter = null,
         array $interpreterOptions = [],
         bool $hideInFieldlistDatatype = false
     ) {
@@ -141,7 +141,7 @@ class Attribute
      *
      *
      */
-    public function getValue(IndexableInterface $object, int $subObjectId = null, ConfigInterface $tenantConfig = null, mixed $default = null): mixed
+    public function getValue(IndexableInterface $object, ?int $subObjectId = null, ?ConfigInterface $tenantConfig = null, mixed $default = null): mixed
     {
         if (null !== $this->getter) {
             if ($this->getter instanceof ExtendedGetterInterface) {

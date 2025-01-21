@@ -29,7 +29,7 @@ abstract class CachingPriceSystem extends AbstractPriceSystem implements Caching
      */
     protected array $priceInfos = [];
 
-    public function getPriceInfo(CheckoutableInterface $product, int|string $quantityScale = null, array $products = null): PriceInfoInterface
+    public function getPriceInfo(CheckoutableInterface $product, int|string|null $quantityScale = null, ?array $products = null): PriceInfoInterface
     {
         $pId = $product->getId();
         if (!is_array($this->priceInfos[$pId] ?? null)) {

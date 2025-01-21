@@ -35,7 +35,7 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
         $this->pricingManagers = $pricingManagers;
     }
 
-    public function getPriceInfo(CheckoutableInterface $product, int|string $quantityScale = null, array $products = null): PriceInfoInterface
+    public function getPriceInfo(CheckoutableInterface $product, int|string|null $quantityScale = null, ?array $products = null): PriceInfoInterface
     {
         return $this->initPriceInfoInstance($quantityScale, $product, $products);
     }

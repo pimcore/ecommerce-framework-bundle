@@ -50,7 +50,7 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
         $resolver->setAllowedTypes('client_config', 'array');
     }
 
-    public function getClientConfig(string $setting = null): array|string|null
+    public function getClientConfig(?string $setting = null): array|string|null
     {
         return $setting
             ? $this->clientConfig[$setting]
@@ -74,7 +74,7 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
      *
      * @return mixed $subTenantData
      */
-    public function prepareSubTenantEntries(IndexableInterface $object, int $subObjectId = null): mixed
+    public function prepareSubTenantEntries(IndexableInterface $object, ?int $subObjectId = null): mixed
     {
         return null;
     }

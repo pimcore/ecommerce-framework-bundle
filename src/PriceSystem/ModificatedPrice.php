@@ -27,7 +27,7 @@ class ModificatedPrice extends Price implements ModificatedPriceInterface
 
     protected ?RuleInterface $rule = null;
 
-    public function __construct(Decimal $amount, Currency $currency, bool $minPrice = false, string $description = null)
+    public function __construct(Decimal $amount, Currency $currency, bool $minPrice = false, ?string $description = null)
     {
         parent::__construct($amount, $currency, $minPrice);
 

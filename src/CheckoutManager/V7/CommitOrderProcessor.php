@@ -178,7 +178,7 @@ class CommitOrderProcessor implements CommitOrderProcessorInterface, LoggerAware
      * @throws UnsupportedException|PaymentNotSuccessfulException
      * @throws \Exception
      */
-    public function commitOrderPayment(StatusInterface $paymentStatus, PaymentInterface $paymentProvider, AbstractOrder $sourceOrder = null): AbstractOrder
+    public function commitOrderPayment(StatusInterface $paymentStatus, PaymentInterface $paymentProvider, ?AbstractOrder $sourceOrder = null): AbstractOrder
     {
         // acquire lock to make sure only one process is committing order payment
         $lock = $this->lockFactory->createLock(self::LOCK_KEY . $paymentStatus->getInternalPaymentId());

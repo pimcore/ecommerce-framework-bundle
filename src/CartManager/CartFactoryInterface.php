@@ -23,5 +23,5 @@ interface CartFactoryInterface
 {
     public function getCartClassName(EnvironmentInterface $environment): string;
 
-    public function create(EnvironmentInterface $environment, string $name, string $id = null, array $options = []): CartInterface;
+    public function create(EnvironmentInterface $environment, string $name, ?string $id = null, array $options = []): CartInterface;
 }

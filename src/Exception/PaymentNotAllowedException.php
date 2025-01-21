@@ -31,7 +31,7 @@ class PaymentNotAllowedException extends AbstractEcommerceException
      * PaymentNotAllowedException constructor.
      *
      */
-    public function __construct(string $message, AbstractOrder $order, CartInterface $cart = null, bool $orderNeedsUpdate = null)
+    public function __construct(string $message, AbstractOrder $order, ?CartInterface $cart = null, ?bool $orderNeedsUpdate = null)
     {
         parent::__construct($message);
 

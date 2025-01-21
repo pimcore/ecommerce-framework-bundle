@@ -22,7 +22,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\UnsupportedException;
 
 class CommitOrderProcessorLocator extends CheckoutTenantAwareServiceLocator implements CommitOrderProcessorLocatorInterface
 {
-    public function getCommitOrderProcessor(string $tenant = null): CommitOrderProcessorInterface
+    public function getCommitOrderProcessor(?string $tenant = null): CommitOrderProcessorInterface
     {
         return $this->locate($tenant);
     }

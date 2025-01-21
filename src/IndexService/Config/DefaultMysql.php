@@ -63,7 +63,7 @@ class DefaultMysql extends AbstractConfig implements MysqlConfigInterface
      *
      * @return mixed $subTenantData
      */
-    public function prepareSubTenantEntries(IndexableInterface $object, int $subObjectId = null): mixed
+    public function prepareSubTenantEntries(IndexableInterface $object, ?int $subObjectId = null): mixed
     {
         return null;
     }

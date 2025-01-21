@@ -19,7 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\CartManager;
 
 interface CartManagerLocatorInterface
 {
-    public function getCartManager(string $tenant = null): CartManagerInterface;
+    public function getCartManager(?string $tenant = null): CartManagerInterface;
 
     public function hasCartManager(string $tenant): bool;
 }

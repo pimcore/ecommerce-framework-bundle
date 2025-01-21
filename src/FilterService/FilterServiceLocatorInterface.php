@@ -19,7 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService;
 
 interface FilterServiceLocatorInterface
 {
-    public function getFilterService(string $tenant = null): FilterService;
+    public function getFilterService(?string $tenant = null): FilterService;
 
     public function hasFilterService(string $tenant): bool;
 }

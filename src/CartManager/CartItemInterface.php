@@ -84,7 +84,7 @@ interface CartItemInterface
 
     public function save(): void;
 
-    public function setAddedDate(\DateTime $date = null): void;
+    public function setAddedDate(?\DateTime $date = null): void;
 
     public function getAddedDate(): \DateTime;
 

@@ -68,13 +68,13 @@ interface VoucherServiceInterface
      *
      * @return PricingManagerTokenInformation[]
      */
-    public function getPricingManagerTokenInformationDetails(CartInterface $cart, string $locale = null): array;
+    public function getPricingManagerTokenInformationDetails(CartInterface $cart, ?string $locale = null): array;
 
     /**
      * Cleans the token reservations due to sysConfig duration settings, if no series Id is
      * set all reservations older than the set duration get removed.
      */
-    public function cleanUpReservations(int $seriesId = null): bool;
+    public function cleanUpReservations(?int $seriesId = null): bool;
 
     /**
      * Removes all tokens from a voucher series and its reservations,
@@ -87,5 +87,5 @@ interface VoucherServiceInterface
     /**
      * Removes all statistics, optionally a seriesId can be passed, to only remove from one series.
      */
-    public function cleanUpStatistics(int $seriesId = null): bool;
+    public function cleanUpStatistics(?int $seriesId = null): bool;
 }

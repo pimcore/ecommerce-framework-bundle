@@ -26,7 +26,7 @@ class TagsGetter implements GetterInterface
 {
     use OptionsResolverTrait;
 
-    public function get(object $object, array $config = null): mixed
+    public function get(object $object, ?array $config = null): mixed
     {
         $config = $this->resolveOptions($config ?? []);
 

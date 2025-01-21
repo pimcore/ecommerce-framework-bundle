@@ -21,7 +21,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7\OrderManagerInterfac
 
 interface OrderManagerLocatorInterface
 {
-    public function getOrderManager(string $tenant = null): OrderManagerInterface;
+    public function getOrderManager(?string $tenant = null): OrderManagerInterface;
 
     public function hasOrderManager(string $tenant): bool;
 }

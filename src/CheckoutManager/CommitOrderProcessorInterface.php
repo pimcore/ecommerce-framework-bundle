@@ -56,7 +56,7 @@ interface CommitOrderProcessorInterface
      * @param AbstractOrder|null $sourceOrder Source order for recurring payment
      *
      */
-    public function commitOrderPayment(StatusInterface $paymentStatus, PaymentInterface $paymentProvider, AbstractOrder $sourceOrder = null): AbstractOrder;
+    public function commitOrderPayment(StatusInterface $paymentStatus, PaymentInterface $paymentProvider, ?AbstractOrder $sourceOrder = null): AbstractOrder;
 
     /**
      * Commits order
