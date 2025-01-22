@@ -154,7 +154,7 @@ class DefaultService implements VoucherServiceInterface
      *
      * @throws UnsupportedException
      */
-    public function getPricingManagerTokenInformationDetails(CartInterface $cart, string $locale = null): array
+    public function getPricingManagerTokenInformationDetails(CartInterface $cart, ?string $locale = null): array
     {
         if (empty($cart->getVoucherTokenCodes())) {
             return [];
@@ -255,7 +255,7 @@ class DefaultService implements VoucherServiceInterface
         return Token\Listing::cleanUpAllTokens($series->getId());
     }
 
-    public function cleanUpStatistics(int $seriesId = null): bool
+    public function cleanUpStatistics(?int $seriesId = null): bool
     {
         if (isset($seriesId)) {
             return Statistic::cleanUpStatistics($this->statisticsDaysThreshold, $seriesId);

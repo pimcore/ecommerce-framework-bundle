@@ -225,7 +225,7 @@ class TrackingManager implements TrackingManagerInterface
      * Track checkout step
      *
      */
-    public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, string $stepNumber = null, string $checkoutOption = null): void
+    public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, ?string $stepNumber = null, ?string $checkoutOption = null): void
     {
         foreach ($this->getActiveTrackers() as $tracker) {
             if ($tracker instanceof CheckoutStepInterface) {
@@ -271,8 +271,8 @@ class TrackingManager implements TrackingManagerInterface
     public function trackEvent(
         string $eventCategory,
         string $eventAction,
-        string $eventLabel = null,
-        int $eventValue = null
+        ?string $eventLabel = null,
+        ?int $eventValue = null
     ): void {
         foreach ($this->getTrackers() as $tracker) {
             if ($tracker instanceof TrackEventInterface) {

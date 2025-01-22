@@ -63,10 +63,10 @@ class CheckoutManagerFactory implements CheckoutManagerFactoryInterface
         OrderManagerLocatorInterface $orderManagers,
         CommitOrderProcessorLocatorInterface $commitOrderProcessors,
         array $checkoutStepDefinitions,
-        PaymentInterface $paymentProvider = null,
+        ?PaymentInterface $paymentProvider = null,
         array $options = [],
-        ServiceLocator $handlePendingPaymentStrategyLocator = null,
-        EventDispatcherInterface $eventDispatcher = null
+        ?ServiceLocator $handlePendingPaymentStrategyLocator = null,
+        ?EventDispatcherInterface $eventDispatcher = null
     ) {
         $this->environment = $environment;
         $this->orderManagers = $orderManagers;

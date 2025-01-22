@@ -274,7 +274,7 @@ class OrderAgent implements OrderAgentInterface
      *
      * @throws Exception
      */
-    public function setPaymentProvider(PaymentInterface $paymentProvider, AbstractOrder $sourceOrder = null): static
+    public function setPaymentProvider(PaymentInterface $paymentProvider, ?AbstractOrder $sourceOrder = null): static
     {
         $this->paymentProvider = $paymentProvider;
 
@@ -436,7 +436,7 @@ class OrderAgent implements OrderAgentInterface
      *
      *
      */
-    protected function generateInternalPaymentId(int $paymentInfoCount = null): string
+    protected function generateInternalPaymentId(?int $paymentInfoCount = null): string
     {
         $order = $this->getOrder();
         if ($paymentInfoCount === null) {

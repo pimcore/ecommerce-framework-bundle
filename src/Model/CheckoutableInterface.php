@@ -70,5 +70,5 @@ interface CheckoutableInterface extends ProductInterface
     /**
      * returns availability info based on given quantity
      */
-    public function getOSAvailabilityInfo(int $quantity = null): AvailabilityInterface;
+    public function getOSAvailabilityInfo(?int $quantity = null): AvailabilityInterface;
 }

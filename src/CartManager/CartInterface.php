@@ -72,7 +72,7 @@ interface CartInterface
      *
      * @return string $itemKey
      */
-    public function addItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string;
+    public function addItem(CheckoutableInterface $product, int $count, ?string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], ?string $comment = null): string;
 
     /**
      * @param bool $replace replace if item with same key exists
@@ -80,7 +80,7 @@ interface CartInterface
      *
      * @return string $itemKey
      */
-    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string;
+    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], ?string $comment = null): string;
 
     /**
      * updates count of specific cart item
@@ -96,7 +96,7 @@ interface CartInterface
      *
      * @return string $itemKey
      */
-    public function addGiftItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string;
+    public function addGiftItem(CheckoutableInterface $product, int $count, ?string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], ?string $comment = null): string;
 
     /**
      * @param bool $replace replace if item with same key exists
@@ -104,7 +104,7 @@ interface CartInterface
      *
      * @return string $itemKey
      */
-    public function updateGiftItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string;
+    public function updateGiftItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], ?string $comment = null): string;
 
     public function removeItem(string $itemKey): void;
 
@@ -187,11 +187,11 @@ interface CartInterface
 
     public function getCreationDate(): \DateTime;
 
-    public function setCreationDate(\DateTime $creationDate = null): void;
+    public function setCreationDate(?\DateTime $creationDate = null): void;
 
     public function getModificationDate(): ?\DateTime;
 
-    public function setModificationDate(\DateTime $modificationDate = null): void;
+    public function setModificationDate(?\DateTime $modificationDate = null): void;
 
     /**
      * sorts all items in cart according to a given callback function

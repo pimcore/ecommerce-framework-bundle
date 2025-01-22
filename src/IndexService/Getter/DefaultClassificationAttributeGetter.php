@@ -31,7 +31,7 @@ class DefaultClassificationAttributeGetter implements GetterInterface
      * ** fieldname - name of the field upon which the classification store is saved on the specific object [defaults to attributes]
      * note that this getter does not support localization at the moment
      */
-    public function get(object $object, array $config = null): mixed
+    public function get(object $object, ?array $config = null): mixed
     {
         $config = $this->resolveOptions($config ?? []);
         $sourceList = $config['source'];

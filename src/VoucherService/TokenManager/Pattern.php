@@ -171,12 +171,12 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
         return Reservation::releaseToken($code);
     }
 
-    public function getCodes(array $filter = null): bool|array
+    public function getCodes(?array $filter = null): bool|array
     {
         return Token\Listing::getCodes($this->seriesId, $filter);
     }
 
-    public function getStatistics(int $usagePeriod = null): array
+    public function getStatistics(?int $usagePeriod = null): array
     {
         $overallCount = Token\Listing::getCountBySeriesId($this->seriesId);
         $usageCount = Token\Listing::getCountByUsages(1, $this->seriesId);

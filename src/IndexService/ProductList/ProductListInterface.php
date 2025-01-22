@@ -106,7 +106,7 @@ interface ProductListInterface extends PaginateListingInterface
      * Adds price condition to product list
      *
      */
-    public function addPriceCondition(float $from = null, float $to = null): void;
+    public function addPriceCondition(?float $from = null, ?float $to = null): void;
 
     public function setInProductList(bool $inProductList): void;
 

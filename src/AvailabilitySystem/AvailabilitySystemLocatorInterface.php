@@ -19,7 +19,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\AvailabilitySystem;
 
 interface AvailabilitySystemLocatorInterface
 {
-    public function getAvailabilitySystem(string $name = null): AvailabilitySystemInterface;
+    public function getAvailabilitySystem(?string $name = null): AvailabilitySystemInterface;
 
     public function hasAvailabilitySystem(string $name): bool;
 }

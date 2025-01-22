@@ -110,7 +110,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
      *
      * @return string the name of the index, such as at_de_elastic_13
      */
-    public function getIndexNameVersion(int $indexVersionOverride = null): string
+    public function getIndexNameVersion(?int $indexVersionOverride = null): string
     {
         $indexVersion = $indexVersionOverride ?? $this->getIndexVersion();
 
@@ -345,7 +345,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
         $this->fillupPreparationQueue($object);
     }
 
-    protected function doUpdateIndex(int $objectId, array $data = null, array $metadata = null): void
+    protected function doUpdateIndex(int $objectId, ?array $data = null, ?array $metadata = null): void
     {
         $isLocked = $this->checkIndexLock(false);
 
@@ -560,7 +560,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
      *
      * @throws Exception
      */
-    protected function doDeleteFromIndex(int $objectId, IndexableInterface $object = null): void
+    protected function doDeleteFromIndex(int $objectId, ?IndexableInterface $object = null): void
     {
         $osClient = $this->getOpenSearchClient();
 

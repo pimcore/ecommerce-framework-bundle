@@ -32,7 +32,7 @@ interface PriceSystemInterface
      * @param CheckoutableInterface[]|null $products
      *
      */
-    public function getPriceInfo(CheckoutableInterface $product, int|string $quantityScale = null, array $products = null): PriceInfoInterface;
+    public function getPriceInfo(CheckoutableInterface $product, int|string|null $quantityScale = null, ?array $products = null): PriceInfoInterface;
 
     /**
      * Filters and orders given product IDs based on price information

@@ -36,7 +36,7 @@ class TaxEntry
 
     protected ?string $taxId = null;
 
-    public function __construct(float $percent, Decimal $amount, string $taxId = null, TaxEntryFieldcollection $entry = null)
+    public function __construct(float $percent, Decimal $amount, ?string $taxId = null, ?TaxEntryFieldcollection $entry = null)
     {
         $this->percent = $percent;
         $this->amount = $amount;
@@ -79,7 +79,7 @@ class TaxEntry
         return $this->taxId;
     }
 
-    public function setTaxId(string $taxId = null): void
+    public function setTaxId(?string $taxId = null): void
     {
         $this->taxId = $taxId;
     }

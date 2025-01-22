@@ -18,5 +18,5 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Getter;
 
 interface GetterInterface
 {
-    public function get(object $object, array $config = null): mixed;
+    public function get(object $object, ?array $config = null): mixed;
 }

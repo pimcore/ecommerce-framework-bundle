@@ -92,7 +92,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
         $this->fillupPreparationQueue($object);
     }
 
-    protected function doUpdateIndex(int $objectId, array $data = null, array $metadata = null): void
+    protected function doUpdateIndex(int $objectId, ?array $data = null, ?array $metadata = null): void
     {
         $xml = $this->createXMLElement();
 
@@ -129,7 +129,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
          *
          * @return \SimpleXMLElement
          */
-        $addChildWithCDATA = function (\SimpleXMLElement $parent, string $name, string $value = null) {
+        $addChildWithCDATA = function (\SimpleXMLElement $parent, string $name, ?string $value = null) {
             $new_child = $parent->addChild($name);
 
             if ($new_child !== null) {
@@ -258,7 +258,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
         $this->saveToMockupCache($objectId, $data);
     }
 
-    protected function doDeleteFromIndex(int $subObjectId, IndexableInterface $object = null): void
+    protected function doDeleteFromIndex(int $subObjectId, ?IndexableInterface $object = null): void
     {
         $this->db->executeQuery(sprintf('DELETE FROM %1$s WHERE id = %2$d', $this->getExportTableName(), $subObjectId));
         $this->db->executeQuery(sprintf('DELETE FROM %1$s WHERE id = %2$d', $this->getStoreTableName(), $subObjectId));

@@ -47,7 +47,7 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
      */
     protected ?array $childWorkerList = null;
 
-    public function __construct(IndexUpdateService $indexUpdateService, IndexService $indexService, string $name = null)
+    public function __construct(IndexUpdateService $indexUpdateService, IndexService $indexService, ?string $name = null)
     {
         parent::__construct($name);
         $this->indexUpdateService = $indexUpdateService;

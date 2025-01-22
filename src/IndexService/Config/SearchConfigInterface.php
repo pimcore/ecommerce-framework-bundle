@@ -37,7 +37,7 @@ interface SearchConfigInterface extends ConfigInterface
      */
     public function getSynonymProviders(): array;
 
-    public function getClientConfig(string $property = null): array|string|null;
+    public function getClientConfig(?string $property = null): array|string|null;
 
     /**
      * returns the full field name

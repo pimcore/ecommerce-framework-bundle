@@ -91,7 +91,7 @@ interface TokenManagerInterface
      *
      *
      */
-    public function getCodes(array $filter = null): bool|array;
+    public function getCodes(?array $filter = null): bool|array;
 
     public function getStatistics(?int $usagePeriod = null): bool|array;
 

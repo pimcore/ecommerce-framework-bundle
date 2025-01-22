@@ -209,7 +209,7 @@ class Listing extends \Pimcore\Model\Listing\AbstractListing implements Paginate
         }
     }
 
-    public static function getCountByLength(int $length, int $seriesId = null): ?int
+    public static function getCountByLength(int $length, ?int $seriesId = null): ?int
     {
         $query = 'SELECT COUNT(*) as count FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Token\Dao::TABLE_NAME . ' WHERE length = ?';
         $params = [$length];

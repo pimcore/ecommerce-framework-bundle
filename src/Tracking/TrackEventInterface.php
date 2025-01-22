@@ -18,5 +18,5 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tracking;
 
 interface TrackEventInterface
 {
-    public function trackEvent(string $eventCategory, string $eventAction, string $eventLabel = null, int $eventValue = null): void;
+    public function trackEvent(string $eventCategory, string $eventAction, ?string $eventLabel = null, ?int $eventValue = null): void;
 }

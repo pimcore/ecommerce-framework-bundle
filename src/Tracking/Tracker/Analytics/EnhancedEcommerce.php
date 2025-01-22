@@ -171,7 +171,7 @@ class EnhancedEcommerce extends AbstractAnalyticsTracker implements
         $this->trackCode($result);
     }
 
-    public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, string $stepNumber = null, string $checkoutOption = null): void
+    public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, ?string $stepNumber = null, ?string $checkoutOption = null): void
     {
         $this->ensureDependencies();
 
@@ -218,8 +218,8 @@ class EnhancedEcommerce extends AbstractAnalyticsTracker implements
     public function trackEvent(
         string $eventCategory,
         string $eventAction,
-        string $eventLabel = null,
-        int $eventValue = null
+        ?string $eventLabel = null,
+        ?int $eventValue = null
     ): void {
         $parameters = [
             'eventCategory' => $eventCategory,

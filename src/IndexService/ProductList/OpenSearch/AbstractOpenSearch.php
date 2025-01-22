@@ -237,7 +237,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      * Adds price condition to product list
      *
      */
-    public function addPriceCondition(float $from = null, float $to = null): void
+    public function addPriceCondition(?float $from = null, ?float $to = null): void
     {
         $this->conditionPriceFrom = $from;
         $this->conditionPriceTo = $to;
@@ -569,7 +569,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      *
      *
      */
-    protected function buildQuery(array $params, array $boolFilters, array $queryFilters, string $variantMode = null): array
+    protected function buildQuery(array $params, array $boolFilters, array $queryFilters, ?string $variantMode = null): array
     {
         if (!$variantMode) {
             $variantMode = $this->getVariantMode();

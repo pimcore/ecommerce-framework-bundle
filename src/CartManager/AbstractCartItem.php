@@ -242,7 +242,7 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
         return $this->getPriceInfo()->getTotalPrice();
     }
 
-    public function setAddedDate(\DateTime $date = null): void
+    public function setAddedDate(?\DateTime $date = null): void
     {
         if ($date) {
             $this->addedDateTimestamp = intval($date->format('Uu'));

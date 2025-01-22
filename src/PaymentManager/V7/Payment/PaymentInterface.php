@@ -49,7 +49,7 @@ interface PaymentInterface
     /**
      * Executes payment
      */
-    public function executeDebit(PriceInterface $price = null, string $reference = null): StatusInterface;
+    public function executeDebit(?PriceInterface $price = null, ?string $reference = null): StatusInterface;
 
     /**
      * Executes credit

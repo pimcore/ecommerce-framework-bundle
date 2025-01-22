@@ -43,7 +43,7 @@ class ProcessPreparationQueueCommand extends AbstractIndexServiceCommand
 
     protected IndexService $indexService;
 
-    public function __construct(IndexUpdateService $indexUpdateService, IndexService $indexService, string $name = null)
+    public function __construct(IndexUpdateService $indexUpdateService, IndexService $indexService, ?string $name = null)
     {
         parent::__construct($name);
         $this->indexUpdateService = $indexUpdateService;
