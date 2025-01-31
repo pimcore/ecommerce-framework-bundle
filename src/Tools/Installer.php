@@ -172,38 +172,14 @@ class Installer extends SettingsStoreAwareInstaller
         $this->installTables();
         $this->installPermissions();
         $this->installDependentBundles();
+        parent::install();
     }
 
     public function uninstall(): void
     {
         $this->uninstallPermissions();
         $this->uninstallTables();
-    }
-
-    public function isInstalled(): bool
-    {
-        $installed = false;
-
-        try {
-            // check if if first permission is installed
-            $installed = $this->db->fetchOne('SELECT `key` FROM users_permission_definitions WHERE `key` = :key', [
-                'key' => $this->permissionsToInstall[0],
-            ]);
-        } catch (\Exception $e) {
-            // nothing to do
-        }
-
-        return (bool) $installed;
-    }
-
-    public function canBeInstalled(): bool
-    {
-        return !$this->isInstalled();
-    }
-
-    public function canBeUninstalled(): bool
-    {
-        return $this->isInstalled();
+        parent::uninstall();
     }
 
     private function getClassesToInstall(): array
