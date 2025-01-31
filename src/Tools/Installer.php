@@ -19,8 +19,8 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tools;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Migrations\Version20210430124911;
-use Pimcore\Extension\Bundle\Installer\AbstractInstaller;
 use Pimcore\Extension\Bundle\Installer\Exception\InstallationException;
+use Pimcore\Extension\Bundle\Installer\SettingsStoreAwareInstaller;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\ClassDefinition\Service;
 use Pimcore\Model\DataObject\Fieldcollection;
@@ -31,7 +31,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 /**
  * @internal
  */
-class Installer extends AbstractInstaller
+class Installer extends SettingsStoreAwareInstaller
 {
     private string $installSourcesPath;
 
@@ -141,7 +141,7 @@ class Installer extends AbstractInstaller
         $this->installSourcesPath = __DIR__ . '/../Resources/install';
         $this->bundle = $bundle;
         $this->db = $connection;
-        parent::__construct();
+        parent::__construct($bundle);
     }
 
     public function installDependentBundles(): void
