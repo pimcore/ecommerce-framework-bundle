@@ -55,7 +55,7 @@ class DefaultService implements ServiceInterface
         if (substr_count($parentFolderPath, '*') % 2 === 0 && !$maybeStrftime) {
             $pattern = '/\*([^\*]+)\*/';
             $offerParentPath = preg_replace_callback($pattern, function ($matches) {
-                return CarbonImmutable::now(date_default_timezone_get())->isoFormat($matches[1]);
+                return CarbonImmutable::now()->isoFormat($matches[1]);
             }, $parentFolderPath);
         } else {
             trigger_deprecation(
