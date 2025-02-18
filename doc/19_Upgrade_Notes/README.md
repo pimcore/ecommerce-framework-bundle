@@ -2,6 +2,9 @@
 
 ## Version 2.0.0
 
+### [Pimcore]
+- Updated to composer to Pimcore 12 due to a BC-Break for `getById()` only accepting `int` as parameter for `id`.
+
 ### [Elasticsearch]
 
 - Removed ElasticSearchConfigInterface, use SearchConfigInterface instead.
