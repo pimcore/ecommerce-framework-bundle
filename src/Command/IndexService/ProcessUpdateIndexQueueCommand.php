@@ -159,4 +159,10 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
     {
         return 500; // index updates per child process
     }
+
+    protected function getBatchSize(): int
+    {
+        return $this->input->getOption('batch-size') ?: $this->getSegmentSize();
+    }
+    
 }
