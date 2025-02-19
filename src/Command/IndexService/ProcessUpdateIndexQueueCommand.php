@@ -162,7 +162,7 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
     {
         $segmentSize = 500;
 
-        if ($this->input->hasOption('segment-size') && this->input->getOption('segment-size')) {
+        if ($this->input->hasOption('segment-size') && $this->input->getOption('segment-size')) {
             $segmentSize = (int)$this->input->getOption('segment-size');
         }
 
@@ -173,7 +173,7 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
     {
         $batchSize = $this->getSegmentSize();
 
-        if ($this->input->hasOption('batch-size') && this->input->getOption('batch-size')) {
+        if ($this->input->hasOption('batch-size') && $this->input->getOption('batch-size')) {
             $batchSize = (int)$this->input->getOption('batch-size');
         }
 
