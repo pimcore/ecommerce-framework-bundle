@@ -164,5 +164,4 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
     {
         return $this->input->getOption('batch-size') ?: $this->getSegmentSize();
     }
-    
 }
