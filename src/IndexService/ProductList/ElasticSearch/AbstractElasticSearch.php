@@ -872,6 +872,11 @@ abstract class AbstractElasticSearch implements ProductListInterface
         }
     }
 
+    protected function groupByValuesSpecificFilterExcludes(string $fieldname, array $config): array
+    {
+        return [];
+    }
+
     /**
      * loads all prepared group by values
      *   1 - get general filter (= filter of fields don't need to be considered in group by values or where fieldnameShouldBeExcluded set to false)
@@ -925,11 +930,13 @@ abstract class AbstractElasticSearch implements ProductListInterface
             //exclude all attributes that are already filtered
             $shortFieldname = $this->getTenantConfig()->getReverseMappedFieldName($fieldname);
 
+            $specificFilteredFieldnames = [...$filteredFieldnames, ...$this->groupByValuesSpecificFilterExcludes($fieldname, $config)];
+
             $specificFilters = [];
             //user specific filters
-            $specificFilters = $this->buildFilterConditions($specificFilters, array_merge($filteredFieldnames, [$shortFieldname => $shortFieldname]));
+            $specificFilters = $this->buildFilterConditions($specificFilters, array_merge($specificFilteredFieldnames, [$shortFieldname => $shortFieldname]));
             //relation conditions
-            $specificFilters = $this->buildRelationConditions($specificFilters, array_merge($filteredFieldnames, [$shortFieldname => $shortFieldname]));
+            $specificFilters = $this->buildRelationConditions($specificFilters, array_merge($specificFilteredFieldnames, [$shortFieldname => $shortFieldname]));
 
             if (!empty($config['aggregationConfig'])) {
                 $aggregation = $config['aggregationConfig'];
