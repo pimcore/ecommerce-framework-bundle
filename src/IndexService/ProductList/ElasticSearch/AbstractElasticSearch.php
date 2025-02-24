@@ -930,13 +930,22 @@ abstract class AbstractElasticSearch implements ProductListInterface
             //exclude all attributes that are already filtered
             $shortFieldname = $this->getTenantConfig()->getReverseMappedFieldName($fieldname);
 
-            $specificFilteredFieldnames = [...$filteredFieldnames, ...$this->groupByValuesSpecificFilterExcludes($fieldname, $config)];
+            $specificFilteredFieldnames = [
+                ...$filteredFieldnames,
+                ...$this->groupByValuesSpecificFilterExcludes($fieldname, $config)
+            ];
 
             $specificFilters = [];
             //user specific filters
-            $specificFilters = $this->buildFilterConditions($specificFilters, array_merge($specificFilteredFieldnames, [$shortFieldname => $shortFieldname]));
+            $specificFilters = $this->buildFilterConditions(
+                $specificFilters,
+                array_merge($specificFilteredFieldnames, [$shortFieldname => $shortFieldname])
+            );
             //relation conditions
-            $specificFilters = $this->buildRelationConditions($specificFilters, array_merge($specificFilteredFieldnames, [$shortFieldname => $shortFieldname]));
+            $specificFilters = $this->buildRelationConditions(
+                $specificFilters,
+                array_merge($specificFilteredFieldnames, [$shortFieldname => $shortFieldname])
+            );
 
             if (!empty($config['aggregationConfig'])) {
                 $aggregation = $config['aggregationConfig'];
