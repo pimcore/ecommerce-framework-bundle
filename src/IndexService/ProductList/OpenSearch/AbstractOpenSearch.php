@@ -929,7 +929,7 @@ abstract class AbstractOpenSearch implements ProductListInterface
 
             $specificFilteredFieldnames = [
                 ...$filteredFieldnames,
-                ...$this->groupByValuesSpecificFilterExcludes($fieldname, $config)
+                ...$this->groupByValuesSpecificFilterExcludes($fieldname, $config),
             ];
 
             $specificFilters = [];

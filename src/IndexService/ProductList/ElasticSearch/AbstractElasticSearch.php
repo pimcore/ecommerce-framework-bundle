@@ -932,7 +932,7 @@ abstract class AbstractElasticSearch implements ProductListInterface
 
             $specificFilteredFieldnames = [
                 ...$filteredFieldnames,
-                ...$this->groupByValuesSpecificFilterExcludes($fieldname, $config)
+                ...$this->groupByValuesSpecificFilterExcludes($fieldname, $config),
             ];
 
             $specificFilters = [];
