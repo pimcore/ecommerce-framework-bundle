@@ -109,7 +109,7 @@ class DefaultFindologic implements ProductListInterface
         return $this->products;
     }
 
-    public function addCondition(array|string $condition, string $fieldname = ''): void
+    public function addCondition(array|string|bool $condition, string $fieldname = ''): void
     {
         $this->products = null;
         $this->conditions[$fieldname][] = $condition;

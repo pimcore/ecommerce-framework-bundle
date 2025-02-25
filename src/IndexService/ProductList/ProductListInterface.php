@@ -68,7 +68,7 @@ interface ProductListInterface extends PaginateListingInterface
      * and exclude functionality in group by results
      *
      */
-    public function addCondition(array|string $condition, string $fieldname = ''): void;
+    public function addCondition(array|string|bool $condition, string $fieldname = ''): void;
 
     /**
      * Adds query condition to product list for fulltext search
