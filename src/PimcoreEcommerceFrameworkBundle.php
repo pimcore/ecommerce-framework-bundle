@@ -18,6 +18,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle;
 
 use Pimcore\Bundle\ApplicationLoggerBundle\PimcoreApplicationLoggerBundle;
 use Pimcore\Bundle\EcommerceFrameworkBundle\DependencyInjection\Compiler\RegisterConfiguredServicesPass;
+use Pimcore\Bundle\EcommerceFrameworkBundle\DependencyInjection\PimcoreEcommerceFrameworkExtension;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Tools\Installer;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Type\Decimal;
 use Pimcore\Bundle\GoogleMarketingBundle\PimcoreGoogleMarketingBundle;
@@ -29,11 +30,17 @@ use Pimcore\HttpKernel\Bundle\DependentBundleInterface;
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
 use Pimcore\Version;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\WebpackEncoreBundle\WebpackEncoreBundle;
 
 class PimcoreEcommerceFrameworkBundle extends AbstractPimcoreBundle implements DependentBundleInterface, PimcoreBundleAdminClassicInterface
 {
     use BundleAdminClassicTrait;
+
+    public function getContainerExtension(): ExtensionInterface
+    {
+        return new PimcoreEcommerceFrameworkExtension();
+    }
 
     public function getVersion(): string
     {
