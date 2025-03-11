@@ -27,15 +27,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class ConfigController
  *
- * @Route("/pricing")
- *
  * @internal
  */
+#[Route('/pricing')]
 class PricingController extends UserAwareController implements KernelControllerEventInterface
 {
     use JsonHelperTrait;
@@ -46,9 +45,7 @@ class PricingController extends UserAwareController implements KernelControllerE
         $this->checkPermission('bundle_ecommerce_pricing_rules');
     }
 
-    /**
-     * @Route("/list", name="pimcore_ecommerceframework_pricing_list", methods={"GET"})
-     */
+    #[Route('/list', name: 'pimcore_ecommerceframework_pricing_list', methods: ['GET'])]
     public function listAction(): JsonResponse
     {
         $rules = new Rule\Listing();
@@ -81,12 +78,10 @@ class PricingController extends UserAwareController implements KernelControllerE
     }
 
     /**
-     * get priceing rule details as json
-     *
-     * @Route("/get", name="pimcore_ecommerceframework_pricing_get", methods={"GET"})
-     *
+     * get pricing rule details as json
      * @throws NotFoundHttpException
      */
+    #[Route('/get', name: 'pimcore_ecommerceframework_pricing_get', methods: ['GET'])]
     public function getAction(Request $request): JsonResponse
     {
         $rule = Rule::getById((int) $request->get('id'));
@@ -125,11 +120,8 @@ class PricingController extends UserAwareController implements KernelControllerE
 
     /**
      * add new rule
-     *
-     * @Route("/add", name="pimcore_ecommerceframework_pricing_add", methods={"POST"})
-     *
-     *
      */
+    #[Route('/add', name: 'pimcore_ecommerceframework_pricing_add', methods: ['POST'])]
     public function addAction(Request $request): JsonResponse
     {
         // send json respone
@@ -156,11 +148,8 @@ class PricingController extends UserAwareController implements KernelControllerE
 
     /**
      * delete exiting rule
-     *
-     * @Route("/delete", name="pimcore_ecommerceframework_pricing_delete", methods={"DELETE"})
-     *
-     *
      */
+    #[Route('/delete', name: 'pimcore_ecommerceframework_pricing_delete', methods: ['DELETE'])]
     public function deleteAction(Request $request): JsonResponse
     {
         // send json respone
@@ -183,11 +172,10 @@ class PricingController extends UserAwareController implements KernelControllerE
     }
 
     /**
-     * @Route("/copy", name="pimcore_ecommerceframework_pricing_copy", methods={"POST"})
-     *
      * @return JsonResponse
      * copy existing rule
      */
+    #[Route('/copy', name: 'pimcore_ecommerceframework_pricing_copy', methods: ['POST'])]
     public function copyAction(Request $request): JsonResponse
     {
         // send json respone
@@ -234,11 +222,10 @@ class PricingController extends UserAwareController implements KernelControllerE
     }
 
     /**
-     * @Route("/rename", name="pimcore_ecommerceframework_pricing_rename", methods={"PUT"})
-     *
      * @return JsonResponse
      * rename exiting rule
      */
+    #[Route('/rename', name: 'pimcore_ecommerceframework_pricing_rename', methods: ['PUT'])]
     public function renameAction(Request $request): JsonResponse
     {
         // send json respone
@@ -280,11 +267,8 @@ class PricingController extends UserAwareController implements KernelControllerE
 
     /**
      * save rule config
-     *
-     * @Route("/save", name="pimcore_ecommerceframework_pricing_save", methods={"PUT"})
-     *
-     *
      */
+    #[Route('/save', name: 'pimcore_ecommerceframework_pricing_save', methods: ['PUT'])]
     public function saveAction(Request $request): JsonResponse
     {
         // send json respone
@@ -370,11 +354,7 @@ class PricingController extends UserAwareController implements KernelControllerE
         return $this->jsonResponse($return);
     }
 
-    /**
-     * @Route("/save-order", name="pimcore_ecommerceframework_pricing_save-order", methods={"PUT"})
-     *
-     *
-     */
+    #[Route('/save-order', name: 'pimcore_ecommerceframework_pricing_save-order', methods: ['PUT'])]
     public function saveOrderAction(Request $request): JsonResponse
     {
         // send json respone
@@ -397,10 +377,7 @@ class PricingController extends UserAwareController implements KernelControllerE
         return $this->jsonResponse($return);
     }
 
-    /**
-     * @Route("/get-config", name="pimcore_ecommerceframework_pricing_get-config", methods={"GET"})
-     *
-     */
+    #[Route('/get-config', name: 'pimcore_ecommerceframework_pricing_get-config', methods: ['GET'])]
     public function getConfigAction(): JsonResponse
     {
         $pricingManager = Factory::getInstance()->getPricingManager();

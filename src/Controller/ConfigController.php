@@ -20,16 +20,14 @@ use Pimcore\Controller\KernelControllerEventInterface;
 use Pimcore\Controller\UserAwareController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class ConfigController
- *
- * @Route("/config")
- *
  * @internal
  */
+#[Route('/config')]
 class ConfigController extends UserAwareController implements KernelControllerEventInterface
 {
     /**
@@ -46,10 +44,7 @@ class ConfigController extends UserAwareController implements KernelControllerEv
         $this->checkPermission('bundle_ecommerce_back-office_order');
     }
 
-    /**
-     * @Route("/js-config", name="pimcore_ecommerceframework_config_jsconfig", methods={"GET"})
-     *
-     */
+    #[Route('/js-config', name: 'pimcore_ecommerceframework_config_jsconfig', methods: ['GET'])]
     public function jsConfigAction(): Response
     {
         $config = $this->getParameter('pimcore_ecommerce.pimcore.config');

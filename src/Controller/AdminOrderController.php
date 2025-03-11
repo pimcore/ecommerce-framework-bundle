@@ -44,7 +44,7 @@ use Pimcore\Model\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -52,10 +52,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Class AdminOrderController
  *
  * @internal
- *
- * @Route("/admin-order")
- *
  */
+#[Route('/admin-order')]
 class AdminOrderController extends UserAwareController implements KernelControllerEventInterface
 {
     protected OrderManagerInterface $orderManager;
@@ -88,11 +86,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
         $this->paymentManager = Factory::getInstance()->getPaymentManager();
     }
 
-    /**
-     * @Route("/list", name="pimcore_ecommerce_backend_admin-order_list", methods={"GET"})
-     *
-     *
-     */
+    #[Route('/list', name: 'pimcore_ecommerce_backend_admin-order_list', methods: ['GET'])]
     public function listAction(Request $request, IntlFormatter $formatter, PaginatorInterface $paginator): Response
     {
         // create new order list
@@ -191,11 +185,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
         ]);
     }
 
-    /**
-     * @Route("/detail", name="pimcore_ecommerce_backend_admin-order_detail", methods={"GET"})
-     *
-     *
-     */
+    #[Route('/detail', name: 'pimcore_ecommerce_backend_admin-order_detail', methods: ['GET'])]
     public function detailAction(
         Request $request,
         ClientInterface $client,
@@ -372,11 +362,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
         ]);
     }
 
-    /**
-     * @Route("/item-cancel", name="pimcore_ecommerce_backend_admin-order_item-cancel", methods={"GET", "POST"})
-     *
-     *
-     */
+    #[Route('/item-cancel', name: 'pimcore_ecommerce_backend_admin-order_item-cancel', methods: ['GET', 'POST'])]
     public function itemCancelAction(Request $request, CsrfProtectionHandler $csrfProtection): Response
     {
         // init
@@ -409,10 +395,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
         ]);
     }
 
-    /**
-     * @Route("/item-edit", name="pimcore_ecommerce_backend_admin-order_item-edit", methods={"GET", "POST"})
-     *
-     */
+    #[Route('/item-edit', name: 'pimcore_ecommerce_backend_admin-order_item-edit', methods: ['GET', 'POST'])]
     public function itemEditAction(Request $request, CsrfProtectionHandler $csrfProtectionHandler): Response
     {
         // init
@@ -444,10 +427,7 @@ class AdminOrderController extends UserAwareController implements KernelControll
         ]);
     }
 
-    /**
-     * @Route("/item-complaint", name="pimcore_ecommerce_backend_admin-order_item-complaint", methods={"GET", "POST"})
-     *
-     */
+    #[Route('/item-complaint', name: 'pimcore_ecommerce_backend_admin-order_item-complaint', methods: ['GET', 'POST'])]
     public function itemComplaintAction(Request $request, CsrfProtectionHandler $csrfProtectionHandler): Response
     {
         // init
