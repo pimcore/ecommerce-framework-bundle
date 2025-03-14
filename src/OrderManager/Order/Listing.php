@@ -131,6 +131,13 @@ class Listing extends AbstractOrderList implements OrderListInterface
             }
         }
 
+        $queryBuilder->leftJoin(
+            'orderItem',
+            'object_collection_PricingRule_' . OnlineShopOrderItem::classId(),
+            $alias,
+            'pricingRule.id = orderItem.id AND pricingRule.fieldname = "pricingRules"'
+        );
+
         return $this;
     }
 
