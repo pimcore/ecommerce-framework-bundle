@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order;
 
 use Doctrine\DBAL\Query\QueryBuilder as DoctrineQueryBuilder;
+use Doctrine\DBAL\Query\QueryException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\AbstractOrderList;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderListFilterInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderListInterface;
@@ -106,18 +107,29 @@ class Listing extends AbstractOrderList implements OrderListInterface
         return $this;
     }
 
+
     public function joinPricingRule(): static
     {
         $queryBuilder = $this->getQueryBuilder();
-        $joins = $queryBuilder->getQueryPart('from');
+        $alias = 'pricingRule';
 
-        if (!array_key_exists('pricingRule', $joins)) {
-            $queryBuilder->leftJoin(
+        try {
+            $clonedQueryBuilder = clone $queryBuilder;
+            $clonedQueryBuilder->leftJoin(
                 'orderItem',
                 'object_collection_PricingRule_' . OnlineShopOrderItem::classId(),
-                'pricingRule',
+                $alias,
                 'pricingRule.id = orderItem.id AND pricingRule.fieldname = "pricingRules"'
             );
+            $clonedQueryBuilder->getSQL();
+        } catch (QueryException $exception){
+            if (str_contains(
+                    $exception->getMessage(),
+                    'The given alias \''.$alias.'\' is not unique in FROM and JOIN clause table',
+                )
+            ){
+                return $this;
+            }
         }
 
         return $this;
@@ -127,16 +139,12 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('OrderPriceModifications', $joins)) {
-            $queryBuilder->leftJoin(
-                '`order`',
-                'object_collection_OrderPriceModifications_' . OnlineShopOrder::classId(),
-                'OrderPriceModifications',
-                'OrderPriceModifications.id = order.oo_id AND OrderPriceModifications.fieldname = "priceModifications"'
-            );
-        }
+        $queryBuilder->leftJoin(
+            '`order`',
+            'object_collection_OrderPriceModifications_' . OnlineShopOrder::classId(),
+            'OrderPriceModifications',
+            'OrderPriceModifications.id = order.oo_id AND OrderPriceModifications.fieldname = "priceModifications"'
+        );
 
         return $this;
     }
@@ -145,19 +153,15 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
+        // create sub select
+        $paymentQueryBuilder = Db::getConnection()->createQueryBuilder();
 
-        if (!array_key_exists('paymentInfo', $joins)) {
-            // create sub select
-            $paymentQueryBuilder = Db::getConnection()->createQueryBuilder();
+        $paymentQueryBuilder->select('GROUP_CONCAT(",", _paymentInfo.paymentReference, "," SEPARATOR ",") AS paymentReference', '_order.id AS id')
+            ->from('object_collection_PaymentInfo_' . OnlineShopOrder::classId(), '_paymentInfo')
+            ->join('_paymentInfo', 'object_' . OnlineShopOrder::classId(), '_order', '_order.oo_id = _paymentInfo.id');
 
-            $paymentQueryBuilder->select('GROUP_CONCAT(",", _paymentInfo.paymentReference, "," SEPARATOR ",") AS paymentReference', '_order.id AS id')
-                ->from('object_collection_PaymentInfo_' . OnlineShopOrder::classId(), '_paymentInfo')
-                ->join('_paymentInfo', 'object_' . OnlineShopOrder::classId(), '_order', '_order.oo_id = _paymentInfo.id');
-
-            // join
-            $queryBuilder->leftJoin('`order`', (string) $paymentQueryBuilder, 'paymentInfo', 'paymentInfo.id = `order`.oo_id');
-        }
+        // join
+        $queryBuilder->leftJoin('`order`', (string) $paymentQueryBuilder, 'paymentInfo', 'paymentInfo.id = `order`.oo_id');
 
         return $this;
     }
@@ -166,12 +170,8 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('orderItemObjects', $joins)) {
-            $queryBuilder->join('orderItem', 'objects', 'orderItemObjects',
-                'orderItemObjects.id = orderItem.product__id');
-        }
+        $queryBuilder->join('orderItem', 'objects', 'orderItemObjects',
+            'orderItemObjects.id = orderItem.product__id');
 
         return $this;
     }
@@ -180,16 +180,12 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('product', $joins)) {
-            $queryBuilder->join(
-                'orderItem',
-                'object_query_' . $classId,
-                'product',
-                'product.oo_id = orderItem.product__id'
-            );
-        }
+        $queryBuilder->join(
+            'orderItem',
+            'object_query_' . $classId,
+            'product',
+            'product.oo_id = orderItem.product__id'
+        );
 
         return $this;
     }
@@ -204,13 +200,9 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('customer', $joins)) {
-            $queryBuilder->join('`order`', 'object_' . $classId, 'customer',
-                'customer.id = order.customer__id'
-            );
-        }
+        $queryBuilder->join('`order`', 'object_' . $classId, 'customer',
+            'customer.id = order.customer__id'
+        );
 
         return $this;
     }
