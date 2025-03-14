@@ -107,7 +107,6 @@ class Listing extends AbstractOrderList implements OrderListInterface
         return $this;
     }
 
-
     public function joinPricingRule(): static
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -122,12 +121,12 @@ class Listing extends AbstractOrderList implements OrderListInterface
                 'pricingRule.id = orderItem.id AND pricingRule.fieldname = "pricingRules"'
             );
             $clonedQueryBuilder->getSQL();
-        } catch (QueryException $exception){
+        } catch (QueryException $exception) {
             if (str_contains(
-                    $exception->getMessage(),
-                    'The given alias \''.$alias.'\' is not unique in FROM and JOIN clause table',
-                )
-            ){
+                $exception->getMessage(),
+                'The given alias \''.$alias.'\' is not unique in FROM and JOIN clause table',
+            )
+            ) {
                 return $this;
             }
         }
