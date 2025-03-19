@@ -208,9 +208,9 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $alias = '';
+        $alias = 'customer';
         if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
-            $queryBuilder->join('`order`', 'object_' . $classId, 'customer',
+            $queryBuilder->join('`order`', 'object_' . $classId, $alias,
                 'customer.id = order.customer__id'
             );
         }
