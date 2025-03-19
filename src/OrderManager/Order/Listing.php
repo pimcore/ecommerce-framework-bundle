@@ -16,14 +16,15 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Query\QueryBuilder as DoctrineQueryBuilder;
-use Doctrine\DBAL\Query\QueryException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\AbstractOrderList;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderListFilterInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderListInterface;
 use Pimcore\Db;
 use Pimcore\Model\DataObject\OnlineShopOrder;
 use Pimcore\Model\DataObject\OnlineShopOrderItem;
+use ReflectionClass;
 
 class Listing extends AbstractOrderList implements OrderListInterface
 {
@@ -107,36 +108,25 @@ class Listing extends AbstractOrderList implements OrderListInterface
         return $this;
     }
 
+    private function aliasExistsInFrom(QueryBuilder $queryBuilder, string $alias): bool
+    {
+        $reflector = new ReflectionClass($queryBuilder);
+        $from = $reflector->getProperty('from')->getValue($queryBuilder);
+        return array_key_exists($alias, $from);
+    }
+
     public function joinPricingRule(): static
     {
         $queryBuilder = $this->getQueryBuilder();
         $alias = 'pricingRule';
-
-        try {
-            $clonedQueryBuilder = clone $queryBuilder;
-            $clonedQueryBuilder->leftJoin(
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
+            $queryBuilder->leftJoin(
                 'orderItem',
                 'object_collection_PricingRule_' . OnlineShopOrderItem::classId(),
                 $alias,
                 'pricingRule.id = orderItem.id AND pricingRule.fieldname = "pricingRules"'
             );
-            $clonedQueryBuilder->getSQL();
-        } catch (QueryException $exception) {
-            if (str_contains(
-                $exception->getMessage(),
-                'The given alias \''.$alias.'\' is not unique in FROM and JOIN clause table',
-            )
-            ) {
-                return $this;
-            }
         }
-
-        $queryBuilder->leftJoin(
-            'orderItem',
-            'object_collection_PricingRule_' . OnlineShopOrderItem::classId(),
-            $alias,
-            'pricingRule.id = orderItem.id AND pricingRule.fieldname = "pricingRules"'
-        );
 
         return $this;
     }
@@ -145,12 +135,15 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $queryBuilder->leftJoin(
-            '`order`',
-            'object_collection_OrderPriceModifications_' . OnlineShopOrder::classId(),
-            'OrderPriceModifications',
-            'OrderPriceModifications.id = order.oo_id AND OrderPriceModifications.fieldname = "priceModifications"'
-        );
+        $alias = 'OrderPriceModifications';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
+            $queryBuilder->leftJoin(
+                '`order`',
+                'object_collection_OrderPriceModifications_' . OnlineShopOrder::classId(),
+                $alias,
+                'OrderPriceModifications.id = order.oo_id AND OrderPriceModifications.fieldname = "priceModifications"'
+            );
+        }
 
         return $this;
     }
@@ -162,12 +155,15 @@ class Listing extends AbstractOrderList implements OrderListInterface
         // create sub select
         $paymentQueryBuilder = Db::getConnection()->createQueryBuilder();
 
-        $paymentQueryBuilder->select('GROUP_CONCAT(",", _paymentInfo.paymentReference, "," SEPARATOR ",") AS paymentReference', '_order.id AS id')
-            ->from('object_collection_PaymentInfo_' . OnlineShopOrder::classId(), '_paymentInfo')
-            ->join('_paymentInfo', 'object_' . OnlineShopOrder::classId(), '_order', '_order.oo_id = _paymentInfo.id');
+        $alias = 'paymentInfo';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
+            $paymentQueryBuilder->select('GROUP_CONCAT(",", _paymentInfo.paymentReference, "," SEPARATOR ",") AS paymentReference', '_order.id AS id')
+                ->from('object_collection_PaymentInfo_' . OnlineShopOrder::classId(), '_paymentInfo')
+                ->join('_paymentInfo', 'object_' . OnlineShopOrder::classId(), '_order', '_order.oo_id = _paymentInfo.id');
 
-        // join
-        $queryBuilder->leftJoin('`order`', (string) $paymentQueryBuilder, 'paymentInfo', 'paymentInfo.id = `order`.oo_id');
+            // join
+            $queryBuilder->leftJoin('`order`', (string)$paymentQueryBuilder, $alias, 'paymentInfo.id = `order`.oo_id');
+        }
 
         return $this;
     }
@@ -176,8 +172,11 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $queryBuilder->join('orderItem', 'objects', 'orderItemObjects',
-            'orderItemObjects.id = orderItem.product__id');
+        $alias = 'orderItemObjects';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
+            $queryBuilder->join('orderItem', 'objects', $alias,
+                'orderItemObjects.id = orderItem.product__id');
+        }
 
         return $this;
     }
@@ -186,12 +185,15 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $queryBuilder->join(
-            'orderItem',
-            'object_query_' . $classId,
-            'product',
-            'product.oo_id = orderItem.product__id'
-        );
+        $alias = 'product';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
+            $queryBuilder->join(
+                'orderItem',
+                'object_query_' . $classId,
+                $alias,
+                'product.oo_id = orderItem.product__id'
+            );
+        }
 
         return $this;
     }
@@ -206,9 +208,12 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $queryBuilder->join('`order`', 'object_' . $classId, 'customer',
-            'customer.id = order.customer__id'
-        );
+        $alias = '';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
+            $queryBuilder->join('`order`', 'object_' . $classId, 'customer',
+                'customer.id = order.customer__id'
+            );
+        }
 
         return $this;
     }
