@@ -112,6 +112,7 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $reflector = new ReflectionClass($queryBuilder);
         $from = $reflector->getProperty('from')->getValue($queryBuilder);
+
         return array_key_exists($alias, $from);
     }
 
