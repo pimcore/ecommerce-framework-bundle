@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order;
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Query\QueryBuilder as DoctrineQueryBuilder;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\AbstractOrderList;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderListFilterInterface;
@@ -108,7 +107,7 @@ class Listing extends AbstractOrderList implements OrderListInterface
         return $this;
     }
 
-    private function aliasExistsInFrom(QueryBuilder $queryBuilder, string $alias): bool
+    private function aliasExistsInFrom(DoctrineQueryBuilder $queryBuilder, string $alias): bool
     {
         $reflector = new ReflectionClass($queryBuilder);
         $from = $reflector->getProperty('from')->getValue($queryBuilder);
