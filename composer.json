@@ -16,7 +16,7 @@
   "prefer-stable": true,
   "require": {
     "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-    "pimcore/pimcore": "dev-check-settings-store-aware-doctrine-metadata-initialized",
+    "pimcore/pimcore": "dev-check-settings-store-aware-doctrine-metadata-initialized as 11.5.0",
     "pimcore/personalization-bundle": "^1.0",
     "pimcore/google-marketing-bundle": "^1.0",
     "knplabs/knp-paginator-bundle": "^6.0.0",
