@@ -504,7 +504,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
             'actions' => [
                 [
                     'remove' => [
-                        'index' => '*',
+                        'index' => $this->indexName . '-*',
                         'alias' => $this->indexName,
                     ],
                 ],
@@ -529,7 +529,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker
     protected function cleanupUnusedEsIndices(): void
     {
         $osClient = $this->getOpenSearchClient();
-        $stats = $osClient->indices()->stats();
+        $stats = $osClient->indices()->stats(['index' => $this->indexName . '-*']);
         foreach ($stats['indices'] as $key => $data) {
             preg_match('/'.$this->indexName.'-(\d+)/', $key, $matches);
             if (is_array($matches) && count($matches) > 1) {
