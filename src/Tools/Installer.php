@@ -373,7 +373,6 @@ class Installer extends SettingsStoreAwareInstaller
 
     public function getLastMigrationVersionClassName(): ?string
     {
-
         return Version20210430124911::class;
     }
 }
