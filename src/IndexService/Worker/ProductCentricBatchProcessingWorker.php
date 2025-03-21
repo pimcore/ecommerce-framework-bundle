@@ -405,7 +405,9 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
             try {
                 $fn();
 
-                return $this->db->commit();
+                $this->db->commit();
+
+                return true;
             } catch (\Exception $e) {
                 $this->db->rollBack();
                 Logger::warning("Executing transational query, no. {$i} of {$maxTries} tries failed. " . $e->getMessage());
