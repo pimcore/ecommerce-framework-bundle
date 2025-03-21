@@ -50,7 +50,7 @@ class Dao extends \Pimcore\Model\Dao\AbstractDao
      */
     public function getById(int $id): void
     {
-        $classRaw = $this->db->fetchAssociative('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . $this->db->quote($id));
+        $classRaw = $this->db->fetchAssociative('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . $id);
         if (empty($classRaw['id'])) {
             throw new NotFoundException('Cart ' . $id . ' not found.');
         }
