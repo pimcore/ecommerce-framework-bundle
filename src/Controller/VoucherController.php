@@ -26,17 +26,16 @@ use Pimcore\Security\User\TokenStorageUserResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class VoucherController
  *
- * @Route("/voucher")
- *
  * @internal
  */
+#[Route('/voucher')]
 class VoucherController extends UserAwareController implements KernelControllerEventInterface
 {
     protected TokenStorageUserResolver $tokenResolver;
@@ -71,8 +70,8 @@ class VoucherController extends UserAwareController implements KernelControllerE
     /**
      * Loads and shows voucherservice backend tab
      *
-     * @Route("/voucher-code-tab", name="pimcore_ecommerce_backend_voucher_voucher-code-tab", methods={"GET"})
      */
+    #[Route('/voucher-code-tab', name: 'pimcore_ecommerce_backend_voucher_voucher-code-tab', methods: ['GET'])]
     public function voucherCodeTabAction(Request $request): Response
     {
         $onlineShopVoucherSeries = OnlineShopVoucherSeries::getById((int) $request->get('id'));
@@ -103,8 +102,8 @@ class VoucherController extends UserAwareController implements KernelControllerE
     /**
      * Export tokens to file. The action should implement all export formats defined in ExportableTokenManagerInterface.
      *
-     * @Route("/export-tokens", name="pimcore_ecommerce_backend_voucher_export-tokens", methods={"GET"})
      */
+    #[Route('/export-tokens', name: 'pimcore_ecommerce_backend_voucher_export-tokens', methods: ['GET'])]
     public function exportTokensAction(Request $request): Response
     {
         $onlineShopVoucherSeries = OnlineShopVoucherSeries::getById((int) $request->get('id'));
@@ -157,8 +156,8 @@ class VoucherController extends UserAwareController implements KernelControllerE
     /**
      * Generates new Tokens or Applies single token settings.
      *
-     * @Route("/generate", name="pimcore_ecommerce_backend_voucher_generate", methods={"GET"})
      */
+    #[Route('/generate', name: 'pimcore_ecommerce_backend_voucher_generate', methods: ['GET'])]
     public function generateAction(Request $request): Response
     {
         $onlineShopVoucherSeries = OnlineShopVoucherSeries::getById((int) $request->get('id'));
@@ -189,9 +188,8 @@ class VoucherController extends UserAwareController implements KernelControllerE
 
     /**
      * Removes tokens due to given filter parameters.
-     *
-     * @Route("/cleanup", name="pimcore_ecommerce_backend_voucher_cleanup", methods={"POST"})
      */
+    #[Route('/cleanup', name: 'pimcore_ecommerce_backend_voucher_cleanup', methods: ['POST'])]
     public function cleanupAction(Request $request): Response
     {
         $onlineShopVoucherSeries = OnlineShopVoucherSeries::getById((int) $request->get('id'));
@@ -224,10 +222,8 @@ class VoucherController extends UserAwareController implements KernelControllerE
 
     /**
      * Removes token reservations due to given duration.
-     *
-     * @Route("/cleanup-reservations", name="pimcore_ecommerce_backend_voucher_cleanup-reservations", methods={"POST"})
-     *
      */
+    #[Route('/cleanup-reservations', name: 'pimcore_ecommerce_backend_voucher_cleanup-reservations', methods: ['POST'])]
     public function cleanupReservationsAction(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $duration = $request->get('duration');

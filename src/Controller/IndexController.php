@@ -26,17 +26,16 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class IndexController
  *
- * @Route("/index")
- *
  * @internal
  */
+#[Route('/index')]
 class IndexController extends UserAwareController implements KernelControllerEventInterface
 {
     use JsonHelperTrait;
@@ -46,10 +45,7 @@ class IndexController extends UserAwareController implements KernelControllerEve
         $this->checkPermission('bundle_ecommerce_back-office_order');
     }
 
-    /**
-     * @Route("/get-filter-groups", name="pimcore_ecommerceframework_index_getfiltergroups", methods={"GET"})
-     *
-     */
+    #[Route('/get-filter-groups', name: 'pimcore_ecommerceframework_index_getfiltergroups', methods: ['GET'])]
     public function getFilterGroupsAction(): JsonResponse
     {
         $indexService = Factory::getInstance()->getIndexService();
@@ -73,9 +69,11 @@ class IndexController extends UserAwareController implements KernelControllerEve
         return $this->jsonResponse(['data' => array_values($data)]);
     }
 
-    /**
-     * @Route("/get-values-for-filter-field", name="pimcore_ecommerceframework_index_getvaluesforfilterfield", methods={"GET"})
-     */
+    #[Route(
+        '/get-values-for-filter-field',
+        name: 'pimcore_ecommerceframework_index_getvaluesforfilterfield',
+        methods: ['GET']
+    )]
     public function getValuesForFilterFieldAction(Request $request, EventDispatcherInterface $eventDispatcher): JsonResponse
     {
         try {
@@ -119,11 +117,7 @@ class IndexController extends UserAwareController implements KernelControllerEve
         }
     }
 
-    /**
-     * @Route("/get-fields", name="pimcore_ecommerceframework_index_getfields", methods={"GET"})
-     *
-     *
-     */
+    #[Route('/get-fields', name: 'pimcore_ecommerceframework_index_getfields', methods: ['GET'])]
     public function getFieldsAction(Request $request, EventDispatcherInterface $eventDispatcher, TranslatorInterface $translator): JsonResponse
     {
         $indexService = Factory::getInstance()->getIndexService();
@@ -173,11 +167,7 @@ class IndexController extends UserAwareController implements KernelControllerEve
         return $this->jsonResponse(['data' => array_values($data)]);
     }
 
-    /**
-     * @Route("/get-all-tenants", name="pimcore_ecommerceframework_index_getalltenants", methods={"GET"})
-     *
-     *
-     */
+    #[Route('/get-all-tenants', name: 'pimcore_ecommerceframework_index_getalltenants', methods: ['GET'])]
     public function getAllTenantsAction(TranslatorInterface $translator): JsonResponse
     {
         $tenants = Factory::getInstance()->getAllTenants();
