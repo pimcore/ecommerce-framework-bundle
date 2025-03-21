@@ -69,7 +69,11 @@ class IndexController extends UserAwareController implements KernelControllerEve
         return $this->jsonResponse(['data' => array_values($data)]);
     }
 
-    #[Route('/get-values-for-filter-field', name: 'pimcore_ecommerceframework_index_getvaluesforfilterfield', methods: ['GET'])]
+    #[Route(
+        '/get-values-for-filter-field',
+        name: 'pimcore_ecommerceframework_index_getvaluesforfilterfield',
+        methods: ['GET']
+    )]
     public function getValuesForFilterFieldAction(Request $request, EventDispatcherInterface $eventDispatcher): JsonResponse
     {
         try {
