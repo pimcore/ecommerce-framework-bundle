@@ -102,7 +102,7 @@ class Listing extends AbstractOrderList implements OrderListInterface
 
     public function setOrder(string $order): static
     {
-        $this->getQueryBuilder()->add('orderBy', $order, false);
+        $this->getQueryBuilder()->addOrderBy($order, null);
 
         return $this;
     }

@@ -54,7 +54,7 @@ class Dao extends AbstractDao
      */
     public function getById(int $id): void
     {
-        $classRaw = $this->db->fetchAssociative('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . $this->db->quote($id));
+        $classRaw = $this->db->fetchAssociative('SELECT * FROM ' . self::TABLE_NAME . ' WHERE id=' . $id);
         if (empty($classRaw)) {
             throw new NotFoundException('pricing rule ' . $id . ' not found.');
         }

@@ -32,7 +32,7 @@ class Product implements OrderListFilterInterface
     {
         $db = \Pimcore\Db::get();
         $ids = [
-            $db->quote($this->product->getId()),
+            $db->quote((string)$this->product->getId()),
         ];
 
         $variants = $this->product->getChildren([
@@ -41,7 +41,7 @@ class Product implements OrderListFilterInterface
 
         /** @var \Pimcore\Model\DataObject\Concrete $variant */
         foreach ($variants as $variant) {
-            $ids[] = $db->quote($variant->getId());
+            $ids[] = $db->quote((string)$variant->getId());
         }
 
         $orderList->addCondition('orderItem.product__id IN (' . implode(',', $ids) . ')');
