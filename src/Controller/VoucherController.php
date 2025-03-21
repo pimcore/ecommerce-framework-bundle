@@ -32,6 +32,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class VoucherController
+ *
  * @internal
  */
 #[Route('/voucher')]

@@ -79,6 +79,7 @@ class PricingController extends UserAwareController implements KernelControllerE
 
     /**
      * get pricing rule details as json
+     *
      * @throws NotFoundHttpException
      */
     #[Route('/get', name: 'pimcore_ecommerceframework_pricing_get', methods: ['GET'])]

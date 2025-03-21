@@ -25,6 +25,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class ConfigController
+ *
  * @internal
  */
 #[Route('/config')]
