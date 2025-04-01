@@ -147,19 +147,25 @@ class Installer extends SettingsStoreAwareInstaller
     public function installDependentBundles(): void
     {
         //Install ApplicationLoggerBundle Bundle
-        $appLoggerInstaller = \Pimcore::getContainer()?->get(\Pimcore\Bundle\ApplicationLoggerBundle\Installer::class);
+        $appLoggerInstaller = \Pimcore::getContainer()?->get(
+            \Pimcore\Bundle\ApplicationLoggerBundle\Installer::class
+        );
         if ($appLoggerInstaller && !$appLoggerInstaller->isInstalled()) {
             $appLoggerInstaller->install();
         }
 
         //Install PersonalizationBundle
-        $personalizationInstaller = \Pimcore::getContainer()?->get(\Pimcore\Bundle\PersonalizationBundle\Installer::class);
+        $personalizationInstaller = \Pimcore::getContainer()?->get(
+            \Pimcore\Bundle\PersonalizationBundle\Installer::class
+        );
         if ($personalizationInstaller && !$personalizationInstaller->isInstalled()) {
             $personalizationInstaller->install();
         }
 
         //Install GoogleMarketingBundle
-        $googleMarketingInstaller = \Pimcore::getContainer()?->get(\Pimcore\Bundle\GoogleMarketingBundle\Installer::class);
+        $googleMarketingInstaller = \Pimcore::getContainer()?->get(
+            \Pimcore\Bundle\GoogleMarketingBundle\Installer::class
+        );
         if ($googleMarketingInstaller && !$googleMarketingInstaller->isInstalled()) {
             $googleMarketingInstaller->install();
         }
