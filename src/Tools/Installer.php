@@ -19,7 +19,6 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tools;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Migrations\Version20210430124911;
-use Pimcore\Extension\Bundle\Installer\AbstractInstaller;
 use Pimcore\Extension\Bundle\Installer\Exception\InstallationException;
 use Pimcore\Extension\Bundle\Installer\SettingsStoreAwareInstaller;
 use Pimcore\Model\DataObject\ClassDefinition;
