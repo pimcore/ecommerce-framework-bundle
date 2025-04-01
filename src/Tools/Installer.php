@@ -21,6 +21,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Migrations\Version20210430124911;
 use Pimcore\Extension\Bundle\Installer\AbstractInstaller;
 use Pimcore\Extension\Bundle\Installer\Exception\InstallationException;
+use Pimcore\Extension\Bundle\Installer\SettingsStoreAwareInstaller;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\ClassDefinition\Service;
 use Pimcore\Model\DataObject\Fieldcollection;
@@ -31,7 +32,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 /**
  * @internal
  */
-class Installer extends AbstractInstaller
+class Installer extends SettingsStoreAwareInstaller
 {
     private string $installSourcesPath;
 
@@ -141,7 +142,7 @@ class Installer extends AbstractInstaller
         $this->installSourcesPath = __DIR__ . '/../Resources/install';
         $this->bundle = $bundle;
         $this->db = $connection;
-        parent::__construct();
+        parent::__construct($bundle);
     }
 
     public function installDependentBundles(): void
@@ -172,38 +173,14 @@ class Installer extends AbstractInstaller
         $this->installTables();
         $this->installPermissions();
         $this->installDependentBundles();
+        parent::install();
     }
 
     public function uninstall(): void
     {
         $this->uninstallPermissions();
         $this->uninstallTables();
-    }
-
-    public function isInstalled(): bool
-    {
-        $installed = false;
-
-        try {
-            // check if if first permission is installed
-            $installed = $this->db->fetchOne('SELECT `key` FROM users_permission_definitions WHERE `key` = :key', [
-                'key' => $this->permissionsToInstall[0],
-            ]);
-        } catch (\Exception $e) {
-            // nothing to do
-        }
-
-        return (bool) $installed;
-    }
-
-    public function canBeInstalled(): bool
-    {
-        return !$this->isInstalled();
-    }
-
-    public function canBeUninstalled(): bool
-    {
-        return $this->isInstalled();
+        parent::uninstall();
     }
 
     private function getClassesToInstall(): array
