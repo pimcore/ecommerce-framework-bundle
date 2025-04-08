@@ -20,7 +20,7 @@
     "pimcore/pimcore": "^12.0",
     "nesbot/carbon": "^2.72 || ^3.8.4",
     "pimcore/personalization-bundle": "^2.0",
-    "pimcore/google-marketing-bundle": "^1.0",
+    "pimcore/google-marketing-bundle": "^2.0",
     "knplabs/knp-paginator-bundle": "^6.0.0",
     "knplabs/knp-components": "^5.1.0",
     "symfony/webpack-encore-bundle": "^1.17 || ^2.0",
