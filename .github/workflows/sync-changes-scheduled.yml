@@ -1,0 +1,23 @@
+name: Sync changes scheduled from CE to EE
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '30 21 * * *'
+
+jobs:
+  sync-branches:
+    uses: pimcore/workflows-collection-public/.github/workflows/reusable-sync-changes.yaml@main
+    if: github.repository == 'pimcore/ecommerce-framework-bundle'
+    strategy:
+      fail-fast: false
+      matrix:
+        ref: [{'base': '2.x', 'destination': '2.x'}]
+    with:
+      base_ref: ${{ matrix.ref.base }}
+      ref_name: ${{ matrix.ref.destination }}
+      target_repo: 'ee-ecommerce-framework-bundle'
+      auto_merge: true
+    secrets:
+      SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
+      GIT_NAME: ${{ secrets.GIT_NAME }}
+      GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
