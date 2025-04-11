@@ -24,7 +24,7 @@ class AbstractPriceInfo implements PriceInfoInterface
 {
     private PriceSystemInterface $priceSystem;
 
-    protected int $quantity;
+    protected int|string $quantity;
 
     protected ?CheckoutableInterface $product = null;
 
