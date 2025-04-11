@@ -78,7 +78,8 @@ class SelectCategory extends AbstractFilterType
      */
     public function addCondition(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter, array $params, bool $isPrecondition = false): array
     {
-        $value = $params[$filterDefinition->getField()] ?? null;
+        $field = $this->getField($filterDefinition);
+        $value = $params[$field] ?? null;
         $isReload = $params['is_reload'] ?? null;
 
         if ($value == AbstractFilterType::EMPTY_STRING) {
@@ -90,18 +91,16 @@ class SelectCategory extends AbstractFilterType
             }
         }
 
-        $currentFilter[$filterDefinition->getField()] = $value;
+        $currentFilter[$field] = $value;
 
         if (!empty($value)) {
             $value = '%,' . trim((string)$value) . ',%';
 
             $db = Db::get();
-
-            if ($isPrecondition) {
-                $productList->addCondition($filterDefinition->getField() . ' LIKE ' . $db->quote($value), 'PRECONDITION_' . $filterDefinition->getField());
-            } else {
-                $productList->addCondition($filterDefinition->getField() . ' LIKE ' . $db->quote($value), $filterDefinition->getField());
-            }
+            $productList->addCondition(
+                $field . ' LIKE ' . $db->quote($value),
+                $this->getConditionField($field, $isPrecondition)
+            );
         }
 
         return $currentFilter;

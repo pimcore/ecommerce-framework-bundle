@@ -115,11 +115,7 @@ class MultiSelectFromMultiSelect extends SelectFromMultiSelect
             }
             $quotedValues = '('.$quotedValues.')';
 
-            if ($isPrecondition) {
-                $productList->addCondition($quotedValues, 'PRECONDITION_' . $field);
-            } else {
-                $productList->addCondition($quotedValues, $field);
-            }
+            $productList->addCondition($quotedValues, $this->getConditionField($field, $isPrecondition));
         }
 
         return $currentFilter;

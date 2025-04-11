@@ -53,11 +53,10 @@ class Select extends AbstractFilterType
 
         if (!empty($value)) {
             $db = Db::get();
-            if ($isPrecondition) {
-                $productList->addCondition('TRIM(`' . $field . '`) = ' . $db->quote($value), 'PRECONDITION_' . $field);
-            } else {
-                $productList->addCondition('TRIM(`' . $field . '`) = ' . $db->quote($value), $field);
-            }
+            $productList->addCondition(
+                'TRIM(`' . $field . '`) = ' . $db->quote($value),
+                $this->getConditionField($field, $isPrecondition)
+            );
         }
 
         return $currentFilter;

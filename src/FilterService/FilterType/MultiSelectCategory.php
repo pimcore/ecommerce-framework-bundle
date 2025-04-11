@@ -69,7 +69,8 @@ class MultiSelectCategory extends AbstractFilterType
 
     public function addCondition(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter, array $params, bool $isPrecondition = false): array
     {
-        $value = $params[$filterDefinition->getField()] ?? null;
+        $field = $this->getField($filterDefinition);
+        $value = $params[$field] ?? null;
         $isReload = $params['is_reload'] ?? null;
 
         if ($value == AbstractFilterType::EMPTY_STRING) {
@@ -83,7 +84,7 @@ class MultiSelectCategory extends AbstractFilterType
             $value = $preSelect;
         }
 
-        $currentFilter[$filterDefinition->getField()] = $value;
+        $currentFilter[$field] = $value;
 
         $conditions = [];
         if (!empty($value)) {
@@ -95,7 +96,7 @@ class MultiSelectCategory extends AbstractFilterType
 
                 $category = '%,' . trim((string)$category) . ',%';
 
-                $conditions[] = $filterDefinition->getField() . ' LIKE ' . $db->quote($category);
+                $conditions[] = $field . ' LIKE ' . $db->quote($category);
             }
         }
 
@@ -111,11 +112,7 @@ class MultiSelectCategory extends AbstractFilterType
                 $conditions = '(' . implode(' OR ', $conditions) . ')';
             }
 
-            if ($isPrecondition) {
-                $productList->addCondition($conditions, 'PRECONDITION_' . $filterDefinition->getField());
-            } else {
-                $productList->addCondition($conditions, $filterDefinition->getField());
-            }
+            $productList->addCondition($conditions, $this->getConditionField($field, $isPrecondition));
         }
 
         return $currentFilter;
