@@ -25,11 +25,11 @@ use Psr\Log\LoggerInterface;
  */
 class Dao
 {
-    private Connection $db;
+    protected Connection $db;
 
-    private DefaultMysql $model;
+    protected DefaultMysql $model;
 
-    private int $lastRecordCount;
+    protected int $lastRecordCount;
 
     protected LoggerInterface $logger;
 
