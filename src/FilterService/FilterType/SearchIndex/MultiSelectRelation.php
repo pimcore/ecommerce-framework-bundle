@@ -75,10 +75,13 @@ class MultiSelectRelation extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filte
             if (!empty($quotedValues)) {
                 if ($filterDefinition->getUseAndCondition()) {
                     foreach ($quotedValues as $value) {
-                        $productList->addRelationCondition($field, $value);
+                        $productList->addRelationCondition($this->getConditionField($field, $isPrecondition), $value);
                     }
                 } else {
-                    $productList->addRelationCondition($field, ['terms' => ['relations.' . $field => $quotedValues]]);
+                    $productList->addRelationCondition(
+                        $this->getConditionField($field, $isPrecondition),
+                        ['terms' => ['relations.' . $field => $quotedValues]]
+                    );
                 }
             }
         }

@@ -133,7 +133,7 @@ class SelectClassificationStoreAttributes extends AbstractFilterType
                     $currentFilter[$field][$keyId] = $filterValue;
 
                     $valueField = $nestedPath . '.' . $keyId . '.keyword';
-                    $productList->addCondition($filterValue, $valueField);
+                    $productList->addCondition($filterValue, $this->getConditionField($valueField, $isPrecondition));
                 }
             }
         }

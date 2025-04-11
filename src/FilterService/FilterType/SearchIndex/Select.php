@@ -42,7 +42,7 @@ class Select extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\Filt
         $currentFilter[$field] = $value;
 
         if (!empty($value)) {
-            $productList->addCondition(trim($value), $field);
+            $productList->addCondition(trim($value), $this->getConditionField($field, $isPrecondition));
         }
 
         return $currentFilter;

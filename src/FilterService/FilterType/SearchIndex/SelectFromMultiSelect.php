@@ -45,7 +45,10 @@ class SelectFromMultiSelect extends \Pimcore\Bundle\EcommerceFrameworkBundle\Fil
         $currentFilter[$field] = $value;
 
         if (!empty($value)) {
-            $productList->addCondition(['term' => ['attributes.' . $field => $value]], $field);
+            $productList->addCondition(
+                ['term' => ['attributes.' . $field => $value]],
+                $this->getConditionField($field, $isPrecondition)
+            );
         }
 
         return $currentFilter;

@@ -83,10 +83,13 @@ class MultiSelect extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService
             if (!empty($quotedValues)) {
                 if ($filterDefinition->getUseAndCondition()) {
                     foreach ($quotedValues as $value) {
-                        $productList->addCondition($value, $field);
+                        $productList->addCondition($value, $this->getConditionField($field, $isPrecondition));
                     }
                 } else {
-                    $productList->addCondition(['terms' => ['attributes.' . $field => $quotedValues]], $field);
+                    $productList->addCondition(
+                        ['terms' => ['attributes.' . $field => $quotedValues]],
+                        $this->getConditionField($field, $isPrecondition)
+                    );
                 }
             }
         }
