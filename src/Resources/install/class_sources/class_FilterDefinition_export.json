@@ -116,7 +116,7 @@
                                         "defaultValue": null,
                                         "queryColumnType": "double",
                                         "columnType": "double",
-                                        "integer": false,
+                                        "integer": true,
                                         "unsigned": false,
                                         "minValue": null,
                                         "maxValue": null,

@@ -92,9 +92,9 @@ class FilterDefinition extends \Pimcore\Bundle\EcommerceFrameworkBundle\Model\Ab
 
     /**
      * Get pageLimit - Results per Page
-     * @return float|null
+     * @return int|null
      */
-    public function getPageLimit(): ?float
+    public function getPageLimit(): ?int
     {
         if ($this instanceof PreGetValueHookInterface && !\Pimcore::inAdmin()) {
             $preValue = $this->preGetValue("pageLimit");
@@ -122,10 +122,10 @@ class FilterDefinition extends \Pimcore\Bundle\EcommerceFrameworkBundle\Model\Ab
 
     /**
      * Set pageLimit - Results per Page
-     * @param float|null $pageLimit
+     * @param int|null $pageLimit
      * @return $this
      */
-    public function setPageLimit(?float $pageLimit): static
+    public function setPageLimit(?int $pageLimit): static
     {
         /** @var \Pimcore\Model\DataObject\ClassDefinition\Data\Numeric $fd */
         $fd = $this->getClass()->getFieldDefinition("pageLimit");
@@ -682,4 +682,3 @@ class FilterDefinition extends \Pimcore\Bundle\EcommerceFrameworkBundle\Model\Ab
     }
 
 }
-
