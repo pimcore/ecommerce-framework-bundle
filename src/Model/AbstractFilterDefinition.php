@@ -28,9 +28,9 @@ abstract class AbstractFilterDefinition extends DataObject\Concrete implements D
     /**
      * returns page limit for product list
      *
-     *
+     * @todo Convert return typehint to ?int in the next major update.
      */
-    abstract public function getPageLimit(): ?float;
+    abstract public function getPageLimit(): float|int|null;
 
     /**
      * returns list of available fields for sorting ascending
