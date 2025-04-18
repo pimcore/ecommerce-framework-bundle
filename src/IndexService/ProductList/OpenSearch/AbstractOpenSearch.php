@@ -167,7 +167,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      *
      * @param string $fieldname - must be set for open search
      */
-    public function addCondition(array|string $condition, string $fieldname = ''): void
+    public function addCondition(array|string|bool $condition, string $fieldname = ''): void
     {
         $this->filterConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;

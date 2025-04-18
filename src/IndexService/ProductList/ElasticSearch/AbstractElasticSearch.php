@@ -166,7 +166,7 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
      *
      * @param string $fieldname - must be set for elastic search
      */
-    public function addCondition(array|string $condition, string $fieldname = ''): void
+    public function addCondition(array|string|bool $condition, string $fieldname = ''): void
     {
         $this->filterConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
