@@ -927,7 +927,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
             }
         }
 
-        if ($taskResponse === null || !isset($taskResponse['completed']) || $taskResponse['completed'] === false) {
+        if (empty($taskResponse) || !isset($taskResponse['completed']) || $taskResponse['completed'] === false) {
             throw new RequestTimeout408Exception('reindex is not finished. Cleanup task index for task ' . $taskId);
         }
 
