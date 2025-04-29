@@ -19,6 +19,8 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\OpenSearch
 use Doctrine\DBAL\Connection;
 use Exception;
 use OpenSearch\Client;
+use OpenSearch\Common\Exceptions\OpenSearchException;
+use OpenSearch\Common\Exceptions\RequestTimeout408Exception;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Interpreter\RelationInterpreterInterface;
@@ -37,6 +39,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker implements IndexRefreshInterface
 {
+    const REINDEX_TIMEOUT = 200;
+
     const STORE_TABLE_NAME = 'ecommerceframework_productindex_store_opensearch';
 
     const RELATION_FIELD = 'parentchildrelation';
@@ -869,6 +873,7 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
      * @param string $sourceIndexName the name of the source index in ES.
      * @param string $targetIndexName the name of the target index in ES. If existing, will be deleted
      *
+     * @throws OpenSearchException
      */
     protected function performReindex(string $sourceIndexName, string $targetIndexName): void
     {
@@ -897,9 +902,34 @@ abstract class AbstractOpenSearch extends ProductCentricBatchProcessingWorker im
             'body' => $body,
         ]);
 
-        $osClient->reindex([
+        // in case of long running reindexing this might lead to Gateway Timeout of Opensearch. Due to that
+        // query without waiting for completion and check task status periodically
+        $result = $osClient->reindex([
             'body' => $body,
+            'wait_for_completion' => false,
         ]);
+
+        $taskId = $result['task'];
+        $taskResponse = null;
+        for ($checks = 1; $checks <= self::REINDEX_TIMEOUT; $checks++) {
+            sleep(15);
+            Logger::info('Waiting for reindex to finish. ' . $checks . '/' . self::REINDEX_TIMEOUT);
+            // query task status
+            $taskResponse = $osClient->tasks()->get(['task_id' => $taskId]);
+            // if task was completed delete it to not fill up index for tasks
+            if (isset($taskResponse['completed']) && $taskResponse['completed']) {
+                $osClient->delete([
+                    'index' => '.tasks',
+                    'id' => $taskId,
+                ]);
+
+                break;
+            }
+        }
+
+        if ($taskResponse === null || !isset($taskResponse['completed']) || $taskResponse['completed'] === false) {
+            throw new RequestTimeout408Exception('reindex is not finished. Cleanup task index for task ' . $taskId);
+        }
 
         Logger::info(sprintf('Completed re-index in %.02f seconds.', (time() - $startTime)));
     }
