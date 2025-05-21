@@ -32,7 +32,7 @@ class PaymentProviderInstaller extends AbstractInstaller
 
     public function canBeInstalled(): bool
     {
-        return !$this->isInstalled();
+        return ClassDefinition::getByName('OnlineShopOrder') && !$this->isInstalled();
     }
 
     public function canBeUninstalled(): bool
