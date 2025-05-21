@@ -1,6 +1,8 @@
 name: Sync changes scheduled from CE to EE
 on:
   workflow_dispatch:
+  schedule:
+      - cron:  '30 21 * * *'
 
 jobs:
   sync-branches:
@@ -9,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ref: [{'base': '2.x', 'destination': '2.x'}]
+        ref: [{'base': '2.x', 'destination': '2.x'}, {'base': '2.0', 'destination': '2.0'}]
     with:
       base_ref: ${{ matrix.ref.base }}
       ref_name: ${{ matrix.ref.destination }}
