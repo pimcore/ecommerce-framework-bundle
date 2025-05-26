@@ -152,8 +152,28 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
         return 'combined product ID rows in store table index';
     }
 
+    /**
+     * index updates per child process
+     */
     protected function getSegmentSize(): int
     {
-        return 500; // index updates per child process
+        $segmentSize = 500;
+
+        if ($this->input->hasOption('segment-size') && $this->input->getOption('segment-size')) {
+            $segmentSize = (int)$this->input->getOption('segment-size');
+        }
+
+        return $segmentSize;
+    }
+
+    protected function getBatchSize(): int
+    {
+        $batchSize = $this->getSegmentSize();
+
+        if ($this->input->hasOption('batch-size') && $this->input->getOption('batch-size')) {
+            $batchSize = (int)$this->input->getOption('batch-size');
+        }
+
+        return $batchSize;
     }
 }
