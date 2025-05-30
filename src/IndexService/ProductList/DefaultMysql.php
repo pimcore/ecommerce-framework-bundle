@@ -15,6 +15,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\CoreExtensions\ObjectData\IndexFieldSelection;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
+use Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\AbstractFilterType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\MysqlConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractCategory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
@@ -98,8 +99,10 @@ class DefaultMysql implements ProductListInterface
 
     public function addRelationCondition(string $fieldname, string|array $condition): void
     {
+        $realFieldname = $this->getRealFieldname($fieldname);
+
         $this->products = null;
-        $this->relationConditions[$fieldname][] = '`fieldname` = ' . $this->quote($fieldname) . ' AND '  . $condition;
+        $this->relationConditions[$fieldname][] = '`fieldname` = ' . $this->quote($realFieldname) . ' AND '  . $condition;
     }
 
     /**
@@ -273,6 +276,19 @@ class DefaultMysql implements ProductListInterface
         }
 
         return $this->products;
+    }
+
+    /**
+     * Returns fieldname without precondition prefix.
+     */
+    protected function getRealFieldname(string $fieldname): string
+    {
+        $isPrecondition = str_starts_with($fieldname, AbstractFilterType::PREFIX_PRECONDITION);
+        if ($isPrecondition) {
+            return substr($fieldname, strlen(AbstractFilterType::PREFIX_PRECONDITION));
+        }
+
+        return $fieldname;
     }
 
     /**
