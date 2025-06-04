@@ -28,7 +28,8 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     {
         $carts = [];
         $cartIds = $this->db->fetchFirstColumn(
-            'SELECT id FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart\Dao::TABLE_NAME
+            'SELECT id FROM '
+            . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart\Dao::TABLE_NAME
             . $this->getCondition() . $this->getOrder() . $this->getOffsetLimit(),
             $this->model->getConditionVariables(),
         );
@@ -46,7 +47,8 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     {
         try {
             return (int) $this->db->fetchOne(
-                'SELECT COUNT(*) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart\Dao::TABLE_NAME
+                'SELECT COUNT(*) FROM `'
+                . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart\Dao::TABLE_NAME
                 . '`' . $this->getCondition(),
                 $this->model->getConditionVariables(),
             );
