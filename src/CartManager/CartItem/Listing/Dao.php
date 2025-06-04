@@ -28,7 +28,8 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     {
         $items = [];
         $cartItems = $this->db->fetchAllAssociative(
-            'SELECT cartid, itemKey, parentItemKey FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME . $this->getCondition() . $this->getOrder() . $this->getOffsetLimit(),
+            'SELECT cartid, itemKey, parentItemKey FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME
+            . $this->getCondition() . $this->getOrder() . $this->getOffsetLimit(),
             $this->model->getConditionVariables(),
         );
 
@@ -44,7 +45,8 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     {
         try {
             return (int)$this->db->fetchOne(
-                'SELECT COUNT(*) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME . '`' . $this->getCondition(),
+                'SELECT COUNT(*) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME . '`'
+                . $this->getCondition(),
                 $this->model->getConditionVariables(),
             );
         } catch (\Exception $e) {
@@ -55,7 +57,8 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     public function getTotalAmount(): int
     {
         return (int)$this->db->fetchOne(
-            'SELECT SUM(count) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME . '`' . $this->getCondition(),
+            'SELECT SUM(count) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME . '`'
+            . $this->getCondition(),
             $this->model->getConditionVariables(),
         );
     }
