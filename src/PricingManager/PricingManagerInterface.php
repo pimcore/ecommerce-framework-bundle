@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager;
@@ -25,7 +22,6 @@ interface PricingManagerInterface
     public function applyProductRules(PriceSystemPriceInfoInterface $priceinfo): PriceSystemPriceInfoInterface;
 
     /**
-     * @param CartInterface $cart
      *
      * @return RuleInterface[] applied rules
      */
@@ -34,23 +30,19 @@ interface PricingManagerInterface
     /**
      * Get map from action name to used class
      *
-     * @return array
      */
     public function getActionMapping(): array;
 
     /**
      * Get map from condition name to used class
      *
-     * @return array
      */
     public function getConditionMapping(): array;
 
     /**
      * Factory
      *
-     * @param string $type
      *
-     * @return ConditionInterface
      *
      * @throws InvalidConfigException
      */
@@ -59,25 +51,20 @@ interface PricingManagerInterface
     /**
      * Factory
      *
-     * @param string $type
      *
-     * @return ActionInterface
      */
     public function getAction(string $type): ActionInterface;
 
     /**
      * Factory
      *
-     * @return EnvironmentInterface
      */
     public function getEnvironment(): EnvironmentInterface;
 
     /**
      * Wraps price info in pricing manager price info
      *
-     * @param PriceSystemPriceInfoInterface $priceInfo
      *
-     * @return PriceSystemPriceInfoInterface|PriceInfoInterface
      */
     public function getPriceInfo(PriceSystemPriceInfoInterface $priceInfo): PriceInfoInterface|PriceSystemPriceInfoInterface;
 }

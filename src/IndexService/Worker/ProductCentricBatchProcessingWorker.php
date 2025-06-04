@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker;
@@ -45,7 +42,7 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
         return $this->getStoreTableName();
     }
 
-    abstract protected function doUpdateIndex(int $objectId, array $data = null, array $metadata = null): void;
+    abstract protected function doUpdateIndex(int $objectId, ?array $data = null, ?array $metadata = null): void;
 
     public function updateItemInIndex(int $objectId): void
     {
@@ -215,9 +212,6 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepareDataForIndex(IndexableInterface $object): array
     {
         $subObjectIds = $this->tenantConfig->createSubIdsForObject($object);
@@ -369,9 +363,6 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
         return $processedSubObjects;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resetPreparationQueue(): void
     {
         Logger::info('Index-Actions - Resetting preparation queue');
@@ -387,9 +378,6 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resetIndexingQueue(): void
     {
         Logger::info('Index-Actions - Resetting index queue');
@@ -414,7 +402,9 @@ abstract class ProductCentricBatchProcessingWorker extends AbstractWorker implem
             try {
                 $fn();
 
-                return $this->db->commit();
+                $this->db->commit();
+
+                return true;
             } catch (\Exception $e) {
                 $this->db->rollBack();
                 Logger::warning("Executing transational query, no. {$i} of {$maxTries} tries failed. " . $e->getMessage());

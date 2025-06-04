@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tracking\Tracker\Analytics;
@@ -37,7 +34,6 @@ class UniversalEcommerce extends AbstractAnalyticsTracker implements CheckoutCom
     /**
      * Track checkout complete
      *
-     * @param AbstractOrder $order
      */
     public function trackCheckoutComplete(AbstractOrder $order): void
     {
@@ -55,10 +51,8 @@ class UniversalEcommerce extends AbstractAnalyticsTracker implements CheckoutCom
     }
 
     /**
-     * @param Transaction $transaction
      * @param ProductAction[] $items
      *
-     * @return array
      */
     protected function buildCheckoutCompleteCalls(Transaction $transaction, array $items): array
     {
@@ -79,9 +73,7 @@ class UniversalEcommerce extends AbstractAnalyticsTracker implements CheckoutCom
     /**
      * Transform transaction into universal data object
      *
-     * @param Transaction $transaction
      *
-     * @return array
      */
     protected function transformTransaction(Transaction $transaction): array
     {
@@ -99,9 +91,7 @@ class UniversalEcommerce extends AbstractAnalyticsTracker implements CheckoutCom
     /**
      * Transform product action into universal data object
      *
-     * @param ProductAction $item
      *
-     * @return array
      */
     protected function transformProductAction(ProductAction $item): array
     {

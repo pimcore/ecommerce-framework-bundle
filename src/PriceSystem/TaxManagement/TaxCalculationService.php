@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PriceSystem\TaxManagement;
@@ -29,10 +26,7 @@ class TaxCalculationService
     /**
      * Updates taxes in given price by using its tax entries and net or gross amount based on the given $calculationMode
      *
-     * @param PriceInterface $price
      * @param string $calculationMode - valid options are TaxCalculationService::CALCULATION_FROM_NET (default) and TaxCalculationService::CALCULATION_FROM_GROSS
-     *
-     * @return PriceInterface
      *
      * @throws UnsupportedException
      */
@@ -51,9 +45,7 @@ class TaxCalculationService
     /**
      * Calculates taxes based on the net amount of the price and the tax entries
      *
-     * @param PriceInterface $price
      *
-     * @return PriceInterface
      *
      * @throws UnsupportedException
      */
@@ -102,9 +94,7 @@ class TaxCalculationService
     /**
      * Calculates taxes based on the gross amount of the price and the tax entries
      *
-     * @param PriceInterface $price
      *
-     * @return PriceInterface
      *
      * @throws UnsupportedException
      */

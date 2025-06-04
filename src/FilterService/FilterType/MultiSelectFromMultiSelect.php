@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType;
@@ -65,11 +62,6 @@ class MultiSelectFromMultiSelect extends SelectFromMultiSelect
     }
 
     /**
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     * @param array $params
-     * @param bool $isPrecondition
      *
      * @return string[]
      */
@@ -84,13 +76,15 @@ class MultiSelectFromMultiSelect extends SelectFromMultiSelect
         if (empty($value) && !$isReload) {
             if (is_array($preSelect)) {
                 $value = $preSelect;
-            } else {
+            } elseif (is_string($preSelect)) {
                 $value = explode(',', $preSelect);
             }
 
-            foreach ($value as $key => $v) {
-                if (!$v) {
-                    unset($value[$key]);
+            if (is_iterable($value)) {
+                foreach ($value as $key => $v) {
+                    if (!$v) {
+                        unset($value[$key]);
+                    }
                 }
             }
         } elseif (!empty($value) && in_array(AbstractFilterType::EMPTY_STRING, $value)) {

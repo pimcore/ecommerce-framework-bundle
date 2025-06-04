@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
@@ -60,12 +57,10 @@ class DefaultMysql extends AbstractConfig implements MysqlConfigInterface
     /**
      * in case of subtenants returns a data structure containing all sub tenants
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return mixed $subTenantData
      */
-    public function prepareSubTenantEntries(IndexableInterface $object, int $subObjectId = null): mixed
+    public function prepareSubTenantEntries(IndexableInterface $object, ?int $subObjectId = null): mixed
     {
         return null;
     }
@@ -73,20 +68,13 @@ class DefaultMysql extends AbstractConfig implements MysqlConfigInterface
     /**
      * populates index for tenant relations based on gived data
      *
-     * @param mixed $objectId
-     * @param mixed $subTenantData
-     * @param mixed $subObjectId
      *
-     * @return void
      */
     public function updateSubTenantEntries(mixed $objectId, mixed $subTenantData, mixed $subObjectId = null): void
     {
         return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
         if (!$tenantWorker instanceof DefaultMysqlWorker) {

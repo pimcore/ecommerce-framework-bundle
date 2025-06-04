@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\DependencyInjection\ServiceLocator;
@@ -30,7 +27,6 @@ abstract class TenantAwareServiceLocator
     /**
      * If true the locator will not fall back to the default tenant if a tenant is requested but not existing
      *
-     * @var bool
      */
     protected bool $strictTenants = false;
 
@@ -46,7 +42,7 @@ abstract class TenantAwareServiceLocator
         $this->strictTenants = $strictTenants;
     }
 
-    protected function locate(string $tenant = null): mixed
+    protected function locate(?string $tenant = null): mixed
     {
         $tenant = $this->resolveTenant($tenant);
 
@@ -59,7 +55,7 @@ abstract class TenantAwareServiceLocator
 
     abstract protected function buildNotFoundException(string $tenant): UnsupportedException;
 
-    protected function resolveTenant(string $tenant = null): string
+    protected function resolveTenant(?string $tenant = null): string
     {
         // explicitly checking for empty here to catch situations where the tenant is just an empty string
         if (empty($tenant)) {

@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7;
@@ -85,9 +82,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * cancel order item and refund payment
      *
-     * @param AbstractOrderItem $item
      *
-     * @return Note
      *
      * @throws \Exception
      */
@@ -129,10 +124,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * change order item
      *
-     * @param AbstractOrderItem $item
-     * @param float $amount
      *
-     * @return Note
      *
      * @throws Exception
      */
@@ -161,10 +153,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * start item complaint
      *
-     * @param AbstractOrderItem $item
-     * @param float $quantity
      *
-     * @return Note
      */
     public function itemComplaint(AbstractOrderItem $item, float $quantity): Note
     {
@@ -182,10 +171,7 @@ class OrderAgent implements OrderAgentInterface
     /**
      * set a item state
      *
-     * @param AbstractOrderItem $item
-     * @param string $state
      *
-     * @return Note
      *
      * @throws Exception
      */
@@ -280,14 +266,12 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * @param PaymentInterface $paymentProvider
-     * @param AbstractOrder|null $sourceOrder
      *
      * @return $this
      *
      * @throws Exception
      */
-    public function setPaymentProvider(PaymentInterface $paymentProvider, AbstractOrder $sourceOrder = null): static
+    public function setPaymentProvider(PaymentInterface $paymentProvider, ?AbstractOrder $sourceOrder = null): static
     {
         $this->paymentProvider = $paymentProvider;
 
@@ -310,7 +294,7 @@ class OrderAgent implements OrderAgentInterface
 
         // update authorizedData
         $authorizedData = $paymentProvider->getAuthorizedData();
-        foreach ((array)$authorizedData as $field => $value) {
+        foreach ($authorizedData as $field => $value) {
             $setter = 'setAuth_' . $field;
             if (method_exists($providerData, $setter)) {
                 $providerData->{$setter}($value);
@@ -318,7 +302,7 @@ class OrderAgent implements OrderAgentInterface
         }
 
         if (method_exists($providerData, 'setPaymentFinished')) {
-            $providerData->setPaymentFinished(new \DateTime());
+            $providerData->setPaymentFinished(new Carbon());
         }
 
         if (method_exists($providerData, 'setConfigurationKey')) {
@@ -372,7 +356,7 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws PaymentNotAllowedException
      * @throws Exception
@@ -420,7 +404,6 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * @return PaymentInfo
      *
      * @throws Exception
      * @throws UnsupportedException
@@ -448,11 +431,9 @@ class OrderAgent implements OrderAgentInterface
     /**
      * generates internal payment id for current order
      *
-     * @param int|null $paymentInfoCount
      *
-     * @return string
      */
-    protected function generateInternalPaymentId(int $paymentInfoCount = null): string
+    protected function generateInternalPaymentId(?int $paymentInfoCount = null): string
     {
         $order = $this->getOrder();
         if ($paymentInfoCount === null) {
@@ -469,7 +450,6 @@ class OrderAgent implements OrderAgentInterface
      *  - creation date
      *  - all product numbers
      *
-     * @return int
      */
     protected function getFingerprintOfOrder(): int
     {
@@ -492,7 +472,6 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * @return AbstractOrder
      *
      * @throws Exception
      * @throws UnsupportedException
@@ -521,7 +500,6 @@ class OrderAgent implements OrderAgentInterface
     }
 
     /**
-     * @param StatusInterface $status
      *
      * @return $this
      *
@@ -633,8 +611,6 @@ class OrderAgent implements OrderAgentInterface
     /**
      * Hook to extract and save additional information in payment information
      *
-     * @param StatusInterface $status
-     * @param AbstractPaymentInformation $currentPaymentInformation
      */
     protected function extractAdditionalPaymentInformation(StatusInterface $status, AbstractPaymentInformation $currentPaymentInformation): void
     {

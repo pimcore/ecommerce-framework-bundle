@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Traits;
@@ -30,10 +27,7 @@ trait OptionsResolverTrait
      * Runs options through options resolver. Supports multiple options resolvers identified
      * by name (e.g. for sub-options)
      *
-     * @param array $options
-     * @param string $resolverName
      *
-     * @return array
      */
     protected function resolveOptions(array $options, string $resolverName = 'default'): array
     {
@@ -43,9 +37,7 @@ trait OptionsResolverTrait
     /**
      * Sets up and returns a named options resolver
      *
-     * @param string $resolverName
      *
-     * @return OptionsResolver
      */
     protected function getOptionsResolver(string $resolverName = 'default'): OptionsResolver
     {
@@ -60,8 +52,6 @@ trait OptionsResolverTrait
     /**
      * Set up options resolver (add defaults, set required fields, ...)
      *
-     * @param string $resolverName
-     * @param OptionsResolver $resolver
      *
      * @throws \InvalidArgumentException If no resolver with the given name is supported
      */

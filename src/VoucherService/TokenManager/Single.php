@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\TokenManager;
@@ -19,6 +16,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\TokenManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
+use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\VoucherServiceException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrder;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractVoucherTokenType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Reservation;
@@ -107,9 +105,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     /**
      * Get data for export
      *
-     * @param array $params
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -152,12 +148,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
         return false;
     }
 
-    /**
-     * @param array|null $filter
-     *
-     * @return array|bool
-     */
-    public function getCodes(array $filter = null): bool|array
+    public function getCodes(?array $filter = null): bool|array
     {
         return Token\Listing::getCodes($this->seriesId, $filter);
     }
@@ -174,7 +165,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
         $data = $periodData;
     }
 
-    public function getStatistics(int $usagePeriod = null): array
+    public function getStatistics(?int $usagePeriod = null): array
     {
         $token = Token::getByCode($this->configuration->getToken());
         $overallCount = $this->configuration->getUsages();
@@ -207,7 +198,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     public function applyToken(string $code, CartInterface $cart, AbstractOrder $order): OnlineShopVoucherToken|bool
     {
         if ($token = Token::getByCode($code)) {
-            if ($token->check($this->configuration->getUsages(), true)) {
+            if ($token->check((int)$this->configuration->getUsages(), true)) {
                 if ($token->apply()) {
                     $orderToken = \Pimcore\Model\DataObject\OnlineShopVoucherToken::getByToken($code, 1);
                     if (!$orderToken instanceof \Pimcore\Model\DataObject\OnlineShopVoucherToken) {
@@ -233,10 +224,7 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
     /**
      * cleans up the token usage and the ordered token object if necessary
      *
-     * @param OnlineShopVoucherToken $tokenObject
-     * @param AbstractOrder $order
      *
-     * @return bool
      */
     public function removeAppliedTokenFromOrder(OnlineShopVoucherToken $tokenObject, AbstractOrder $order): bool
     {
@@ -259,6 +247,8 @@ class Single extends AbstractTokenManager implements ExportableTokenManagerInter
             if ($token->check((int)$this->configuration->getUsages())) {
                 return true;
             }
+
+            throw new VoucherServiceException('Max usage limit reached.', VoucherServiceException::ERROR_CODE_NO_MORE_USAGES);
         }
 
         return false;

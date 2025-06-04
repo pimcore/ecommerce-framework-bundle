@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PriceSystem;
@@ -29,42 +26,36 @@ interface PriceInfoInterface
     /**
      * Returns single price
      *
-     * @return PriceInterface
      */
     public function getPrice(): PriceInterface;
 
     /**
      * Returns total price (single price * quantity)
      *
-     * @return PriceInterface
      */
     public function getTotalPrice(): PriceInterface;
 
     /**
      * Returns if price is a minimal price (e.g. when having many product variants they might have a from price)
      *
-     * @return bool
      */
     public function isMinPrice(): bool;
 
     /**
      * Returns quantity
      *
-     * @return int|string
      */
     public function getQuantity(): int|string;
 
     /**
      * Numeric quantity or constant PriceInterfaceInfo::MIN_PRICE
      *
-     * @param int|string $quantity
      */
     public function setQuantity(int|string $quantity): void;
 
     /**
      * Relation to price system
      *
-     * @param PriceSystemInterface $priceSystem
      *
      * @return $this
      */
@@ -73,7 +64,6 @@ interface PriceInfoInterface
     /**
      * Relation to product
      *
-     * @param CheckoutableInterface $product
      *
      * @return $this
      */
@@ -82,7 +72,6 @@ interface PriceInfoInterface
     /**
      * Returns product
      *
-     * @return CheckoutableInterface|null
      */
     public function getProduct(): ?CheckoutableInterface;
 }

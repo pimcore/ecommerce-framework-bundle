@@ -1,15 +1,12 @@
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
- *
- * @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- * @license    http://www.pimcore.org/license     GPLv3 and PCL
- */
+* This source file is available under the terms of the
+* Pimcore Open Core License (POCL)
+* Full copyright and license information is available in
+* LICENSE.md which is distributed with this source code.
+*
+*  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.com)
+*  @license    Pimcore Open Core License (POCL)
+*/
 
 pimcore.registerNS("pimcore.bundle.EcommerceFramework.pricing.config.item");
 /**
@@ -1346,6 +1343,13 @@ pimcore.bundle.EcommerceFramework.pricing.actions = {
                     value: data.percent,
                     maxValue: 100,
                     minValue: 0
+                }, {
+                    xtype: "checkbox",
+                    width: 100,
+                    labelWidth: 120,
+                    fieldLabel: t("bundle_ecommerce_pricing_config_action_cart_discount_only_discount_cart"),
+                    name: "onlyDiscountCart",
+                    value: data.onlyDiscountCart,
                 }
             ]
         });

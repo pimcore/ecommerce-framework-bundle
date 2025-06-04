@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager;
@@ -74,7 +71,6 @@ class PriceInfo implements PriceInfoInterface
      * Checks if environment changed based on hash
      * if so, resets valid rules
      *
-     * @return bool
      */
     protected function environmentHashChanged(): bool
     {
@@ -90,9 +86,6 @@ class PriceInfo implements PriceInfoInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRules(bool $forceRecalc = false): array
     {
         if ($forceRecalc || $this->validRules === null) {
@@ -115,9 +108,6 @@ class PriceInfo implements PriceInfoInterface
         return $this->validRules;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPrice(): PriceInterface
     {
         $price = clone $this->priceInfo->getPrice();
@@ -144,9 +134,6 @@ class PriceInfo implements PriceInfoInterface
         return $price;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTotalPrice(): PriceInterface
     {
         $price = clone $this->priceInfo->getPrice();
@@ -159,33 +146,21 @@ class PriceInfo implements PriceInfoInterface
         return $price;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isMinPrice(): bool
     {
         return $this->priceInfo->isMinPrice();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getQuantity(): int|string
     {
         return $this->priceInfo->getQuantity();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setQuantity(int|string $quantity): void
     {
         $this->priceInfo->setQuantity($quantity);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPriceSystem(PriceSystemInterface $priceSystem): static
     {
         $this->priceInfo->setPriceSystem($priceSystem);
@@ -193,9 +168,6 @@ class PriceInfo implements PriceInfoInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setProduct(CheckoutableInterface $product): static
     {
         $this->priceInfo->setProduct($product);
@@ -203,9 +175,6 @@ class PriceInfo implements PriceInfoInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProduct(): ?CheckoutableInterface
     {
         return $this->priceInfo->getProduct();
@@ -268,9 +237,6 @@ class PriceInfo implements PriceInfoInterface
         return $price;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDiscountPercent(): float
     {
         $percent = $this->getPrice()->getAmount()->discountPercentageOf(

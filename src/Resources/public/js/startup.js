@@ -1,15 +1,12 @@
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
- *
- * @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- * @license    http://www.pimcore.org/license     GPLv3 and PCL
- */
+* This source file is available under the terms of the
+* Pimcore Open Core License (POCL)
+* Full copyright and license information is available in
+* LICENSE.md which is distributed with this source code.
+*
+*  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.com)
+*  @license    Pimcore Open Core License (POCL)
+*/
 
 
 
@@ -19,6 +16,9 @@ pimcore.registerNS("pimcore.bundle.ecommerce.startup");
  * @private
  */
 pimcore.bundle.ecommerce.startup = Class.create({
+
+    useOrderDetailTab : true,
+
     initialize: function () {
         document.addEventListener(pimcore.events.preMenuBuild, this.preMenuBuild.bind(this));
         document.addEventListener(pimcore.events.postOpenObject, this.postOpenObject.bind(this));
@@ -106,7 +106,7 @@ pimcore.bundle.ecommerce.startup = Class.create({
 
         if (pimcore.globalmanager.get("user").isAllowed("bundle_ecommerce_back-office_order")) {
 
-            if (e.detail.type == "object" && e.detail.object.data.general.className == "OnlineShopOrder") {
+            if (e.detail.type == "object" && e.detail.object.data.general.className == "OnlineShopOrder"  && this.useOrderDetailTab) {
                 const tab = new pimcore.bundle.EcommerceFramework.OrderTab(e.detail.object, e.detail.type);
                 e.detail.object.tab.items.items[1].insert(0, tab.getLayout());
                 e.detail.object.tab.items.items[1].updateLayout();

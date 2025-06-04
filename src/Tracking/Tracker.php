@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tracking;
@@ -34,11 +31,6 @@ abstract class Tracker implements TrackerInterface
     /**
      * Tracker constructor.
      *
-     * @param TrackingItemBuilderInterface $trackingItemBuilder
-     * @param Environment $twig
-     * @param array $options
-     * @param array $assortmentTenants
-     * @param array $checkoutTenants
      */
     public function __construct(
         TrackingItemBuilderInterface $trackingItemBuilder,
@@ -90,10 +82,7 @@ abstract class Tracker implements TrackerInterface
     /**
      * Remove null values from an object, keep protected keys in any case
      *
-     * @param array $data
-     * @param array $protectedKeys
      *
-     * @return array
      */
     protected function filterNullValues(array $data, array $protectedKeys = []): array
     {
@@ -108,17 +97,11 @@ abstract class Tracker implements TrackerInterface
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAssortmentTenants(): array
     {
         return $this->assortmentTenants;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCheckoutTenants(): array
     {
         return $this->checkoutTenants;

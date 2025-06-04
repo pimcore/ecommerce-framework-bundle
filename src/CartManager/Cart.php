@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CartManager;
@@ -142,7 +139,6 @@ class Cart extends AbstractCart implements CartInterface
     /**
      * @param string $countSubItems - use one of COUNT_MAIN_ITEMS_ONLY, COUNT_MAIN_OR_SUB_ITEMS, COUNT_MAIN_AND_SUB_ITEMS
      *
-     * @return int
      */
     public function getItemCount(string $countSubItems = self::COUNT_MAIN_ITEMS_ONLY): int
     {
@@ -179,15 +175,12 @@ class Cart extends AbstractCart implements CartInterface
     /**
      * @static
      *
-     * @param int $userId
      *
-     * @return array
      */
     public static function getAllCartsForUser(int $userId): array
     {
         $list = new Cart\Listing();
-        $db = \Pimcore\Db::get();
-        $list->setCondition('userid = ' . $db->quote($userId));
+        $list->setCondition('userid = ' . $userId);
         $list->setCartClass(get_called_class());
 
         return $list->getCarts();

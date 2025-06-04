@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType;
@@ -81,7 +78,7 @@ abstract class AbstractFilterType
         return $template;
     }
 
-    protected function getPreSelect(AbstractFilterDefinitionType $filterDefinition): array|string|null
+    protected function getPreSelect(AbstractFilterDefinitionType $filterDefinition): array|string|int|null
     {
         $field = $filterDefinition->getField();
         if ($field instanceof IndexFieldSelection) {
@@ -97,11 +94,7 @@ abstract class AbstractFilterType
      * renders and returns the rendered html snippet for the current filter
      * based on settings in the filter definition and the current filter params.
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
      *
-     * @return string
      */
     public function getFilterFrontend(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter): string
     {
@@ -115,28 +108,16 @@ abstract class AbstractFilterType
      * returns the raw data for the current filter based on settings in the
      * filter definition and the current filter params.
      *
-     * @abstract
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
      *
-     * @return array
      */
     abstract public function getFilterValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter): array;
 
     /**
      * adds necessary conditions to the product list implementation based on the currently set filter params.
      *
-     * @abstract
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     * @param array $params
-     * @param bool $isPrecondition
      *
-     * @return array
      *
      * @throws InvalidConfigException
      */
@@ -145,8 +126,6 @@ abstract class AbstractFilterType
     /**
      * calls prepareGroupByValues of productlist if necessary
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
      *
      */
     public function prepareGroupByValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList): void
@@ -157,10 +136,7 @@ abstract class AbstractFilterType
     /**
      * sort result
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param array $result
      *
-     * @return array
      */
     protected function sortResult(AbstractFilterDefinitionType $filterDefinition, array $result): array
     {
@@ -170,10 +146,7 @@ abstract class AbstractFilterType
     /**
      * renders filter template
      *
-     * @param string $template
-     * @param array $parameters
      *
-     * @return string
      */
     protected function render(string $template, array $parameters = []): string
     {

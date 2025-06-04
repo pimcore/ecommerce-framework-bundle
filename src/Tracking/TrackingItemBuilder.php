@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tracking;
@@ -37,9 +34,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
      * Build a product impression object
      *
      * @param ProductInterface&Concrete $product
-     * @param string $list
      *
-     * @return ProductImpression
      */
     public function buildProductImpressionItem(ProductInterface $product, string $list = 'default'): ProductImpression
     {
@@ -64,9 +59,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Build a product view object
      *
-     * @param ProductInterface $product
      *
-     * @return ProductAction
      */
     public function buildProductViewItem(ProductInterface $product): ProductAction
     {
@@ -77,7 +70,6 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
      * Init common product action attributes and add additional application-specific product action attributes.
      *
      * @param AbstractProductData $item the tracking item that is going to be serialized later on.
-     * @param ProductInterface $product
      */
     protected function initProductAttributes(AbstractProductData $item, ProductInterface $product): void
     {
@@ -97,10 +89,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Build a product action item
      *
-     * @param ProductInterface $product
-     * @param int $quantity
      *
-     * @return ProductAction
      */
     public function buildProductActionItem(ProductInterface $product, int $quantity = 1): ProductAction
     {
@@ -120,9 +109,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Build a checkout transaction object
      *
-     * @param AbstractOrder $order
      *
-     * @return Transaction
      */
     public function buildCheckoutTransaction(AbstractOrder $order): Transaction
     {
@@ -140,7 +127,6 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Build checkout items
      *
-     * @param AbstractOrder $order
      *
      * @return ProductAction[]
      */
@@ -162,7 +148,6 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Build checkout items
      *
-     * @param CartInterface $cart
      *
      * @return ProductAction[]
      */
@@ -190,10 +175,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Build a checkout item object
      *
-     * @param AbstractOrder $order
-     * @param AbstractOrderItem $orderItem
      *
-     * @return ProductAction
      */
     public function buildCheckoutItem(AbstractOrder $order, AbstractOrderItem $orderItem): ProductAction
     {
@@ -214,9 +196,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Build a checkout item object by cart Item
      *
-     * @param CartItemInterface $cartItem
      *
-     * @return ProductAction
      */
     public function buildCheckoutItemByCartItem(CartItemInterface $cartItem): ProductAction
     {
@@ -235,10 +215,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Get a product's categories
      *
-     * @param ProductInterface $product
-     * @param bool $first
      *
-     * @return array|string
      */
     protected function getProductCategories(ProductInterface $product, bool $first = false): array|string
     {
@@ -263,9 +240,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Get a product's brand
      *
-     * @param ProductInterface $product
      *
-     * @return null|string
      */
     protected function getProductBrand(ProductInterface $product): ?string
     {
@@ -284,9 +259,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Get order shipping
      *
-     * @param AbstractOrder $order
      *
-     * @return float
      */
     protected function getOrderShipping(AbstractOrder $order): float
     {
@@ -308,9 +281,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Get order tax
      *
-     * @param AbstractOrder $order
      *
-     * @return float
      */
     protected function getOrderTax(AbstractOrder $order): float
     {
@@ -325,9 +296,7 @@ class TrackingItemBuilder implements TrackingItemBuilderInterface
     /**
      * Normalize name for tracking JS
      *
-     * @param string $name
      *
-     * @return string
      */
     protected function normalizeName(string $name): string
     {

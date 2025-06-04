@@ -2,21 +2,19 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItemInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\EnvironmentInterface;
@@ -116,6 +114,7 @@ class OrderManager implements OrderManagerInterface
             'list_class' => Listing::class,
             'list_item_class' => Listing\Item::class,
             'parent_order_folder' => '/order/%Y/%m/%d',
+            'order_parent_path' => '/order/*YY*',
         ]);
 
         foreach ($classProperties as $classProperty) {
@@ -124,9 +123,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param CartInterface $cart
      *
-     * @return AbstractOrder
      *
      * @throws \Exception
      *
@@ -256,9 +253,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param CartInterface $cart
      *
-     * @return AbstractOrder|null
      *
      * @throws \Exception
      */
@@ -283,9 +278,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param CartInterface $cart
      *
-     * @return AbstractOrder
      *
      * @throws \Exception
      */
@@ -330,9 +323,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param AbstractOrder $sourceOrder
      *
-     * @return AbstractOrder
      *
      * @throws \Exception
      */
@@ -381,9 +372,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param CartInterface $cart
      *
-     * @return bool
      *
      * @throws \Exception
      */
@@ -409,11 +398,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param CartItemInterface $item
-     * @param AbstractObject $parent
-     * @param bool $isGiftItem
      *
-     * @return AbstractOrderItem
      *
      * @throws \Exception
      */
@@ -562,7 +547,6 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param int|Folder $orderParentFolder
      *
      * @throws \Exception
      */
@@ -587,20 +571,42 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @return Folder
      *
      * @throws \Exception
      */
     protected function getOrderParentFolder(): Folder
     {
+        // processing config and setting options
+        // BC Layer to check if the newer config is properly set, otherwise use the former one
         if (empty($this->orderParentFolder)) {
-            // processing config and setting options
-            $parentFolderId = (string)$this->options['parent_order_folder'];
+            if ($this->options['order_parent_path']) {
+                $parentFolderOption = (string)$this->options['order_parent_path'];
 
-            if (is_numeric($parentFolderId)) {
-                $parentFolderId = (int)$parentFolderId;
+                // The asterisks must be either 0 or be in pairs to be a valid
+                if (substr_count($parentFolderOption, '*') % 2 !== 0) {
+                    throw new \InvalidArgumentException('Invalid parent order folder path. Please make sure that the path is properly formatted.');
+                }
+
+                $pattern = '/\*([^\*]+)\*/';
+                $parentFolderPath = preg_replace_callback($pattern, function ($matches) {
+                    return CarbonImmutable::now()->isoFormat($matches[1]);
+                }, $parentFolderOption);
+
             } else {
-                $p = Service::createFolderByPath(strftime($parentFolderId, time()));
+                trigger_deprecation(
+                    'pimcore/ecommerce-framework-bundle',
+                    '1.1',
+                    'Please use `order_parent_path` instead of `parent_order_folder`, as strftime() is deprecated.'
+                );
+
+                $parentFolderOption = (string)$this->options['parent_order_folder'];
+                $parentFolderPath = strftime($parentFolderOption, time());
+            }
+
+            if (is_numeric($parentFolderOption)) {
+                $parentFolderId = (int)$parentFolderOption;
+            } else {
+                $p = Service::createFolderByPath($parentFolderPath);
                 $parentFolderId = $p->getId();
                 unset($p);
             }
@@ -614,9 +620,7 @@ class OrderManager implements OrderManagerInterface
     /**
      * returns cart id for order object
      *
-     * @param CartInterface $cart
      *
-     * @return string
      */
     protected function createCartId(CartInterface $cart): string
     {
@@ -624,7 +628,6 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param AbstractOrder $order
      *
      * @throws \Exception
      */
@@ -653,11 +656,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param array $items
-     * @param AbstractOrder $order
-     * @param bool $giftItems
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -708,7 +707,7 @@ class OrderManager implements OrderManagerInterface
 
             //add new tokens - which are the remaining entries of $flippedVoucherTokens
             foreach ($flippedVoucherTokens as $code => $x) {
-                $this->voucherService->applyToken($code, $cart, $order);
+                $this->voucherService->applyToken((string)$code, $cart, $order);
             }
         }
     }
@@ -716,10 +715,7 @@ class OrderManager implements OrderManagerInterface
     /**
      * hook to save individual data into order object
      *
-     * @param CartInterface $cart
-     * @param AbstractOrder $order
      *
-     * @return AbstractOrder
      */
     protected function applyCustomCheckoutDataToOrder(CartInterface $cart, AbstractOrder $order): AbstractOrder
     {
@@ -730,9 +726,7 @@ class OrderManager implements OrderManagerInterface
      * hook to set customer into order
      * default implementation gets current customer from environment and sets it into order
      *
-     * @param AbstractOrder $order
      *
-     * @return AbstractOrder
      */
     protected function setCurrentCustomerToOrder(AbstractOrder $order): AbstractOrder
     {
@@ -749,7 +743,6 @@ class OrderManager implements OrderManagerInterface
     /**
      * hook for creating order number - can be overwritten
      *
-     * @return string
      */
     protected function createOrderNumber(): string
     {
@@ -757,7 +750,6 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @return AbstractOrder
      *
      * @throws \Exception
      */
@@ -774,17 +766,12 @@ class OrderManager implements OrderManagerInterface
     /**
      * Get list of valid source orders to perform recurring payment on.
      *
-     * @param string $customerId
-     * @param RecurringPaymentInterface $paymentProvider
-     * @param string|null $paymentMethod
-     * @param string $orderId
      *
-     * @return Concrete
      *
      * @throws \Exception
      * @throws ProviderNotFoundException
      */
-    public function getRecurringPaymentSourceOrderList(string $customerId, RecurringPaymentInterface $paymentProvider, string $paymentMethod = null, string $orderId = ''): Concrete
+    public function getRecurringPaymentSourceOrderList(string $customerId, RecurringPaymentInterface $paymentProvider, ?string $paymentMethod = null, string $orderId = ''): Concrete
     {
         $orders = $this->buildOrderList();
         $orders->addConditionParam('customer__id = ?', $customerId);
@@ -812,15 +799,12 @@ class OrderManager implements OrderManagerInterface
     /**
      * Get source order for performing recurring payment
      *
-     * @param string $customerId
-     * @param RecurringPaymentInterface $paymentProvider
-     * @param string|null $paymentMethod
      *
      * @return \Pimcore\Model\DataObject\Concrete|null|false
      *
      * @throws \Exception
      */
-    public function getRecurringPaymentSourceOrder(string $customerId, RecurringPaymentInterface $paymentProvider, string $paymentMethod = null): bool|\Pimcore\Model\DataObject\Concrete|null
+    public function getRecurringPaymentSourceOrder(string $customerId, RecurringPaymentInterface $paymentProvider, ?string $paymentMethod = null): bool|\Pimcore\Model\DataObject\Concrete|null
     {
         if (!$paymentProvider->isRecurringPaymentEnabled()) {
             return null;
@@ -833,11 +817,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param AbstractOrder $order
-     * @param RecurringPaymentInterface $payment
-     * @param string $customerId
      *
-     * @return bool
      *
      * @throws \Exception
      */
@@ -849,7 +829,6 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @return AbstractOrderItem
      *
      * @throws \Exception
      */
@@ -866,7 +845,6 @@ class OrderManager implements OrderManagerInterface
     /**
      * @param TaxEntry[] $taxItems
      *
-     * @return array
      */
     protected function buildTaxArray(array $taxItems): array
     {
@@ -885,9 +863,7 @@ class OrderManager implements OrderManagerInterface
     /**
      * Build list class name, try namespaced first and fall back to legacy naming
      *
-     * @param string $className
      *
-     * @return string
      *
      * @throws \Exception
      */
@@ -907,7 +883,6 @@ class OrderManager implements OrderManagerInterface
     /**
      * Build class name for order list
      *
-     * @return string
      *
      * @throws \Exception
      */
@@ -919,7 +894,6 @@ class OrderManager implements OrderManagerInterface
     /**
      * Build class name for order item list
      *
-     * @return string
      *
      * @throws \Exception
      */
@@ -931,7 +905,6 @@ class OrderManager implements OrderManagerInterface
     /**
      * Build order listing
      *
-     * @return Concrete
      *
      * @throws \Exception
      */
@@ -945,7 +918,6 @@ class OrderManager implements OrderManagerInterface
     /**
      * Build order item listing
      *
-     * @return Concrete
      *
      * @throws \Exception
      */

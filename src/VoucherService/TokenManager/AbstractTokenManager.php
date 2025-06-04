@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\TokenManager;
@@ -47,10 +44,7 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
     abstract public function cleanUpCodes(?array $filter = []): bool;
 
     /**
-     * @param string $code
-     * @param CartInterface $cart
      *
-     * @return bool
      *
      * @throws VoucherServiceException When validation fails for any reason
      */
@@ -66,7 +60,6 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
     /**
      * Only tokens of published voucher series' may be used.
      *
-     * @param string $code
      *
      * @throws VoucherServiceException When token for $code can't be found, series of token can't be found or if series isn't published.
      */
@@ -89,8 +82,6 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
     /**
      * Once per cart setting
      *
-     * @param string $code
-     * @param CartInterface $cart
      *
      * @throws VoucherServiceException
      */
@@ -113,7 +104,6 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
     /**
      * Only token per cart setting
      *
-     * @param CartInterface $cart
      *
      * @throws VoucherServiceException
      */
@@ -138,9 +128,7 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
     /**
      * Export tokens to CSV
      *
-     * @param array $params
      *
-     * @return string
      */
     public function exportCsv(array $params): string
     {
@@ -187,9 +175,7 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
     /**
      * Export tokens to plain text list
      *
-     * @param array $params
      *
-     * @return string
      */
     public function exportPlain(array $params): string
     {
@@ -215,9 +201,7 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
     /**
      * Get data for export - to be overridden in child classes
      *
-     * @param array $params
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -232,39 +216,23 @@ abstract class AbstractTokenManager implements TokenManagerInterface, Exportable
 
     abstract public function releaseToken(string $code, CartInterface $cart): bool;
 
-    /**
-     * @param array|null $filter
-     *
-     * @return array|bool
-     */
-    abstract public function getCodes(array $filter = null): bool|array;
+    abstract public function getCodes(?array $filter = null): bool|array;
 
-    /**
-     * @param int|null $usagePeriod
-     *
-     * @return bool|array
-     */
-    abstract public function getStatistics(int $usagePeriod = null): bool|array;
+    abstract public function getStatistics(?int $usagePeriod = null): bool|array;
 
     abstract public function getConfiguration(): AbstractVoucherTokenType;
 
     /**
      * Returns bool false if failed - otherwise an array or a string with the codes
      *
-     * @return bool | string | array
      */
     abstract public function insertOrUpdateVoucherSeries(): bool|string|array;
 
     abstract public function getFinalTokenLength(): int;
 
-    /**
-     * {@inheritdoc}
-     */
     abstract public function cleanUpReservations(int $duration = 0, ?int $seriesId = null): bool;
 
     /**
-     * @param array $viewParamsBag
-     * @param array $params
      *
      * @return string The path of the template to display
      */

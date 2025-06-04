@@ -1,15 +1,12 @@
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
- *
- * @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- * @license    http://www.pimcore.org/license     GPLv3 and PCL
- */
+* This source file is available under the terms of the
+* Pimcore Open Core License (POCL)
+* Full copyright and license information is available in
+* LICENSE.md which is distributed with this source code.
+*
+*  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.com)
+*  @license    Pimcore Open Core License (POCL)
+*/
 
 pimcore.registerNS("pimcore.object.tags.indexFieldSelection");
 /**
@@ -62,10 +59,10 @@ pimcore.object.tags.indexFieldSelection = Class.create(pimcore.object.tags.selec
                     load: function(store) {
                         if(this.data) {
                             if(this.preSelectCombobox.rendered) {
-                                this.preSelectCombobox.setValue(this.data.preSelect);
+                                this.preSelectCombobox.setValue(this.getPreselectValue());
                             } else {
                                 this.preSelectCombobox.addListener("afterRender", function() {
-                                    this.preSelectCombobox.setValue(this.data.preSelect);
+                                    this.preSelectCombobox.setValue(this.getPreselectValue());
                                 }.bind(this));
                             }
                         }
@@ -239,10 +236,10 @@ pimcore.object.tags.indexFieldSelection = Class.create(pimcore.object.tags.selec
 
         if(this.fieldConfig.multiPreSelect == 'local_single' || this.fieldConfig.multiPreSelect == 'local_multi') {
             if(this.preSelectCombobox.rendered) {
-                this.preSelectCombobox.setValue(this.data.preSelect);
+                this.preSelectCombobox.setValue(this.getPreselectValue());
             } else {
                 this.preSelectCombobox.addListener("afterRender", function() {
-                    this.preSelectCombobox.setValue(this.data.preSelect);
+                    this.preSelectCombobox.setValue(this.getPreselectValue());
                 }.bind(this));
             }
         }
@@ -262,5 +259,12 @@ pimcore.object.tags.indexFieldSelection = Class.create(pimcore.object.tags.selec
 
     isDirty: function() {
         return this.fieldsCombobox.isDirty() || (this.preSelectCombobox && this.preSelectCombobox.isDirty());
+    },
+
+    getPreselectValue: function() {
+        if(this.fieldConfig.filterGroups?.includes('relation')) {
+            return this.data.preSelect?.split(',').map(Number);
+        }
+        return this.data.preSelect?.split(',');
     }
 });

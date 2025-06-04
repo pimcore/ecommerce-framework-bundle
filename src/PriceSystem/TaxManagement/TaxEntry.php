@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PriceSystem\TaxManagement;
@@ -36,13 +33,7 @@ class TaxEntry
 
     protected ?string $taxId = null;
 
-    /**
-     * @param float $percent
-     * @param Decimal $amount
-     * @param string|null $taxId
-     * @param TaxEntryFieldcollection|null $entry
-     */
-    public function __construct(float $percent, Decimal $amount, string $taxId = null, TaxEntryFieldcollection $entry = null)
+    public function __construct(float $percent, Decimal $amount, ?string $taxId = null, ?TaxEntryFieldcollection $entry = null)
     {
         $this->percent = $percent;
         $this->amount = $amount;
@@ -85,10 +76,7 @@ class TaxEntry
         return $this->taxId;
     }
 
-    /**
-     * @param string|null $taxId
-     */
-    public function setTaxId(string $taxId = null): void
+    public function setTaxId(?string $taxId = null): void
     {
         $this->taxId = $taxId;
     }
@@ -97,7 +85,6 @@ class TaxEntry
      * Converts tax rate configuration of given OnlineShopTaxClass to TaxEntries that can be used for
      * tax calculation.
      *
-     * @param OnlineShopTaxClass $taxClass
      *
      * @return TaxEntry[]
      */

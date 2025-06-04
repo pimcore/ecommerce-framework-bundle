@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PriceSystem;
@@ -74,9 +71,6 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
         $resolver->setAllowedTypes('price_type', 'string');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createPriceInfoInstance(int|string|null $quantityScale, CheckoutableInterface $product, array $products): AbstractPriceInfo
     {
         $taxClass = $this->getTaxClassForProduct($product);
@@ -98,9 +92,6 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
         return new AttributePriceInfo($price, $quantityScale, $totalPrice);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function filterProductIds(array $productIds, ?float $fromPrice, ?float $toPrice, string $order, int $offset, int $limit): array
     {
         throw new UnsupportedException(__METHOD__  . ' is not supported for ' . get_class($this));
@@ -109,10 +100,8 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
     /**
      * Calculates prices from product
      *
-     * @param CheckoutableInterface $product
      * @param CheckoutableInterface[] $products
      *
-     * @return Decimal
      */
     protected function calculateAmount(CheckoutableInterface $product, array $products): Decimal
     {
@@ -142,7 +131,6 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
     /**
      * Returns default currency based on environment settings
      *
-     * @return Currency
      */
     protected function getDefaultCurrency(): Currency
     {
@@ -152,9 +140,7 @@ class AttributePriceSystem extends CachingPriceSystem implements PriceSystemInte
     /**
      * Creates instance of PriceInterface
      *
-     * @param Decimal $amount
      *
-     * @return PriceInterface
      */
     protected function getPriceClassInstance(Decimal $amount): PriceInterface
     {

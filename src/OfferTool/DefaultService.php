@@ -2,21 +2,19 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OfferTool;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItemInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
@@ -49,7 +47,23 @@ class DefaultService implements ServiceInterface
 
         $this->offerClass = $offerClass;
         $this->offerItemClass = $offerItemClass;
-        $this->parentFolderPath = strftime($parentFolderPath, time());
+
+        $maybeStrftime = str_contains($parentFolderPath, '%');
+        if (substr_count($parentFolderPath, '*') % 2 === 0 && !$maybeStrftime) {
+            $pattern = '/\*([^\*]+)\*/';
+            $offerParentPath = preg_replace_callback($pattern, function ($matches) {
+                return CarbonImmutable::now()->isoFormat($matches[1]);
+            }, $parentFolderPath);
+        } else {
+            trigger_deprecation(
+                'pimcore/ecommerce-framework-bundle',
+                '1.1',
+                'Please use `offer_parent_path` instead of `offer_tool:order_storage:parent_folder_path`, as strftime() is deprecated.'
+            );
+            $offerParentPath = strftime($parentFolderPath, time());
+        }
+
+        $this->parentFolderPath = $offerParentPath;
     }
 
     protected function getParentFolder(): Folder
@@ -70,10 +84,8 @@ class DefaultService implements ServiceInterface
     }
 
     /**
-     * @param CartInterface $cart
      * @param CartItemInterface[] $excludeItems
      *
-     * @return AbstractOffer
      */
     public function createNewOfferFromCart(CartInterface $cart, array $excludeItems = []): AbstractOffer
     {
@@ -224,9 +236,7 @@ class DefaultService implements ServiceInterface
      * transforms price before set to the offer tool item.
      * can be used e.g. for adding vat, ...
      *
-     * @param Decimal $price
      *
-     * @return Decimal
      */
     protected function priceTransformationHook(Decimal $price): Decimal
     {

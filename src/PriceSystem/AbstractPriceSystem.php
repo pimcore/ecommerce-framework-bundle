@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PriceSystem;
@@ -35,10 +32,7 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
         $this->pricingManagers = $pricingManagers;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPriceInfo(CheckoutableInterface $product, int|string $quantityScale = null, array $products = null): PriceInfoInterface
+    public function getPriceInfo(CheckoutableInterface $product, int|string|null $quantityScale = null, ?array $products = null): PriceInfoInterface
     {
         return $this->initPriceInfoInstance($quantityScale, $product, $products);
     }
@@ -48,10 +42,8 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
      * set any price values
      *
      * @param int|string|null $quantityScale Numeric or string (allowed values: PriceInfoInterface::MIN_PRICE)
-     * @param CheckoutableInterface $product
      * @param CheckoutableInterface[] $products
      *
-     * @return PriceInfoInterface
      */
     protected function initPriceInfoInstance(int|string|null $quantityScale, CheckoutableInterface $product, array $products): PriceInfoInterface
     {
@@ -78,10 +70,8 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
 
     /**
      * @param int|string|null $quantityScale Numeric or string (allowed values: PriceInfoInterface::MIN_PRICE)
-     * @param CheckoutableInterface $product
      * @param CheckoutableInterface[] $products
      *
-     * @return AbstractPriceInfo
      */
     abstract public function createPriceInfoInstance(int|string|null $quantityScale, CheckoutableInterface $product, array $products): AbstractPriceInfo;
 
@@ -91,7 +81,6 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
      *
      * Should be overwritten in custom price systems with suitable implementation.
      *
-     * @return OnlineShopTaxClass
      */
     protected function getDefaultTaxClass(): OnlineShopTaxClass
     {
@@ -112,9 +101,7 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
     /**
      * Returns OnlineShopTaxClass for given CheckoutableInterface.
      *
-     * @param CheckoutableInterface $product
      *
-     * @return OnlineShopTaxClass
      */
     public function getTaxClassForProduct(CheckoutableInterface $product): OnlineShopTaxClass
     {
@@ -124,9 +111,7 @@ abstract class AbstractPriceSystem implements PriceSystemInterface
     /**
      * Returns OnlineShopTaxClass for given CartPriceModificatorInterface
      *
-     * @param CartPriceModificatorInterface $modificator
      *
-     * @return OnlineShopTaxClass
      */
     public function getTaxClassForPriceModification(CartPriceModificatorInterface $modificator): OnlineShopTaxClass
     {

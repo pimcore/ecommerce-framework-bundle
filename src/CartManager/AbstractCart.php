@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CartManager;
@@ -85,12 +82,11 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
      * @param string|null $itemKey
      * @param bool $replace
      * @param array $customProperties
+
      * @param AbstractSetProductEntry[] $subProducts
-     * @param string|null $comment
      *
-     * @return string
      */
-    public function addItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $customProperties = [], array $subProducts = [], string $comment = null): string
+    public function addItem(CheckoutableInterface $product, int $count, ?string $itemKey = null, bool $replace = false, array $customProperties = [], array $subProducts = [], ?string $comment = null): string
     {
         if (empty($itemKey)) {
             $itemKey = (string) $product->getId();
@@ -104,17 +100,15 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
     }
 
     /**
-     * @param string $itemKey
      * @param CheckoutableInterface&Concrete $product
      * @param int $count
      * @param bool $replace
      * @param array $customProperties
+
      * @param AbstractSetProductEntry[] $subProducts
-     * @param string|null $comment
      *
-     * @return string
      */
-    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $customProperties = [], array $subProducts = [], string $comment = null): string
+    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $customProperties = [], array $subProducts = [], ?string $comment = null): string
     {
         //load items first in order to lazyload items (if they are lazy loaded)
         $this->getItems();
@@ -171,10 +165,7 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
     /**
      * updates count of specific cart item
      *
-     * @param string $itemKey
-     * @param int $count
      *
-     * @return CartItemInterface
      */
     public function updateItemCount(string $itemKey, int $count): CartItemInterface
     {
@@ -190,16 +181,9 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
 
     /**
      * @param CheckoutableInterface&Concrete $product
-     * @param int $count
-     * @param string|null $itemKey
-     * @param bool $replace
-     * @param array $params
-     * @param array $subProducts
-     * @param string|null $comment
      *
-     * @return string
      */
-    public function addGiftItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string
+    public function addGiftItem(CheckoutableInterface $product, int $count, ?string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], ?string $comment = null): string
     {
         if (empty($itemKey)) {
             $itemKey = (string) $product->getId();
@@ -213,17 +197,10 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
     }
 
     /**
-     * @param string $itemKey
      * @param CheckoutableInterface&Concrete $product
-     * @param int $count
-     * @param bool $replace
-     * @param array $params
-     * @param array $subProducts
-     * @param string|null $comment
      *
-     * @return string
      */
-    public function updateGiftItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string
+    public function updateGiftItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], ?string $comment = null): string
     {
         // item already exists?
         if (!array_key_exists($itemKey, $this->giftItems)) {
@@ -282,8 +259,6 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
 
     /**
      * @param string $countSubItems - use one of COUNT_MAIN_ITEMS_ONLY, COUNT_MAIN_OR_SUB_ITEMS, COUNT_MAIN_AND_SUB_ITEMS
-     *
-     * @return int
      *
      * @throws InvalidConfigException
      */
@@ -355,8 +330,6 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
 
     /**
      * @param string $countSubItems - use one of COUNT_MAIN_ITEMS_ONLY, COUNT_MAIN_OR_SUB_ITEMS, COUNT_MAIN_AND_SUB_ITEMS
-     *
-     * @return int
      *
      * @throws InvalidConfigException
      */
@@ -521,10 +494,7 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
         return $this->creationDate;
     }
 
-    /**
-     * @param \DateTime|null $creationDate
-     */
-    public function setCreationDate(\DateTime $creationDate = null): void
+    public function setCreationDate(?\DateTime $creationDate = null): void
     {
         $this->creationDate = $creationDate;
         if ($creationDate) {
@@ -555,10 +525,7 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
         return $this->modificationDate;
     }
 
-    /**
-     * @param \DateTime|null $modificationDate
-     */
-    public function setModificationDate(\DateTime $modificationDate = null): void
+    public function setModificationDate(?\DateTime $modificationDate = null): void
     {
         $this->modificationDate = $modificationDate;
         if ($modificationDate) {
@@ -651,7 +618,6 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
     }
 
     /**
-     * @param int $count
      *
      * @return array<int, CartItemInterface>
      */
@@ -670,7 +636,6 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
     /**
      * sorts all items in cart according to a given callback function
      *
-     * @param callable $value_compare_func
      *
      * @return $this
      */
@@ -682,9 +647,7 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
     /**
      * Adds a voucher token to the cart's checkout data and reserves it.
      *
-     * @param string $code
      *
-     * @return bool
      *
      * @throws \Exception
      */
@@ -726,9 +689,7 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
     /**
      * Removes a token from cart and releases token reservation.
      *
-     * @param string $code
      *
-     * @return bool
      *
      * @throws \Exception
      */
@@ -808,9 +769,7 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
     /**
      * Should be added to the cart
      *
-     * @param CartItemInterface $item
      *
-     * @return bool
      */
     protected static function isValidCartItem(CartItemInterface $item): bool
     {

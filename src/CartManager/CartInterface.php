@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CartManager;
@@ -66,73 +63,52 @@ interface CartInterface
     public function getGiftItem(string $itemKey): ?CartItemInterface;
 
     /**
-     * @param CheckoutableInterface $product
-     * @param int $count
-     * @param string|null $itemKey
      * @param bool $replace replace if item with same key exists
      * @param array $customProperties optional additional item information
      * @param AbstractSetProductEntry[] $subProducts
-     * @param string|null $comment
      *
      * @return string $itemKey
      */
-    public function addItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $customProperties = [], array $subProducts = [], string $comment = null): string;
+    public function addItem(CheckoutableInterface $product, int $count, ?string $itemKey = null, bool $replace = false, array $customProperties = [], array $subProducts = [], ?string $comment = null): string;
 
     /**
-     * @param string $itemKey
-     * @param CheckoutableInterface $product
-     * @param int $count
      * @param bool $replace replace if item with same key exists
      * @param array $customProperties optional additional item information
-     * @param array $subProducts
-     * @param string|null $comment
+     * @param array $params optional additional item information
      *
      * @return string $itemKey
      */
-    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $customProperties = [], array $subProducts = [], string $comment = null): string;
+    public function updateItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $customProperties = [], array $subProducts = [], ?string $comment = null): string;
 
     /**
      * updates count of specific cart item
      *
-     * @param string $itemKey
-     * @param int $count
      *
-     * @return mixed
      */
     public function updateItemCount(string $itemKey, int $count): mixed;
 
     /**
-     * @param CheckoutableInterface $product
-     * @param int $count
-     * @param string|null $itemKey
      * @param bool $replace replace if item with same key exists
      * @param array $params optional additional item information
      * @param AbstractSetProductEntry[] $subProducts
-     * @param string|null $comment
      *
      * @return string $itemKey
      */
-    public function addGiftItem(CheckoutableInterface $product, int $count, string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string;
+    public function addGiftItem(CheckoutableInterface $product, int $count, ?string $itemKey = null, bool $replace = false, array $params = [], array $subProducts = [], ?string $comment = null): string;
 
     /**
-     * @param string $itemKey
-     * @param CheckoutableInterface $product
-     * @param int $count
      * @param bool $replace replace if item with same key exists
      * @param array $params optional additional item information
-     * @param array $subProducts
-     * @param string|null $comment
      *
      * @return string $itemKey
      */
-    public function updateGiftItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], string $comment = null): string;
+    public function updateGiftItem(string $itemKey, CheckoutableInterface $product, int $count, bool $replace = false, array $params = [], array $subProducts = [], ?string $comment = null): string;
 
     public function removeItem(string $itemKey): void;
 
     /**
      * clears all items of cart
      *
-     * @return void
      */
     public function clear(): void;
 
@@ -141,7 +117,6 @@ interface CartInterface
      *
      * @param string $countSubItems - use one of COUNT_MAIN_ITEMS_ONLY, COUNT_MAIN_OR_SUB_ITEMS, COUNT_MAIN_AND_SUB_ITEMS
      *
-     * @return int
      */
     public function getItemAmount(string $countSubItems = self::COUNT_MAIN_ITEMS_ONLY): int;
 
@@ -150,12 +125,10 @@ interface CartInterface
      *
      * @param string $countSubItems - use one of COUNT_MAIN_ITEMS_ONLY, COUNT_MAIN_OR_SUB_ITEMS, COUNT_MAIN_AND_SUB_ITEMS
      *
-     * @return int
      */
     public function getItemCount(string $countSubItems = self::COUNT_MAIN_ITEMS_ONLY): int;
 
     /**
-     * @param int $count
      *
      * @return CartItemInterface[]
      */
@@ -164,7 +137,6 @@ interface CartInterface
     /**
      * returns price calculator of cart
      *
-     * @return CartPriceCalculatorInterface
      */
     public function getPriceCalculator(): CartPriceCalculatorInterface;
 
@@ -181,33 +153,26 @@ interface CartInterface
      * Set custom checkout data for cart.
      * can be used for delivery information, ...
      *
-     * @param string $key
-     * @param string $data
      */
     public function setCheckoutData(string $key, string $data): void;
 
     /**
      * Get custom checkout data for cart with given key.
      *
-     * @param string $key
      *
-     * @return string|null
      */
     public function getCheckoutData(string $key): ?string;
 
     /**
      * get name of cart.
      *
-     * @return string
      */
     public function getName(): string;
 
     /**
      * set name of cart.
      *
-     * @param string $name
      *
-     * @return void
      */
     public function setName(string $name): void;
 
@@ -215,32 +180,20 @@ interface CartInterface
      * returns if cart is bookable.
      * default implementation checks if all products of cart a bookable.
      *
-     * @return bool
      */
     public function getIsBookable(): bool;
 
     public function getCreationDate(): \DateTime;
 
-    /**
-     * @param null|\DateTime $creationDate
-     *
-     * @return void
-     */
-    public function setCreationDate(\DateTime $creationDate = null): void;
+    public function setCreationDate(?\DateTime $creationDate = null): void;
 
     public function getModificationDate(): ?\DateTime;
 
-    /**
-     * @param null|\DateTime $modificationDate
-     *
-     * @return void
-     */
-    public function setModificationDate(\DateTime $modificationDate = null): void;
+    public function setModificationDate(?\DateTime $modificationDate = null): void;
 
     /**
      * sorts all items in cart according to a given callback function
      *
-     * @param callable $value_compare_func
      *
      * @return $this
      */
@@ -249,23 +202,19 @@ interface CartInterface
     /**
      * saves cart
      *
-     * @return void
      */
     public function save(): void;
 
     /**
      * deletes cart
      *
-     * @return void
      */
     public function delete(): void;
 
     /**
      * @static
      *
-     * @param int $id
      *
-     * @return CartInterface|null
      */
     public static function getById(int $id): ?CartInterface;
 
@@ -274,16 +223,12 @@ interface CartInterface
      *
      * @static
      *
-     * @param int $userId
-     *
      * @return CartInterface[]
      */
     public static function getAllCartsForUser(int $userId): array;
 
     /**
-     * @param string $token
      *
-     * @return bool
      *
      * @throws \Exception
      */

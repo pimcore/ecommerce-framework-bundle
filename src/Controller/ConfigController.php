@@ -2,49 +2,47 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Controller;
 
+use Pimcore\Controller\KernelControllerEventInterface;
 use Pimcore\Controller\UserAwareController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class ConfigController
  *
- * @Route("/config")
- *
  * @internal
  */
-class ConfigController extends UserAwareController
+#[Route('/config')]
+class ConfigController extends UserAwareController implements KernelControllerEventInterface
 {
     /**
      * ConfigController constructor.
      *
-     * @param RouterInterface $router
      */
     public function __construct(private RouterInterface $router)
     {
         $this->router = $router;
     }
 
-    /**
-     * @Route("/js-config", name="pimcore_ecommerceframework_config_jsconfig", methods={"GET"})
-     *
-     * @return Response
-     */
+    public function onKernelControllerEvent(ControllerEvent $event): void
+    {
+        $this->checkPermission('bundle_ecommerce_back-office_order');
+    }
+
+    #[Route('/js-config', name: 'pimcore_ecommerceframework_config_jsconfig', methods: ['GET'])]
     public function jsConfigAction(): Response
     {
         $config = $this->getParameter('pimcore_ecommerce.pimcore.config');

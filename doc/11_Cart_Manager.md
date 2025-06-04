@@ -3,7 +3,7 @@
 The Cart Manager is responsible for all aspects concerning carts and can manage multiple carts. 
 Important to know is, that in the E-Commerce Framework every user specific product collection is a cart. No matter 
 how it is called (cart, wish list, compare list, ...), all these product collections need the same base 
-functionality. Therefore all different product collections are carts with a specific name.
+functionality. Therefore, all different product collections are carts with a specific name.
  
 
 ## Working with Carts
@@ -76,7 +76,7 @@ $subTotal = $cart->getPriceCalculator()->getSubTotal();
 // iterates through all price modifications
 foreach ($cart->getPriceCalculator()->getPriceModifications() as $name => $modification) {
     // $name is the label of a modification
-    // $modification is a OnlineShop_Framework_IModificatedPrice
+    // $modification is an implementation of \Pimcore\Bundle\EcommerceFrameworkBundle\PriceSystem\ModificatedPriceInterface
 }
  
 // delivers sum including all price modifications
@@ -132,9 +132,9 @@ Following elements are configured:
   by factory implementation
 * **Price calculator factory service ID + options and modificators**: The price calculator is a framework for calculation
   and modification (shipping costs, discounts, ...) of prices on cart level. Each modification is implemented in a 
-  [`CartPriceModificatorInterface` class](https://github.com/pimcore/pimcore/blob/11.x/bundles/EcommerceFrameworkBundle/CartManager/CartPriceModificator/CartPriceModificatorInterface.php). 
-  See [Shipping](https://github.com/pimcore/pimcore/blob/11.x/bundles/EcommerceFrameworkBundle/CartManager/CartPriceModificator/Shipping.php)
-  or [Discount](https://github.com/pimcore/pimcore/blob/11.x/bundles/EcommerceFrameworkBundle/CartManager/CartPriceModificator/Discount.php)
+  [`CartPriceModificatorInterface` class](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/CartManager/CartPriceModificator/CartPriceModificatorInterface.php). 
+  See [Shipping](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/CartManager/CartPriceModificator/Shipping.php)
+  or [Discount](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/CartManager/CartPriceModificator/Discount.php)
   for examples.
 
 
@@ -151,7 +151,7 @@ Use this implementation when no user login is available and storing carts in the
 
 * **Database-Cart** (class name `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart`): This cart implementation
 stores all cart information in the **database**. In this case, it is important that the currently logged in user is set 
-to the [E-Commerce Framework Environment](https://github.com/pimcore/pimcore/blob/11.x/bundles/EcommerceFrameworkBundle/EnvironmentInterface.php)
+to the [E-Commerce Framework Environment](https://github.com/pimcore/ecommerce-framework-bundle/blob/1.x/src/EnvironmentInterface.php)
 with the code snippet in the box below. 
 Use this implementation when user logins are available and the carts should be persisted beyond session lifetime. 
 
@@ -178,3 +178,15 @@ Once set, the cart manager uses all specific settings of the currently active ch
 in the configuration (identified by tenant name).
 
 See also [Demo](https://github.com/pimcore/demo/blob/11.x/config/ecommerce/base-ecommerce.yaml#L197) for some examples.  
+
+
+## Adding Custom Properties to Cart Items
+
+Following steps are necessary to add additional custom properties to cart items: 
+
+1) Extend `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem` implementation and add your custom properties including getters/setters. 
+2) Extend `Cart::getCartItemClassName` implementation and make sure your custom `CartItem` implementation gets returned.
+3) Provide the custom properties as key-value pairs in `$params` parameter in the following methods:
+   1) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\AbstractCart::addItem`
+   2) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\AbstractCart::updateItem`
+   3) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartManagerInterface::addToCart`

@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tracking;
@@ -37,8 +34,6 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Merge values into properties
      *
-     * @param array $data
-     * @param bool $overwrite
      *
      * @return $this
      */
@@ -63,8 +58,6 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Add an additional attribute.
      *
-     * @param string $attribute
-     * @param mixed $value
      *
      * @return $this
      */
@@ -78,9 +71,7 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Get an additional attribute.
      *
-     * @param string $attribute
      *
-     * @return mixed
      */
     public function getAdditionalAttribute(string $attribute): mixed
     {
@@ -90,7 +81,6 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Get all additional attributes.
      *
-     * @return array
      */
     public function getAdditionalAttributes(): array
     {
@@ -100,7 +90,6 @@ abstract class AbstractData implements \JsonSerializable
     /**
      * Serialize all non-null properties
      *
-     * @return array
      */
     public function jsonSerialize(): array
     {

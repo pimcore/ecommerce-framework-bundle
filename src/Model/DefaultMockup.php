@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Model;
@@ -122,7 +119,7 @@ class DefaultMockup implements ProductInterface, LinkGeneratorAwareInterface, In
             $attributeName = substr($method, 3);
         }
 
-        foreach([$attributeName, lcfirst($attributeName)] as $attrName) {
+        foreach ([$attributeName, lcfirst($attributeName)] as $attrName) {
 
             if (is_array($this->params) && array_key_exists($attrName, $this->params)) {
                 return $this->params[$attrName];
@@ -170,7 +167,6 @@ class DefaultMockup implements ProductInterface, LinkGeneratorAwareInterface, In
      * called by default CommitOrderProcessor to get the product name to store it in the order item
      * should be overwritten in mapped sub classes of product classes
      *
-     * @return string|null
      */
     public function getOSName(): ?string
     {
@@ -181,7 +177,6 @@ class DefaultMockup implements ProductInterface, LinkGeneratorAwareInterface, In
      * called by default CommitOrderProcessor to get the product number to store it in the order item
      * should be overwritten in mapped sub classes of product classes
      *
-     * @return string|null
      */
     public function getOSProductNumber(): ?string
     {

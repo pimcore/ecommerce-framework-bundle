@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\V7;
@@ -49,25 +46,20 @@ interface OrderManagerInterface
     /**
      * Looks if order object for given cart exists and returns it - it does not create it!
      *
-     * @param CartInterface $cart
      *
-     * @return AbstractOrder|null
      */
     public function getOrderFromCart(CartInterface $cart): ?AbstractOrder;
 
     /**
      * Returns order based on given payment status
      *
-     * @param StatusInterface $paymentStatus
      *
-     * @return AbstractOrder|null
      */
     public function getOrderByPaymentStatus(StatusInterface $paymentStatus): ?AbstractOrder;
 
     /**
      * Builds order listing
      *
-     * @return \Pimcore\Model\DataObject\Listing\Concrete
      *
      * @throws \Exception
      */
@@ -76,7 +68,6 @@ interface OrderManagerInterface
     /**
      * Build order item listing
      *
-     * @return \Pimcore\Model\DataObject\Listing\Concrete
      *
      * @throws \Exception
      */
@@ -85,10 +76,7 @@ interface OrderManagerInterface
     public function cartHasPendingPayments(CartInterface $cart): bool;
 
     /**
-     * @param CartInterface $cart
-     * @param AbstractOrder $order
      *
-     * @return bool
      *
      * @throws UnsupportedException
      */

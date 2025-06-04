@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tests\Ecommerce\PricingManager\Rule;
@@ -111,14 +108,7 @@ class AbstractRuleTest extends EcommerceTestCase
     }
 
     /**
-     * @param int $id
-     * @param float $grossPrice
-     * @param PricingManagerInterface|null $pricingManager
-     * @param array $categories
-     * @param array $taxes
-     * @param string $combinationType
      *
-     * @return CheckoutableInterface
      *
      * @throws \TypeError
      */
@@ -258,7 +248,6 @@ class AbstractRuleTest extends EcommerceTestCase
     }
 
     /**
-     * @param array $definitions
      *
      * @return ActionInterface[]
      */
@@ -316,7 +305,6 @@ class AbstractRuleTest extends EcommerceTestCase
     }
 
     /**
-     * @param array $ruleDefinitions
      *
      * @return RuleInterface[]
      */
@@ -345,12 +333,6 @@ class AbstractRuleTest extends EcommerceTestCase
         return $rules;
     }
 
-    /**
-     * @param int $id
-     * @param int|null $parentId
-     *
-     * @return AbstractProduct
-     */
     protected function mockProductForCondition(int $id, int $parentId = null): AbstractProduct
     {
         $product = $this->getMockBuilder(AbstractProduct::class)->getMock();

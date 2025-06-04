@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService;
@@ -32,7 +29,6 @@ class FilterService
     protected array $filterTypes = [];
 
     /**
-     * @param FilterGroupHelper $filterGroupHelper
      * @param AbstractFilterType[] $filterTypes
      */
     public function __construct(FilterGroupHelper $filterGroupHelper, array $filterTypes)
@@ -120,7 +116,6 @@ class FilterService
      * @param ProductListInterface $productList current product list (with all set filters) to get available options and counts
      * @param array $currentFilter current filter for this filter definition
      *
-     * @return array
      */
     public function getFilterValues(AbstractFilterDefinitionType $filterDefinition, ProductListInterface $productList, array $currentFilter): array
     {
@@ -132,11 +127,6 @@ class FilterService
     /**
      * Adds condition - delegates it to the AbstractFilterType instance
      *
-     * @param AbstractFilterDefinitionType $filterDefinition
-     * @param ProductListInterface $productList
-     * @param array $currentFilter
-     * @param array $params
-     * @param bool $isPrecondition
      *
      * @return array updated currentFilter array
      */

@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CartManager;
@@ -49,7 +46,6 @@ interface CartItemInterface
     /**
      * @param CartItemInterface[] $subItems
      *
-     * @return void
      */
     public function setSubItems(array $subItems): void;
 
@@ -73,29 +69,19 @@ interface CartItemInterface
     /**
      * @static
      *
-     * @param int|string $cartId
-     * @param string $itemKey
-     * @param string $parentKey
      *
-     * @return CartItemInterface|null
      */
     public static function getByCartIdItemKey(int|string $cartId, string $itemKey, string $parentKey = ''): ?CartItemInterface;
 
     /**
      * @static
      *
-     * @param int|string $cartId
      */
     public static function removeAllFromCart(int|string $cartId): void;
 
     public function save(): void;
 
-    /**
-     * @param \DateTime|null $date
-     *
-     * @return void
-     */
-    public function setAddedDate(\DateTime $date = null): void;
+    public function setAddedDate(?\DateTime $date = null): void;
 
     public function getAddedDate(): \DateTime;
 
@@ -109,7 +95,6 @@ interface CartItemInterface
     /**
      * get item name
      *
-     * @return string
      */
     public function getName(): string;
 

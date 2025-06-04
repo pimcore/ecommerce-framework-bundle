@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker;
@@ -30,16 +27,13 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
     /**
      * returns prefix for cache key
      *
-     * @return string
      */
     abstract protected function getMockupCachePrefix(): string;
 
     /**
      * creates mockup cache key
      *
-     * @param int $objectId
      *
-     * @return string
      */
     protected function createMockupCacheKey(int $objectId): string
     {
@@ -49,7 +43,6 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
     /**
      * deletes element from mockup cache
      *
-     * @param int $objectId
      */
     protected function deleteFromMockupCache(int $objectId): void
     {
@@ -60,14 +53,11 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
     /**
      * updates mockup cache, delegates creation of mockup object to tenant config
      *
-     * @param int $objectId
-     * @param array|null $data
      *
-     * @return DefaultMockup
      *
      * @throws InvalidConfigException
      */
-    public function saveToMockupCache(int $objectId, array $data = null): DefaultMockup
+    public function saveToMockupCache(int $objectId, ?array $data = null): DefaultMockup
     {
         if (empty($data)) {
             $data = $this->db->fetchOne('SELECT data FROM ' . $this->getStoreTableName() . ' WHERE id = ? AND tenant = ?', [$objectId, $this->name]);
@@ -109,9 +99,7 @@ abstract class AbstractMockupCacheWorker extends ProductCentricBatchProcessingWo
     /**
      * gets mockup from cache and if not in cache, adds it to cache
      *
-     * @param int $objectId
      *
-     * @return DefaultMockup
      */
     public function getMockupFromCache(int $objectId): DefaultMockup
     {

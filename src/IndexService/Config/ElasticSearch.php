@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
@@ -32,7 +29,7 @@ use Symfony\Contracts\Service\Attribute\Required;
  * Default configuration for elastic search as product index implementation.
  *
  */
-class ElasticSearch extends AbstractConfig implements MockupConfigInterface, ElasticSearchConfigInterface
+class ElasticSearch extends AbstractConfig implements MockupConfigInterface, SearchConfigInterface
 {
     use OptionsResolverTrait;
 
@@ -45,7 +42,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * contains the mapping for the fields in Elasticsearch
      *
-     * @var array
      */
     protected array $fieldMapping = [
         'id' => 'system.id',
@@ -68,7 +64,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     protected iterable $synonymProviders = [];
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @param SynonymProviderInterface[] $synonymProviders
      */
@@ -172,7 +168,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         return $parts;
     }
 
-    /** @inheritDoc */
     public function getFieldNameMapped(string $fieldName, bool $considerSubFieldNames = false): string
     {
         if (isset($this->fieldMapping[$fieldName])) {
@@ -192,7 +187,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         return $fieldName;
     }
 
-    /** @inheritDoc */
     public function getReverseMappedFieldName(string $fullFieldName): bool|int|string
     {
         //check for direct match of field name
@@ -205,7 +199,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         $fieldNamePart = $fullFieldName;
         while (!empty($fieldNamePart)) {
             // cut off part after last .
-            $fieldNamePart = substr($fieldNamePart, 0, strripos($fieldNamePart, '.'));
+            $fieldNamePart = substr($fieldNamePart, 0, (int) strripos($fieldNamePart, '.'));
 
             // search for mapping with field name part
             $fieldName = array_search($fieldNamePart, $this->fieldMapping);
@@ -220,12 +214,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         return $fullFieldName;
     }
 
-    /**
-     * @param string|null $property
-     *
-     * @return array|string|null
-     */
-    public function getClientConfig(string $property = null): array|string|null
+    public function getClientConfig(?string $property = null): array|string|null
     {
         if ($property) {
             return $this->clientConfig[$property] ?? null;
@@ -242,9 +231,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * checks, if product should be in index for current tenant
      *
-     * @param IndexableInterface $object
      *
-     * @return bool
      */
     public function inIndex(IndexableInterface $object): bool
     {
@@ -254,12 +241,10 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * in case of subtenants returns a data structure containing all sub tenants
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return array $subTenantData
      */
-    public function prepareSubTenantEntries(IndexableInterface $object, int $subObjectId = null): array
+    public function prepareSubTenantEntries(IndexableInterface $object, ?int $subObjectId = null): array
     {
         return [];
     }
@@ -267,11 +252,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * populates index for tenant relations based on gived data
      *
-     * @param mixed $objectId
-     * @param mixed $subTenantData
-     * @param mixed $subObjectId
      *
-     * @return void
      */
     public function updateSubTenantEntries(mixed $objectId, mixed $subTenantData, mixed $subObjectId = null): void
     {
@@ -282,7 +263,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * returns condition for current subtenant
      *
-     * @return array
      */
     public function getSubTenantCondition(): array
     {
@@ -293,9 +273,6 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
         if (!$tenantWorker instanceof DefaultElasticSearchWorker) {
@@ -311,11 +288,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
     /**
      * creates object mockup for given data
      *
-     * @param int $objectId
-     * @param array $data
-     * @param array $relations
      *
-     * @return DefaultMockup
      */
     public function createMockupObject(int $objectId, array $data, array $relations): DefaultMockup
     {
@@ -326,9 +299,7 @@ class ElasticSearch extends AbstractConfig implements MockupConfigInterface, Ela
      * Gets object mockup by id, can consider subIds and therefore return e.g. an array of values
      * always returns a object mockup if available
      *
-     * @param int $objectId
      *
-     * @return IndexableInterface|null
      */
     public function getObjectMockupById(int $objectId): ?IndexableInterface
     {

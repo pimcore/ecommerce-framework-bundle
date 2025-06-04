@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CoreExtensions\ClassDefinition;
@@ -81,11 +78,7 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
     }
 
     /**
-     * @param mixed $data
      * @param null|\Pimcore\Model\DataObject\AbstractObject $object
-     * @param array $params
-     *
-     * @return array
      *
      * @see ResourcePersistenceAwareInterface::getDataForResource
      *
@@ -108,11 +101,7 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
     }
 
     /**
-     * @param mixed $data
      * @param null|\Pimcore\Model\DataObject\AbstractObject $object
-     * @param array $params
-     *
-     * @return ObjectData\IndexFieldSelection|null
      *
      * @see ResourcePersistenceAwareInterface::getDataFromResource
      *
@@ -127,11 +116,7 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
     }
 
     /**
-     * @param mixed $data
      * @param null|\Pimcore\Model\DataObject\AbstractObject $object
-     * @param array $params
-     *
-     * @return array
      *
      * @see QueryResourcePersistenceAwareInterface::getDataForQueryResource
      */
@@ -141,11 +126,7 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
     }
 
     /**
-     * @param mixed $data
      * @param null|\Pimcore\Model\DataObject\AbstractObject $object
-     * @param array $params
-     *
-     * @return array|null
      *
      * @see Data::getDataForEditmode
      *
@@ -164,11 +145,7 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
     }
 
     /**
-     * @param mixed $data
      * @param null|\Pimcore\Model\DataObject\AbstractObject $object
-     * @param array $params
-     *
-     * @return ObjectData\IndexFieldSelection|null
      *
      * @see Data::getDataFromEditmode
      */
@@ -186,11 +163,7 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
     }
 
     /**
-     * @param mixed $data
      * @param Concrete|null $object
-     * @param array $params
-     *
-     * @return string
      *
      * @see Data::getVersionPreview
      *
@@ -204,9 +177,6 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function checkValidity(mixed $data, bool $omitMandatoryCheck = false, array $params = []): void
     {
         if (!$omitMandatoryCheck && $this->getMandatory() &&
@@ -218,10 +188,7 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
     /**
      * converts object data to a simple string value or CSV Export
      *
-     * @param DataObject\Concrete|DataObject\Localizedfield|DataObject\Objectbrick\Data\AbstractData|DataObject\Fieldcollection\Data\AbstractData $object
-     * @param array $params
      *
-     * @return string
      *
      * @internal
      */
@@ -244,10 +211,7 @@ class IndexFieldSelection extends Data implements ResourcePersistenceAwareInterf
     /**
      * True if change is allowed in edit mode.
      *
-     * @param Concrete $object
-     * @param array $params
      *
-     * @return bool
      */
     public function isDiffChangeAllowed(Concrete $object, array $params = []): bool
     {

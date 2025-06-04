@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Command\IndexService;
@@ -47,21 +44,13 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
      */
     protected ?array $childWorkerList = null;
 
-    /**
-     * @param IndexUpdateService $indexUpdateService
-     * @param IndexService $indexService
-     * @param string|null $name
-     */
-    public function __construct(IndexUpdateService $indexUpdateService, IndexService $indexService, string $name = null)
+    public function __construct(IndexUpdateService $indexUpdateService, IndexService $indexService, ?string $name = null)
     {
         parent::__construct($name);
         $this->indexUpdateService = $indexUpdateService;
         $this->indexService = $indexService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         parent::configure();
@@ -163,8 +152,28 @@ class ProcessUpdateIndexQueueCommand extends AbstractIndexServiceCommand
         return 'combined product ID rows in store table index';
     }
 
+    /**
+     * index updates per child process
+     */
     protected function getSegmentSize(): int
     {
-        return 500; // index updates per child process
+        $segmentSize = 500;
+
+        if ($this->input->hasOption('segment-size') && $this->input->getOption('segment-size')) {
+            $segmentSize = (int)$this->input->getOption('segment-size');
+        }
+
+        return $segmentSize;
+    }
+
+    protected function getBatchSize(): int
+    {
+        $batchSize = $this->getSegmentSize();
+
+        if ($this->input->hasOption('batch-size') && $this->input->getOption('batch-size')) {
+            $batchSize = (int)$this->input->getOption('batch-size');
+        }
+
+        return $batchSize;
     }
 }

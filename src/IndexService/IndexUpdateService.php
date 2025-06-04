@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService;
@@ -150,7 +147,7 @@ class IndexUpdateService
      * @param string[]|null $tenantNameList optional list of tenant names for which the update should happen. If null, then the parameter
      *        will be ignored. If the array is empty, then no update will take place.
      */
-    public function resetIdsInPreparation(array $idList, string $triggerInfo, array $tenantNameList = null): void
+    public function resetIdsInPreparation(array $idList, string $triggerInfo, ?array $tenantNameList = null): void
     {
         $this->resetIds($idList, $triggerInfo, false, $tenantNameList);
     }
@@ -164,7 +161,7 @@ class IndexUpdateService
      * @param string[]|null $tenantNameList optional list of tenant names for which the update should happen. If null, then the parameter
      *        will be ignored. If the array is empty, then no update will take place.
      */
-    public function resetIdsUpdateIndex(array $idList, string $triggerInfo, array $tenantNameList = null): void
+    public function resetIdsUpdateIndex(array $idList, string $triggerInfo, ?array $tenantNameList = null): void
     {
         $this->resetIds($idList, $triggerInfo, true, $tenantNameList);
     }
@@ -180,13 +177,13 @@ class IndexUpdateService
      * @param string[]|null $tenantNameList optional list of tenant names for which the update should happen. If null, then the parameter
      *        will be ignored. If the array is empty, then no update will take place.
      */
-    protected function resetIds(array $idList, string $triggerInfo, bool $onlyResetUpdateIndex = false, array $tenantNameList = null): void
+    protected function resetIds(array $idList, string $triggerInfo, bool $onlyResetUpdateIndex = false, ?array $tenantNameList = null): void
     {
         if (count($idList) === 0) {
             return;
         }
 
-        if(is_array($tenantNameList)  && count($tenantNameList) === 0) {
+        if (is_array($tenantNameList)  && count($tenantNameList) === 0) {
             return;
         }
 

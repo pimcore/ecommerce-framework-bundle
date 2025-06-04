@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CoreExtensions\ObjectData;
@@ -23,16 +20,14 @@ class IndexFieldSelection
     public string $field;
 
     /**
-     * @var string|string[]|null
+     * @var string|string[]|int|null
      */
-    public string|array|null $preSelect;
+    public string|array|int|null $preSelect;
 
     /**
-     * @param string|null $tenant
-     * @param string $field
-     * @param string|string[] $preSelect
+     * @param string|string[]|int $preSelect
      */
-    public function __construct(?string $tenant, string $field, array|string|null $preSelect)
+    public function __construct(?string $tenant, string $field, array|string|int|null $preSelect)
     {
         $this->field = $field;
         $this->preSelect = $preSelect;
@@ -52,7 +47,7 @@ class IndexFieldSelection
     /**
      * @param string|string[] $preSelect
      */
-    public function setPreSelect(array|string $preSelect): void
+    public function setPreSelect(array|string|int $preSelect): void
     {
         $this->preSelect = $preSelect;
     }
@@ -60,7 +55,7 @@ class IndexFieldSelection
     /**
      * @return string|string[]|null
      */
-    public function getPreSelect(): array|string|null
+    public function getPreSelect(): array|string|int|null
     {
         return $this->preSelect;
     }

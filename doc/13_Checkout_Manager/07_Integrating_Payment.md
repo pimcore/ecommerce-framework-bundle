@@ -8,9 +8,7 @@ in [Committing Orders](./05_Committing_Orders.md), a few more steps are necessar
 After all checkout steps are completed, the payment can be started. This is done as follows: 
 
 ```php
-/**
- * @Route("/checkout-init-payment", name="shop-checkout-init-payment")
- */
+#[Route('/checkout-init-payment', name: 'shop-checkout-init-payment')]
 public function initPaymentAction(Request $request, Factory $factory) {
     
     // ... do some stuff, and get $cart
@@ -56,9 +54,7 @@ as follows. If payment handling was successful, the order needs to be committed.
 A client side handling could look like as follows: 
 
 ```php
-/**
- * @Route("/checkout-payment-response", name="shop-checkout-payment-response")
- */
+#[Route('/checkout-payment-response', name: 'shop-checkout-payment-response')]
 public function paymentResponseAction(Request $request, Factory $factory, RequestStack $requestStack) {
      
     // ... do some stuff, and get $cart

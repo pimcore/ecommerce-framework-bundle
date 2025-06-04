@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\DependencyInjection;
@@ -32,6 +29,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\PriceSystem\PriceSystemLocator;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\PricingManagerLocator;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\PricingManagerLocatorInterface;
 use Pimcore\Bundle\ElasticsearchClientBundle\DependencyInjection\PimcoreElasticsearchClientExtension;
+use Pimcore\Bundle\OpenSearchClientBundle\DependencyInjection\PimcoreOpenSearchClientExtension;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
@@ -461,7 +459,7 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
 
             if (!empty($tenantConfig['config_options'])) {
                 $config->setArgument('$options', $tenantConfig['config_options']);
-                $this->registerIndexServiceElasticSearchSynonymProviders($tenantConfig['config_options'], $config, $container);
+                $this->registerIndexServiceSynonymProviders($tenantConfig['config_options'], $config, $container);
             }
 
             $worker = new ChildDefinition($tenantConfig['worker_id']);
@@ -472,6 +470,13 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
                 $worker->addMethodCall(
                     'setElasticSearchClient',
                     [new Reference(PimcoreElasticsearchClientExtension::CLIENT_SERVICE_PREFIX . $tenantConfig['config_options']['es_client_name'])]
+                );
+            }
+
+            if (!empty($tenantConfig['config_options']['opensearch_client_name'])) {
+                $worker->addMethodCall(
+                    'setOpenSearchClient',
+                    [new Reference(PimcoreOpenSearchClientExtension::CLIENT_SERVICE_PREFIX . $tenantConfig['config_options']['opensearch_client_name'])]
                 );
             }
 
@@ -486,7 +491,7 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
     /**
      * Register synonym providers and their options per tenant config.
      */
-    private function registerIndexServiceElasticSearchSynonymProviders(
+    private function registerIndexServiceSynonymProviders(
         array $tenantConfigOptions,
         Definition $config,
         ContainerBuilder $container
@@ -597,7 +602,7 @@ final class PimcoreEcommerceFrameworkExtension extends ConfigurableExtension imp
 
         $container->setParameter(
             'pimcore_ecommerce.offer_tool.order_storage.parent_folder_path',
-            $config['order_storage']['parent_folder_path']
+            $config['order_storage']['offer_parent_path'] ?? $config['order_storage']['parent_folder_path']
         );
     }
 

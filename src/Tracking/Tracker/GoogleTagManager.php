@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tracking\Tracker;
@@ -65,9 +62,6 @@ class GoogleTagManager extends Tracker implements
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function trackProductImpression(ProductInterface $product, string $list = 'default'): void
     {
         $item = $this->trackingItemBuilder->buildProductImpressionItem($product, $list);
@@ -162,7 +156,7 @@ class GoogleTagManager extends Tracker implements
         $this->trackCode($result);
     }
 
-    public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, string $stepNumber = null, string $checkoutOption = null): void
+    public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, ?string $stepNumber = null, ?string $checkoutOption = null): void
     {
         $items = $this->trackingItemBuilder->buildCheckoutItemsByCart($cart);
 
@@ -210,9 +204,7 @@ class GoogleTagManager extends Tracker implements
     /**
      * Transform product action into data array
      *
-     * @param ProductAction $item
      *
-     * @return array
      */
     protected function transformProductAction(ProductAction $item): array
     {
@@ -235,9 +227,7 @@ class GoogleTagManager extends Tracker implements
     /**
      * Transform product action into data array
      *
-     * @param ProductImpression $item
      *
-     * @return array
      */
     protected function transformProductImpression(ProductImpression $item): array
     {
@@ -261,9 +251,7 @@ class GoogleTagManager extends Tracker implements
     /**
      * Transform transaction into data array
      *
-     * @param Transaction $transaction
      *
-     * @return array
      */
     protected function transformTransaction(Transaction $transaction): array
     {

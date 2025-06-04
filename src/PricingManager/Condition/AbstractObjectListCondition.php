@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Condition;
@@ -23,10 +20,7 @@ abstract class AbstractObjectListCondition
     /**
      * Handle serializing of object list to list of IDs
      *
-     * @param string $objectProperty
-     * @param string $idProperty
      *
-     * @return array
      */
     protected function handleSleep(string $objectProperty, string $idProperty): array
     {
@@ -45,8 +39,6 @@ abstract class AbstractObjectListCondition
     /**
      * Handle loading of object list from serialized list of IDs
      *
-     * @param string $objectProperty
-     * @param string $idProperty
      */
     protected function handleWakeup(string $objectProperty, string $idProperty): void
     {
@@ -72,9 +64,7 @@ abstract class AbstractObjectListCondition
     /**
      * Load object by ID
      *
-     * @param int $id
      *
-     * @return Concrete|null
      */
     protected function loadObject(int $id): ?Concrete
     {

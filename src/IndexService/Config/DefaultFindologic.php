@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
@@ -50,12 +47,7 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
         $resolver->setAllowedTypes('client_config', 'array');
     }
 
-    /**
-     * @param string|null $setting
-     *
-     * @return array|string|null
-     */
-    public function getClientConfig(string $setting = null): array|string|null
+    public function getClientConfig(?string $setting = null): array|string|null
     {
         return $setting
             ? $this->clientConfig[$setting]
@@ -66,9 +58,7 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
     /**
      * checks, if product should be in index for current tenant
      *
-     * @param IndexableInterface $object
      *
-     * @return bool
      */
     public function inIndex(IndexableInterface $object): bool
     {
@@ -78,12 +68,10 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
     /**
      * in case of subtenants returns a data structure containing all sub tenants
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return mixed $subTenantData
      */
-    public function prepareSubTenantEntries(IndexableInterface $object, int $subObjectId = null): mixed
+    public function prepareSubTenantEntries(IndexableInterface $object, ?int $subObjectId = null): mixed
     {
         return null;
     }
@@ -91,19 +79,12 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
     /**
      * populates index for tenant relations based on gived data
      *
-     * @param mixed $objectId
-     * @param mixed $subTenantData
-     * @param mixed $subObjectId
      *
-     * @return void
      */
     public function updateSubTenantEntries(mixed $objectId, mixed $subTenantData, mixed $subObjectId = null): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTenantWorker(WorkerInterface $tenantWorker): void
     {
         if (!$tenantWorker instanceof DefaultFindologicWorker) {
@@ -116,9 +97,6 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
         parent::setTenantWorker($tenantWorker);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTenantWorker(): DefaultFindologicWorker
     {
         $tenantWorker = parent::getTenantWorker();
@@ -135,7 +113,6 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
     /**
      * returns condition for current subtenant
      *
-     * @return array
      */
     public function getSubTenantCondition(): array
     {
@@ -145,11 +122,7 @@ class DefaultFindologic extends AbstractConfig implements FindologicConfigInterf
     /**
      * creates object mockup for given data
      *
-     * @param int $objectId
-     * @param array $data
-     * @param array $relations
      *
-     * @return DefaultMockup
      */
     public function createMockupObject(int $objectId, array $data, array $relations): DefaultMockup
     {

@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker;
@@ -106,8 +103,6 @@ abstract class AbstractWorker implements WorkerInterface
     /**
      * cleans up all old zombie data
      *
-     * @param IndexableInterface $object
-     * @param array $subObjectIds
      */
     protected function doCleanupOldZombieData(IndexableInterface $object, array $subObjectIds): void
     {
@@ -120,17 +115,14 @@ abstract class AbstractWorker implements WorkerInterface
     /**
      * actually deletes all sub entries from index. original object is delivered too, but keep in mind, that this might be empty.
      *
-     * @param int $subObjectId
      * @param IndexableInterface|null $object - might be empty (when object doesn't exist any more in pimcore
      */
-    abstract protected function doDeleteFromIndex(int $subObjectId, IndexableInterface $object = null): void;
+    abstract protected function doDeleteFromIndex(int $subObjectId, ?IndexableInterface $object = null): void;
 
     /**
      * Checks if given data is array and returns converted data suitable for search backend. For mysql it is a string with special delimiter.
      *
-     * @param array|string $data
      *
-     * @return array|string
      */
     protected function convertArray(array|string $data): array|string
     {

@@ -18,19 +18,19 @@ $config->setRules([
     '@PSR1'                  => true,
     '@PSR2'                  => true,
     'array_syntax'           => ['syntax' => 'short'],
+    'list_syntax'            => ['syntax' => 'short'],
 
-    'header_comment'         => [
-        'comment_type' => 'PHPDoc',
-        'header' => 'Pimcore' . PHP_EOL . PHP_EOL .
-            'This source file is available under two different licenses:' . PHP_EOL .
-            '- GNU General Public License version 3 (GPLv3)' . PHP_EOL .
-            '- Pimcore Commercial License (PCL)' . PHP_EOL .
-            'Full copyright and license information is available in' . PHP_EOL .
-            'LICENSE.md which is distributed with this source code.' . PHP_EOL .
-            PHP_EOL .
-            ' @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)' . PHP_EOL .
-            ' @license    http://www.pimcore.org/license     GPLv3 and PCL'
-    ],
+'header_comment'         => [
+    'comment_type' => 'PHPDoc',
+    'header' =>
+        'This source file is available under the terms of the' . PHP_EOL .
+        'Pimcore Open Core License (POCL)' . PHP_EOL .
+        'Full copyright and license information is available in' . PHP_EOL .
+        'LICENSE.md which is distributed with this source code.' . PHP_EOL .
+        PHP_EOL .
+        ' @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)' . PHP_EOL .
+        ' @license    Pimcore Open Core License (POCL)'
+],
 
     'blank_line_before_statement'         => true,
     'encoding'                            => true,
@@ -51,6 +51,7 @@ $config->setRules([
     'no_leading_namespace_whitespace'     => true,
     'no_short_bool_cast'                  => true,
     'no_spaces_around_offset'             => true,
+    'no_superfluous_phpdoc_tags'          => ['allow_mixed' => true, 'remove_inheritdoc' => true],
     'no_unneeded_control_parentheses'     => true,
     'no_unused_imports'                   => true,
     'no_whitespace_before_comma_in_array' => true,

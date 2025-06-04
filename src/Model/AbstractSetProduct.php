@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Model;
@@ -49,12 +46,10 @@ abstract class AbstractSetProduct extends AbstractProduct
      * default implementation checks if set product is active, given products are bookable and set product has a valid price
      * if no products given, mandatory products are used
      *
-     * @param int $quantityScale
      * @param AbstractSetProductEntry[]|null $products
      *
-     * @return bool
      */
-    public function getOSIsBookable(int $quantityScale = 1, array $products = null): bool
+    public function getOSIsBookable(int $quantityScale = 1, ?array $products = null): bool
     {
         if ($this->isActive()) {
             if (empty($products)) {
@@ -81,14 +76,11 @@ abstract class AbstractSetProduct extends AbstractProduct
     /**
      * Delivers min price for given products or with default mandatory products of set product
      *
-     * @param int|null $quantityScale
-     * @param array|null $products
      *
-     * @return PriceInterface
      *
      * @throws UnsupportedException
      */
-    public function getOSPrice(int $quantityScale = null, array $products = null): PriceInterface
+    public function getOSPrice(?int $quantityScale = null, ?array $products = null): PriceInterface
     {
         return $this->getOSPriceInfo($quantityScale, $products)->getPrice();
     }
@@ -96,14 +88,11 @@ abstract class AbstractSetProduct extends AbstractProduct
     /**
      * Delivers priceinfo with min price for given products or with  default mandatory products of set product
      *
-     * @param int|null $quantityScale
-     * @param array|null $products
      *
-     * @return PriceInfoInterface
      *
      * @throws UnsupportedException
      */
-    public function getOSPriceInfo(int $quantityScale = null, ?array $products = null): PriceInfoInterface
+    public function getOSPriceInfo(?int $quantityScale = null, ?array $products = null): PriceInfoInterface
     {
         if (!is_array($products)) {
             $products = $this->getMandatoryProductEntries();
@@ -113,14 +102,11 @@ abstract class AbstractSetProduct extends AbstractProduct
     }
 
     /**
-     * @param int|null $quantity
      * @param AbstractSetProductEntry[]|null $products
-     *
-     * @return AvailabilityInterface
      *
      * @throws UnsupportedException
      */
-    public function getOSAvailabilityInfo(int $quantity = null, ?array $products = null): AvailabilityInterface
+    public function getOSAvailabilityInfo(?int $quantity = null, ?array $products = null): AvailabilityInterface
     {
         if ($quantity === null) {
             $quantity = 1;
@@ -137,8 +123,6 @@ abstract class AbstractSetProduct extends AbstractProduct
      * checks if all mandatory of set products are set in given product list
      *
      * @param  AbstractSetProductEntry[] $products
-     *
-     * @return void
      *
      * @throws UnsupportedException
      */

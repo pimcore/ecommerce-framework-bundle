@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService;
@@ -69,10 +66,7 @@ class DefaultService implements VoucherServiceInterface
     }
 
     /**
-     * @param string $code
-     * @param CartInterface  $cart
      *
-     * @return bool
      *
      * @throws VoucherServiceException
      */
@@ -124,10 +118,7 @@ class DefaultService implements VoucherServiceInterface
      * Gets the correct token manager and calls removeAppliedTokenFromOrder(), which cleans up the
      * token usage and the ordered token object if necessary, removes the token object from the order.
      *
-     * @param \Pimcore\Model\DataObject\OnlineShopVoucherToken $tokenObject
-     * @param AbstractOrder $order
      *
-     * @return bool
      */
     public function removeAppliedTokenFromOrder(\Pimcore\Model\DataObject\OnlineShopVoucherToken $tokenObject, AbstractOrder $order): bool
     {
@@ -155,14 +146,12 @@ class DefaultService implements VoucherServiceInterface
     }
 
     /**
-     * @param CartInterface $cart
-     * @param string|null $locale
      *
      * @return PricingManagerTokenInformation[]
      *
      * @throws UnsupportedException
      */
-    public function getPricingManagerTokenInformationDetails(CartInterface $cart, string $locale = null): array
+    public function getPricingManagerTokenInformationDetails(CartInterface $cart, ?string $locale = null): array
     {
         if (empty($cart->getVoucherTokenCodes())) {
             return [];
@@ -263,7 +252,7 @@ class DefaultService implements VoucherServiceInterface
         return Token\Listing::cleanUpAllTokens($series->getId());
     }
 
-    public function cleanUpStatistics(int $seriesId = null): bool
+    public function cleanUpStatistics(?int $seriesId = null): bool
     {
         if (isset($seriesId)) {
             return Statistic::cleanUpStatistics($this->statisticsDaysThreshold, $seriesId);

@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\Definition;
@@ -49,14 +46,14 @@ class Attribute
 
     public function __construct(
         string $name,
-        string $fieldName = null,
-        string $type = null,
-        string $locale = null,
-        string $filterGroup = null,
+        ?string $fieldName = null,
+        ?string $type = null,
+        ?string $locale = null,
+        ?string $filterGroup = null,
         array $options = [],
-        GetterInterface $getter = null,
+        ?GetterInterface $getter = null,
         array $getterOptions = [],
-        InterpreterInterface $interpreter = null,
+        ?InterpreterInterface $interpreter = null,
         array $interpreterOptions = [],
         bool $hideInFieldlistDatatype = false
     ) {
@@ -139,14 +136,9 @@ class Attribute
     /**
      * Get value from object, running through getter if defined
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
-     * @param ConfigInterface|null $tenantConfig
-     * @param mixed $default
      *
-     * @return mixed
      */
-    public function getValue(IndexableInterface $object, int $subObjectId = null, ConfigInterface $tenantConfig = null, mixed $default = null): mixed
+    public function getValue(IndexableInterface $object, ?int $subObjectId = null, ?ConfigInterface $tenantConfig = null, mixed $default = null): mixed
     {
         if (null !== $this->getter) {
             if ($this->getter instanceof ExtendedGetterInterface) {
@@ -167,9 +159,7 @@ class Attribute
     /**
      * Interpret value with interpreter if defined
      *
-     * @param mixed $value
      *
-     * @return mixed
      */
     public function interpretValue(mixed $value): mixed
     {

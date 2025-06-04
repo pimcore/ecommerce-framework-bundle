@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker;
@@ -41,7 +38,6 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
     /**
      * findologic supported fields
      *
-     * @var array
      */
     protected array $supportedFields = [
         'id', 'ordernumber', 'name', 'summary', 'description', 'price',
@@ -60,7 +56,6 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
     /**
      * creates or updates necessary index structures (like database tables and so on)
      *
-     * @return void
      */
     public function createOrUpdateIndexStructures(): void
     {
@@ -70,9 +65,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
     /**
      * deletes given element from index
      *
-     * @param IndexableInterface $object
      *
-     * @return void
      */
     public function deleteFromIndex(IndexableInterface $object): void
     {
@@ -82,9 +75,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
     /**
      * updates given element in index
      *
-     * @param IndexableInterface $object
      *
-     * @return void
      */
     public function updateIndex(IndexableInterface $object): void
     {
@@ -98,12 +89,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
         $this->fillupPreparationQueue($object);
     }
 
-    /**
-     * @param int $objectId
-     * @param array|null $data
-     * @param array|null $metadata
-     */
-    protected function doUpdateIndex(int $objectId, array $data = null, array $metadata = null): void
+    protected function doUpdateIndex(int $objectId, ?array $data = null, ?array $metadata = null): void
     {
         $xml = $this->createXMLElement();
 
@@ -140,7 +126,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
          *
          * @return \SimpleXMLElement
          */
-        $addChildWithCDATA = function (\SimpleXMLElement $parent, string $name, string $value = null) {
+        $addChildWithCDATA = function (\SimpleXMLElement $parent, string $name, ?string $value = null) {
             $new_child = $parent->addChild($name);
 
             if ($new_child !== null) {
@@ -269,11 +255,7 @@ class DefaultFindologic extends AbstractMockupCacheWorker implements WorkerInter
         $this->saveToMockupCache($objectId, $data);
     }
 
-    /**
-     * @param int $subObjectId
-     * @param IndexableInterface|null $object
-     */
-    protected function doDeleteFromIndex(int $subObjectId, IndexableInterface $object = null): void
+    protected function doDeleteFromIndex(int $subObjectId, ?IndexableInterface $object = null): void
     {
         $this->db->executeQuery(sprintf('DELETE FROM %1$s WHERE id = %2$d', $this->getExportTableName(), $subObjectId));
         $this->db->executeQuery(sprintf('DELETE FROM %1$s WHERE id = %2$d', $this->getStoreTableName(), $subObjectId));

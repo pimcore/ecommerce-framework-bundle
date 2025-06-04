@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType;
@@ -30,7 +27,7 @@ class MultiSelectCategory extends AbstractFilterType
         $rawValues = $productList->getGroupByValues($filterDefinition->getField(), true);
         $values = [];
 
-        /** @var array<string, boolean> $availableRelations */
+        /** @var array<string, bool> $availableRelations */
         $availableRelations = [];
         if (!$filterDefinition instanceof FilterCategoryMultiselect) {
             throw new InvalidConfigException('invalid configuration');
@@ -96,7 +93,7 @@ class MultiSelectCategory extends AbstractFilterType
                     $category = $category->getId();
                 }
 
-                $category = '%,' . trim($category) . ',%';
+                $category = '%,' . trim((string)$category) . ',%';
 
                 $conditions[] = $filterDefinition->getField() . ' LIKE ' . $db->quote($category);
             }

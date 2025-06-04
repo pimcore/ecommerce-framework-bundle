@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config;
@@ -31,9 +28,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
 
     protected Connection $db;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(
         AttributeFactory $attributeFactory,
         string $tenantName,
@@ -53,7 +47,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
     /**
      * returns table name of product index
      *
-     * @return string
      */
     public function getTablename(): string
     {
@@ -63,7 +56,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
     /**
      * returns table name of product index reations
      *
-     * @return string
      */
     public function getRelationTablename(): string
     {
@@ -73,7 +65,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
     /**
      * return table name of product index tenant relations for subtenants
      *
-     * @return string
      */
     public function getTenantRelationTablename(): string
     {
@@ -83,9 +74,7 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
     /**
      * checks, if product should be in index for current tenant (not subtenant)
      *
-     * @param IndexableInterface $object
      *
-     * @return bool
      */
     public function inIndex(IndexableInterface $object): bool
     {
@@ -103,7 +92,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
      * In this case adds join statement to tenant relation table. But in theory any needed join statement can be
      * added here.
      *
-     * @return string
      */
     public function getJoins(): string
     {
@@ -120,7 +108,6 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
      *
      * In this case just adds the condition that subtenant_id equals the current subtenant
      *
-     * @return string
      */
     public function getCondition(): string
     {
@@ -138,12 +125,10 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
      * In this case tenants are also Pimcore objects and are assigned to product objects.
      * This method extracts assigned tenants and returns an array of [object-ID, subtenant-ID]
      *
-     * @param IndexableInterface $object
-     * @param int|null $subObjectId
      *
      * @return array $subTenantData
      */
-    public function prepareSubTenantEntries(IndexableInterface $object, int $subObjectId = null): array
+    public function prepareSubTenantEntries(IndexableInterface $object, ?int $subObjectId = null): array
     {
         $subTenantData = [];
         if ($this->inIndex($object)) {
@@ -166,11 +151,7 @@ class DefaultMysqlSubTenantConfig extends DefaultMysql
      *
      * In this case deletes all entries of given object from tenant relation table and adds the new ones.
      *
-     * @param mixed $objectId
-     * @param mixed $subTenantData
-     * @param mixed $subObjectId
      *
-     * @return void
      */
     public function updateSubTenantEntries(mixed $objectId, mixed $subTenantData, mixed $subObjectId = null): void
     {

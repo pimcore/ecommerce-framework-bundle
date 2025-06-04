@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ElasticSearch;
@@ -20,10 +17,11 @@ use Doctrine\DBAL\Connection;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\ElasticSearch;
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\ElasticSearchConfigInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Interpreter\RelationInterpreterInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
-use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\IndexRefreshInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Worker\ProductCentricBatchProcessingWorker;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
 use Pimcore\Logger;
 use Pimcore\Model\Tool\TmpStore;
@@ -33,7 +31,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * @property ElasticSearch $tenantConfig
  */
-abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessingWorker implements Worker\BatchProcessingWorkerInterface
+abstract class AbstractElasticSearch extends ProductCentricBatchProcessingWorker implements IndexRefreshInterface
 {
     const STORE_TABLE_NAME = 'ecommerceframework_productindex_store_elastic';
 
@@ -41,14 +39,9 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
 
     const REINDEXING_LOCK_KEY = 'elasticsearch_reindexing_lock';
 
-    const DEFAULT_TIMEOUT_MS_FRONTEND = 20000; // 20 seconds
-
-    const DEFAULT_TIMEOUT_MS_BACKEND =  120000; // 2 minutes
-
     /**
      * Default value for the mapping of custom attributes
      *
-     * @var bool
      */
     protected bool $storeCustomAttributes = true;
 
@@ -58,14 +51,12 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      * index name of elastic search must be lower case
      * the index name is an alias to indexname-versionnumber
      *
-     * @var string
      */
     protected string $indexName;
 
     /**
      * The Version number of the Index (we increase the Version number if the mapping cant be changed (reindexing process))
      *
-     * @var int|null
      */
     protected ?int $indexVersion = null;
 
@@ -78,13 +69,12 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * name for routing param for ES bulk requests
      *
-     * @var string
      */
     protected string $routingParamName = 'routing';
 
     protected LoggerInterface $logger;
 
-    public function __construct(ElasticSearchConfigInterface $tenantConfig, Connection $db, EventDispatcherInterface $eventDispatcher, LoggerInterface $pimcoreEcommerceEsLogger)
+    public function __construct(SearchConfigInterface $tenantConfig, Connection $db, EventDispatcherInterface $eventDispatcher, LoggerInterface $pimcoreEcommerceEsLogger)
     {
         parent::__construct($tenantConfig, $db, $eventDispatcher);
         $this->logger = $pimcoreEcommerceEsLogger;
@@ -94,7 +84,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * should custom attributes be stored separately
      *
-     * @return bool
      */
     public function getStoreCustomAttributes(): bool
     {
@@ -104,7 +93,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * Do store custom attributes
      *
-     * @param bool $storeCustomAttributes
      */
     public function setStoreCustomAttributes(bool $storeCustomAttributes): void
     {
@@ -118,7 +106,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      *
      * @return string the name of the index, such as at_de_elastic_13
      */
-    public function getIndexNameVersion(int $indexVersionOverride = null): string
+    public function getIndexNameVersion(?int $indexVersionOverride = null): string
     {
         $indexVersion = $indexVersionOverride ?? $this->getIndexVersion();
 
@@ -168,9 +156,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
         return $this;
     }
 
-    /**
-     * @param Client|null $elasticSearchClient
-     */
     public function setElasticSearchClient(?Client $elasticSearchClient): void
     {
         $this->elasticSearchClient = $elasticSearchClient;
@@ -281,9 +266,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      * creates mapping attributes based on system attributes, in product index defined attributes and relations
      * can be overwritten in order to consider additional mappings for sub tenants
      *
-     * @param bool $includeTypes
      *
-     * @return array
      */
     public function getSystemAttributes(bool $includeTypes = false): array
     {
@@ -311,7 +294,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * deletes given element from index
      *
-     * @param IndexableInterface $object
      *
      * @throws \Exception
      */
@@ -335,7 +317,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * updates given element in index
      *
-     * @param IndexableInterface $object
      *
      * @throws \Throwable
      */
@@ -361,7 +342,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
         $this->fillupPreparationQueue($object);
     }
 
-    protected function doUpdateIndex(int $objectId, array $data = null, array $metadata = null): void
+    protected function doUpdateIndex(int $objectId, ?array $data = null, ?array $metadata = null): void
     {
         $isLocked = $this->checkIndexLock(false);
 
@@ -438,9 +419,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      * override this method if you need to add custom data
      * which should not be stored in the store data
      *
-     * @param array|string $data
      *
-     * @return array|string
      */
     protected function doPreIndexDataModification(array|string $data): array|string
     {
@@ -567,9 +546,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
      *
      * return array in this case
      *
-     * @param array|string $data
      *
-     * @return array|string
      */
     protected function convertArray(array|string $data): array|string
     {
@@ -577,12 +554,10 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     }
 
     /**
-     * @param int $objectId
-     * @param IndexableInterface|null $object
      *
      * @throws \Exception
      */
-    protected function doDeleteFromIndex(int $objectId, IndexableInterface $object = null): void
+    protected function doDeleteFromIndex(int $objectId, ?IndexableInterface $object = null): void
     {
         $esClient = $this->getElasticSearchClient();
 
@@ -595,7 +570,7 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
 
             try {
                 $tenantConfig = $this->getTenantConfig();
-                if (!$tenantConfig instanceof ElasticSearchConfigInterface) {
+                if (!$tenantConfig instanceof SearchConfigInterface) {
                     throw new \Exception('Expected a ElasticSearchConfigInterface');
                 }
                 $esClient->delete([
@@ -762,7 +737,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * puts current mapping to index with given name
      *
-     * @param string $indexName
      *
      * @throws \Exception
      */
@@ -850,7 +824,6 @@ abstract class AbstractElasticSearch extends Worker\ProductCentricBatchProcessin
     /**
      * Get the next index version, e.g. if currently 13, then 14 will be returned.
      *
-     * @return int
      */
     protected function getNextIndexVersion(): int
     {

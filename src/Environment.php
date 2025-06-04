@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle;
@@ -47,7 +44,6 @@ class Environment implements EnvironmentInterface
      * This value will not be stored into the session and is only valid for current process
      * set with setCurrentCheckoutTenant('tenant', false');
      *
-     * @var string|null
      */
     protected ?string $currentTransientCheckoutTenant = null;
 
@@ -182,7 +178,6 @@ class Environment implements EnvironmentInterface
     /**
      * sets current assortment tenant which is used for indexing and product lists
      *
-     * @param string|null $tenant
      */
     public function setCurrentAssortmentTenant(?string $tenant): void
     {
@@ -194,7 +189,6 @@ class Environment implements EnvironmentInterface
     /**
      * gets current assortment tenant which is used for indexing and product lists
      *
-     * @return string|null
      */
     public function getCurrentAssortmentTenant(): ?string
     {
@@ -206,7 +200,6 @@ class Environment implements EnvironmentInterface
     /**
      * sets current assortment sub tenant which is used for indexing and product lists
      *
-     * @param string|null $subTenant
      */
     public function setCurrentAssortmentSubTenant(?string $subTenant): void
     {
@@ -218,7 +211,6 @@ class Environment implements EnvironmentInterface
     /**
      * gets current assortment tenant which is used for indexing and product lists
      *
-     * @return string|null
      */
     public function getCurrentAssortmentSubTenant(): ?string
     {
@@ -230,7 +222,6 @@ class Environment implements EnvironmentInterface
     /**
      * sets current checkout tenant which is used for cart and checkout manager
      *
-     * @param string $tenant
      * @param bool $persistent - if set to false, tenant is not stored to session and only valid for current process
      */
     public function setCurrentCheckoutTenant(string $tenant, bool $persistent = true): void
@@ -248,7 +239,6 @@ class Environment implements EnvironmentInterface
     /**
      * gets current assortment tenant which is used for cart and checkout manager
      *
-     * @return string|null
      */
     public function getCurrentCheckoutTenant(): ?string
     {
@@ -260,7 +250,6 @@ class Environment implements EnvironmentInterface
     /**
      * gets current system locale
      *
-     * @return null|string
      */
     public function getSystemLocale(): ?string
     {

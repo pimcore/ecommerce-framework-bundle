@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OfferTool;
@@ -38,14 +35,12 @@ abstract class AbstractOfferToolProduct extends \Pimcore\Model\DataObject\Concre
     /**
      * should be overwritten in mapped sub classes of product classes
      *
-     * @return string|null
      */
     abstract public function getOSName(): ?string;
 
     /**
      * should be overwritten in mapped sub classes of product classes
      *
-     * @return string|null
      */
     abstract public function getOSProductNumber(): ?string;
 
@@ -53,7 +48,6 @@ abstract class AbstractOfferToolProduct extends \Pimcore\Model\DataObject\Concre
      * defines the name of the availability system for this product.
      * for offline tool there are no availability systems implemented
      *
-     * @return string
      */
     public function getAvailabilitySystemName(): string
     {
@@ -115,21 +109,13 @@ abstract class AbstractOfferToolProduct extends \Pimcore\Model\DataObject\Concre
     /**
      * returns availability info based on given quantity
      */
-    public function getOSAvailabilityInfo(int $quantity = null): AvailabilityInterface
+    public function getOSAvailabilityInfo(?int $quantity = null): AvailabilityInterface
     {
         return $this->getAvailabilitySystemImplementation()->getAvailabilityInfo($this, $quantity);
     }
 
-    public static function getById(int|string $id, array $params = []): ?static
+    public static function getById(int $id, array $params = []): ?static
     {
-        if (is_string($id)) {
-            trigger_deprecation(
-                'pimcore/pimcore',
-                '11.0',
-                sprintf('Passing id as string to method %s is deprecated', __METHOD__)
-            );
-            $id = is_numeric($id) ? (int) $id : 0;
-        }
         $object = DataObject::getById($id, $params);
 
         if ($object instanceof AbstractOfferToolProduct) {
@@ -142,7 +128,6 @@ abstract class AbstractOfferToolProduct extends \Pimcore\Model\DataObject\Concre
     /**
      * @throws UnsupportedException
      *
-     * @return string|null
      */
     public function getProductGroup(): ?string
     {

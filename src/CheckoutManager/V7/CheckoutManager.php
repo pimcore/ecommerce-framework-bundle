@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CheckoutManager\V7;
@@ -57,7 +54,6 @@ class CheckoutManager implements CheckoutManagerInterface
     /**
      * Payment Provider
      *
-     * @var PaymentInterface|null
      */
     protected ?PaymentInterface $payment = null;
 
@@ -92,7 +88,7 @@ class CheckoutManager implements CheckoutManagerInterface
         CommitOrderProcessorLocatorInterface $commitOrderProcessors,
         array $checkoutSteps,
         EventDispatcherInterface $eventDispatcher,
-        PaymentInterface $paymentProvider = null
+        ?PaymentInterface $paymentProvider = null
     ) {
         $this->cart = $cart;
         $this->environment = $environment;
@@ -155,9 +151,6 @@ class CheckoutManager implements CheckoutManagerInterface
         $this->currentStep = $event->getCurrentStep();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasActivePayment(): bool
     {
         $orderManager = $this->orderManagers->getOrderManager();
@@ -173,7 +166,6 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * @return AbstractOrder
      *
      * @throws UnsupportedException
      */
@@ -212,9 +204,6 @@ class CheckoutManager implements CheckoutManagerInterface
         return $order;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function initOrderPayment(): \Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractPaymentInformation
     {
         $order = $this->checkIfPaymentIsPossible();
@@ -226,7 +215,7 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws \Exception
      */
@@ -252,9 +241,6 @@ class CheckoutManager implements CheckoutManagerInterface
         return $paymentProvider->startPayment($orderAgent, $cart->getPriceCalculator()->getGrandTotal(), $paymentConfig);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function cancelStartedOrderPayment(): ?AbstractOrder
     {
         $orderManager = $this->orderManagers->getOrderManager();
@@ -269,9 +255,6 @@ class CheckoutManager implements CheckoutManagerInterface
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOrder(): AbstractOrder
     {
         return $this->orderManagers->getOrderManager()->getOrCreateOrderFromCart($this->cart);
@@ -280,7 +263,6 @@ class CheckoutManager implements CheckoutManagerInterface
     /**
      * Updates and cleans up environment after order is committed
      *
-     * @param AbstractOrder|null $order
      */
     protected function updateEnvironmentAfterOrderCommit(?AbstractOrder $order): void
     {
@@ -301,7 +283,7 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws UnsupportedException
      * @throws \Exception
@@ -339,9 +321,6 @@ class CheckoutManager implements CheckoutManagerInterface
     /**
      * Verifies if the payment provider is supported for recurring payment
      *
-     * @param RecurringPaymentInterface $provider
-     * @param AbstractOrder $sourceOrder
-     * @param string $customerId
      *
      * @throws \Exception
      */
@@ -364,10 +343,7 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * @param AbstractOrder $sourceOrder
-     * @param string $customerId
      *
-     * @return AbstractOrder
      *
      * @throws UnsupportedException
      * @throws \Exception
@@ -415,7 +391,7 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws UnsupportedException
      */
@@ -441,7 +417,7 @@ class CheckoutManager implements CheckoutManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     *
      *
      * @throws UnsupportedException
      */
@@ -499,33 +475,21 @@ class CheckoutManager implements CheckoutManagerInterface
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCart(): CartInterface
     {
         return $this->cart;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCheckoutStep(string $stepName): ?CheckoutStepInterface
     {
         return $this->checkoutSteps[$stepName] ?? null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCheckoutSteps(): array
     {
         return $this->checkoutStepOrder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentStep(): CheckoutStepInterface
     {
         $this->validateCheckoutSteps();
@@ -540,17 +504,11 @@ class CheckoutManager implements CheckoutManagerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isFinished(): bool
     {
         return $this->finished;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCommitted(): bool
     {
         $order = $this->orderManagers->getOrderManager()->getOrderFromCart($this->cart);
@@ -558,17 +516,11 @@ class CheckoutManager implements CheckoutManagerInterface
         return $order && $order->getOrderState() === $order::ORDER_STATE_COMMITTED;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPayment(): ?PaymentInterface
     {
         return $this->payment;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function cleanUpPendingOrders(): void
     {
         $this->commitOrderProcessors->getCommitOrderProcessor()->cleanUpPendingOrders();

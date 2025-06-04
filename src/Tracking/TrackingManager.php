@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\Tracking;
@@ -58,7 +55,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Register a tracker
      *
-     * @param TrackerInterface $tracker
      */
     public function registerTracker(TrackerInterface $tracker): void
     {
@@ -126,8 +122,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track product impression
      *
-     * @param ProductInterface $product
-     * @param string $list
      */
     public function trackProductImpression(ProductInterface $product, string $list = 'default'): void
     {
@@ -141,7 +135,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track product view
      *
-     * @param ProductInterface $product
      */
     public function trackProductView(ProductInterface $product): void
     {
@@ -155,7 +148,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track a cart update
      *
-     * @param CartInterface $cart
      */
     public function trackCartUpdate(CartInterface $cart): void
     {
@@ -169,9 +161,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track product add to cart
      *
-     * @param CartInterface $cart
-     * @param ProductInterface $product
-     * @param float|int $quantity
      */
     public function trackCartProductActionAdd(CartInterface $cart, ProductInterface $product, float|int $quantity = 1): void
     {
@@ -185,9 +174,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track product remove from cart
      *
-     * @param CartInterface $cart
-     * @param ProductInterface $product
-     * @param float|int $quantity
      */
     public function trackCartProductActionRemove(CartInterface $cart, ProductInterface $product, float|int $quantity = 1): void
     {
@@ -201,7 +187,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track start checkout with first step
      *
-     * @param CartInterface $cart
      */
     public function trackCheckout(CartInterface $cart): void
     {
@@ -215,7 +200,6 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track checkout complete
      *
-     * @param AbstractOrder $order
      */
     public function trackCheckoutComplete(AbstractOrder $order): void
     {
@@ -237,12 +221,8 @@ class TrackingManager implements TrackingManagerInterface
     /**
      * Track checkout step
      *
-     * @param CheckoutManagerCheckoutStepInterface $step
-     * @param CartInterface $cart
-     * @param string|null $stepNumber
-     * @param string|null $checkoutOption
      */
-    public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, string $stepNumber = null, string $checkoutOption = null): void
+    public function trackCheckoutStep(CheckoutManagerCheckoutStepInterface $step, CartInterface $cart, ?string $stepNumber = null, ?string $checkoutOption = null): void
     {
         foreach ($this->getActiveTrackers() as $tracker) {
             if ($tracker instanceof CheckoutStepInterface) {
@@ -288,8 +268,8 @@ class TrackingManager implements TrackingManagerInterface
     public function trackEvent(
         string $eventCategory,
         string $eventAction,
-        string $eventLabel = null,
-        int $eventValue = null
+        ?string $eventLabel = null,
+        ?int $eventValue = null
     ): void {
         foreach ($this->getTrackers() as $tracker) {
             if ($tracker instanceof TrackEventInterface) {

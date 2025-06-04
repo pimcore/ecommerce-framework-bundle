@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order;
@@ -23,6 +20,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderListInterface;
 use Pimcore\Db;
 use Pimcore\Model\DataObject\OnlineShopOrder;
 use Pimcore\Model\DataObject\OnlineShopOrderItem;
+use ReflectionClass;
 
 class Listing extends AbstractOrderList implements OrderListInterface
 {
@@ -53,7 +51,6 @@ class Listing extends AbstractOrderList implements OrderListInterface
     /**
      * get query builder
      *
-     * @return DoctrineQueryBuilder
      */
     public function getQueryBuilder(): DoctrineQueryBuilder
     {
@@ -102,21 +99,28 @@ class Listing extends AbstractOrderList implements OrderListInterface
 
     public function setOrder(string $order): static
     {
-        $this->getQueryBuilder()->add('orderBy', $order, false);
+        $this->getQueryBuilder()->addOrderBy($order, null);
 
         return $this;
+    }
+
+    private function aliasExistsInFrom(DoctrineQueryBuilder $queryBuilder, string $alias): bool
+    {
+        $reflector = new ReflectionClass($queryBuilder);
+        $from = $reflector->getProperty('from')->getValue($queryBuilder);
+
+        return array_key_exists($alias, $from);
     }
 
     public function joinPricingRule(): static
     {
         $queryBuilder = $this->getQueryBuilder();
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('pricingRule', $joins)) {
+        $alias = 'pricingRule';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
             $queryBuilder->leftJoin(
                 'orderItem',
                 'object_collection_PricingRule_' . OnlineShopOrderItem::classId(),
-                'pricingRule',
+                $alias,
                 'pricingRule.id = orderItem.id AND pricingRule.fieldname = "pricingRules"'
             );
         }
@@ -128,13 +132,12 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('OrderPriceModifications', $joins)) {
+        $alias = 'OrderPriceModifications';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
             $queryBuilder->leftJoin(
                 '`order`',
                 'object_collection_OrderPriceModifications_' . OnlineShopOrder::classId(),
-                'OrderPriceModifications',
+                $alias,
                 'OrderPriceModifications.id = order.oo_id AND OrderPriceModifications.fieldname = "priceModifications"'
             );
         }
@@ -146,18 +149,17 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
+        // create sub select
+        $paymentQueryBuilder = Db::getConnection()->createQueryBuilder();
 
-        if (!array_key_exists('paymentInfo', $joins)) {
-            // create sub select
-            $paymentQueryBuilder = Db::getConnection()->createQueryBuilder();
-
+        $alias = 'paymentInfo';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
             $paymentQueryBuilder->select('GROUP_CONCAT(",", _paymentInfo.paymentReference, "," SEPARATOR ",") AS paymentReference', '_order.id AS id')
                 ->from('object_collection_PaymentInfo_' . OnlineShopOrder::classId(), '_paymentInfo')
                 ->join('_paymentInfo', 'object_' . OnlineShopOrder::classId(), '_order', '_order.oo_id = _paymentInfo.id');
 
             // join
-            $queryBuilder->leftJoin('`order`', (string) $paymentQueryBuilder, 'paymentInfo', 'paymentInfo.id = `order`.oo_id');
+            $queryBuilder->leftJoin('`order`', (string)$paymentQueryBuilder, $alias, 'paymentInfo.id = `order`.oo_id');
         }
 
         return $this;
@@ -167,10 +169,9 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('orderItemObjects', $joins)) {
-            $queryBuilder->join('orderItem', 'objects', 'orderItemObjects',
+        $alias = 'orderItemObjects';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
+            $queryBuilder->join('orderItem', 'objects', $alias,
                 'orderItemObjects.id = orderItem.product__id');
         }
 
@@ -181,13 +182,12 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('product', $joins)) {
+        $alias = 'product';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
             $queryBuilder->join(
                 'orderItem',
                 'object_query_' . $classId,
-                'product',
+                $alias,
                 'product.oo_id = orderItem.product__id'
             );
         }
@@ -196,7 +196,6 @@ class Listing extends AbstractOrderList implements OrderListInterface
     }
 
     /**
-     * @param string $classId
      *
      * @return $this
      *
@@ -206,10 +205,9 @@ class Listing extends AbstractOrderList implements OrderListInterface
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        $joins = $queryBuilder->getQueryPart('from');
-
-        if (!array_key_exists('customer', $joins)) {
-            $queryBuilder->join('`order`', 'object_' . $classId, 'customer',
+        $alias = 'customer';
+        if (!$this->aliasExistsInFrom($queryBuilder, $alias)) {
+            $queryBuilder->join('`order`', 'object_' . $classId, $alias,
                 'customer.id = order.customer__id'
             );
         }
@@ -220,7 +218,6 @@ class Listing extends AbstractOrderList implements OrderListInterface
     /**
      * join for item / sub items
      *
-     * @param DoctrineQueryBuilder $select
      *
      * @return $this
      */
@@ -264,12 +261,10 @@ class Listing extends AbstractOrderList implements OrderListInterface
     }
 
     /**
-     * @param string $condition
-     * @param string|null $value
      *
      * @return $this
      */
-    public function addCondition(string $condition, string $value = null): static
+    public function addCondition(string $condition, ?string $value = null): static
     {
         if (null === $value) {
             $value = [];

@@ -1,16 +1,13 @@
 <?php
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager;
@@ -88,8 +85,6 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * load model with serializes data from db
      *
-     * @param string $key
-     * @param mixed $value
      *
      * @return $this
      *
@@ -139,8 +134,6 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param string $label
-     * @param string|null $locale
      *
      * @return $this
      */
@@ -151,11 +144,6 @@ class Rule extends AbstractModel implements RuleInterface
         return $this;
     }
 
-    /**
-     * @param string|null $locale
-     *
-     * @return string
-     */
     public function getLabel(?string $locale = null): string
     {
         return $this->label[$this->getLanguage($locale)] ?? '';
@@ -174,8 +162,6 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param string $description
-     * @param string|null $locale
      *
      * @return $this
      */
@@ -186,11 +172,6 @@ class Rule extends AbstractModel implements RuleInterface
         return $this;
     }
 
-    /**
-     * @param string|null $locale
-     *
-     * @return string|null
-     */
     public function getDescription(?string $locale = null): ?string
     {
         return $this->description[$this->getLanguage($locale)] ?? null;
@@ -285,9 +266,7 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * test all conditions if this rule is valid
      *
-     * @param EnvironmentInterface $environment
      *
-     * @return bool
      */
     public function check(EnvironmentInterface $environment): bool
     {
@@ -302,7 +281,6 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * checks if rule has at least one action that changes product price (and not cart price)
      *
-     * @return bool
      */
     public function hasProductActions(): bool
     {
@@ -318,7 +296,6 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * checks if rule has at least one action that changes cart price
      *
-     * @return bool
      */
     public function hasCartActions(): bool
     {
@@ -356,11 +333,9 @@ class Rule extends AbstractModel implements RuleInterface
     /**
      * gets current language
      *
-     * @param string|null $language
      *
-     * @return string
      */
-    protected function getLanguage(string $language = null): string
+    protected function getLanguage(?string $language = null): string
     {
         if ($language) {
             return (string) $language;
@@ -370,7 +345,6 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param string $typeClass
      *
      * @return ConditionInterface[]
      */

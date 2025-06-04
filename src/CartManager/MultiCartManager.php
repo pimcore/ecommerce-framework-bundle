@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CartManager;
@@ -111,28 +108,19 @@ class MultiCartManager implements CartManagerInterface
     }
 
     /**
-     * @param CheckoutableInterface $product
-     * @param int $count
-     * @param string|null $key
-     * @param string|null $itemKey
-     * @param bool $replace
-     * @param array $customProperties
-     * @param array $subProducts
-     * @param string|null $comment
      *
-     * @return string
      *
      * @throws InvalidConfigException
      */
     public function addToCart(
         CheckoutableInterface $product,
         int $count,
-        string $key = null,
-        string $itemKey = null,
+        ?string $key = null,
+        ?string $itemKey = null,
         bool $replace = false,
         array $customProperties = [],
         array $subProducts = [],
-        string $comment = null
+        ?string $comment = null
     ): string {
         $this->checkForInit();
 
@@ -159,10 +147,7 @@ class MultiCartManager implements CartManagerInterface
         return $this;
     }
 
-    /**
-     * @param string|null $key
-     */
-    public function deleteCart(string $key = null): void
+    public function deleteCart(?string $key = null): void
     {
         $this->checkForInit();
 
@@ -171,9 +156,7 @@ class MultiCartManager implements CartManagerInterface
     }
 
     /**
-     * @param array $params
      *
-     * @return int|string
      *
      * @throws InvalidConfigException
      */
@@ -200,11 +183,10 @@ class MultiCartManager implements CartManagerInterface
     }
 
     /**
-     * @param string|null $key
      *
      * @throws InvalidConfigException
      */
-    public function clearCart(string $key = null): void
+    public function clearCart(?string $key = null): void
     {
         $this->checkForInit();
 
@@ -219,13 +201,11 @@ class MultiCartManager implements CartManagerInterface
     }
 
     /**
-     * @param string|null $key
      *
-     * @return CartInterface
      *
      * @throws InvalidConfigException
      */
-    public function getCart(string $key = null): CartInterface
+    public function getCart(?string $key = null): CartInterface
     {
         $this->checkForInit();
 
@@ -250,9 +230,7 @@ class MultiCartManager implements CartManagerInterface
     }
 
     /**
-     * @param string $name
      *
-     * @return CartInterface
      *
      * @throws InvalidConfigException
      */
@@ -281,12 +259,10 @@ class MultiCartManager implements CartManagerInterface
     }
 
     /**
-     * @param string $itemKey
-     * @param string|null $key
      *
      * @throws InvalidConfigException
      */
-    public function removeFromCart(string $itemKey, string $key = null): void
+    public function removeFromCart(string $itemKey, ?string $key = null): void
     {
         $this->checkForInit();
 

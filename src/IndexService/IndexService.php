@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService;
@@ -37,9 +34,7 @@ class IndexService
     protected string $defaultTenant = 'default';
 
     /**
-     * @param EnvironmentInterface $environment
      * @param WorkerInterface[] $tenantWorkers
-     * @param string $defaultTenant
      */
     public function __construct(EnvironmentInterface $environment, array $tenantWorkers = [], string $defaultTenant = 'default')
     {
@@ -55,7 +50,6 @@ class IndexService
     }
 
     /**
-     * @param WorkerInterface $tenantWorker
      *
      * @internal
      */
@@ -72,9 +66,7 @@ class IndexService
     /**
      * Returns a specific tenant worker
      *
-     * @param string $tenant
      *
-     * @return WorkerInterface
      *
      * @throws WorkerNotFoundException
      */
@@ -90,7 +82,6 @@ class IndexService
     /**
      * Returns default worker as set in defaultTenant
      *
-     * @return WorkerInterface
      *
      * @throws DefaultWorkerNotFoundException
      */
@@ -109,12 +100,10 @@ class IndexService
     /**
      * Returns all attributes marked as general search attributes for full text search
      *
-     * @param string|null $tenant
      *
-     * @return array
      *
      */
-    public function getGeneralSearchAttributes(string $tenant = null): array
+    public function getGeneralSearchAttributes(?string $tenant = null): array
     {
         try {
             $tenantWorker = $this->resolveTenantWorker($tenant);
@@ -138,7 +127,6 @@ class IndexService
     /**
      * Deletes given element from index
      *
-     * @param IndexableInterface $object
      */
     public function deleteFromIndex(IndexableInterface $object): void
     {
@@ -150,7 +138,6 @@ class IndexService
     /**
      * Updates given element in index
      *
-     * @param IndexableInterface $object
      */
     public function updateIndex(IndexableInterface $object): void
     {
@@ -162,13 +149,10 @@ class IndexService
     /**
      * Returns all index attributes
      *
-     * @param bool $considerHideInFieldList
-     * @param string|null $tenant
      *
-     * @return array
      *
      */
-    public function getIndexAttributes(bool $considerHideInFieldList = false, string $tenant = null): array
+    public function getIndexAttributes(bool $considerHideInFieldList = false, ?string $tenant = null): array
     {
         try {
             $tenantWorker = $this->resolveTenantWorker($tenant);
@@ -182,12 +166,10 @@ class IndexService
     /**
      * Returns all filter groups
      *
-     * @param string|null $tenant
      *
-     * @return array
      *
      */
-    public function getAllFilterGroups(string $tenant = null): array
+    public function getAllFilterGroups(?string $tenant = null): array
     {
         try {
             $tenantWorker = $this->resolveTenantWorker($tenant);
@@ -201,13 +183,10 @@ class IndexService
     /**
      * Returns all index attributes for a given filter group
      *
-     * @param string $filterType
-     * @param string|null $tenant
      *
-     * @return array
      *
      */
-    public function getIndexAttributesByFilterGroup(string $filterType, string $tenant = null): array
+    public function getIndexAttributesByFilterGroup(string $filterType, ?string $tenant = null): array
     {
         try {
             $tenantWorker = $this->resolveTenantWorker($tenant);
@@ -221,7 +200,6 @@ class IndexService
     /**
      * Returns current tenant configuration
      *
-     * @return ConfigInterface
      *
      */
     public function getCurrentTenantConfig(): ConfigInterface
@@ -251,13 +229,11 @@ class IndexService
     /**
      * Resolve tenant worker either from given tenant name or from the current tenant
      *
-     * @param string|null $tenant
      *
-     * @return WorkerInterface
      *
      * @throws WorkerNotFoundException
      */
-    protected function resolveTenantWorker(string $tenant = null): WorkerInterface
+    protected function resolveTenantWorker(?string $tenant = null): WorkerInterface
     {
         if (null === $tenant) {
             $tenant = $this->environment->getCurrentAssortmentTenant();

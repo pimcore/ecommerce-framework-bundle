@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\FilterService;
@@ -38,9 +35,7 @@ class FilterGroupHelper
      *
      * might be overwritten, if new column groups are necessary
      *
-     * @param string $columnGroup
      *
-     * @return string
      */
     protected function getColumnTypeForColumnGroup(string $columnGroup): string
     {
@@ -50,11 +45,7 @@ class FilterGroupHelper
     /**
      * returns all possible group by values for given column group, product list and field combination
      *
-     * @param string $columnGroup
-     * @param ProductListInterface $productList
-     * @param string $field
      *
-     * @return array
      */
     public function getGroupByValuesForFilterGroup(string $columnGroup, ProductListInterface $productList, string $field): array
     {
@@ -80,11 +71,11 @@ class FilterGroupHelper
                 }
             }
         } elseif ($columnType == 'multiselect') {
+            $productList->prepareGroupByValues($field);
             $values = $productList->getGroupByValues($field);
 
             sort($values);
-
-            foreach ($values as $v) {
+            foreach (array_filter($values) as $v) {
                 $helper = explode(WorkerInterface::MULTISELECT_DELIMITER, $v);
                 foreach ($helper as $h) {
                     $data[$h] = ['key' => $h, 'value' => $h];

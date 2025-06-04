@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\DependencyInjection;
@@ -72,9 +69,6 @@ final class Configuration implements ConfigurationInterface
         $this->indexWorkerConfigMapper = new DefaultWorkerConfigMapper();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('pimcore_ecommerce_framework');
@@ -383,7 +377,19 @@ final class Configuration implements ConfigurationInterface
                                     ->scalarNode('parent_order_folder')
                                         ->info('Default parent folder for new orders, it is possible to use strftime-compatible placeholders')
                                         ->defaultValue('/order/%%Y/%%m/%%d')
-                                        ->cannotBeEmpty()
+//                                        ->cannotBeEmpty()   //Since it's deprecated, it can be left empty once the replacement is set
+                                        ->setDeprecated(
+                                            'pimcore/ecommerce-framework-bundle',
+                                            '1.1',
+                                            'The "%node%" option is deprecated. Use "order_parent_path" instead and adapt to use Carbon placeholders.'
+                                        )
+                                    ->end()
+                                    ->scalarNode('order_parent_path')
+                                        ->info('Default parent folder for new orders, it is possible to use Carbon placeholders')
+                                        ->defaultValue('')
+// These commented lines would be required when `parent_order_folder` gets removed
+//                                    ->defaultValue('/order/*Y*/*M*/*D*')
+//                                    ->cannotBeEmpty()
                                     ->end()
                                 ->end()
                             ->end()
@@ -855,7 +861,7 @@ final class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('name')->isRequired()->end()
                                         ->scalarNode('field_name')->defaultNull()->info('Defines object attribute field name, can be omitted if the same like name of index attribute')->end()
-                                        ->scalarNode('type')->defaultNull()->info('Type of index attribute (database column or elastic search data type)')->end()
+                                        ->scalarNode('type')->defaultNull()->info('Type of index attribute (database column or search index data type)')->end()
                                         ->scalarNode('locale')->defaultNull()->info('Locale for localized fields, can be omitted if not necessary')->end()
                                         ->scalarNode('filter_group')->defaultNull()->info('Defines filter group for filter definition in filter service')->end()
                                         ->append($this->buildOptionsNode())
@@ -1041,8 +1047,19 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                         ->scalarNode('parent_folder_path')
                             ->info('default path for new offers')
-                            ->cannotBeEmpty()
+                            ->setDeprecated(
+                                'pimcore/ecommerce-framework-bundle',
+                                '1.1',
+                                'The "%node%" option is deprecated. Use "offer_parent_path" instead and adapt to use Carbon placeholders.'
+                            )
+//                            ->cannotBeEmpty() //Since it's deprecated, it can be left empty once the replacement is set
                             ->defaultValue('/offertool/offers/%%Y/%%m')
+                        ->end()
+                        ->scalarNode('offer_parent_path')
+                            ->info('default path for new offers')
+// These commented lines would be required when `parent_folder_path` gets removed
+//                            ->cannotBeEmpty()
+//                            ->defaultValue('/offertool/offers/*Y*/*M*')
                         ->end()
                     ->end()
                 ->end()
@@ -1111,7 +1128,7 @@ final class Configuration implements ConfigurationInterface
         return $trackingManager;
     }
 
-    private function buildOptionsNode(string $name = 'options', array $defaultValue = [], string $documentation = null): NodeDefinition
+    private function buildOptionsNode(string $name = 'options', array $defaultValue = [], ?string $documentation = null): NodeDefinition
     {
         $node = new VariableNodeDefinition($name);
         if ($documentation) {
@@ -1131,10 +1148,7 @@ final class Configuration implements ConfigurationInterface
     /**
      * Normalizes properties from old to new names to easy migration
      *
-     * @param array $data
-     * @param array $map
      *
-     * @return array
      */
     private function remapProperties(array $data, array $map): array
     {

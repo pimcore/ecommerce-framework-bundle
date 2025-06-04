@@ -2,16 +2,13 @@
 declare(strict_types=1);
 
 /**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Commercial License (PCL)
+ * This source file is available under the terms of the
+ * Pimcore Open Core License (POCL)
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
- *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
- *  @license    http://www.pimcore.org/license     GPLv3 and PCL
+ *  @copyright  Copyright (c) Pimcore GmbH (https://www.pimcore.com)
+ *  @license    Pimcore Open Core License (POCL)
  */
 
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\CartManager;
@@ -30,7 +27,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     /**
      * flag needed for preventing call modified on cart when loading cart from storage
      *
-     * @var bool
      */
     protected bool $isLoading = false;
 
@@ -169,7 +165,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     /**
      * @param CartItemInterface[] $subItems
      *
-     * @return void
      */
     public function setSubItems(array $subItems): void
     {
@@ -246,10 +241,7 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
         return $this->getPriceInfo()->getTotalPrice();
     }
 
-    /**
-     * @param \DateTime|null $date
-     */
-    public function setAddedDate(\DateTime $date = null): void
+    public function setAddedDate(?\DateTime $date = null): void
     {
         if ($date) {
             $this->addedDateTimestamp = intval($date->format('Uu'));
@@ -281,7 +273,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     /**
      * get item name
      *
-     * @return string
      */
     public function getName(): string
     {
@@ -292,7 +283,6 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
      * Flag needed for preventing call modified on cart when loading cart from storage
      * only for internal usage
      *
-     * @param bool $isLoading
      *
      * @internal
      */
