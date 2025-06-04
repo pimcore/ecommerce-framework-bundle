@@ -31,8 +31,10 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
         $rules = [];
 
         // load objects
-        $ruleIds = $this->db->fetchFirstColumn('SELECT id FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Rule\Dao::TABLE_NAME .
-                                                 $this->getCondition() . $this->getOrder() . $this->getOffsetLimit(), $this->model->getConditionVariables());
+        $ruleIds = $this->db->fetchFirstColumn(
+            'SELECT id FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Rule\Dao::TABLE_NAME . $this->getCondition() . $this->getOrder() . $this->getOffsetLimit(), 
+            $this->model->getConditionVariables(),
+        );
 
         foreach ($ruleIds as $id) {
             $rules[] = call_user_func([$this->getRuleClass(), 'getById'], $id);
@@ -56,7 +58,10 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     public function getTotalCount(): int
     {
         try {
-            return (int) $this->db->fetchOne('SELECT COUNT(*) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Rule\Dao::TABLE_NAME . '`' . $this->getCondition(), $this->model->getConditionVariables());
+            return (int) $this->db->fetchOne(
+                'SELECT COUNT(*) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Rule\Dao::TABLE_NAME . '`' . $this->getCondition(),
+                $this->model->getConditionVariables(),
+            );
         } catch (\Exception $e) {
             return 0;
         }
