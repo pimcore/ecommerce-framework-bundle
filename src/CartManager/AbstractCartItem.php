@@ -294,17 +294,12 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     /**
      * Sets custom properties to CartItem when provided in AbstractCart::addItem
      *
-     * @param array $customProperties
-     * @return void
      */
     public function setCustomProperties(array $customProperties): void
     {
         $this->customProperties = $customProperties;
     }
 
-    /**
-     * @return array
-     */
     public function getCustomProperties(): array
     {
         return $this->customProperties;

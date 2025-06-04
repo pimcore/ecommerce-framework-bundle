@@ -78,11 +78,6 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
 
     /**
      * @param CheckoutableInterface&Concrete $product
-     * @param int $count
-     * @param string|null $itemKey
-     * @param bool $replace
-     * @param array $customProperties
-
      * @param AbstractSetProductEntry[] $subProducts
      *
      */
@@ -101,10 +96,6 @@ abstract class AbstractCart extends AbstractModel implements CartInterface
 
     /**
      * @param CheckoutableInterface&Concrete $product
-     * @param int $count
-     * @param bool $replace
-     * @param array $customProperties
-
      * @param AbstractSetProductEntry[] $subProducts
      *
      */

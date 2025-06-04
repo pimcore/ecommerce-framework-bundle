@@ -74,7 +74,6 @@ interface CartInterface
     /**
      * @param bool $replace replace if item with same key exists
      * @param array $customProperties optional additional item information
-     * @param array $params optional additional item information
      *
      * @return string $itemKey
      */
