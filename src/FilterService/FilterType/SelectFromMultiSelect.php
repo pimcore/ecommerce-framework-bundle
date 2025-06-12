@@ -73,11 +73,10 @@ class SelectFromMultiSelect extends AbstractFilterType
 
         if (!empty($value)) {
             $value = '%' . WorkerInterface::MULTISELECT_DELIMITER  . $value .  WorkerInterface::MULTISELECT_DELIMITER . '%';
-            if ($isPrecondition) {
-                $productList->addCondition($field . ' LIKE ' . $db->quote($value), 'PRECONDITION_' . $field);
-            } else {
-                $productList->addCondition($field . ' LIKE ' . $db->quote($value), $field);
-            }
+            $productList->addCondition(
+                $field . ' LIKE ' . $db->quote($value),
+                $this->getConditionField($field, $isPrecondition)
+            );
         }
 
         return $currentFilter;

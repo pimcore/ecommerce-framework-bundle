@@ -47,19 +47,20 @@ class NumberRange extends AbstractFilterType
 
         $db = Db::get();
 
-        if (!empty($value['from'])) {
-            if ($isPrecondition) {
-                $productList->addCondition($this->getField($filterDefinition) . ' >= ' . $db->quote($value['from']), 'PRECONDITION_' . $this->getField($filterDefinition));
-            } elseif ($value['from'] != AbstractFilterType::EMPTY_STRING) {
-                $productList->addCondition($this->getField($filterDefinition) . ' >= ' . $db->quote($value['from']), $this->getField($filterDefinition));
-            }
+        $from = $value['from'] ?? null;
+        $to = $value['to'] ?? null;
+
+        if ($from && $from !== AbstractFilterType::EMPTY_STRING) {
+            $productList->addCondition(
+                $field . ' >= ' . $db->quote((string)$from),
+                $this->getConditionField($field, $isPrecondition)
+            );
         }
-        if (!empty($value['to'])) {
-            if ($isPrecondition) {
-                $productList->addCondition($this->getField($filterDefinition) . ' <= ' . $db->quote($value['to']), 'PRECONDITION_' . $this->getField($filterDefinition));
-            } elseif ($value['to'] != AbstractFilterType::EMPTY_STRING) {
-                $productList->addCondition($this->getField($filterDefinition) . ' <= ' . $db->quote($value['to']), $this->getField($filterDefinition));
-            }
+        if ($to && $to !== AbstractFilterType::EMPTY_STRING) {
+            $productList->addCondition(
+                $field . ' <= ' . $db->quote((string)$to),
+                $this->getConditionField($field, $isPrecondition)
+            );
         }
 
         return $currentFilter;

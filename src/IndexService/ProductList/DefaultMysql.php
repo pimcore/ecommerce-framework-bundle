@@ -15,6 +15,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList;
 
 use Pimcore\Bundle\EcommerceFrameworkBundle\CoreExtensions\ObjectData\IndexFieldSelection;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
+use Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\AbstractFilterType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\MysqlConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractCategory;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\IndexableInterface;
@@ -49,6 +50,8 @@ class DefaultMysql implements ProductListInterface
     protected bool $inProductList = true;
 
     protected LoggerInterface $logger;
+
+    private const AND = ' AND ';
 
     public function __construct(MysqlConfigInterface $tenantConfig, LoggerInterface $pimcoreEcommerceSqlLogger)
     {
@@ -98,8 +101,11 @@ class DefaultMysql implements ProductListInterface
 
     public function addRelationCondition(string $fieldname, string|array $condition): void
     {
+        $realFieldname = $this->getRealFieldname($fieldname);
+        $fieldnameCondition = '`fieldname` = ' . $this->quote($realFieldname);
+
         $this->products = null;
-        $this->relationConditions[$fieldname][] = '`fieldname` = ' . $this->quote($fieldname) . ' AND '  . $condition;
+        $this->relationConditions[$fieldname][] = $fieldnameCondition . self::AND  . $condition;
     }
 
     /**
@@ -273,6 +279,19 @@ class DefaultMysql implements ProductListInterface
         }
 
         return $this->products;
+    }
+
+    /**
+     * Returns fieldname without precondition prefix.
+     */
+    protected function getRealFieldname(string $fieldname): string
+    {
+        $isPrecondition = str_starts_with($fieldname, AbstractFilterType::PREFIX_PRECONDITION);
+        if ($isPrecondition) {
+            return substr($fieldname, strlen(AbstractFilterType::PREFIX_PRECONDITION));
+        }
+
+        return $fieldname;
     }
 
     /**
@@ -454,18 +473,18 @@ class DefaultMysql implements ProductListInterface
             $variantMode = $this->getVariantMode();
         }
 
-        $preCondition = 'active = 1 AND virtualProductActive = 1';
+        $preCondition = 'active = 1' . self::AND . 'virtualProductActive = 1';
         if ($this->inProductList) {
-            $preCondition .= ' AND inProductList = 1';
+            $preCondition .= self::AND . 'inProductList = 1';
         }
 
         $tenantCondition = $this->getCurrentTenantConfig()->getCondition();
         if ($tenantCondition) {
-            $preCondition .= ' AND ' . $tenantCondition;
+            $preCondition .= self::AND . $tenantCondition;
         }
 
         if ($this->getCategory()) {
-            $preCondition .= " AND parentCategoryIds LIKE '%," . $this->getCategory()->getId() . ",%'";
+            $preCondition .= self::AND . "parentCategoryIds LIKE '%," . $this->getCategory()->getId() . ",%'";
         }
 
         $condition = $preCondition;
@@ -476,19 +495,19 @@ class DefaultMysql implements ProductListInterface
             case ProductListInterface::VARIANT_MODE_INCLUDE_PARENT_OBJECT:
 
                 //make sure, that only variant objects are considered
-                $condition .= ' AND a.id != virtualProductId ';
+                $condition .= self::AND . 'a.id != virtualProductId ';
 
                 break;
 
             case ProductListInterface::VARIANT_MODE_HIDE:
 
-                $condition .= " AND `type` != 'variant'";
+                $condition .= self::AND . "`type` != 'variant'";
 
                 break;
 
             case ProductListInterface::VARIANT_MODE_VARIANTS_ONLY:
 
-                $condition .= " AND `type` = 'variant'";
+                $condition .= self::AND . "`type` = 'variant'";
 
                 break;
         }
@@ -496,7 +515,7 @@ class DefaultMysql implements ProductListInterface
         if (!$excludeConditions) {
             $userspecific = $this->buildUserspecificConditions($excludedFieldname);
             if ($userspecific) {
-                $condition .= ' AND ' . $userspecific;
+                $condition .= self::AND . $userspecific;
             }
         }
 
@@ -513,7 +532,10 @@ class DefaultMysql implements ProductListInterface
                 }
             }
 
-            $condition .= ' AND ' . $this->resource->buildFulltextSearchWhere($this->tenantConfig->getSearchAttributes(), $searchstring);
+            $condition .= self::AND . $this->resource->buildFulltextSearchWhere(
+                $this->tenantConfig->getSearchAttributes(),
+                $searchstring
+            );
         }
 
         $this->logger->info('Total Condition: ' . $condition);
@@ -528,7 +550,7 @@ class DefaultMysql implements ProductListInterface
             if ($fieldname !== $excludedFieldname) {
                 foreach ($condArray as $cond) {
                     if ($condition) {
-                        $condition .= ' AND ';
+                        $condition .= self::AND;
                     }
 
                     $condition .= 'a.id IN (SELECT DISTINCT src FROM ' . $this->getCurrentTenantConfig()->getRelationTablename() . ' WHERE ' . $cond . ')';
@@ -540,7 +562,7 @@ class DefaultMysql implements ProductListInterface
             if ($fieldname !== $excludedFieldname) {
                 foreach ($condArray as $cond) {
                     if ($condition) {
-                        $condition .= ' AND ';
+                        $condition .= self::AND;
                     }
 
                     $condition .= is_array($cond)

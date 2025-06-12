@@ -121,7 +121,7 @@ class MultiSelectRelation extends \Pimcore\Bundle\EcommerceFrameworkBundle\Filte
         $currentFilter[$field] = $value;
 
         if (!empty($value)) {
-            $productList->addRelationCondition($field, $value);
+            $productList->addRelationCondition($this->getConditionField($field, $isPrecondition), $value);
         }
 
         return $currentFilter;

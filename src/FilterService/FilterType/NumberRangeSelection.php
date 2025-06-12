@@ -122,18 +122,16 @@ class NumberRangeSelection extends AbstractFilterType
 
         if (!empty($value)) {
             if (!empty($value['from'])) {
-                if ($isPrecondition) {
-                    $productList->addCondition($field . ' >= ' . $db->quote($value['from']), 'PRECONDITION_' . $field);
-                } else {
-                    $productList->addCondition($field . ' >= ' . $db->quote($value['from']), $field);
-                }
+                $productList->addCondition(
+                    $field . ' >= ' . $db->quote((string)$value['from']),
+                    $this->getConditionField($field, $isPrecondition)
+                );
             }
             if (!empty($value['to'])) {
-                if ($isPrecondition) {
-                    $productList->addCondition($field . ' <= ' . $db->quote($value['to']), 'PRECONDITION_' . $field);
-                } else {
-                    $productList->addCondition($field . ' < ' . $db->quote($value['to']), $field);
-                }
+                $productList->addCondition(
+                    $field . ' < ' . $db->quote((string)$value['to']),
+                    $this->getConditionField($field, $isPrecondition)
+                );
             }
         }
 

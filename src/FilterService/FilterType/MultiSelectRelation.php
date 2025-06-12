@@ -124,10 +124,16 @@ class MultiSelectRelation extends AbstractFilterType
             if (!empty($quotedValues)) {
                 if ($filterDefinition->getUseAndCondition()) {
                     foreach ($quotedValues as $value) {
-                        $productList->addRelationCondition($field, 'dest = ' . $value);
+                        $productList->addRelationCondition(
+                            $this->getConditionField($field, $isPrecondition),
+                            'dest = ' . $value
+                        );
                     }
                 } else {
-                    $productList->addRelationCondition($field, 'dest IN (' . implode(',', $quotedValues) . ')');
+                    $productList->addRelationCondition(
+                        $this->getConditionField($field, $isPrecondition),
+                        'dest IN (' . implode(',', $quotedValues) . ')'
+                    );
                 }
             }
         }

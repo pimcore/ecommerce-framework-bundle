@@ -81,18 +81,16 @@ class MultiSelect extends AbstractFilterType
 
                 if ($filterDefinition->getUseAndCondition()) {
                     foreach ($quotedValues as $value) {
-                        if ($isPrecondition) {
-                            $productList->addCondition($field . ' = ' . $value, 'PRECONDITION_' . $field);
-                        } else {
-                            $productList->addCondition($field . ' = ' . $value, $field);
-                        }
+                        $productList->addCondition(
+                            $field . ' = ' . $value,
+                            $this->getConditionField($field, $isPrecondition)
+                        );
                     }
                 } else {
-                    if ($isPrecondition) {
-                        $productList->addCondition($field . ' IN (' . implode(',', $quotedValues) . ')', 'PRECONDITION_' . $field);
-                    } else {
-                        $productList->addCondition($field . ' IN (' . implode(',', $quotedValues) . ')', $field);
-                    }
+                    $productList->addCondition(
+                        $field . ' IN (' . implode(',', $quotedValues) . ')',
+                        $this->getConditionField($field, $isPrecondition)
+                    );
                 }
             }
         }

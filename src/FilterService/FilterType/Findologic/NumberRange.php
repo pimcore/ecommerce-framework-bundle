@@ -100,7 +100,7 @@ class NumberRange extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterService
             } else {
                 $v['max'] = 9999999999999999;       // findologic won't accept only one of max or min, always needs both
             }
-            $productList->addCondition($v, $field);
+            $productList->addCondition($v, $this->getConditionField($field, $isPrecondition));
         }
 
         return $currentFilter;

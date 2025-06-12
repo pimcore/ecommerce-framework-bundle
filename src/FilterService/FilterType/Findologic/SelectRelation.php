@@ -86,7 +86,7 @@ class SelectRelation extends \Pimcore\Bundle\EcommerceFrameworkBundle\FilterServ
         $currentFilter[$field] = $value;
 
         if (!empty($value)) {
-            $productList->addCondition([$value], $field);
+            $productList->addCondition([$value], $this->getConditionField($field, $isPrecondition));
         }
 
         return $currentFilter;

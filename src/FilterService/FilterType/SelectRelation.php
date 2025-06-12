@@ -105,7 +105,10 @@ class SelectRelation extends AbstractFilterType
 
         $db = Db::get();
         if (!empty($value)) {
-            $productList->addRelationCondition($field, 'dest = ' . $db->quote($value));
+            $productList->addRelationCondition(
+                $this->getConditionField($field, $isPrecondition),
+                'dest = ' . $db->quote($value)
+            );
         }
 
         return $currentFilter;

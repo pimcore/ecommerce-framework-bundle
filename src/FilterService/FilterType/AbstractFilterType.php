@@ -26,6 +26,8 @@ abstract class AbstractFilterType
 {
     const EMPTY_STRING = '$$EMPTY$$';
 
+    public const PREFIX_PRECONDITION = 'PRECONDITION_';
+
     protected TranslatorInterface $translator;
 
     protected EngineInterface $templatingEngine;
@@ -66,6 +68,11 @@ abstract class AbstractFilterType
         }
 
         return $field;
+    }
+
+    protected function getConditionField(string $field, bool $isPrecondition): string
+    {
+        return $isPrecondition ? self::PREFIX_PRECONDITION . $field : $field;
     }
 
     protected function getTemplate(AbstractFilterDefinitionType $filterDefinition): ?string
