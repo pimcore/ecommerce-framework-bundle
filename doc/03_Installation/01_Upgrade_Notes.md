@@ -1,4 +1,6 @@
 # Upgrade Notes
+#### v2.1.0
+Added the possibility to distinguish relations conditions applied as preconditions.
 
 #### v2.0.0
 Added `bool` as possible type to `$condition` parameter of `addCondition` function in `ProductListInterface` (and all implementing classes).
