@@ -52,13 +52,13 @@ class NumberRange extends AbstractFilterType
 
         if ($from && $from !== AbstractFilterType::EMPTY_STRING) {
             $productList->addCondition(
-                $field . ' >= ' . $db->quote($from),
+                $field . ' >= ' . $db->quote((string)$from),
                 $this->getConditionField($field, $isPrecondition)
             );
         }
         if ($to && $to !== AbstractFilterType::EMPTY_STRING) {
             $productList->addCondition(
-                $field . ' <= ' . $db->quote($to),
+                $field . ' <= ' . $db->quote((string)$to),
                 $this->getConditionField($field, $isPrecondition)
             );
         }
