@@ -27,8 +27,12 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     public function load(): array
     {
         $carts = [];
-        $cartIds = $this->db->fetchFirstColumn('SELECT id FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart\Dao::TABLE_NAME .
-                                                 $this->getCondition() . $this->getOrder() . $this->getOffsetLimit());
+        $cartIds = $this->db->fetchFirstColumn(
+            'SELECT id FROM '
+            . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart\Dao::TABLE_NAME
+            . $this->getCondition() . $this->getOrder() . $this->getOffsetLimit(),
+            $this->model->getConditionVariables(),
+        );
 
         foreach ($cartIds as $id) {
             $carts[] = call_user_func([$this->getCartClass(), 'getById'], $id);
@@ -42,7 +46,12 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     public function getTotalCount(): int
     {
         try {
-            return (int) $this->db->fetchOne('SELECT COUNT(*) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart\Dao::TABLE_NAME . '`' . $this->getCondition());
+            return (int) $this->db->fetchOne(
+                'SELECT COUNT(*) FROM `'
+                . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\Cart\Dao::TABLE_NAME
+                . '`' . $this->getCondition(),
+                $this->model->getConditionVariables(),
+            );
         } catch (\Exception $e) {
             return 0;
         }
