@@ -41,7 +41,12 @@ class DefaultClassificationStore implements InterpreterInterface
                 if (!isset($data['values'][$keyId])) {
                     $data['values'][$keyId] = [];
                 }
-                $data['values'][$keyId][] = (string) $value->getLocalizedKeyValue($groupId, $keyId, 'en');
+
+                $keyValue = $value->getLocalizedKeyValue($groupId, $keyId, 'en');
+
+                // Ensure that we store all values as array of strings
+                $keyValues = is_array($keyValue) ? $keyValue : [$keyValue];
+                $data['values'][$keyId] = array_map(fn($val) => (string) $val, $keyValues);
                 $data['keys'][$keyId] = $keyId;
             }
         }
