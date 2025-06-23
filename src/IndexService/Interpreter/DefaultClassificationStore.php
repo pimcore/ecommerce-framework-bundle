@@ -46,7 +46,7 @@ class DefaultClassificationStore implements InterpreterInterface
 
                 // Ensure that we store all values as array of strings
                 $keyValues = is_array($keyValue) ? $keyValue : [$keyValue];
-                $data['values'][$keyId] = array_map(fn($val) => (string) $val, $keyValues);
+                $data['values'][$keyId] = array_map(fn ($val) => (string) $val, $keyValues);
                 $data['keys'][$keyId] = $keyId;
             }
         }
