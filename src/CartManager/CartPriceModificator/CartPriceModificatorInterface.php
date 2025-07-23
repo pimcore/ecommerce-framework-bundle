@@ -31,5 +31,5 @@ interface CartPriceModificatorInterface
      * @param CartInterface $cart - cart
      *
      */
-    public function modify(PriceInterface $currentSubTotal, CartInterface $cart): ModificatedPriceInterface;
+    public function modify(PriceInterface $currentSubTotal, CartInterface $cart): ?ModificatedPriceInterface;
 }
