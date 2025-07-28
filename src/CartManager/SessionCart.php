@@ -101,7 +101,7 @@ class SessionCart extends AbstractCart implements CartInterface
         return $this;
     }
 
-    public static function getById(int $id): ?SessionCart
+    public static function getById(int|string $id): ?SessionCart
     {
         $carts = static::getAllCartsForUser(-1);
 
