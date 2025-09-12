@@ -159,4 +159,17 @@ abstract class AbstractFilterType
     {
         return $this->templatingEngine->render($template, $parameters);
     }
+
+    /**
+     * Returns fieldname without precondition prefix.
+     */
+    public static function getRealFieldname(string $fieldname): string
+    {
+        $isPrecondition = str_starts_with($fieldname, self::PREFIX_PRECONDITION);
+        if ($isPrecondition) {
+            return substr($fieldname, strlen(self::PREFIX_PRECONDITION));
+        }
+
+        return $fieldname;
+    }
 }

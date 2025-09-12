@@ -16,6 +16,7 @@ namespace Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\OpenS
 use OpenSearch\Client;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Exception\InvalidConfigException;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
+use Pimcore\Bundle\EcommerceFrameworkBundle\FilterService\FilterType\AbstractFilterType;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\OpenSearch;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\Config\SearchConfigInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductListInterface;
@@ -166,6 +167,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      */
     public function addCondition(array|string|bool $condition, string $fieldname = ''): void
     {
+        $fieldname = AbstractFilterType::getRealFieldname($fieldname);
         $this->filterConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
         $this->products = null;
@@ -188,6 +190,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      */
     public function addRelationCondition(string $fieldname, string|array $condition): void
     {
+        $fieldname = AbstractFilterType::getRealFieldname($fieldname);
         $this->relationConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
         $this->products = null;

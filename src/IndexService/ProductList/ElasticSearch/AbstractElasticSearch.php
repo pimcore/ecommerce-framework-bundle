@@ -166,7 +166,7 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
      */
     public function addCondition(array|string|bool $condition, string $fieldname = ''): void
     {
-        $fieldname = $this->getRealFieldname($fieldname);
+        $fieldname = AbstractFilterType::getRealFieldname($fieldname);
         $this->filterConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
         $this->products = null;
@@ -189,7 +189,7 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
      */
     public function addRelationCondition(string $fieldname, string|array $condition): void
     {
-        $fieldname = $this->getRealFieldname($fieldname);
+        $fieldname = AbstractFilterType::getRealFieldname($fieldname);
         $this->relationConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
         $this->products = null;
@@ -1239,18 +1239,5 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
         }
 
         return 0.0;
-    }
-
-    /**
-     * Returns fieldname without precondition prefix.
-     */
-    protected function getRealFieldname(string $fieldname): string
-    {
-        $isPrecondition = str_starts_with($fieldname, AbstractFilterType::PREFIX_PRECONDITION);
-        if ($isPrecondition) {
-            return substr($fieldname, strlen(AbstractFilterType::PREFIX_PRECONDITION));
-        }
-
-        return $fieldname;
     }
 }

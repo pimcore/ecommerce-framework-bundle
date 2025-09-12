@@ -101,7 +101,7 @@ class DefaultMysql implements ProductListInterface
 
     public function addRelationCondition(string $fieldname, string|array $condition): void
     {
-        $realFieldname = $this->getRealFieldname($fieldname);
+        $realFieldname = AbstractFilterType::getRealFieldname($fieldname);
         $fieldnameCondition = '`fieldname` = ' . $this->quote($realFieldname);
 
         $this->products = null;
@@ -279,19 +279,6 @@ class DefaultMysql implements ProductListInterface
         }
 
         return $this->products;
-    }
-
-    /**
-     * Returns fieldname without precondition prefix.
-     */
-    protected function getRealFieldname(string $fieldname): string
-    {
-        $isPrecondition = str_starts_with($fieldname, AbstractFilterType::PREFIX_PRECONDITION);
-        if ($isPrecondition) {
-            return substr($fieldname, strlen(AbstractFilterType::PREFIX_PRECONDITION));
-        }
-
-        return $fieldname;
     }
 
     /**
