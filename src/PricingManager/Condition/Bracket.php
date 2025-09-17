@@ -149,7 +149,7 @@ class Bracket implements BracketInterface
 
         foreach ($this->conditions as $condition) {
             if ($condition instanceof BracketInterface) {
-                $conditions = array_merge($condition->getConditionsByType($typeClass));
+                $conditions = array_merge($conditions, $condition->getConditionsByType($typeClass));
             } elseif ($condition instanceof $typeClass) {
                 $conditions[] = $condition;
             }
