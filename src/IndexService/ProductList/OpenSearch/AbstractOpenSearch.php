@@ -189,7 +189,6 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      */
     public function addRelationCondition(string $fieldname, string|array $condition): void
     {
-        $fieldname = AbstractFilterType::getRealFieldname($fieldname);
         $this->relationConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
         $this->products = null;
