@@ -643,7 +643,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
                         $boolFilters[] = $relationCondition;
                     } else {
                         $boolFilters[] = ['term' => [
-                            $this->tenantConfig->getFieldNameMapped($realFieldname) => $relationCondition]
+                            $this->tenantConfig->getFieldNameMapped($realFieldname) => $relationCondition],
                         ];
                     }
                 }
@@ -668,7 +668,7 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
                         $boolFilters[] = $filterCondition;
                     } else {
                         $boolFilters[] = ['term' => [
-                            $this->tenantConfig->getFieldNameMapped($realFieldname, true) => $filterCondition]
+                            $this->tenantConfig->getFieldNameMapped($realFieldname, true) => $filterCondition],
                         ];
                     }
                 }
