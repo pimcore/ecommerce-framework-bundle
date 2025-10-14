@@ -641,7 +641,9 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
                     if (is_array($relationCondition)) {
                         $boolFilters[] = $relationCondition;
                     } else {
-                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($realFieldname) => $relationCondition]];
+                        $boolFilters[] = ['term' => [
+                            $this->tenantConfig->getFieldNameMapped($realFieldname) => $relationCondition]
+                        ];
                     }
                 }
             }
@@ -664,7 +666,9 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
                     if (is_array($filterCondition)) {
                         $boolFilters[] = $filterCondition;
                     } else {
-                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($realFieldname, true) => $filterCondition]];
+                        $boolFilters[] = ['term' => [
+                            $this->tenantConfig->getFieldNameMapped($realFieldname, true) => $filterCondition]
+                        ];
                     }
                 }
             }
