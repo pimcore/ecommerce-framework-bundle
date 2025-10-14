@@ -167,7 +167,6 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
      */
     public function addCondition(array|string|bool $condition, string $fieldname = ''): void
     {
-        $fieldname = AbstractFilterType::getRealFieldname($fieldname);
         $this->filterConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
         $this->products = null;
@@ -639,11 +638,12 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
     {
         foreach ($this->relationConditions as $fieldname => $relationConditionArray) {
             if (!array_key_exists($fieldname, $excludedFieldnames)) {
+                $realFieldname = AbstractFilterType::getRealFieldname($fieldname);
                 foreach ($relationConditionArray as $relationCondition) {
                     if (is_array($relationCondition)) {
                         $boolFilters[] = $relationCondition;
                     } else {
-                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($fieldname) => $relationCondition]];
+                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($realFieldname) => $relationCondition]];
                     }
                 }
             }
@@ -661,11 +661,12 @@ abstract class AbstractOpenSearch implements ProductListInterface, TenantConfigI
     {
         foreach ($this->filterConditions as $fieldname => $filterConditionArray) {
             if (!array_key_exists($fieldname, $excludedFieldnames)) {
+                $realFieldname = AbstractFilterType::getRealFieldname($fieldname);
                 foreach ($filterConditionArray as $filterCondition) {
                     if (is_array($filterCondition)) {
                         $boolFilters[] = $filterCondition;
                     } else {
-                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($fieldname, true) => $filterCondition]];
+                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($realFieldname, true) => $filterCondition]];
                     }
                 }
             }

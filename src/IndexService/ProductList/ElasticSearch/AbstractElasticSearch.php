@@ -166,7 +166,6 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
      */
     public function addCondition(array|string|bool $condition, string $fieldname = ''): void
     {
-        $fieldname = AbstractFilterType::getRealFieldname($fieldname);
         $this->filterConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
         $this->products = null;
@@ -189,7 +188,6 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
      */
     public function addRelationCondition(string $fieldname, string|array $condition): void
     {
-        $fieldname = AbstractFilterType::getRealFieldname($fieldname);
         $this->relationConditions[$fieldname][] = $condition;
         $this->preparedGroupByValuesLoaded = false;
         $this->products = null;
@@ -638,11 +636,12 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
     {
         foreach ($this->relationConditions as $fieldname => $relationConditionArray) {
             if (!array_key_exists($fieldname, $excludedFieldnames)) {
+                $realFieldname = AbstractFilterType::getRealFieldname($fieldname);
                 foreach ($relationConditionArray as $relationCondition) {
                     if (is_array($relationCondition)) {
                         $boolFilters[] = $relationCondition;
                     } else {
-                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($fieldname) => $relationCondition]];
+                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($realFieldname) => $relationCondition]];
                     }
                 }
             }
@@ -660,11 +659,12 @@ abstract class AbstractElasticSearch implements ProductListInterface, TenantConf
     {
         foreach ($this->filterConditions as $fieldname => $filterConditionArray) {
             if (!array_key_exists($fieldname, $excludedFieldnames)) {
+                $realFieldname = AbstractFilterType::getRealFieldname($fieldname);
                 foreach ($filterConditionArray as $filterCondition) {
                     if (is_array($filterCondition)) {
                         $boolFilters[] = $filterCondition;
                     } else {
-                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($fieldname, true) => $filterCondition]];
+                        $boolFilters[] = ['term' => [$this->tenantConfig->getFieldNameMapped($realFieldname, true) => $filterCondition]];
                     }
                 }
             }
