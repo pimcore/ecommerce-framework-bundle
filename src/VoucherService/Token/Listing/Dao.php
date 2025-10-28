@@ -52,7 +52,8 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
                 'SELECT COUNT(*) as amount FROM ' .
                 \Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Token\Dao::TABLE_NAME .
                 $this->getCondition(),
-                $this->model->getConditionVariables()
+                $this->model->getConditionVariables(),
+                $this->model->getConditionVariableTypes(),
             );
         } catch (\Exception $e) {
             return 0;
