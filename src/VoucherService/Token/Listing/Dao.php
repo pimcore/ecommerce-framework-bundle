@@ -34,7 +34,8 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
               $this->getOrder() .
               $this->getOffsetLimit(),
             $this->model->getConditionVariables(),
-            $this->model->getConditionVariableTypes());
+            $this->model->getConditionVariableTypes()
+        );
 
         foreach ($unitIds as $row) {
             $item = new \Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Token();
