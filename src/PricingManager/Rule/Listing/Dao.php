@@ -36,6 +36,7 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
             . \Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Rule\Dao::TABLE_NAME
             . $this->getCondition() . $this->getOrder() . $this->getOffsetLimit(),
             $this->model->getConditionVariables(),
+            $this->model->getConditionVariableTypes(),
         );
 
         foreach ($ruleIds as $id) {
@@ -65,6 +66,7 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
                 . \Pimcore\Bundle\EcommerceFrameworkBundle\PricingManager\Rule\Dao::TABLE_NAME
                 . '`' . $this->getCondition(),
                 $this->model->getConditionVariables(),
+                $this->model->getConditionVariableTypes(),
             );
         } catch (\Exception $e) {
             return 0;
