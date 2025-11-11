@@ -184,7 +184,7 @@ class Cart extends AbstractCart implements CartInterface
     {
         $list = new Cart\Listing();
         $db = \Pimcore\Db::get();
-        $list->setCondition('userid = ' . $db->quote($userId));
+        $list->setCondition('userid = ' . $userId);
         $list->setCartClass(get_called_class());
 
         return $list->getCarts();
