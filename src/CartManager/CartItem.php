@@ -108,7 +108,7 @@ class CartItem extends AbstractCartItem implements CartItemInterface
 
             $db = \Pimcore\Db::get();
             $itemList->setCondition(
-                'cartId = ' . $db->quote((string)$this->getCartId()) . 
+                'cartId = ' . $db->quote((string)$this->getCartId()) .
                 ' AND parentItemKey = ' . $db->quote($this->getItemKey())
             );
 
