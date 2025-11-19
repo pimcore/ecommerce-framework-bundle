@@ -411,7 +411,7 @@
         </div>
     </div>
 
-    {% do pimcore_head_script().captureStart() %}
+    {% set inlineScript %}
         document.addEventListener("DOMContentLoaded", function(event) {
             // pimcore open object
             document.querySelectorAll('[data-action=open]').forEach(function(el){
@@ -448,5 +448,6 @@
             {% endif %}
 
         });
-    {% do pimcore_head_script().captureEnd() %}
+    {% endset %}
+    {% do pimcore_head_script().appendScript(inlineScript ~ "") %}
 {% endblock %}

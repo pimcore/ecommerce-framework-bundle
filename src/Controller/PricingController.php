@@ -344,7 +344,7 @@ class PricingController extends UserAwareController implements KernelControllerE
 
             // create rule condition
             $condition = Factory::getInstance()->getPricingManager()->getCondition($rootContainer->type);
-            $condition->fromJSON(json_encode($rootContainer));
+            $condition->fromJSON(json_encode($rootContainer, JSON_PARTIAL_OUTPUT_ON_ERROR));
             $rule->setCondition($condition);
 
             // save action

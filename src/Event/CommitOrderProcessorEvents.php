@@ -47,6 +47,20 @@ final class CommitOrderProcessorEvents
     const POST_COMMIT_ORDER = 'pimcore.ecommerce.commitorderprocessor.postCommitOrder';
 
     /**
+     * @Event("Pimcore\Bundle\EcommerceFrameworkBundle\Event\Model\CommitOrderProcessorEvent")
+     *
+     * @var string
+     */
+    const PRE_CLEANUP_PENDING_ORDER = 'pimcore.ecommerce.commitorderprocessor.preCleanupPendingOrder';
+
+    /**
+     * @Event("Pimcore\Bundle\EcommerceFrameworkBundle\Event\Model\CommitOrderProcessorEvent")
+     *
+     * @var string
+     */
+    const PRE_CLEANUP_PENDING_PAYMENT = 'pimcore.ecommerce.commitorderprocessor.preCleanupPendingPayment';
+
+    /**
      * @Event("Pimcore\Bundle\EcommerceFrameworkBundle\Event\Model\SendConfirmationMailEvent")
      *
      * @var string

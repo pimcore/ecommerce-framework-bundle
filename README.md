@@ -46,7 +46,7 @@ have a look at our [case studies](https://pimcore.com/en/customers?industry=&cap
 Following aspects are short-cuts into the documentation for start working with the E-Commerce Framework: 
 
 - [Architecture Overview](./doc/01_Architecture_Overview.md)
-- [Installation](./doc/03_Installation.md) and [Configuration](./doc/04_Configuration/README.md)
+- [Installation](./doc/03_Installation/README.md) and [Configuration](./doc/04_Configuration/README.md)
 - [Indexing and Listing Products](./doc/05_Index_Service/README.md)
 - [Filtering Products](./doc/07_Filter_Service/README.md)
 - [Working with Prices](./doc/09_Working_with_Prices/README.md)

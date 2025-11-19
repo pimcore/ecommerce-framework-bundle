@@ -178,3 +178,15 @@ Once set, the cart manager uses all specific settings of the currently active ch
 in the configuration (identified by tenant name).
 
 See also [Demo](https://github.com/pimcore/demo/blob/11.x/config/ecommerce/base-ecommerce.yaml#L197) for some examples.  
+
+
+## Adding Custom Properties to Cart Items
+
+Following steps are necessary to add additional custom properties to cart items: 
+
+1) Extend `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem` implementation and add your custom properties including getters/setters. 
+2) Extend `Cart::getCartItemClassName` implementation and make sure your custom `CartItem` implementation gets returned.
+3) Provide the custom properties as key-value pairs in `$params` parameter in the following methods:
+   1) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\AbstractCart::addItem`
+   2) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\AbstractCart::updateItem`
+   3) `Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartManagerInterface::addToCart`

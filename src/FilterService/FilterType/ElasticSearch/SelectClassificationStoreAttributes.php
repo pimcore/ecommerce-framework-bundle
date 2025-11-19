@@ -21,6 +21,9 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\IndexService\ProductList\ProductList
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractFilterDefinitionType;
 use Pimcore\Model\DataObject\Classificationstore\KeyConfig;
 
+/**
+ * @deprecated This class will be moved to the SearchIndex namespace in version 2.0.0.
+ */
 class SelectClassificationStoreAttributes extends AbstractFilterType
 {
     /**

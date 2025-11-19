@@ -46,7 +46,6 @@ interface PriceSystemInterface
      *
      * Should be overwritten in custom price systems with suitable implementation.
      *
-     * @param CheckoutableInterface&Concrete $product
      *
      */
     public function getTaxClassForProduct(CheckoutableInterface $product): OnlineShopTaxClass;

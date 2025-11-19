@@ -26,16 +26,26 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
+ *
+ * @deprecated will be removed in 2.0.0 - use the new IndexSyncCommand instead
  */
 class EsSyncCommand extends AbstractIndexServiceCommand
 {
     protected function configure(): void
     {
         parent::configure();
+
+        trigger_deprecation(
+            'pimcore/ecommerce-framework-bundle',
+            '2.0.0',
+            'The command "%s" is deprecated and will be removed in a future version. Please use the ecommerce:indexservice:search-index-sync instead.',
+            $this->getName()
+        );
+
         $this
             ->setName('ecommerce:indexservice:elasticsearch-sync')
             ->setDescription(
-                'Refresh elastic search (ES) index settings, mappings via native ES-API.'
+                'Refresh elastic search (ES) index settings, mappings via native ES-API. (Deprecated)'
             )
             ->addArgument('mode', InputArgument::REQUIRED,
                 'reindex: Reindexes ES indices based on the their native reindexing API. Might be necessary when mapping has changed.'.PHP_EOL.

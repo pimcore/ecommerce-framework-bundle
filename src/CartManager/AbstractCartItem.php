@@ -291,4 +291,19 @@ abstract class AbstractCartItem extends \Pimcore\Model\AbstractModel implements 
     {
         $this->isLoading = $isLoading;
     }
+
+    /**
+     * Sets custom properties to CartItem when provided in AbstractCart::addItem
+     *
+     *
+     */
+    public function setCustomProperties(array $params): void
+    {
+        foreach ($params as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->{$method}($value);
+            }
+        }
+    }
 }

@@ -19,13 +19,13 @@
         {% do pimcore_head_script().appendFile(asset('/bundles/pimcoreecommerceframework/js/voucherservice/voucherSeriesTabScript.js')) %}
     {% endapply %}
 
-    {% block head_stylesheets deferred %}
+    {% block head_stylesheets %}
         {{ pimcore_head_link() }}
     {% endblock %}
 </head>
 <body>
     {# output scripts added before #}
-    {% block scripts deferred %}
+    {% block scripts %}
         {{ pimcore_head_script() }}
     {% endblock %}
     {% set colors = {

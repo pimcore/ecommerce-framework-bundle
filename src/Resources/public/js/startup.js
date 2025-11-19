@@ -19,6 +19,9 @@ pimcore.registerNS("pimcore.bundle.ecommerce.startup");
  * @private
  */
 pimcore.bundle.ecommerce.startup = Class.create({
+
+    useOrderDetailTab : true,
+
     initialize: function () {
         document.addEventListener(pimcore.events.preMenuBuild, this.preMenuBuild.bind(this));
         document.addEventListener(pimcore.events.postOpenObject, this.postOpenObject.bind(this));
@@ -106,7 +109,7 @@ pimcore.bundle.ecommerce.startup = Class.create({
 
         if (pimcore.globalmanager.get("user").isAllowed("bundle_ecommerce_back-office_order")) {
 
-            if (e.detail.type == "object" && e.detail.object.data.general.className == "OnlineShopOrder") {
+            if (e.detail.type == "object" && e.detail.object.data.general.className == "OnlineShopOrder"  && this.useOrderDetailTab) {
                 const tab = new pimcore.bundle.EcommerceFramework.OrderTab(e.detail.object, e.detail.type);
                 e.detail.object.tab.items.items[1].insert(0, tab.getLayout());
                 e.detail.object.tab.items.items[1].updateLayout();

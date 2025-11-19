@@ -378,9 +378,21 @@ final class Configuration implements ConfigurationInterface
                                         ->cannotBeEmpty()
                                     ->end()
                                     ->scalarNode('parent_order_folder')
-                                        ->info('Default parent folder for new orders')
+                                        ->info('Default parent folder for new orders, it is possible to use strftime-compatible placeholders')
                                         ->defaultValue('/order/%%Y/%%m/%%d')
-                                        ->cannotBeEmpty()
+//                                        ->cannotBeEmpty()   //Since it's deprecated, it can be left empty once the replacement is set
+                                        ->setDeprecated(
+                                            'pimcore/ecommerce-framework-bundle',
+                                            '1.1',
+                                            'The "%node%" option is deprecated. Use "order_parent_path" instead and adapt to use Carbon placeholders.'
+                                        )
+                                    ->end()
+                                    ->scalarNode('order_parent_path')
+                                        ->info('Default parent folder for new orders, it is possible to use Carbon placeholders')
+                                        ->defaultValue('')
+// These commented lines would be required when `parent_order_folder` gets removed
+//                                    ->defaultValue('/order/*Y*/*M*/*D*')
+//                                    ->cannotBeEmpty()
                                     ->end()
                                 ->end()
                             ->end()
@@ -852,7 +864,7 @@ final class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('name')->isRequired()->end()
                                         ->scalarNode('field_name')->defaultNull()->info('Defines object attribute field name, can be omitted if the same like name of index attribute')->end()
-                                        ->scalarNode('type')->defaultNull()->info('Type of index attribute (database column or elastic search data type)')->end()
+                                        ->scalarNode('type')->defaultNull()->info('Type of index attribute (database column or search index data type)')->end()
                                         ->scalarNode('locale')->defaultNull()->info('Locale for localized fields, can be omitted if not necessary')->end()
                                         ->scalarNode('filter_group')->defaultNull()->info('Defines filter group for filter definition in filter service')->end()
                                         ->append($this->buildOptionsNode())
@@ -1038,8 +1050,19 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                         ->scalarNode('parent_folder_path')
                             ->info('default path for new offers')
-                            ->cannotBeEmpty()
+                            ->setDeprecated(
+                                'pimcore/ecommerce-framework-bundle',
+                                '1.1',
+                                'The "%node%" option is deprecated. Use "offer_parent_path" instead and adapt to use Carbon placeholders.'
+                            )
+//                            ->cannotBeEmpty() //Since it's deprecated, it can be left empty once the replacement is set
                             ->defaultValue('/offertool/offers/%%Y/%%m')
+                        ->end()
+                        ->scalarNode('offer_parent_path')
+                            ->info('default path for new offers')
+// These commented lines would be required when `parent_folder_path` gets removed
+//                            ->cannotBeEmpty()
+//                            ->defaultValue('/offertool/offers/*Y*/*M*')
                         ->end()
                     ->end()
                 ->end()

@@ -30,9 +30,12 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
 
         $unitIds = $this->db->fetchAllAssociative('SELECT * FROM ' .
             \Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Token\Dao::TABLE_NAME .
-            $this->getCondition() .
-            $this->getOrder() .
-            $this->getOffsetLimit(), $this->model->getConditionVariables());
+              $this->getCondition() .
+              $this->getOrder() .
+              $this->getOffsetLimit(),
+            $this->model->getConditionVariables(),
+            $this->model->getConditionVariableTypes()
+        );
 
         foreach ($unitIds as $row) {
             $item = new \Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Token();
@@ -52,7 +55,8 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
                 'SELECT COUNT(*) as amount FROM ' .
                 \Pimcore\Bundle\EcommerceFrameworkBundle\VoucherService\Token\Dao::TABLE_NAME .
                 $this->getCondition(),
-                $this->model->getConditionVariables()
+                $this->model->getConditionVariables(),
+                $this->model->getConditionVariableTypes(),
             );
         } catch (\Exception $e) {
             return 0;

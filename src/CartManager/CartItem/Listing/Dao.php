@@ -27,8 +27,13 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     public function load(): array
     {
         $items = [];
-        $cartItems = $this->db->fetchAllAssociative('SELECT cartid, itemKey, parentItemKey FROM ' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME .
-                                                 $this->getCondition() . $this->getOrder() . $this->getOffsetLimit());
+        $cartItems = $this->db->fetchAllAssociative(
+            'SELECT cartid, itemKey, parentItemKey FROM '
+            . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME
+            . $this->getCondition() . $this->getOrder() . $this->getOffsetLimit(),
+            $this->model->getConditionVariables(),
+            $this->model->getConditionVariableTypes(),
+        );
 
         foreach ($cartItems as $item) {
             $items[] = call_user_func([$this->getClassName(), 'getByCartIdItemKey'], $item['cartid'], $item['itemKey'], $item['parentItemKey']);
@@ -41,7 +46,13 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
     public function getTotalCount(): int
     {
         try {
-            return (int)$this->db->fetchOne('SELECT COUNT(*) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME . '`' . $this->getCondition());
+            return (int)$this->db->fetchOne(
+                'SELECT COUNT(*) FROM `'
+                . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME
+                . '`' . $this->getCondition(),
+                $this->model->getConditionVariables(),
+                $this->model->getConditionVariableTypes(),
+            );
         } catch (\Exception $e) {
             return 0;
         }
@@ -49,7 +60,13 @@ class Dao extends \Pimcore\Model\Listing\Dao\AbstractDao
 
     public function getTotalAmount(): int
     {
-        return (int)$this->db->fetchOne('SELECT SUM(count) FROM `' . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME . '`' . $this->getCondition());
+        return (int)$this->db->fetchOne(
+            'SELECT SUM(count) FROM `'
+            . \Pimcore\Bundle\EcommerceFrameworkBundle\CartManager\CartItem\Dao::TABLE_NAME
+            . '`' . $this->getCondition(),
+            $this->model->getConditionVariables(),
+            $this->model->getConditionVariableTypes(),
+        );
     }
 
     public function setClassName(string $className): void
