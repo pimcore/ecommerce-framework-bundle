@@ -55,7 +55,7 @@ class EsSyncCommand extends AbstractIndexServiceCommand
     {
         trigger_deprecation(
             'pimcore/ecommerce-framework-bundle',
-            '2.0.0',
+            '1.3',
             'The command "%s" is deprecated and will be removed in a future version. Please use the ecommerce:indexservice:search-index-sync instead.',
             $this->getName()
         );
