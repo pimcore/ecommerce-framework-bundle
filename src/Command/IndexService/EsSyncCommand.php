@@ -35,13 +35,6 @@ class EsSyncCommand extends AbstractIndexServiceCommand
     {
         parent::configure();
 
-        trigger_deprecation(
-            'pimcore/ecommerce-framework-bundle',
-            '2.0.0',
-            'The command "%s" is deprecated and will be removed in a future version. Please use the ecommerce:indexservice:search-index-sync instead.',
-            $this->getName()
-        );
-
         $this
             ->setName('ecommerce:indexservice:elasticsearch-sync')
             ->setDescription(
@@ -60,6 +53,13 @@ class EsSyncCommand extends AbstractIndexServiceCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        trigger_deprecation(
+            'pimcore/ecommerce-framework-bundle',
+            '2.0.0',
+            'The command "%s" is deprecated and will be removed in a future version. Please use the ecommerce:indexservice:search-index-sync instead.',
+            $this->getName()
+        );
+        
         $mode = $input->getArgument('mode');
         $tenantName = $input->getOption('tenant');
 
