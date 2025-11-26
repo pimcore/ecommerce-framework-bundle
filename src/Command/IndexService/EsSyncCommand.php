@@ -59,7 +59,7 @@ class EsSyncCommand extends AbstractIndexServiceCommand
             'The command "%s" is deprecated and will be removed in a future version. Please use the ecommerce:indexservice:search-index-sync instead.',
             $this->getName()
         );
-        
+
         $mode = $input->getArgument('mode');
         $tenantName = $input->getOption('tenant');
 
