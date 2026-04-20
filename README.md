@@ -1,5 +1,16 @@
 # E-Commerce Framework
 
+> [!IMPORTANT]
+> ## This Repository Has Been Archived
+>
+> This bundle has moved to the Pimcore Enterprise Edition. The GPL version is **EOL** and will no longer receive updates.
+>
+> - **Enterprise repository:** The updated and supported version is available at [ee-ecommerce-framework-bundle](https://github.com/pimcore/ee-ecommerce-framework-bundle) (access is granted by your Pimcore contact person when you have a valid enterprise subscription).
+> - **LTS support:** For long-term support, please use our support portal at [get.support.pimcore.com](https://get.support.pimcore.com/) (access is granted by your Pimcore contact person when you have a valid enterprise subscription).
+> - **Community support:** For community help and general questions, head over to [Pimcore Discussions](https://github.com/orgs/pimcore/discussions).
+
+
+
 ## Why Pimcore E-Commerce Framework
 The e-commerce environment has fundamentally changed and e-commerce projects often face new challenges like: 
  - **complex product structures:** lots of data attributes, complex product relations, configurable product systems, 
